@@ -3,7 +3,7 @@
     public interface IDataBus : IModule
     {
         delegate void NewDataEvent(string dataInJson);
-        event NewDataEvent OnNewDataReadyEvent;
+        event NewDataEvent? OnNewDataReadyEvent;
         /// <summary>
         /// Publish the data
         /// </summary>

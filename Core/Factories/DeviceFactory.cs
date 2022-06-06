@@ -46,7 +46,7 @@ namespace MATSys.Factories
 
         public IDevice CreateDevice(DeviceInformation info)
         {
-            return (IDevice)Activator.CreateInstance(info.DeviceType, new object[] { _services, info.Name });
+            return (IDevice)Activator.CreateInstance(info.DeviceType, new object[] { _services, info.Name })!;
         }
 
         private (bool, DeviceInformation) Parse(IConfiguration configuration, KeyValuePair<string, string> kvPair)
@@ -68,7 +68,7 @@ namespace MATSys.Factories
             {
                 var path = Path.GetFullPath(item);
                 var types = Assembly.LoadFile(path).GetTypes().Where
-                    (x => x.Name == searchKey && x.GetInterface(typeof(IDevice).FullName) != null);
+                    (x => x.Name == searchKey && x.GetInterface(typeof(IDevice).FullName!) != null);
                 if (types.Count() > 0)
                 {
                     info = new DeviceInformation(types.First(), kvPair.Value);
@@ -86,7 +86,7 @@ namespace MATSys.Factories
                 foreach (var item in AppDomain.CurrentDomain.GetAssemblies())
                 {
                     var types = item.GetTypes().Where
-                        (x => x.Name == searchKey && x.GetInterface(typeof(IDevice).FullName) != null);
+                        (x => x.Name == searchKey && x.GetInterface(typeof(IDevice).FullName!) != null);
                     if (types.Count() > 0)
                     {
                         info = new DeviceInformation(types.First(), kvPair.Value);

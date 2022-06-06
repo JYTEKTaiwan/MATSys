@@ -7,7 +7,7 @@
         //object Execute(IDevice instance);
         string? ConvertResultToString(object obj);
 
-        object[] GetParameters();
+        object[]? GetParameters();
 
         string SimplifiedString();
     }

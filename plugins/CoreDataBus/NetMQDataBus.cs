@@ -14,7 +14,7 @@ namespace MATSys.Plugins
         private NetMQConfiguration _config;
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public string Name =>nameof(NetMQDataBus);
+        public string Name => nameof(NetMQDataBus);
 
         public event IDataBus.NewDataEvent OnNewDataReadyEvent;
 
@@ -77,10 +77,9 @@ namespace MATSys.Plugins
 
         public object GetData(int timeoutInMilliseconds)
         {
-           
             return _sub.ReceiveMultipartStrings()[1];
-
         }
+
         ~NetMQDataBus()
         {
         }

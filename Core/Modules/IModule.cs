@@ -4,7 +4,7 @@ namespace MATSys
 {
     public interface IModule
     {
-        string Name { get;  }
+        string Name { get; }
 
         void Load(IConfigurationSection section);
 

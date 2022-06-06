@@ -17,8 +17,8 @@ namespace MATSys.Plugins
         public object GetData(int timeoutInMilliseconds = 1000)
         {
             var task = _ch.Reader.ReadAsync().AsTask();
-            var to=task.Wait(timeoutInMilliseconds);
-            return to?task.Result:null;
+            var to = task.Wait(timeoutInMilliseconds);
+            return to ? task.Result : null;
         }
 
         public void Load(IConfigurationSection section)
@@ -38,9 +38,9 @@ namespace MATSys.Plugins
 
         public Task RunAsync(CancellationToken token)
         {
-            return Task.Run(() => 
+            return Task.Run(() =>
             {
-                _ch = Channel.CreateBounded<string>(new BoundedChannelOptions(config.QueueLength){FullMode= config.Mode });
+                _ch = Channel.CreateBounded<string>(new BoundedChannelOptions(config.QueueLength) { FullMode = config.Mode });
             });
         }
 
@@ -49,6 +49,7 @@ namespace MATSys.Plugins
             _ch.Writer.Complete();
         }
     }
+
     internal sealed class QueueDataBusConfiguration
     {
         public bool DisableEvent { get; set; } = true;

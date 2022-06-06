@@ -1,6 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using System.Threading.Channels;
 
 namespace MATSys.Plugins
 {
@@ -10,11 +8,11 @@ namespace MATSys.Plugins
 
         public string Name => nameof(DefaultDataBus);
 
-        public event IDataBus.NewDataEvent OnNewDataReadyEvent;
+        public event IDataBus.NewDataEvent? OnNewDataReadyEvent;
 
         public object GetData(int timeoutInMilliseconds = 1000)
         {
-            return null;
+            return null!;
         }
 
         public void Load(IConfigurationSection section)

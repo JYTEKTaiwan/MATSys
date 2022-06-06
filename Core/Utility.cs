@@ -10,7 +10,7 @@ namespace MATSys
             public List<Type> Types { get; set; } = new List<Type>();
             public string SectionKey { get; set; } = "";
             public string TypePrefix { get; set; } = "";
-            public IConfiguration Configuration { get; set; }
+            public IConfiguration? Configuration { get; set; }
 
             public string ModulesFolder { get; set; } = @".\modules\";
             public string LibrariesFolder { get; set; } = @".\libs\";
@@ -48,7 +48,7 @@ namespace MATSys
                 {
                     var p = Path.GetFullPath(item);
                     var types = Assembly.LoadFile(p).GetTypes().Where
-                        (x => x.GetInterface(typeof(TInterface).FullName) != null);
+                        (x => x.GetInterface(typeof(TInterface).FullName!) != null);
                     context.Types.AddRange(types);
                 }
 
@@ -62,7 +62,7 @@ namespace MATSys
                 //check if section in the json configuration exits
                 if (section.Exists())
                 {
-                    var lookup = Configuration.GetSection(SectionKey);
+                    var lookup = Configuration?.GetSection(SectionKey);
 
                     Type t;
 
@@ -70,40 +70,40 @@ namespace MATSys
                     if (string.IsNullOrEmpty(type))
                     {
                         //if key is empty or null, return immediately with dafault datarecorder object.
-                        obj = (TInterface)Activator.CreateInstance(defaultInstace);
+                        obj = (TInterface)Activator.CreateInstance(defaultInstace)!;
                         obj.Load(section);
                         return obj;
                     }
 
                     //if key has value, search the type with the default class name. eg. xxx=>xxxDataRecorder
-                    t = Types.Find(x => x.Name.ToLower() == $"{type}{TypePrefix}".ToLower());
+                    t = Types.Find(x => x.Name.ToLower() == $"{type}{TypePrefix}".ToLower())!;
                     if (t == null)
                     {
                         //if searching failed, use the lookup table to get the custom name
                         var key = lookup.GetValue<string>(type.ToLower());
                         if (string.IsNullOrEmpty(key))
                         {
-                            obj = (TInterface)Activator.CreateInstance(defaultInstace);
+                            obj = (TInterface)Activator.CreateInstance(defaultInstace)!;                            
                             obj.Load(section);
                             return obj;
                         }
                         else
                         {
-                            t = Types.Find(x => x.Name.ToLower() == key);
+                            t = Types.Find(x => x.Name.ToLower() == key)!;
                         }
                     }
 
                     if (t == null)
                     {
                         //cannot parse any type, use default datarecorder
-                        obj = (TInterface)Activator.CreateInstance(defaultInstace);
+                        obj = (TInterface)Activator.CreateInstance(defaultInstace)!;
                         obj.Load(section);
                         return obj;
                     }
                     else
                     {
                         //dynamically load the assembly and object
-                        obj = (TInterface)Activator.CreateInstance(t);
+                        obj = (TInterface)Activator.CreateInstance(t)!;
                         obj.Load(section);
                         return obj;
                     }
@@ -111,7 +111,7 @@ namespace MATSys
                 else
                 {
                     //section is missing, use default DataRecorder object.
-                    obj = (TInterface)Activator.CreateInstance(defaultInstace);
+                    obj = (TInterface)Activator.CreateInstance(defaultInstace)!;
                     obj.Load(section);
                     return obj;
                 }

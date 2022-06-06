@@ -23,7 +23,7 @@ namespace MATSys.Commands
 
         public abstract string SimplifiedString();
 
-        public abstract object[] GetParameters();
+        public abstract object[]? GetParameters();
 
         public static Command Create(string methodName)
         {
@@ -82,7 +82,7 @@ namespace MATSys.Commands
         {
         }
 
-        public override object[] GetParameters()
+        public override object[]? GetParameters()
         {
             return null;
         }
@@ -104,9 +104,9 @@ namespace MATSys.Commands
             Parameter = ValueTuple.Create(param1);
         }
 
-        public override object[] GetParameters()
+        public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1 };
+            return new object[] { Parameter.Item1! };
         }
     }
 
@@ -127,9 +127,9 @@ namespace MATSys.Commands
             Parameter = ValueTuple.Create<T1, T2>(param1, param2);
         }
 
-        public override object[] GetParameters()
+        public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1, Parameter.Item2 };
+            return new object[] { Parameter.Item1!, Parameter.Item2! };
         }
     }
 
@@ -151,9 +151,9 @@ namespace MATSys.Commands
             Parameter = ValueTuple.Create(param1, param2, param3);
         }
 
-        public override object[] GetParameters()
+        public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1, Parameter.Item2, Parameter.Item3 };
+            return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3! };
         }
     }
 
@@ -176,9 +176,9 @@ namespace MATSys.Commands
             Parameter = ValueTuple.Create<T1, T2, T3, T4>(param1, param2, param3, param4);
         }
 
-        public override object[] GetParameters()
+        public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1, Parameter.Item2, Parameter.Item3, Parameter.Item4 };
+            return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4! };
         }
     }
 
@@ -202,9 +202,9 @@ namespace MATSys.Commands
             Parameter = ValueTuple.Create<T1, T2, T3, T4, T5>(param1, param2, param3, param4, param5);
         }
 
-        public override object[] GetParameters()
+        public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1, Parameter.Item2, Parameter.Item3, Parameter.Item4, Parameter.Item5 };
+            return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5! };
         }
     }
 
@@ -229,7 +229,7 @@ namespace MATSys.Commands
             Parameter = ValueTuple.Create<T1, T2, T3, T4, T5, T6>(param1, param2, param3, param4, param5, param6);
         }
 
-        public override object[] GetParameters()
+        public override object[]? GetParameters()
         {
 #pragma warning disable CS8601 // Possible null reference assignment.
             return new object[] { Parameter.Item1, Parameter.Item2, Parameter.Item3, Parameter.Item4, Parameter.Item5, Parameter.Item6 };
@@ -259,9 +259,9 @@ namespace MATSys.Commands
             Parameter = ValueTuple.Create<T1, T2, T3, T4, T5, T6, T7>(param1, param2, param3, param4, param5, param6, param7);
         }
 
-        public override object[] GetParameters()
+        public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1, Parameter.Item2, Parameter.Item3, Parameter.Item4, Parameter.Item5, Parameter.Item6, Parameter.Item7 };
+            return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5!, Parameter.Item6!, Parameter.Item7! };
         }
     }
 }

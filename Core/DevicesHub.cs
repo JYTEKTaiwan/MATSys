@@ -5,10 +5,9 @@ using NLog.Extensions.Logging;
 
 namespace MATSys
 {
-    public sealed class DevicesHub 
+    public sealed class DevicesHub
     {
-        private bool disposed = false;
-        private static Lazy<DevicesHub> lazy= new Lazy<DevicesHub>(() => new DevicesHub());
+        private static Lazy<DevicesHub> lazy = new Lazy<DevicesHub>(() => new DevicesHub());
         private readonly IHost host;
         private CancellationTokenSource cts = new CancellationTokenSource();
         private volatile bool isRunning = false;
@@ -30,11 +29,9 @@ namespace MATSys
                     .AddNLog()
                     )
                     .Build();
-
             }
             catch (Exception ex)
             {
-
                 throw new Exception($"DeviceHub Initialzation failed", ex);
             }
         }
@@ -47,19 +44,18 @@ namespace MATSys
                 {
                     host.RunAsync().Wait(100);
                     var devFactory = host.Services.GetRequiredService<IDeviceFactory>() as DeviceFactory;
-                    foreach (var item in devFactory.DeviceInfos)
+                    foreach (var item in devFactory!.DeviceInfos)
                     {
-                        var dev = devFactory.CreateDevice(item);
-                        dev.RunAsync(cts.Token);
+                       var dev = devFactory.CreateDevice(item);
+                        dev!.RunAsync(cts.Token);
                         Devices.Add(dev);
                     }
                     isRunning = true;
                 }
-
             }
             catch (Exception ex)
             {
-                 throw new Exception($"DeviceHub starts failed", ex);
+                throw new Exception($"DeviceHub starts failed", ex);
             }
         }
 
@@ -77,23 +73,20 @@ namespace MATSys
                     host.StopAsync();
                     isRunning = false;
                 }
-
             }
             catch (Exception ex)
             {
                 throw new Exception($"DeviceHub stops failed", ex);
             }
         }
-
     }
 
-    public class DeviceCollection : List<IDevice>
+    public sealed class DeviceCollection : List<IDevice>
     {
-        public DeviceCollection():base()
+        public DeviceCollection() : base()
         {
         }
 
-        public IDevice this[string name] => this.FirstOrDefault(x => x.Name == name);
-
+        public IDevice this[string name] => this.FirstOrDefault(x => x.Name == name)!;
     }
 }

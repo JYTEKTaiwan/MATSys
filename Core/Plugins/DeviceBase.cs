@@ -1,11 +1,10 @@
 ﻿using MATSys.Commands;
+using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Reflection;
-using System;
-using MATSys.Factories;
-
+using NLog;
 namespace MATSys.Plugins
 {
     public abstract class DeviceBase : IDevice
@@ -15,18 +14,20 @@ namespace MATSys.Plugins
         private const string key_server = "CommandServer";
 
         private readonly Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
-        private readonly NLog.ILogger _logger;
+        private readonly ILogger _logger;
         private readonly ICommandServer _server;
         private readonly IDataRecorder _dataRecorder;
         private readonly IDataBus _dataBus;
 
-        public event IDevice.NewDataReady OnDataReady;
+        public event IDevice.NewDataReady? OnDataReady;
+
         NLog.ILogger IDevice.Logger => _logger;
         IDataRecorder IDevice.DataRecorder => _dataRecorder;
         ICommandServer IDevice.Server => _server;
         IDataBus IDevice.DataBus => _dataBus;
         public string Name { get; }
         public IDevice Instance => this;
+
         public DeviceBase(IServiceProvider services, string configurationKey)
         {
             try
@@ -53,14 +54,14 @@ namespace MATSys.Plugins
             }
             catch (Exception ex)
             {
-                _logger.Error(ex.Message);
+                _logger?.Error(ex.Message);
                 throw new Exception($"Initialization of DeviceBase failed", ex);
             }
         }
 
         private void NewDataReady(string dataInJson)
         {
-            OnDataReady.Invoke(dataInJson);
+            OnDataReady?.Invoke(dataInJson);
         }
 
         private Dictionary<string, MethodInfo> ParseSupportedMethods()
@@ -69,8 +70,7 @@ namespace MATSys.Plugins
             {
                 return x.GetCustomAttributes<CommandObjectAttribute>(false).Count() > 0;
             }).ToArray();
-            return methodlist.ToDictionary(x => x.GetCustomAttribute<CommandObjectAttribute>().Name);
-
+            return methodlist.ToDictionary(x => x.GetCustomAttribute<CommandObjectAttribute>()!.Name);
         }
 
         private string OnCommandDataReady(object sender, string commandObjectInJson)
@@ -83,15 +83,14 @@ namespace MATSys.Plugins
                 var parsedName = commandObjectInJson.Split("MethodName\"")[1].Split("\"")[1];
                 var method = methods[parsedName];
                 var att = method.GetCustomAttribute<CommandObjectAttribute>();
-                var cmd = JsonConvert.DeserializeObject(commandObjectInJson, att.CommandType) as ICommand;
-                _logger.Debug($"Converted to command object successfully: {cmd.MethodName}");
+                var cmd = JsonConvert.DeserializeObject(commandObjectInJson, att!.CommandType) as ICommand;
+                _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
 
                 answer = Execute(cmd);
 
                 _logger.Debug($"Command object execution completed with return value {answer}");
                 _logger.Info($"Command [{cmd.MethodName}] is executed successfully");
                 return answer;
-
             }
             catch (Exception ex)
             {
@@ -118,14 +117,12 @@ namespace MATSys.Plugins
                     Task.WaitAll(t1, t2, t3);
 
                     _logger.Info("Starts service");
-
                 }
                 catch (Exception ex)
                 {
                     _logger.Error(ex);
                     throw new Exception($"RunAsync failed", ex);
                 }
-
             });
         }
 
@@ -156,8 +153,8 @@ namespace MATSys.Plugins
             try
             {
                 var method = methods[cmd.MethodName];
-                var result = method.Invoke(this, cmd.GetParameters());
-                return cmd.ConvertResultToString(result);
+                var result = method.Invoke(this, cmd.GetParameters())!;
+                return cmd.ConvertResultToString(result)!;
             }
             catch (Exception ex)
             {
@@ -173,9 +170,8 @@ namespace MATSys.Plugins
             var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<CommandObjectAttribute>().Count() > 0);
             foreach (var item in cmds)
             {
-                yield return item.GetCustomAttribute<CommandObjectAttribute>().GetJsonString();
+                yield return item.GetCustomAttribute<CommandObjectAttribute>()!.GetJsonString();
             }
-
         }
     }
 }

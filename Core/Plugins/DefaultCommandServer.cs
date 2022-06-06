@@ -5,10 +5,12 @@ namespace MATSys.Plugins
     internal sealed class DefaultCommandServer : ICommandServer
     {
         public string Name => nameof(DefaultCommandServer);
-        public event ICommandServer.CommandReadyEvent OnCommandReady;
+
+        public event ICommandServer.CommandReadyEvent? OnCommandReady;
 
         public void Load(IConfigurationSection section)
         {
+            
         }
 
         public Task RunAsync(CancellationToken token)

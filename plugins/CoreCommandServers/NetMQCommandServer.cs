@@ -13,7 +13,7 @@ namespace MATSys.Plugins
 
         private CancellationTokenSource _localCts = new CancellationTokenSource();
 
-        public string Name =>nameof(NetMQCommandServer);
+        public string Name => nameof(NetMQCommandServer);
 
         public Task RunAsync(CancellationToken token)
         {
@@ -75,7 +75,7 @@ namespace MATSys.Plugins
         internal class NetMQCommandStreamConfiguration
         {
             public string AliasName { get; set; } = "";
-            public string LocalIP { get; set; }= "";
+            public string LocalIP { get; set; } = "";
             public int Port { get; set; } = -1;
         }
     }

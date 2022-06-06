@@ -37,7 +37,6 @@ for (int i = 0; i < 10; i++)
         new TestBase.Data() { Date = DateTime.Now.ToString(), Number = new Random().NextDouble() })));
     //var a = hub.Devices["Dev1"].DataBus.GetData();
     //Console.WriteLine($"{a}");
-
 }
 Console.WriteLine("PRESS ANY KEY TO STOP");
 Console.ReadKey();
