@@ -7,12 +7,6 @@ using NetMQ;
 using Newtonsoft.Json;
 
 Console.WriteLine("Hello, World!");
-var aaa = DevicesHub.Instance;
-Console.WriteLine(aaa.GetHashCode());
-Console.WriteLine(DevicesHub.Instance.GetHashCode());
-Console.WriteLine(DevicesHub.Instance.GetHashCode());
-aaa = DevicesHub.Instance;
-Console.WriteLine(aaa.GetHashCode());
 var hub = DevicesHub.Instance;
 hub.Start();
 hub.Devices["Dev1"].OnDataReady += ((result) => Console.WriteLine(result));
@@ -26,7 +20,16 @@ foreach (var item in hub.Devices)
     }
 }
 Console.ReadKey();
-
+var sub = new NetMQ.Sockets.SubscriberSocket();
+sub.Connect("inproc://127.0.0.1:12345");
+sub.Subscribe("AA");
+Task.Run(() => 
+{
+    while (true)
+    {
+        Console.WriteLine(sub.ReceiveMultipartStrings()[1]);
+    }
+});
 var s = new NetMQ.Sockets.DealerSocket();
 s.Connect("tcp://127.0.0.1:1234");
 for (int i = 0; i < 10; i++)

@@ -8,8 +8,8 @@ namespace MATSys.Plugins
     public class CSVDataRecorder<T> : IDataRecorder<T> where T : class
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
-        private Channel<T> _queue;
-        private CSVDataRecorderConfiguration _config;
+        private Channel<T>? _queue;
+        private CSVDataRecorderConfiguration? _config;
 
         private CancellationTokenSource _localCts = new CancellationTokenSource();
         private Task _task = Task.CompletedTask;
@@ -51,7 +51,7 @@ namespace MATSys.Plugins
                     var filename = DateTime.Now.ToString("HHmmssfff") + ".csv";
                     _queue = Channel.CreateBounded<T>(new BoundedChannelOptions(2000) { FullMode = BoundedChannelFullMode.DropOldest });
                     var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
-                    T data;
+                    T? data;
                     StreamWriter streamWriter = new StreamWriter(filename);
                     CsvWriter writer = new CsvWriter(streamWriter, System.Globalization.CultureInfo.InvariantCulture);
                     writer.WriteHeader<T>();
@@ -84,7 +84,7 @@ namespace MATSys.Plugins
         {
             return Task.Run(() =>
             {
-                _queue.Writer.TryWrite(data);
+                _queue!.Writer.TryWrite(data);
                 _logger.Info("Data is queued to filestream");
             });
         }
@@ -108,8 +108,8 @@ namespace MATSys.Plugins
     public class CSVDataRecorder : IDataRecorder
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
-        private Channel<object> _queue;
-        private CSVDataRecorderConfiguration _config;
+        private Channel<object>? _queue;
+        private CSVDataRecorderConfiguration? _config;
         private CancellationTokenSource _localCts = new CancellationTokenSource();
         private Task _task = Task.CompletedTask;
 
@@ -129,11 +129,11 @@ namespace MATSys.Plugins
 
         public void Stop()
         {
-            if (_config.WaitForComplete)
+            if (_config!.WaitForComplete)
             {
                 SpinWait.SpinUntil(() =>
                 {
-                    return _queue.Reader.Count == 0;
+                    return _queue!.Reader.Count == 0;
                 }, _config.WaitForCompleteTimeout);
             }
             _localCts.Cancel();
@@ -164,13 +164,13 @@ namespace MATSys.Plugins
                 _localCts = new CancellationTokenSource();
                 var filename = DateTime.Now.ToString("HHmmssfff") + ".csv";
                 var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
-                object data;
+                object? data;
                 StreamWriter streamWriter = new StreamWriter(filename);
                 CsvWriter writer = new CsvWriter(streamWriter, System.Globalization.CultureInfo.InvariantCulture);
 
                 while (!_linkedCts.IsCancellationRequested)
                 {
-                    if (_queue.Reader.TryRead(out data))
+                    if (_queue!.Reader.TryRead(out data))
                     {
                         writer.WriteRecord(data);
                         writer.NextRecord();
@@ -179,7 +179,7 @@ namespace MATSys.Plugins
                     SpinWait.SpinUntil(() => token.IsCancellationRequested, 1);
                 }
                 writer.Flush();
-                _queue.Writer.Complete();
+                _queue!.Writer.Complete();
                 streamWriter.Flush();
                 streamWriter.Close();
                 _logger.Debug("File stream and queue are closed");
@@ -192,7 +192,7 @@ namespace MATSys.Plugins
             return Task.Run(() =>
             {
                 _logger.Debug(JsonConvert.SerializeObject(data));
-                _queue.Writer.TryWrite(data);
+                _queue!.Writer.TryWrite(data);
                 _logger.Info("Data is queued to filestream");
             });
         }

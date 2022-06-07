@@ -19,9 +19,9 @@ namespace MATSys.Factories
             foreach (var item in pairs)
             {
                 var info = Parse(_config, item);
-                if (info.Item1)
+                if (!string.IsNullOrEmpty(info.Name))
                 {
-                    DeviceInfos.Add(info.Item2);
+                    DeviceInfos.Add(info);
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace MATSys.Factories
             return (IDevice)Activator.CreateInstance(info.DeviceType, new object[] { _services, info.Name })!;
         }
 
-        private (bool, DeviceInformation) Parse(IConfiguration configuration, KeyValuePair<string, string> kvPair)
+        private DeviceInformation Parse(IConfiguration configuration, KeyValuePair<string, string> kvPair)
         {
             var searchKey = kvPair.Key.Contains(':') ? kvPair.Key.Split(':')[0] : kvPair.Key;
             var info = new DeviceInformation();
@@ -99,7 +99,7 @@ namespace MATSys.Factories
                     }
                 }
             }
-            return (isModFound, info);
+            return isModFound? info:DeviceInformation.Empty;
         }
     }
 
@@ -113,5 +113,7 @@ namespace MATSys.Factories
             DeviceType = deviceType;
             Name = name;
         }
+
+        public static DeviceInformation Empty => new DeviceInformation(Type.EmptyTypes[0], "");
     }
 }

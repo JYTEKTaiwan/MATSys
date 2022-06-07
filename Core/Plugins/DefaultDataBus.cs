@@ -10,7 +10,7 @@ namespace MATSys.Plugins
 
         public event IDataBus.NewDataEvent? OnNewDataReadyEvent;
 
-        public object GetData(int timeoutInMilliseconds = 1000)
+        public object? GetData(int timeoutInMilliseconds = 1000)
         {
             return null!;
         }

@@ -13,7 +13,7 @@
         /// Get the latest data stored in the buffer. Return null if timeout
         /// </summary>
         /// <param name="timeoutInMilliseconds">Timeout value in milliseconds</param>
-        object GetData(int timeoutInMilliseconds = 1000);
+        object? GetData(int timeoutInMilliseconds = 1000);
 
     }
 

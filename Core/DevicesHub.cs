@@ -1,4 +1,5 @@
 ﻿using MATSys.Factories;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog.Extensions.Logging;
@@ -29,6 +30,8 @@ namespace MATSys
                     .AddNLog()
                     )
                     .Build();
+                var config = host.Services.GetService<IConfiguration>()!;
+                NLog.LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
             }
             catch (Exception ex)
             {
@@ -42,7 +45,7 @@ namespace MATSys
             {
                 if (!isRunning)
                 {
-                    host.RunAsync().Wait(100);
+                    host.RunAsync().Wait(500);
                     var devFactory = host.Services.GetRequiredService<IDeviceFactory>() as DeviceFactory;
                     foreach (var item in devFactory!.DeviceInfos)
                     {

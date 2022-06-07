@@ -5,11 +5,11 @@ namespace MATSys.Plugins
 {
     internal sealed class NetMQCommandServer : ICommandServer
     {
-        private NetMQ.Sockets.RouterSocket _routerSocket;
-        private NetMQCommandStreamConfiguration _config;
+        private NetMQ.Sockets.RouterSocket _routerSocket= new NetMQ.Sockets.RouterSocket();
+        private NetMQCommandStreamConfiguration? _config;
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public event ICommandServer.CommandReadyEvent OnCommandReady;
+        public event ICommandServer.CommandReadyEvent? OnCommandReady;
 
         private CancellationTokenSource _localCts = new CancellationTokenSource();
 
@@ -28,7 +28,7 @@ namespace MATSys.Plugins
             _localCts = new CancellationTokenSource();
             var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
 
-            var address = $"{_config.LocalIP}:{_config.Port}";
+            var address = $"{_config?.LocalIP}:{_config?.Port}";
             _logger.Trace("Prepare to run");
             _logger.Debug($"Binds to {address}");
             _routerSocket.Bind(address);
@@ -45,7 +45,7 @@ namespace MATSys.Plugins
                         var content = _routerSocket.ReceiveMultipartStrings();
                         _logger.Debug($"New message received {content[0]}");
 
-                        var response = OnCommandReady?.Invoke(this, content[0]);
+                        var response = OnCommandReady?.Invoke(this, content[0])!;
                         _logger.Trace("Message is executed");
 
                         _routerSocket.SendMoreFrame(key);
@@ -68,7 +68,6 @@ namespace MATSys.Plugins
         public void Load(IConfigurationSection section)
         {
             _config = section.Get<NetMQCommandStreamConfiguration>();
-            _routerSocket = new NetMQ.Sockets.RouterSocket();
             _logger.Info("NetMQCommandServer is initiated");
         }
 

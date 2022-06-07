@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using System.Reflection;
 using NLog;
+using NLog.Extensions.Logging;
+
 namespace MATSys.Plugins
 {
     public abstract class DeviceBase : IDevice
@@ -32,21 +34,23 @@ namespace MATSys.Plugins
         {
             try
             {
+                var config = services.GetRequiredService<IConfiguration>();
+                //sec might be null (will be checked in the factory)
+                var section = config.GetSection(configurationKey);
+
                 //set name of the Device base object
                 Name = configurationKey;
+                LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
                 //Create internal logger using alias name
                 _logger = NLog.LogManager.GetLogger(Name);
 
-                var conf = services.GetRequiredService<IConfiguration>();
-                //sec might be null (will be checked in the factory)
-                var sec = conf.GetSection(configurationKey);
-                Load(sec);
-                _dataRecorder = services.GetRequiredService<IDataRecorderFactory>().CreateRecorder(sec.GetSection(key_dataRecorder));
+                Load(section);
+                _dataRecorder = services.GetRequiredService<IDataRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
                 _logger.Trace($"{_dataRecorder.Name} is injected");
-                _dataBus = services.GetRequiredService<IDataBusFactory>().CreatePublisher(sec.GetSection(key_publisher));
+                _dataBus = services.GetRequiredService<IDataBusFactory>().CreatePublisher(section.GetSection(key_publisher));
                 _dataBus.OnNewDataReadyEvent += NewDataReady;
                 _logger.Trace($"{_dataBus.Name} is injected");
-                _server = services.GetRequiredService<ICommandServerFactory>().CreateCommandStream(sec.GetSection(key_server));
+                _server = services.GetRequiredService<ICommandServerFactory>().CreateCommandStream(section.GetSection(key_server));
                 _logger.Trace($"{_server.Name} is injected");
                 _server.OnCommandReady += OnCommandDataReady; ;
                 methods = ParseSupportedMethods();
@@ -80,7 +84,7 @@ namespace MATSys.Plugins
                 var answer = "";
                 _logger.Trace($"OnDataReady event fired");
                 _logger.Debug($"New command object string is received: {commandObjectInJson}");
-                var parsedName = commandObjectInJson.Split("MethodName\"")[1].Split("\"")[1];
+                var parsedName = commandObjectInJson.Split(new string[] {"MethodName\"" }, StringSplitOptions.RemoveEmptyEntries)[1].Split('\"')[1];
                 var method = methods[parsedName];
                 var att = method.GetCustomAttribute<CommandObjectAttribute>();
                 var cmd = JsonConvert.DeserializeObject(commandObjectInJson, att!.CommandType) as ICommand;

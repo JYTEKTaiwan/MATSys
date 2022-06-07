@@ -7,16 +7,16 @@ namespace MATSys.Plugins
     internal sealed class QueueDataBus : IDataBus
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
-        private Channel<string> _ch;
-        private QueueDataBusConfiguration config;
+        private Channel<string>? _ch;
+        private QueueDataBusConfiguration? config;
 
         public string Name => nameof(QueueDataBus);
 
-        public event IDataBus.NewDataEvent OnNewDataReadyEvent;
+        public event IDataBus.NewDataEvent? OnNewDataReadyEvent;
 
-        public object GetData(int timeoutInMilliseconds = 1000)
+        public object? GetData(int timeoutInMilliseconds = 1000)
         {
-            var task = _ch.Reader.ReadAsync().AsTask();
+            var task = _ch!.Reader.ReadAsync().AsTask();
             var to = task.Wait(timeoutInMilliseconds);
             return to ? task.Result : null;
         }
@@ -29,10 +29,10 @@ namespace MATSys.Plugins
 
         public void Publish(object data)
         {
-            _ch.Writer.TryWrite(JsonConvert.SerializeObject(data));
-            if (!config.DisableEvent)
+            _ch!.Writer.TryWrite(JsonConvert.SerializeObject(data));
+            if (!config!.DisableEvent)
             {
-                OnNewDataReadyEvent.Invoke(JsonConvert.SerializeObject(data));
+                OnNewDataReadyEvent?.Invoke(JsonConvert.SerializeObject(data));
             }
         }
 
@@ -40,13 +40,13 @@ namespace MATSys.Plugins
         {
             return Task.Run(() =>
             {
-                _ch = Channel.CreateBounded<string>(new BoundedChannelOptions(config.QueueLength) { FullMode = config.Mode });
+                _ch = Channel.CreateBounded<string>(new BoundedChannelOptions(config!.QueueLength) { FullMode = config.Mode });
             });
         }
 
         public void Stop()
         {
-            _ch.Writer.Complete();
+            _ch!.Writer.Complete();
         }
     }
 

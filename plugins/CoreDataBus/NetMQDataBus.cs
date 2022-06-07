@@ -11,19 +11,19 @@ namespace MATSys.Plugins
         private SubscriberSocket _sub = new SubscriberSocket();
         private bool isConnected = false;
 
-        private NetMQConfiguration _config;
+        private NetMQConfiguration? _config;
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         public string Name => nameof(NetMQDataBus);
 
-        public event IDataBus.NewDataEvent OnNewDataReadyEvent;
+        public event IDataBus.NewDataEvent? OnNewDataReadyEvent;
 
         private void CurrentDomain_ProcessExit(object? sender, EventArgs e)
         {
             _logger.Trace("ProcessExit event fired");
             if (isConnected)
             {
-                _pub.Unbind(_pub.Options.LastEndpoint);
+                _pub.Unbind(_pub.Options.LastEndpoint!);
                 isConnected = false;
             }
             _pub.Dispose();
@@ -34,14 +34,14 @@ namespace MATSys.Plugins
             var json = JsonConvert.SerializeObject(data);
             _logger.Trace("Ready to publish message");
             var msg = new NetMQMessage();
-            msg.Append(_config.Topic);
+            msg.Append(_config!.Topic);
             msg.Append(json);
             _pub.TrySendMultipartMessage(msg);
             _logger.Debug($"Message content:{msg.ToString()}");
             _logger.Info("Message has sent");
             if (!_config.DisableEvent)
             {
-                OnNewDataReadyEvent.Invoke(json);
+                OnNewDataReadyEvent?.Invoke(json);
             }
         }
 
@@ -49,7 +49,7 @@ namespace MATSys.Plugins
         {
             return Task.Run(() =>
             {
-                _pub.Bind($"{_config.Protocal}://{_config.Address}");
+                _pub.Bind($"{_config!.Protocal}://{_config.Address}");
                 _sub.Connect($"{_config.Protocal}://{_config.Address}");
                 _sub.Subscribe(_config.Topic);
                 isConnected = true;
@@ -61,8 +61,8 @@ namespace MATSys.Plugins
         {
             if (isConnected)
             {
-                _sub.Disconnect(_sub.Options.LastEndpoint);
-                _pub.Unbind(_pub.Options.LastEndpoint);
+                _sub.Disconnect(_sub.Options.LastEndpoint!);
+                _pub.Unbind(_pub.Options.LastEndpoint!);
                 isConnected = false;
                 _logger.Info("Stop service");
             }
