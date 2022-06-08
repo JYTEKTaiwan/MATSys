@@ -7,9 +7,10 @@ namespace MATSys.Scripting
     public class ScriptEngine
     {
         private ScriptOptions scriptOpt = ScriptOptions.Default;
-        private Script? cs;        
+        private Script? cs;
         private const string pattern = @"(?:using\s+)(?<assembly>[a-zA-Z0-9.]+)(?:;)";
         private CancellationTokenSource? cts;
+
         public void Load(string fileName)
         {
             string code = File.ReadAllText(Path.GetFullPath(fileName));
@@ -23,6 +24,7 @@ namespace MATSys.Scripting
             cs = CSharpScript.Create(code, ScriptOptions.Default.AddReferences(assemblies.ToArray()));
             cs.Compile();
         }
+
         public ScriptState Run(int timeoutMilliSecond)
         {
             cts = new CancellationTokenSource();
@@ -30,10 +32,12 @@ namespace MATSys.Scripting
             res.Wait(timeoutMilliSecond, cts.Token);
             return res.Result;
         }
+
         public async Task<ScriptState> RunAsync()
         {
             return await cs!.RunAsync(cts!.Token);
         }
+
         public void Stop()
         {
             cts!.Cancel();

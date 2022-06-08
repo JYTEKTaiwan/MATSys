@@ -28,7 +28,7 @@ namespace MATSys.Plugins
             WriteAsync(data).Wait();
         }
 
-        public void Stop()
+        public void StopService()
         {
             _localCts.Cancel();
             _logger.Info("Stop service");
@@ -39,7 +39,7 @@ namespace MATSys.Plugins
             return t.Status == TaskStatus.RanToCompletion || t.Status == TaskStatus.Canceled || t.Status == TaskStatus.Faulted;
         }
 
-        public Task RunAsync(CancellationToken token)
+        public Task StartServiceAsync(CancellationToken token)
         {
             _logger.Trace("Prepare to run");
 
@@ -127,7 +127,7 @@ namespace MATSys.Plugins
             WriteAsync(data).Wait();
         }
 
-        public void Stop()
+        public void StopService()
         {
             if (_config!.WaitForComplete)
             {
@@ -145,7 +145,7 @@ namespace MATSys.Plugins
             return t.Status == TaskStatus.RanToCompletion || t.Status == TaskStatus.Canceled || t.Status == TaskStatus.Faulted;
         }
 
-        public Task RunAsync(CancellationToken token)
+        public Task StartServiceAsync(CancellationToken token)
         {
             return Task.Run(() =>
             {

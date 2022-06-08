@@ -99,7 +99,7 @@ namespace MATSys.Factories
                     }
                 }
             }
-            return isModFound? info:DeviceInformation.Empty;
+            return isModFound ? info : DeviceInformation.Empty;
         }
     }
 

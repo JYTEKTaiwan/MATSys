@@ -5,7 +5,7 @@ namespace MATSys.Plugins
 {
     internal sealed class NetMQCommandServer : ICommandServer
     {
-        private NetMQ.Sockets.RouterSocket _routerSocket= new NetMQ.Sockets.RouterSocket();
+        private NetMQ.Sockets.RouterSocket _routerSocket = new NetMQ.Sockets.RouterSocket();
         private NetMQCommandStreamConfiguration? _config;
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -15,7 +15,7 @@ namespace MATSys.Plugins
 
         public string Name => nameof(NetMQCommandServer);
 
-        public Task RunAsync(CancellationToken token)
+        public Task StartServiceAsync(CancellationToken token)
         {
             return Task.Run(() =>
             {
@@ -59,7 +59,7 @@ namespace MATSys.Plugins
             });
         }
 
-        public void Stop()
+        public void StopService()
         {
             _localCts.Cancel();
             _logger.Info("Stop service");

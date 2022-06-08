@@ -2,7 +2,7 @@
 
 namespace MATSys.Plugins
 {
-    internal sealed class DefaultDataBus : IDataBus
+    public sealed class DefaultDataBus : IDataBus
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -24,12 +24,12 @@ namespace MATSys.Plugins
         {
         }
 
-        public Task RunAsync(CancellationToken token)
+        public Task StartServiceAsync(CancellationToken token)
         {
             return Task.CompletedTask;
         }
 
-        public void Stop()
+        public void StopService()
         {
         }
     }

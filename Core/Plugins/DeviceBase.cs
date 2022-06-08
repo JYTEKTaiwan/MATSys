@@ -3,9 +3,9 @@ using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
-using System.Reflection;
 using NLog;
 using NLog.Extensions.Logging;
+using System.Reflection;
 
 namespace MATSys.Plugins
 {
@@ -63,6 +63,23 @@ namespace MATSys.Plugins
             }
         }
 
+        public DeviceBase(ICommandServer server, IDataBus bus, IDataRecorder recorder)
+        {
+            Name = $"{this.GetType().Name}_{this.GetHashCode().ToString("X2")}";
+            _logger = NLog.LogManager.GetLogger(Name);
+
+            _dataRecorder = recorder;
+            _logger.Trace($"{_dataRecorder.Name} is injected");
+            _dataBus = bus;
+            _dataBus.OnNewDataReadyEvent += NewDataReady;
+            _logger.Trace($"{_dataBus.Name} is injected");
+            _server = server;
+            _logger.Trace($"{_server.Name} is injected");
+            _server.OnCommandReady += OnCommandDataReady; ;
+            methods = ParseSupportedMethods();
+            _logger.Info($"{Name} base class initialization is completed");
+
+        }
         private void NewDataReady(string dataInJson)
         {
             OnDataReady?.Invoke(dataInJson);
@@ -84,7 +101,7 @@ namespace MATSys.Plugins
                 var answer = "";
                 _logger.Trace($"OnDataReady event fired");
                 _logger.Debug($"New command object string is received: {commandObjectInJson}");
-                var parsedName = commandObjectInJson.Split(new string[] {"MethodName\"" }, StringSplitOptions.RemoveEmptyEntries)[1].Split('\"')[1];
+                var parsedName = commandObjectInJson.Split(new string[] { "MethodName\"" }, StringSplitOptions.RemoveEmptyEntries)[1].Split('\"')[1];
                 var method = methods[parsedName];
                 var att = method.GetCustomAttribute<CommandObjectAttribute>();
                 var cmd = JsonConvert.DeserializeObject(commandObjectInJson, att!.CommandType) as ICommand;
@@ -103,20 +120,20 @@ namespace MATSys.Plugins
             }
         }
 
-        public virtual Task RunAsync(CancellationToken token)
+        public virtual Task StartServiceAsync(CancellationToken token)
         {
             return Task.Run(() =>
             {
                 try
                 {
                     _logger.Trace("Starts the DataRecorder");
-                    var t1 = _dataRecorder.RunAsync(token); ;
+                    var t1 = _dataRecorder.StartServiceAsync(token); ;
 
                     _logger.Trace("Starts the Publisher");
-                    var t2 = _dataBus.RunAsync(token); ;
+                    var t2 = _dataBus.StartServiceAsync(token); ;
 
                     _logger.Trace("Starts the CommandServer");
-                    var t3 = _server.RunAsync(token); ;
+                    var t3 = _server.StartServiceAsync(token); ;
 
                     Task.WaitAll(t1, t2, t3);
 
@@ -130,18 +147,18 @@ namespace MATSys.Plugins
             });
         }
 
-        public virtual void Stop()
+        public virtual void StopService()
         {
             try
             {
                 _logger.Trace("Stops the CommandStream");
-                _server.Stop();
+                _server.StopService();
 
                 _logger.Trace("Stops the DataRecorder");
-                _dataRecorder.Stop();
+                _dataRecorder.StopService();
 
                 _logger.Trace("Stops the Publisher");
-                _dataBus.Stop();
+                _dataBus.StopService();
 
                 _logger.Info("Stops service");
             }

@@ -5,12 +5,13 @@ using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 using NetMQ;
 using Newtonsoft.Json;
+using NLog;
+
 
 Console.WriteLine("Hello, World!");
 var hub = DevicesHub.Instance;
 hub.Start();
 hub.Devices["Dev1"].OnDataReady += ((result) => Console.WriteLine(result));
-
 foreach (var item in hub.Devices)
 {
     Console.WriteLine($"==={item.Name}===");
@@ -23,7 +24,7 @@ Console.ReadKey();
 var sub = new NetMQ.Sockets.SubscriberSocket();
 sub.Connect("inproc://127.0.0.1:12345");
 sub.Subscribe("AA");
-Task.Run(() => 
+Task.Run(() =>
 {
     while (true)
     {
@@ -60,6 +61,10 @@ public class AnotherTest : DeviceBase
 public class TestBase : DeviceBase
 {
     public TestBase(IServiceProvider services, string configurationKey) : base(services, configurationKey)
+    {
+    }
+
+    public TestBase(ICommandServer server, IDataBus bus, IDataRecorder recorder) : base(server, bus, recorder)
     {
     }
 

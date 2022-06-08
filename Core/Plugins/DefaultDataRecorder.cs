@@ -2,17 +2,17 @@
 
 namespace MATSys.Plugins
 {
-    internal sealed class DefaultDataRecorder : IDataRecorder
+    public sealed class DefaultDataRecorder : IDataRecorder
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         public string Name => nameof(DefaultDataRecorder);
 
-        public void Stop()
+        public void StopService()
         {
         }
 
-        public Task RunAsync(CancellationToken token)
+        public Task StartServiceAsync(CancellationToken token)
         {
             return Task.CompletedTask;
         }

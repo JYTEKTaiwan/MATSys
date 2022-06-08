@@ -45,7 +45,7 @@ namespace MATSys.Plugins
             }
         }
 
-        public Task RunAsync(CancellationToken token)
+        public Task StartServiceAsync(CancellationToken token)
         {
             return Task.Run(() =>
             {
@@ -57,7 +57,7 @@ namespace MATSys.Plugins
             });
         }
 
-        public void Stop()
+        public void StopService()
         {
             if (isConnected)
             {

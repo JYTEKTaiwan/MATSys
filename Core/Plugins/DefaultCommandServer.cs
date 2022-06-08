@@ -2,7 +2,7 @@
 
 namespace MATSys.Plugins
 {
-    internal sealed class DefaultCommandServer : ICommandServer
+    public sealed class DefaultCommandServer : ICommandServer
     {
         public string Name => nameof(DefaultCommandServer);
 
@@ -10,15 +10,14 @@ namespace MATSys.Plugins
 
         public void Load(IConfigurationSection section)
         {
-            
         }
 
-        public Task RunAsync(CancellationToken token)
+        public Task StartServiceAsync(CancellationToken token)
         {
             return Task.CompletedTask;
         }
 
-        public void Stop()
+        public void StopService()
         {
         }
     }

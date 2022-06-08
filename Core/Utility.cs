@@ -13,6 +13,7 @@ namespace MATSys
             public IConfiguration? Configuration { get; set; }
             public string ModulesFolder { get; set; } = @".\modules\";
             public string LibrariesFolder { get; set; } = @".\libs\";
+
             public Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
             {
                 string s = LibrariesFolder + args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
@@ -25,6 +26,7 @@ namespace MATSys
                     throw new FileNotFoundException($"Dependent assembly not found : {args.Name}");
                 }
             }
+
             internal static ModuleContext Parse<TInterface>(IConfiguration configuration, string key) where TInterface : IModule
             {
                 var context = new ModuleContext();
@@ -51,6 +53,7 @@ namespace MATSys
 
                 return context;
             }
+
             public TInterface CreateInstance<TInterface>(IConfigurationSection section, Type defaultInstace) where TInterface : IModule
             {
                 TInterface obj;
@@ -79,7 +82,7 @@ namespace MATSys
                         var key = lookup.GetValue<string>(type.ToLower());
                         if (string.IsNullOrEmpty(key))
                         {
-                            obj = (TInterface)Activator.CreateInstance(defaultInstace)!;                            
+                            obj = (TInterface)Activator.CreateInstance(defaultInstace)!;
                             obj.Load(section);
                             return obj;
                         }

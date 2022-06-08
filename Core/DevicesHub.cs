@@ -30,6 +30,7 @@ namespace MATSys
                     .AddNLog()
                     )
                     .Build();
+                //configure NLog environment for the first time
                 var config = host.Services.GetService<IConfiguration>()!;
                 NLog.LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
             }
@@ -45,12 +46,13 @@ namespace MATSys
             {
                 if (!isRunning)
                 {
+                    //start the host and delay 500ms
                     host.RunAsync().Wait(500);
                     var devFactory = host.Services.GetRequiredService<IDeviceFactory>() as DeviceFactory;
                     foreach (var item in devFactory!.DeviceInfos)
                     {
-                       var dev = devFactory.CreateDevice(item);
-                        dev!.RunAsync(cts.Token);
+                        var dev = devFactory.CreateDevice(item);
+                        dev!.StartServiceAsync(cts.Token);
                         Devices.Add(dev);
                     }
                     isRunning = true;
@@ -71,7 +73,7 @@ namespace MATSys
                     cts.Cancel();
                     foreach (var item in Devices)
                     {
-                        item.Stop();
+                        item.StopService();
                     }
                     host.StopAsync();
                     isRunning = false;
