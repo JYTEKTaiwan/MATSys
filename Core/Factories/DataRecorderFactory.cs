@@ -7,7 +7,7 @@ namespace MATSys.Factories
     {
         private readonly Utility.ModuleContext context;
         private const string KEY = "DataRecorderFactory";
-        private Type DefaultType { get; } = typeof(DefaultDataRecorder);
+        private Type DefaultType { get; } = typeof(EmptyDataRecorder);
 
         public DataRecorderFactory(IConfiguration configuration)
         {

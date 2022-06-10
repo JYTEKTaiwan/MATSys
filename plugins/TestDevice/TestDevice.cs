@@ -10,7 +10,7 @@ namespace MATSys.Devices
         {
         }
 
-        public override void Load(IConfigurationSection section)
+        public TestDevice(ICommandServer server, IDataBus bus, IDataRecorder recorder) : base(server, bus, recorder)
         {
         }
 
@@ -22,6 +22,11 @@ namespace MATSys.Devices
         [CommandObject("MethodA", typeof(Command<int>))]
         public void A(int a)
         {
+        }
+
+        public override void Load(Microsoft.Extensions.Configuration.IConfigurationSection section)
+        {
+            throw new NotImplementedException();
         }
     }
 }

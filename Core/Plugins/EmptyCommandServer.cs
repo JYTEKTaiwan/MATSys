@@ -2,9 +2,9 @@
 
 namespace MATSys.Plugins
 {
-    public sealed class DefaultCommandServer : ICommandServer
+    public sealed class EmptyCommandServer : ICommandServer
     {
-        public string Name => nameof(DefaultCommandServer);
+        public string Name => nameof(EmptyCommandServer);
 
         public event ICommandServer.CommandReadyEvent? OnCommandReady;
 

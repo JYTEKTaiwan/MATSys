@@ -117,4 +117,15 @@ namespace MATSys
             }
         }
     }
+
+    internal struct Response
+    {
+        public bool Pass { get; }
+        public string ReturnString { get; }
+        public Response(string response, bool isPassed=true)
+        {
+            Pass = isPassed;
+            ReturnString = response;
+        }
+    }
 }

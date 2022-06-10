@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDataRecorder", "plugins
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "examples\Test\Test.csproj", "{DD18C823-30F9-4116-8B1A-C4E56FB3D1A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MATSys.Scripting", "MATSys.Scripting\MATSys.Scripting.csproj", "{5EB25A43-8D03-4E90-8EFF-F0C77320B2A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Scripting", "MATSys.Scripting\MATSys.Scripting.csproj", "{5EB25A43-8D03-4E90-8EFF-F0C77320B2A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MATSys-tool", "MATSys-tool\MATSys-tool.csproj", "{DA61CCA8-FC3D-4415-A167-D87B0EC053CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{5EB25A43-8D03-4E90-8EFF-F0C77320B2A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EB25A43-8D03-4E90-8EFF-F0C77320B2A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EB25A43-8D03-4E90-8EFF-F0C77320B2A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA61CCA8-FC3D-4415-A167-D87B0EC053CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA61CCA8-FC3D-4415-A167-D87B0EC053CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA61CCA8-FC3D-4415-A167-D87B0EC053CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA61CCA8-FC3D-4415-A167-D87B0EC053CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,9 +74,10 @@ Global
 		{0A3492ED-CCB2-4AD4-A627-6CBCDB0B9427} = {A57D9273-7ECC-464C-A9FC-75B9A3379FA3}
 		{DD18C823-30F9-4116-8B1A-C4E56FB3D1A5} = {3787A6AD-AE85-4828-8476-2DE0E4E7F6CA}
 		{5EB25A43-8D03-4E90-8EFF-F0C77320B2A7} = {79D5C996-EAF9-4311-9720-554D5904EA26}
+		{DA61CCA8-FC3D-4415-A167-D87B0EC053CE} = {79D5C996-EAF9-4311-9720-554D5904EA26}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
 	EndGlobalSection
 EndGlobal

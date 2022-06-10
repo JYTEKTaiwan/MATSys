@@ -7,7 +7,7 @@ namespace MATSys.Factories
     {
         private readonly Utility.ModuleContext context;
         private const string KEY = "CommandServerFactory";
-        private Type DefaultType { get; } = typeof(DefaultCommandServer);
+        private Type DefaultType { get; } = typeof(EmptyCommandServer);
 
         public CommandServerFactory(IConfiguration configuration)
         {

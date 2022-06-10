@@ -23,7 +23,7 @@ namespace MATSys.Plugins
 
         public event IDevice.NewDataReady? OnDataReady;
 
-        NLog.ILogger IDevice.Logger => _logger;
+        ILogger IDevice.Logger => _logger;
         IDataRecorder IDevice.DataRecorder => _dataRecorder;
         ICommandServer IDevice.Server => _server;
         IDataBus IDevice.DataBus => _dataBus;
@@ -78,8 +78,8 @@ namespace MATSys.Plugins
             _server.OnCommandReady += OnCommandDataReady; ;
             methods = ParseSupportedMethods();
             _logger.Info($"{Name} base class initialization is completed");
-
         }
+
         private void NewDataReady(string dataInJson)
         {
             OnDataReady?.Invoke(dataInJson);
@@ -192,6 +192,20 @@ namespace MATSys.Plugins
             foreach (var item in cmds)
             {
                 yield return item.GetCustomAttribute<CommandObjectAttribute>()!.GetJsonString();
+            }
+        }
+
+        public string Execute(string cmdInJson)
+        {
+            try
+            {
+                var result = OnCommandDataReady(this, cmdInJson);
+                return result!;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                throw new Exception($"Execute command failed", ex);
             }
         }
     }

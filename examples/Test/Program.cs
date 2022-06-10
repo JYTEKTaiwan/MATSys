@@ -5,8 +5,6 @@ using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 using NetMQ;
 using Newtonsoft.Json;
-using NLog;
-
 
 Console.WriteLine("Hello, World!");
 var hub = DevicesHub.Instance;

@@ -9,6 +9,8 @@
          IDataRecorder DataRecorder { get; }
          ICommandServer Server { get; }
         string Execute(Commands.ICommand cmd);
+        string Execute(string cmdInJson);
+
         IEnumerable<string> PrintCommands();
         IDevice Instance { get; }
     }

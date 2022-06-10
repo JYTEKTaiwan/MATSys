@@ -2,11 +2,11 @@
 
 namespace MATSys.Plugins
 {
-    public sealed class DefaultDataRecorder : IDataRecorder
+    public sealed class EmptyDataRecorder : IDataRecorder
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public string Name => nameof(DefaultDataRecorder);
+        public string Name => nameof(EmptyDataRecorder);
 
         public void StopService()
         {

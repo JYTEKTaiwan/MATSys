@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MATSys-tool": {
+      "commandName": "Project",
+      "commandLineArgs": "MATSys-tool mod -info -d E:\\repos\\MATSys\\plugins\\bin\\Debug\\net6.0 -n TestDevice"
+    }
+  }
+}

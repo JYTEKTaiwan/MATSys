@@ -7,7 +7,7 @@ namespace MATSys.Factories
     {
         private readonly Utility.ModuleContext context;
         private const string KEY = "DataBusFactory";
-        private Type DefaultType { get; } = typeof(DefaultDataBus);
+        private Type DefaultType { get; } = typeof(EmptyDataBus);
 
         public DataBusFactory(IConfiguration configuration)
         {

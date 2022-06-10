@@ -6,5 +6,6 @@ namespace MATSys
     {
         delegate string CommandReadyEvent(object sender, string commandObjectInJson);
         event CommandReadyEvent? OnCommandReady;
+        
     }
 }
