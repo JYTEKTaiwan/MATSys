@@ -22,7 +22,7 @@
 		<PackageReference Include="NLog" Version="5.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\Core\MATSys.csproj" />
+		<ProjectReference Include="..\..\MATSys\MATSys.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -32,7 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Core\MATSys.csproj" />
+		<ProjectReference Include="..\MATSys\MATSys.csproj" />
 	</ItemGroup>
 
 </Project>
