@@ -40,7 +40,19 @@ namespace MATSys.Commands
         /// Get the simplified string for app to use
         /// </summary>
         /// <returns></returns>
-        public abstract string SimplifiedString();
+        public virtual string SimplifiedString()
+        {
+
+            StringBuilder sb=new StringBuilder();
+            foreach (var item in GetParameters())
+            {
+                sb.Append($"{item},");
+            }
+            var len=sb.Lengh;
+            sb.Remove(len-1,1);
+            var str=$"[{Name}]: {sb.ToString()}";           
+        }
+
 
         /// <summary>
         /// Get all parameter values 
@@ -185,11 +197,18 @@ namespace MATSys.Commands
         }
 
     }
-
+    
+    /// <summary>
+    /// Command object without any parameter
+    /// </summary>
     public sealed class Command : CommandBase
     {
+        /// <summary>
+        /// Get the simplified string
+        /// </summary>
+        /// <returns></returns>
         public override string SimplifiedString()
-        {
+        {            
             return $"[{base.MethodName}]";
         }
 
@@ -197,6 +216,10 @@ namespace MATSys.Commands
         {
         }
 
+        /// <summary>
+        /// return the parameters in object array
+        /// </summary>
+        /// <returns></returns>
         public override object[]? GetParameters()
         {
             return null;
@@ -207,7 +230,10 @@ namespace MATSys.Commands
     {
         [JsonProperty(Order = 1)]
         public ValueTuple<T1> Parameter { get; set; }
-
+        /// <summary>
+        /// Get the simplified string
+        /// </summary>
+        /// <returns></returns>
         public override string SimplifiedString()
         {
             return $"[{base.MethodName}]: " +
@@ -218,7 +244,10 @@ namespace MATSys.Commands
         {
             Parameter = ValueTuple.Create(param1);
         }
-
+        /// <summary>
+        /// return the parameters in object array
+        /// </summary>
+        /// <returns></returns>
         public override object[]? GetParameters()
         {            
             return new object[] { Parameter.Item1! };
