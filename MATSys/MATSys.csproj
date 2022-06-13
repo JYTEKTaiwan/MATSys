@@ -10,12 +10,14 @@
     <Company>JYTEK TAIWAN CORP.</Company>
     <Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
     <PackageIcon>JYTek.png</PackageIcon>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-	  <LangVersion>10.0</LangVersion>
 	  <AssemblyVersion>1.0.*</AssemblyVersion>
 	  <FileVersion>1.0.*</FileVersion>
-	  <Deterministic>False</Deterministic>
 	  <RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/tree/master/Core</RepositoryUrl>
+
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <LangVersion>10.0</LangVersion>
+	  <Deterministic>False</Deterministic>
+
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">

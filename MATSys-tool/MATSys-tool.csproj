@@ -7,13 +7,25 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<BaseOutputPath>..\bin\</BaseOutputPath>
-		<LangVersion>10.0</LangVersion>
+		<Authors>Way Lin</Authors>
+		<Company>JYTEK TAIWAN CORP.</Company>
+		<Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
+		<PackageIcon>JYTek.png</PackageIcon>
 		<AssemblyVersion>1.0.*</AssemblyVersion>
 		<FileVersion>1.0.*</FileVersion>
+		<RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/tree/master/MATSys-tool</RepositoryUrl>
+		<LangVersion>10.0</LangVersion>
 		<Deterministic>False</Deterministic>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Include="..\icon\JYTek.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />

@@ -4,13 +4,28 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <LangVersion>10.0</LangVersion>
+	  <BaseOutputPath>..\bin\</BaseOutputPath>
+
+	  <Authors>Way Lin</Authors>
+	  <Company>JYTEK TAIWAN CORP.</Company>
+	  <Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
+	  <PackageIcon>JYTek.png</PackageIcon>
 	  <AssemblyVersion>1.0.*</AssemblyVersion>
 	  <FileVersion>1.0.*</FileVersion>
+	  <RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/tree/master/MATSys.Scripting</RepositoryUrl>
+	  
+	  <LangVersion>10.0</LangVersion>
 	  <Deterministic>False</Deterministic>
 	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	  <RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/tree/master/MATSys.Scripting</RepositoryUrl>
+
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\icon\JYTek.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" />

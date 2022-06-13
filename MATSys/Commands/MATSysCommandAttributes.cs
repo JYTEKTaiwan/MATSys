@@ -3,17 +3,37 @@ using Newtonsoft.Json.Linq;
 
 namespace MATSys.Commands
 {
-    public sealed class CommandObjectAttribute : Attribute
+    /// <summary>
+    /// Attribute that represent the method information for MATSys to use
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Method)]
+    public sealed class MATSysCommandAttribute : Attribute
     {
+        /// <summary>
+        /// Name of the MATSysCommand object
+        /// </summary>
         public string Name { get; }
+        /// <summary>
+        /// Type of the parameter
+        /// </summary>
         public Type CommandType { get; }
 
-        public CommandObjectAttribute(string name, Type t)
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name">name</param>
+        /// <param name="t"></param>
+        public MATSysCommandAttribute(string name, Type t)
         {
             Name = name;
             CommandType = t;
         }
 
+
+        /// <summary>
+        /// Return the MATSys object json string
+        /// </summary>
+        /// <returns></returns>
         public string GetJsonString()
         {
             JObject jRoot = new JObject();
