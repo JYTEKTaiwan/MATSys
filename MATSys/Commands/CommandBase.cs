@@ -1,6 +1,7 @@
 ﻿//using MACOs.JY.ActorFramework.Core.Devices;
 using Newtonsoft.Json;
 using System.Reflection;
+using System.Text;
 
 namespace MATSys.Commands
 {
@@ -48,9 +49,9 @@ namespace MATSys.Commands
             {
                 sb.Append($"{item},");
             }
-            var len=sb.Lengh;
+            var len=sb.Length;
             sb.Remove(len-1,1);
-            var str=$"[{Name}]: {sb.ToString()}";           
+            var str=$"[{MethodName}]: {sb.ToString()}";           
         }
 
 
@@ -203,15 +204,6 @@ namespace MATSys.Commands
     /// </summary>
     public sealed class Command : CommandBase
     {
-        /// <summary>
-        /// Get the simplified string
-        /// </summary>
-        /// <returns></returns>
-        public override string SimplifiedString()
-        {            
-            return $"[{base.MethodName}]";
-        }
-
         public Command(string name) : base(name)
         {
         }
@@ -230,16 +222,7 @@ namespace MATSys.Commands
     {
         [JsonProperty(Order = 1)]
         public ValueTuple<T1> Parameter { get; set; }
-        /// <summary>
-        /// Get the simplified string
-        /// </summary>
-        /// <returns></returns>
-        public override string SimplifiedString()
-        {
-            return $"[{base.MethodName}]: " +
-                $"{Parameter.Item1}";
-        }
-
+        
         public Command(string name, T1 param1) : base(name)
         {
             Parameter = ValueTuple.Create(param1);
@@ -256,13 +239,7 @@ namespace MATSys.Commands
 
     public sealed class Command<T1, T2> : CommandBase
     {
-        public override string SimplifiedString()
-        {
-            return $"[{base.MethodName}]: " +
-                $"{Parameter.Item1}," +
-                $"{Parameter.Item2}";
-        }
-
+        
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2> Parameter { get; set; }
 
@@ -279,14 +256,7 @@ namespace MATSys.Commands
 
     public sealed class Command<T1, T2, T3> : CommandBase
     {
-        public override string SimplifiedString()
-        {
-            return $"[{base.MethodName}]: " +
-                $"{Parameter.Item1}," +
-                $"{Parameter.Item2}," +
-                $"{Parameter.Item3}";
-        }
-
+       
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3> Parameter { get; set; }
 
@@ -303,15 +273,7 @@ namespace MATSys.Commands
 
     public sealed class Command<T1, T2, T3, T4> : CommandBase
     {
-        public override string SimplifiedString()
-        {
-            return $"[{base.MethodName}]: " +
-                $"{Parameter.Item1}," +
-                $"{Parameter.Item2}," +
-                $"{Parameter.Item3}," +
-                $"{Parameter.Item4}";
-        }
-
+       
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4> Parameter { get; set; }
 
@@ -328,16 +290,7 @@ namespace MATSys.Commands
 
     public sealed class Command<T1, T2, T3, T4, T5> : CommandBase
     {
-        public override string SimplifiedString()
-        {
-            return $"[{base.MethodName}]: " +
-                $"{Parameter.Item1}," +
-                $"{Parameter.Item2}," +
-                $"{Parameter.Item3}," +
-                $"{Parameter.Item4}," +
-                $"{Parameter.Item5}";
-        }
-
+       
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4, T5> Parameter { get; set; }
 
@@ -354,17 +307,7 @@ namespace MATSys.Commands
 
     public sealed class Command<T1, T2, T3, T4, T5, T6> : CommandBase
     {
-        public override string SimplifiedString()
-        {
-            return $"[{base.MethodName}]: " +
-                $"{Parameter.Item1}," +
-                $"{Parameter.Item2}," +
-                $"{Parameter.Item3}," +
-                $"{Parameter.Item4}," +
-                $"{Parameter.Item5}," +
-                $"{Parameter.Item6}";
-        }
-
+        
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4, T5, T6> Parameter { get; set; }
 
@@ -383,18 +326,7 @@ namespace MATSys.Commands
 
     public sealed class Command<T1, T2, T3, T4, T5, T6, T7> : CommandBase
     {
-        public override string SimplifiedString()
-        {
-            return $"[{base.MethodName}]: " +
-                $"{Parameter.Item1}," +
-                $"{Parameter.Item2}," +
-                $"{Parameter.Item3}," +
-                $"{Parameter.Item4}," +
-                $"{Parameter.Item5}," +
-                $"{Parameter.Item6}," +
-                $"{Parameter.Item7}";
-        }
-
+        
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4, T5, T6, T7> Parameter { get; set; }
 
