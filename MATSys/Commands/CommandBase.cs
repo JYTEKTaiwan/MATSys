@@ -222,6 +222,10 @@ namespace MATSys.Commands
         }
     }
 
+/// <summary>
+/// Command object with 1 parameter
+/// </summary>
+/// <typeparam name="T1"></typeparam>
     public sealed class Command<T1> : CommandBase
     {
         [JsonProperty(Order = 1)]
@@ -240,7 +244,11 @@ namespace MATSys.Commands
             return new object[] { Parameter.Item1! };
         }
     }
-
+/// <summary>
+/// Command object with 2 parameters
+/// </summary>
+/// <typeparam name="T1"></typeparam>
+/// <typeparam name="T2"></typeparam>
     public sealed class Command<T1, T2> : CommandBase
     {
         
@@ -257,7 +265,12 @@ namespace MATSys.Commands
             return new object[] { Parameter.Item1!, Parameter.Item2! };
         }
     }
-
+/// <summary>
+/// Command object with 3 parameters
+/// </summary>
+/// <typeparam name="T1"></typeparam>
+/// <typeparam name="T2"></typeparam>
+/// <typeparam name="T3"></typeparam>
     public sealed class Command<T1, T2, T3> : CommandBase
     {
        
@@ -274,7 +287,13 @@ namespace MATSys.Commands
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3! };
         }
     }
-
+/// <summary>
+/// Command object with 4 parameters
+/// </summary>
+/// <typeparam name="T1"></typeparam>
+/// <typeparam name="T2"></typeparam>
+/// <typeparam name="T3"></typeparam>
+/// <typeparam name="T4"></typeparam>
     public sealed class Command<T1, T2, T3, T4> : CommandBase
     {
        
@@ -291,7 +310,14 @@ namespace MATSys.Commands
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4! };
         }
     }
-
+/// <summary>
+/// Command object with 5 parameters
+/// </summary>
+/// <typeparam name="T1"></typeparam>
+/// <typeparam name="T2"></typeparam>
+/// <typeparam name="T3"></typeparam>
+/// <typeparam name="T4"></typeparam>
+/// <typeparam name="T5"></typeparam>
     public sealed class Command<T1, T2, T3, T4, T5> : CommandBase
     {
        
@@ -308,7 +334,15 @@ namespace MATSys.Commands
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5! };
         }
     }
-
+/// <summary>
+/// Command object with 6 parameters
+/// </summary>
+/// <typeparam name="T1"></typeparam>
+/// <typeparam name="T2"></typeparam>
+/// <typeparam name="T3"></typeparam>
+/// <typeparam name="T4"></typeparam>
+/// <typeparam name="T5"></typeparam>
+/// <typeparam name="T6"></typeparam>
     public sealed class Command<T1, T2, T3, T4, T5, T6> : CommandBase
     {
         
@@ -322,12 +356,19 @@ namespace MATSys.Commands
 
         public override object[]? GetParameters()
         {
-#pragma warning disable CS8601 // Possible null reference assignment.
             return new object[] { Parameter.Item1, Parameter.Item2, Parameter.Item3, Parameter.Item4, Parameter.Item5, Parameter.Item6 };
-#pragma warning restore CS8601 // Possible null reference assignment.
         }
     }
-
+/// <summary>
+/// Command object with 7 parameters
+/// </summary>
+/// <typeparam name="T1"></typeparam>
+/// <typeparam name="T2"></typeparam>
+/// <typeparam name="T3"></typeparam>
+/// <typeparam name="T4"></typeparam>
+/// <typeparam name="T5"></typeparam>
+/// <typeparam name="T6"></typeparam>
+/// <typeparam name="T7"></typeparam>
     public sealed class Command<T1, T2, T3, T4, T5, T6, T7> : CommandBase
     {
         
