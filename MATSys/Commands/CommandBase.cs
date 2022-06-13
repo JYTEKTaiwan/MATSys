@@ -1,7 +1,7 @@
 ﻿//using MACOs.JY.ActorFramework.Core.Devices;
 using Newtonsoft.Json;
 using System.Reflection;
-using System.Text;
+using System.Text;  
 
 namespace MATSys.Commands
 {
@@ -45,13 +45,17 @@ namespace MATSys.Commands
         {
 
             StringBuilder sb=new StringBuilder();
-            foreach (var item in GetParameters())
+            var param=GetParameters();
+            if  (param!=null)
             {
-                sb.Append($"{item},");
-            }
-            var len=sb.Length;
-            sb.Remove(len-1,1);
-            var str=$"[{MethodName}]: {sb.ToString()}";           
+                foreach (var item in GetParameters())
+                {
+                    sb.Append($"{item},");
+                }
+                var len=sb.Length;
+                sb.Remove(len-1,1);
+            }            
+            return $"[{MethodName}]: {sb.ToString()}";           
         }
 
 
