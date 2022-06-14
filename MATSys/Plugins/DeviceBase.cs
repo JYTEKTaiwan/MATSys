@@ -20,8 +20,9 @@ namespace MATSys.Plugins
         private readonly ICommandServer _server;
         private readonly IDataRecorder _dataRecorder;
         private readonly IDataBus _dataBus;
-        public volatile bool IsRunning = false;
+        public volatile bool isRunning = false;
 
+        public bool IsRunning=>isRunning;
         public event IDevice.NewDataReady? OnDataReady;
 
         ILogger IDevice.Logger => _logger;
