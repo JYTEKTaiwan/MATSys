@@ -16,7 +16,7 @@ namespace MATSys.Plugins
         private const string key_server = "CommandServer";
 
         public const string cmd_notFound = "NOTFOUND";
-
+        public const string cmd_execError = "EXEC_ERROR";
         private readonly Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
         private readonly ILogger _logger;
         private readonly ICommandServer _server;
@@ -222,24 +222,40 @@ namespace MATSys.Plugins
 
         public string Execute(ICommand cmd)
         {
-            try
+            if (methods.ContainsKey(cmd.MethodName))
             {
-                if (methods.ContainsKey(cmd.MethodName))
+                var method = methods[cmd.MethodName];
+                try
                 {
-                    var method = methods[cmd.MethodName];
                     var result = method.Invoke(this, cmd.GetParameters())!;
                     return cmd.ConvertResultToString(result)!;
                 }
-                else
+                catch (Exception ex)
                 {
-                    return $"{cmd_notFound}: [{cmd.MethodName}]";
+                    bool check=ex is TargetException |ex is ArgumentException|
+                    ex is TargetParameterCountException| ex is MethodAccessException| ex is InvalidOperationException|
+                    ex is NotSupportedException;
+                    if (check)
+                    {
+                        //exceptio from Invoke method
+                        _logger.Warn(ex);
+                        return $"{cmd_execError}: [{ex}]";
+                    }
+                    else 
+                    {
+                        //custom class error, use inner error
+                        _logger.Warn(ex.InnerException);
+                        return $"{cmd_execError}: [{ex.InnerException}]";
+                    }
+                   
                 }
 
             }
-            catch (Exception ex)
+            else
             {
-                _logger.Error(ex);
-                throw new Exception($"Execute command failed", ex);
+                var res=$"{cmd_notFound}: [{cmd.MethodName}]";
+                 _logger.Warn(res);
+                 return res;
             }
         }
 
