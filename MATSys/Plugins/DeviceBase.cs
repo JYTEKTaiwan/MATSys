@@ -20,7 +20,7 @@ namespace MATSys.Plugins
         private readonly ICommandServer _server;
         private readonly IDataRecorder _dataRecorder;
         private readonly IDataBus _dataBus;
-        private volatile bool isRunning = false;
+        public volatile bool IsRunning = false;
 
         public event IDevice.NewDataReady? OnDataReady;
 
@@ -151,7 +151,7 @@ namespace MATSys.Plugins
 
         public virtual Task StartServiceAsync(CancellationToken token)
         {
-            if (!isRunning)
+            if (!IsRunning)
             {
                 return Task.Run(() =>
                 {
@@ -187,7 +187,7 @@ namespace MATSys.Plugins
         {
             try
             {
-                if (isRunning)
+                if (IsRunning)
                 {
                     _logger.Trace("Stops the CommandStream");
                     _server.StopService();
