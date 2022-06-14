@@ -11,8 +11,7 @@
 		<Company>JYTEK TAIWAN CORP.</Company>
 		<Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
 		<PackageIcon>JYTek.png</PackageIcon>
-		<AssemblyVersion>1.0.*</AssemblyVersion>
-		<FileVersion>1.0.*</FileVersion>
+		<AssemblyVersion>1.0.*</AssemblyVersion>		
 		<RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/tree/master/MATSys-tool</RepositoryUrl>
 		<LangVersion>10.0</LangVersion>
 		<Deterministic>False</Deterministic>
