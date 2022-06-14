@@ -47,7 +47,7 @@ namespace MATSys.Commands
             var param=GetParameters();
             if  (param!=null)
             {
-                foreach (var item in GetParameters())
+                foreach (var item in param)
                 {
                     sb.Append($"{item},");
                 }
@@ -355,7 +355,7 @@ namespace MATSys.Commands
 
         public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1, Parameter.Item2, Parameter.Item3, Parameter.Item4, Parameter.Item5, Parameter.Item6 };
+            return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5!, Parameter.Item6! };
         }
     }
 /// <summary>
