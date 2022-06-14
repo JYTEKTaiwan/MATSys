@@ -54,20 +54,21 @@ namespace MATSys.Factories
             var searchKey = kvPair.Key.Contains(':') ? kvPair.Key.Split(':')[0] : kvPair.Key;
             var info = new DeviceInformation();
             string libFolder, modFolder = "";
+            string baseFolder=AppDomain.CurrentDomain.BaseDirectory;
 
             //load library folder path from configuration, if not,  use .\libs\
             var temp = configuration.GetValue<string>("LibrariesFolder");
-            libFolder = string.IsNullOrEmpty(temp) ? @".\libs\" : temp;
+            libFolder = string.IsNullOrEmpty(temp) ? Path.Combine(baseFolder,@"libs") : temp;
 
             //loadmodules folder path from configuration, if not,  use .\modules\
             var tempRoot = configuration.GetValue<string>("ModulesFolder");
-            modFolder = string.IsNullOrEmpty(tempRoot) ? @".\modules\" : tempRoot;
+            modFolder = string.IsNullOrEmpty(tempRoot) ? Path.Combine(baseFolder,@"modules") : tempRoot;
 
             bool isModFound = false;
-            foreach (var item in Directory.GetFiles(modFolder, "*.dll"))
+            foreach (var item in Directory.GetFiles(Path.GetFullPath(modFolder), "*.dll"))
             {
-                var path = Path.GetFullPath(item);
-                var types = Assembly.LoadFile(path).GetTypes().Where
+
+                var types = Assembly.LoadFile(item).GetTypes().Where
                     (x => x.Name == searchKey && x.GetInterface(typeof(IDevice).FullName!) != null);
                 if (types.Count() > 0)
                 {

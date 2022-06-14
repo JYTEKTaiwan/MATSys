@@ -28,7 +28,7 @@ namespace MATSys.Plugins
 
         public void Load(IConfigurationSection section)
         {
-            _logger.Info("DefaultDataRecorder is initiated");
+            _logger.Info($"{nameof(EmptyDataRecorder)} is initiated");
         }
     }
 }

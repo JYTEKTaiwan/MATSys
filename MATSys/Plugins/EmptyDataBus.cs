@@ -17,7 +17,7 @@ namespace MATSys.Plugins
 
         public void Load(IConfigurationSection section)
         {
-            _logger.Info("DefaultDataBus is initiated");
+            _logger.Info($"{nameof(EmptyDataBus)} is initiated");
         }
 
         public void Publish(object data)

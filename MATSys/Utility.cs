@@ -29,6 +29,8 @@ namespace MATSys
 
             internal static ModuleContext Parse<TInterface>(IConfiguration configuration, string key) where TInterface : IModule
             {
+                 string baseFolder=AppDomain.CurrentDomain.BaseDirectory;
+
                 var context = new ModuleContext();
                 context.SectionKey = key;
                 context.Configuration = configuration;
@@ -36,11 +38,11 @@ namespace MATSys
 
                 //load library folder path from configuration, if not,  use .\libs\
                 var temp = configuration.GetValue<string>("LibrariesFolder");
-                context.LibrariesFolder = string.IsNullOrEmpty(temp) ? @".\libs\" : temp;
+                context.LibrariesFolder = string.IsNullOrEmpty(temp) ? Path.Combine(baseFolder,"libs") : temp;
 
                 //loadmodules folder path from configuration, if not,  use .\modules\
                 var tempRoot = configuration.GetValue<string>("ModulesFolder");
-                context.ModulesFolder = string.IsNullOrEmpty(tempRoot) ? @".\modules\" : tempRoot;
+                context.ModulesFolder = string.IsNullOrEmpty(tempRoot) ? Path.Combine(baseFolder,"modules") : tempRoot;
 
                 //Find all assemblies inherited from IDataRecorder
                 foreach (var item in Directory.GetFiles(context.ModulesFolder, "*.dll"))
