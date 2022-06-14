@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using NetMQ;
 using Newtonsoft.Json;
 
+Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
 Console.WriteLine("Hello, World!");
 var hub = DevicesHub.Instance;
 hub.Start();
@@ -18,7 +19,7 @@ foreach (var item in hub.Devices)
         Console.WriteLine(cmd);
     }
 }
-Console.ReadKey();
+Console.ReadLine();
 var sub = new NetMQ.Sockets.SubscriberSocket();
 sub.Connect("inproc://127.0.0.1:12345");
 sub.Subscribe("AA");
@@ -41,7 +42,7 @@ for (int i = 0; i < 10; i++)
     //Console.WriteLine($"{a}");
 }
 Console.WriteLine("PRESS ANY KEY TO STOP");
-Console.ReadKey();
+Console.ReadLine();
 
 hub.Stop();
 
