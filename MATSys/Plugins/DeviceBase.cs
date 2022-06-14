@@ -15,6 +15,8 @@ namespace MATSys.Plugins
         private const string key_publisher = "DataBus";
         private const string key_server = "CommandServer";
 
+        public const string cmd_notFound = "NOTFOUND";
+
         private readonly Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
         private readonly ILogger _logger;
         private readonly ICommandServer _server;
@@ -132,16 +134,24 @@ namespace MATSys.Plugins
                 _logger.Trace($"OnDataReady event fired");
                 _logger.Debug($"New command object string is received: {commandObjectInJson}");
                 var parsedName = commandObjectInJson.Split(new string[] { "MethodName\"" }, StringSplitOptions.RemoveEmptyEntries)[1].Split('\"')[1];
-                var method = methods[parsedName];
-                var att = method.GetCustomAttribute<MATSysCommandAttribute>();
-                var cmd = JsonConvert.DeserializeObject(commandObjectInJson, att!.CommandType) as ICommand;
-                _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
+                if (methods.ContainsKey(parsedName))
+                {
+                    var method = methods[parsedName];
+                    var att = method.GetCustomAttribute<MATSysCommandAttribute>();
+                    var cmd = JsonConvert.DeserializeObject(commandObjectInJson, att!.CommandType) as ICommand;
+                    _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
 
-                answer = Execute(cmd);
+                    answer = Execute(cmd);
 
-                _logger.Debug($"Command object execution completed with return value {answer}");
-                _logger.Info($"Command [{cmd.MethodName}] is executed successfully");
-                return answer;
+                    _logger.Debug($"Command object execution completed with return value {answer}");
+                    _logger.Info($"Command [{cmd.MethodName}] is executed successfully");
+                    return answer;
+                }
+                else
+                {
+                    return $"{cmd_notFound}:[{parsedName}]";
+                }
+
             }
             catch (Exception ex)
             {
@@ -214,9 +224,17 @@ namespace MATSys.Plugins
         {
             try
             {
-                var method = methods[cmd.MethodName];
-                var result = method.Invoke(this, cmd.GetParameters())!;
-                return cmd.ConvertResultToString(result)!;
+                if (methods.ContainsKey(cmd.MethodName))
+                {
+                    var method = methods[cmd.MethodName];
+                    var result = method.Invoke(this, cmd.GetParameters())!;
+                    return cmd.ConvertResultToString(result)!;
+                }
+                else
+                {
+                    return $"{cmd_notFound}: [{cmd.MethodName}]";
+                }
+
             }
             catch (Exception ex)
             {
