@@ -22,14 +22,14 @@ namespace MATSys.Factories
     }
     internal sealed class DataRecorderContext
     {
-        public const string TypePrefix = "DataRecorder";
-        public const string SectionKey = "DataRecorderFactory";
+        private const string TypePrefix = "DataRecorder";
+        private const string SectionKey = "DataRecorderFactory";
+        private Type DefaultType { get; } = typeof(EmptyDataRecorder);
         public List<Type> Types { get; } = new List<Type>();
         public IConfiguration? Configuration { get; }
         public string ModulesFolder { get; } = @".\modules\";
         public string LibrariesFolder { get; } = @".\libs\";
-        private Type DefaultType { get; } = typeof(EmptyDataRecorder);
-
+        
         private static Lazy<DataRecorderContext> lazy = new Lazy<DataRecorderContext>();
 
         public static DataRecorderContext Instance => lazy.Value;
@@ -109,7 +109,7 @@ namespace MATSys.Factories
                         return CreateAndLoadInstance(DefaultType, section);
                     }
                     else
-                    {
+                    {                        
                         t = Types.Find(x => x.Name.ToLower() == key)!;
                     }
                 }
