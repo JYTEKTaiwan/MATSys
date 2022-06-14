@@ -68,13 +68,41 @@ namespace MATSys.Plugins
             Name = $"{this.GetType().Name}_{this.GetHashCode().ToString("X2")}";
             _logger = NLog.LogManager.GetLogger(Name);
 
-            _dataRecorder = recorder;
-            _logger.Trace($"{_dataRecorder.Name} is injected");
-            _dataBus = bus;
+            if (recorder == null)
+            {
+                _dataRecorder = new EmptyDataRecorder();
+                _logger.Trace($"Null reference is detected, {_dataRecorder.Name} is injected");
+            }
+            else
+            {
+                _dataRecorder = recorder;
+                _logger.Trace($"{_dataRecorder.Name} is injected");
+            }
+
+            if (bus == null)
+            {
+                _dataBus = new EmptyDataBus();
+                _logger.Trace($"Null reference is detected, {_dataBus.Name} is injected");
+            }
+            else
+            {
+                _dataBus = bus;
+                _logger.Trace($"{_dataBus.Name} is injected");
+            }
+
             _dataBus.OnNewDataReadyEvent += NewDataReady;
-            _logger.Trace($"{_dataBus.Name} is injected");
-            _server = server;
-            _logger.Trace($"{_server.Name} is injected");
+
+            if (server == null)
+            {
+                _server = new EmptyCommandServer();
+                _logger.Trace($"Null reference is detected, {_server.Name} is injected");
+            }
+            else
+            {
+                _server = server;
+                _logger.Trace($"{_server.Name} is injected");
+            }
+
             _server.OnCommandReady += OnCommandDataReady; ;
             methods = ParseSupportedMethods();
             _logger.Info($"{Name} base class initialization is completed");
