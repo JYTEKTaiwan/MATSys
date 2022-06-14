@@ -22,7 +22,7 @@ namespace MATSys.Plugins
         private readonly IDataBus _dataBus;
         public volatile bool isRunning = false;
 
-        public bool IsRunning=>isRunning;
+        public bool IsRunning => isRunning;
         public event IDevice.NewDataReady? OnDataReady;
 
         ILogger IDevice.Logger => _logger;
@@ -152,7 +152,7 @@ namespace MATSys.Plugins
 
         public virtual Task StartServiceAsync(CancellationToken token)
         {
-            if (!IsRunning)
+            if (!isRunning)
             {
                 return Task.Run(() =>
                 {
@@ -168,6 +168,7 @@ namespace MATSys.Plugins
                         var t3 = _server.StartServiceAsync(token); ;
 
                         Task.WaitAll(t1, t2, t3);
+                        isRunning = true;
 
                         _logger.Info("Starts service");
                     }
@@ -188,7 +189,7 @@ namespace MATSys.Plugins
         {
             try
             {
-                if (IsRunning)
+                if (isRunning)
                 {
                     _logger.Trace("Stops the CommandStream");
                     _server.StopService();
@@ -198,7 +199,7 @@ namespace MATSys.Plugins
 
                     _logger.Trace("Stops the Publisher");
                     _dataBus.StopService();
-
+                    isRunning = false;
                     _logger.Info("Stops service");
                 }
             }
