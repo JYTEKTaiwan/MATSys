@@ -20,6 +20,7 @@ namespace MATSys.Plugins
         private readonly ICommandServer _server;
         private readonly IDataRecorder _dataRecorder;
         private readonly IDataBus _dataBus;
+        private volatile bool isRunning = false;
 
         public event IDevice.NewDataReady? OnDataReady;
 
@@ -150,45 +151,55 @@ namespace MATSys.Plugins
 
         public virtual Task StartServiceAsync(CancellationToken token)
         {
-            return Task.Run(() =>
+            if (!isRunning)
             {
-                try
+                return Task.Run(() =>
                 {
-                    _logger.Trace("Starts the DataRecorder");
-                    var t1 = _dataRecorder.StartServiceAsync(token); ;
+                    try
+                    {
+                        _logger.Trace("Starts the DataRecorder");
+                        var t1 = _dataRecorder.StartServiceAsync(token); ;
 
-                    _logger.Trace("Starts the Publisher");
-                    var t2 = _dataBus.StartServiceAsync(token); ;
+                        _logger.Trace("Starts the Publisher");
+                        var t2 = _dataBus.StartServiceAsync(token); ;
 
-                    _logger.Trace("Starts the CommandServer");
-                    var t3 = _server.StartServiceAsync(token); ;
+                        _logger.Trace("Starts the CommandServer");
+                        var t3 = _server.StartServiceAsync(token); ;
 
-                    Task.WaitAll(t1, t2, t3);
+                        Task.WaitAll(t1, t2, t3);
 
-                    _logger.Info("Starts service");
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error(ex);
-                    throw new Exception($"RunAsync failed", ex);
-                }
-            });
+                        _logger.Info("Starts service");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Error(ex);
+                        throw new Exception($"RunAsync failed", ex);
+                    }
+                });
+            }
+            else
+            {
+                return Task.CompletedTask;
+            }
         }
 
         public virtual void StopService()
         {
             try
             {
-                _logger.Trace("Stops the CommandStream");
-                _server.StopService();
+                if (isRunning)
+                {
+                    _logger.Trace("Stops the CommandStream");
+                    _server.StopService();
 
-                _logger.Trace("Stops the DataRecorder");
-                _dataRecorder.StopService();
+                    _logger.Trace("Stops the DataRecorder");
+                    _dataRecorder.StopService();
 
-                _logger.Trace("Stops the Publisher");
-                _dataBus.StopService();
+                    _logger.Trace("Stops the Publisher");
+                    _dataBus.StopService();
 
-                _logger.Info("Stops service");
+                    _logger.Info("Stops service");
+                }
             }
             catch (Exception ex)
             {
