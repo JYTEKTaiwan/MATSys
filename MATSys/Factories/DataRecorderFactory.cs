@@ -56,10 +56,10 @@ namespace MATSys.Factories
             //loadmodules folder path from configuration, if not,  use .\modules\
             var tempRoot = config.GetValue<string>("ModulesFolder");
             ModulesFolder = string.IsNullOrEmpty(tempRoot) ? Path.Combine(baseFolder, "modules") : tempRoot;
-
+            var ff = Path.GetFullPath(ModulesFolder);
             //Find all assemblies inherited from IDataRecorder
             foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
-            {                
+            {
                 var types = Assembly.LoadFile(item).GetTypes().Where
                     (x => x.GetInterface(typeof(IDataRecorder).FullName!) != null);
                 Types.AddRange(types);
