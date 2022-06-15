@@ -8,7 +8,7 @@ namespace MATSys.Factories
     {
         public CommandServerFactory(IConfiguration configuration)
         {
-            CommandServerContext.GetInstance(configuration);
+            CommandServerContext.Configure(configuration);
             //Register assembly resolve event(in case that dynamically loaded assembly had dependent issue)
             AppDomain.CurrentDomain.AssemblyResolve += CommandServerContext.Instance.AssemblyResolve;
         }
@@ -32,13 +32,12 @@ namespace MATSys.Factories
 
         public static CommandServerContext Instance => lazy.Value;
 
-        public static CommandServerContext GetInstance(IConfiguration config)
+        public static void Configure(IConfiguration config)
         {
             if (!lazy.IsValueCreated)
             {
                 lazy = new Lazy<CommandServerContext>(() => new CommandServerContext(config));
-            }
-            return lazy.Value;
+            }            
         }
 
         private CommandServerContext(IConfiguration config)
