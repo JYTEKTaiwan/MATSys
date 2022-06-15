@@ -58,10 +58,9 @@ namespace MATSys.Factories
             ModulesFolder = string.IsNullOrEmpty(tempRoot) ? Path.Combine(baseFolder, "modules") : tempRoot;
 
             //Find all assemblies inherited from IDataRecorder
-            foreach (var item in Directory.GetFiles(ModulesFolder, "*.dll"))
-            {
-                var p = Path.GetFullPath(item);
-                var types = Assembly.LoadFile(p).GetTypes().Where
+            foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
+            {                
+                var types = Assembly.LoadFile(item).GetTypes().Where
                     (x => x.GetInterface(typeof(IDataRecorder).FullName!) != null);
                 Types.AddRange(types);
             }
