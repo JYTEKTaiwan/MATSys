@@ -15,15 +15,9 @@ namespace MATSys.Factories
             AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
             _services = services;
             _config = services.GetRequiredService<IConfiguration>();
-            var pairs = _config.GetSection("Devices").AsEnumerable(true).Where(x => x.Value != null);
-            foreach (var item in pairs)
-            {
-                var info = Parse(_config, item);
-                if (!string.IsNullOrEmpty(info.Name))
-                {
-                    DeviceInfos.Add(info);
-                }
-            }
+            DeviceFactoryContext.Configure(_config);
+            DeviceInfos = DeviceFactoryContext.Instance.DeviceInfos;
+
         }
 
         private Assembly? CurrentDomain_AssemblyResolve(object? sender, ResolveEventArgs args)
@@ -48,21 +42,72 @@ namespace MATSys.Factories
         {
             return (IDevice)Activator.CreateInstance(info.DeviceType, new object[] { _services, info.Name })!;
         }
+    }
 
+    public struct DeviceInformation
+    {
+        public Type DeviceType { get; }
+        public string Name { get; }
+
+        public DeviceInformation(Type deviceType, string name)
+        {
+            DeviceType = deviceType;
+            Name = name;
+        }
+
+        public static DeviceInformation Empty => new DeviceInformation(null, "");
+    }
+
+    internal sealed class DeviceFactoryContext
+    {
+        private const string TypePrefix = "DataBus";
+        private const string SectionKey = "DataBusFactory";
+        public string ModulesFolder { get; } = @".\modules\";
+        public string LibrariesFolder { get; } = @".\libs\";
+        public List<DeviceInformation> DeviceInfos { get; } = new List<DeviceInformation>();
+        private static Lazy<DeviceFactoryContext> lazy = new Lazy<DeviceFactoryContext>();
+
+        public static DeviceFactoryContext Instance => lazy.Value;
+
+        public static void Configure(IConfiguration config)
+        {
+            if (!lazy.IsValueCreated)
+            {
+                lazy = new Lazy<DeviceFactoryContext>(() => new DeviceFactoryContext(config));
+            }
+        }
+
+        private DeviceFactoryContext(IConfiguration config)
+        {
+            if (config.GetSection("Devices").Exists())
+            {
+                var pairs = config.GetSection("Devices").AsEnumerable(true).Where(x => x.Value != null);
+                foreach (var item in pairs)
+                {
+                    var info = Parse(config, item);
+                    if (!string.IsNullOrEmpty(info.Name))
+                    {
+                        DeviceInfos.Add(info);
+                    }
+                }
+            }
+        }
         private DeviceInformation Parse(IConfiguration configuration, KeyValuePair<string, string> kvPair)
         {
             var searchKey = kvPair.Key.Contains(':') ? kvPair.Key.Split(':')[0] : kvPair.Key;
-            var info = new DeviceInformation();
+
+            var info = DeviceInformation.Empty;
+
             string libFolder, modFolder = "";
-            string baseFolder=AppDomain.CurrentDomain.BaseDirectory;
+            string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
 
             //load library folder path from configuration, if not,  use .\libs\
             var temp = configuration.GetValue<string>("LibrariesFolder");
-            libFolder = string.IsNullOrEmpty(temp) ? Path.Combine(baseFolder,@"libs") : temp;
+            libFolder = string.IsNullOrEmpty(temp) ? Path.Combine(baseFolder, @"libs") : temp;
 
-            //loadmodules folder path from configuration, if not,  use .\modules\
+            //load modules folder path from configuration, if not,  use .\modules\
             var tempRoot = configuration.GetValue<string>("ModulesFolder");
-            modFolder = string.IsNullOrEmpty(tempRoot) ? Path.Combine(baseFolder,@"modules") : tempRoot;
+            modFolder = string.IsNullOrEmpty(tempRoot) ? Path.Combine(baseFolder, @"modules") : tempRoot;
 
             bool isModFound = false;
             foreach (var item in Directory.GetFiles(Path.GetFullPath(modFolder), "*.dll"))
@@ -102,19 +147,7 @@ namespace MATSys.Factories
             }
             return isModFound ? info : DeviceInformation.Empty;
         }
+
     }
 
-    public struct DeviceInformation
-    {
-        public Type DeviceType { get; }
-        public string Name { get; }
-
-        public DeviceInformation(Type deviceType, string name)
-        {
-            DeviceType = deviceType;
-            Name = name;
-        }
-
-        public static DeviceInformation Empty => new DeviceInformation(Type.EmptyTypes[0], "");
-    }
 }
