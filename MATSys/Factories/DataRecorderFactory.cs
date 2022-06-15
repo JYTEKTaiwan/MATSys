@@ -8,7 +8,7 @@ namespace MATSys.Factories
     {
         public DataRecorderFactory(IConfiguration configuration)
         {
-            DataRecorderContext.GetInstance(configuration);
+            DataRecorderContext.Configure(configuration);
             //Register assembly resolve event(in case that dynamically loaded assembly had dependent issue)
             AppDomain.CurrentDomain.AssemblyResolve += DataRecorderContext.Instance.AssemblyResolve;
         }
@@ -29,18 +29,17 @@ namespace MATSys.Factories
         public IConfiguration? Configuration { get; }
         public string ModulesFolder { get; } = @".\modules\";
         public string LibrariesFolder { get; } = @".\libs\";
-        
+
         private static Lazy<DataRecorderContext> lazy = new Lazy<DataRecorderContext>();
 
         public static DataRecorderContext Instance => lazy.Value;
 
-        public static DataRecorderContext GetInstance(IConfiguration config)
+        public static void Configure(IConfiguration config)
         {
             if (!lazy.IsValueCreated)
             {
                 lazy = new Lazy<DataRecorderContext>(() => new DataRecorderContext(config));
             }
-            return lazy.Value;
         }
 
         private DataRecorderContext(IConfiguration config)
@@ -109,7 +108,7 @@ namespace MATSys.Factories
                         return CreateAndLoadInstance(DefaultType, section);
                     }
                     else
-                    {                        
+                    {
                         t = Types.Find(x => x.Name.ToLower() == key)!;
                     }
                 }
