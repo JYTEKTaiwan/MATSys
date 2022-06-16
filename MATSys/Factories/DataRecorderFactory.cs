@@ -15,7 +15,15 @@ namespace MATSys.Factories
 
         public IDataRecorder CreateRecorder(IConfigurationSection section)
         {
-            return DataRecorderContext.Instance.CreateInstance(section);
+            try
+            {
+                return DataRecorderContext.Instance.CreateInstance(section);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
 
 
@@ -74,18 +82,25 @@ namespace MATSys.Factories
             var tempRoot = config.GetValue<string>("ModulesFolder");
             ModulesFolder = string.IsNullOrEmpty(tempRoot) ? Path.Combine(baseFolder, "modules") : tempRoot;
 
-            //Find all assemblies inherited from IDataRecorder
-            foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
+            try
             {
-                var assem = Assembly.LoadFile(item);
-                //load dependent assemblies
-                foreach (var dependent in assem.GetReferencedAssemblies())
+                //Find all assemblies inherited from IDataRecorder
+                foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
                 {
-                    Assembly.Load(dependent);
+                    var assem = Assembly.LoadFile(item);
+                    //load dependent assemblies
+                    foreach (var dependent in assem.GetReferencedAssemblies())
+                    {
+                        Assembly.Load(dependent);
+                    }
+                    var types = assem.GetTypes().Where
+                        (x => x.GetInterface(typeof(IDataRecorder).FullName!) != null);
+                    Types.AddRange(types);
                 }
-                var types = assem.GetTypes().Where
-                    (x => x.GetInterface(typeof(IDataRecorder).FullName!) != null);
-                Types.AddRange(types);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
 
         }
