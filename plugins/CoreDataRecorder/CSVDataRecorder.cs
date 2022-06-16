@@ -162,7 +162,8 @@ namespace MATSys.Plugins
             _task = Task.Run(() =>
             {
                 _localCts = new CancellationTokenSource();
-                var filename = DateTime.Now.ToString("HHmmssfff") + ".csv";
+                string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
+                var filename = Path.Combine(baseFolder,DateTime.Now.ToString("HHmmssfff") + ".csv");
                 var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
                 object? data;
                 StreamWriter streamWriter = new StreamWriter(filename);
