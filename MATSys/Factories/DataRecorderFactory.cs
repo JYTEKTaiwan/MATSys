@@ -106,8 +106,6 @@ namespace MATSys.Factories
         }
         public IDataRecorder CreateInstance(IConfigurationSection section)
         {
-            IDataRecorder obj;
-
             //check if section in the json configuration exits
             if (section.Exists())
             {

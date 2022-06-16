@@ -88,8 +88,6 @@ namespace MATSys.Factories
         }
         public ICommandServer CreateInstance(IConfigurationSection section)
         {
-            ICommandServer obj;
-
             //check if section in the json configuration exits
             if (section.Exists())
             {

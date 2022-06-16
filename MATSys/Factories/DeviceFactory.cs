@@ -41,7 +41,7 @@ namespace MATSys.Factories
 
         public IDevice CreateDevice(DeviceInformation info)
         {
-            return (IDevice)Activator.CreateInstance(info.DeviceType, new object[] { _services, info.Name })!;
+            return (IDevice)Activator.CreateInstance(info.DeviceType!, new object[] { _services, info.Name })!;
         }
     }
 
@@ -56,7 +56,7 @@ namespace MATSys.Factories
             Name = name;
         }
 
-        public static DeviceInformation Empty => new DeviceInformation(null, "");
+        public static DeviceInformation Empty => new DeviceInformation(null!, "");
     }
 
     internal sealed class DeviceFactoryContext

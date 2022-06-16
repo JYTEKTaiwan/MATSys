@@ -89,8 +89,6 @@ namespace MATSys.Factories
         }
         public IDataBus CreateInstance(IConfigurationSection section)
         {
-            IDataBus obj;
-
             //check if section in the json configuration exits
             if (section.Exists())
             {
