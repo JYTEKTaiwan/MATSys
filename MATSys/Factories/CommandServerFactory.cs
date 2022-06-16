@@ -56,10 +56,15 @@ namespace MATSys.Factories
             ModulesFolder = string.IsNullOrEmpty(tempRoot) ? Path.Combine(baseFolder, "modules") : tempRoot;
 
             //Find all assemblies inherited from IDataRecorder
-            foreach (var item in Directory.GetFiles(ModulesFolder, "*.dll"))
+            foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
             {
-                var p = Path.GetFullPath(item);
-                var types = Assembly.LoadFile(p).GetTypes().Where
+                 var assem = Assembly.LoadFile(item);
+                //load dependent assemblies
+                foreach (var dependent in assem.GetReferencedAssemblies())
+                {
+                    Assembly.Load(dependent);
+                }
+                var types = assem.GetTypes().Where
                     (x => x.GetInterface(typeof(ICommandServer).FullName!) != null);
                 Types.AddRange(types);
             }
@@ -67,14 +72,19 @@ namespace MATSys.Factories
         }
         public Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
         {
-            string s = LibrariesFolder + args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            if (File.Exists(s))
+            string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
+            string s2 = LibrariesFolder + args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
+            if(File.Exists(s1))
             {
-                return Assembly.LoadFile(Path.GetFullPath(s));
+                return Assembly.LoadFile(Path.GetFullPath(s1));
+            }
+            else if (File.Exists(s2))
+            {
+                return Assembly.LoadFile(Path.GetFullPath(s2));
             }
             else
             {
-                throw new FileNotFoundException($"Dependent assembly not found : {args.Name}");
+                throw new FileNotFoundException($"Dependent assemaaably not found : {args.Name}");
             }
         }
         public ICommandServer CreateInstance(IConfigurationSection section)

@@ -22,8 +22,9 @@ namespace MATSys.Factories
 
         private Assembly? CurrentDomain_AssemblyResolve(object? sender, ResolveEventArgs args)
         {
+            string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
             string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            string s2 = @".\libs\" + args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
+            string s2 = Path.Combine(baseFolder,"libs",args.Name.Remove(args.Name.IndexOf(',')) + ".dll") ;
             if (File.Exists(s1))
             {
                 return Assembly.LoadFile(Path.GetFullPath(s1));
