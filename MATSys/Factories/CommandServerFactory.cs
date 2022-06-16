@@ -9,8 +9,7 @@ namespace MATSys.Factories
         public CommandServerFactory(IConfiguration configuration)
         {
             CommandServerContext.Configure(configuration);
-            //Register assembly resolve event(in case that dynamically loaded assembly had dependent issue)
-            AppDomain.CurrentDomain.AssemblyResolve += CommandServerContext.Instance.AssemblyResolve;
+            //Register assembly resolve event(in case that dynamically loaded assembly had dependent issue)            
         }
 
         public ICommandServer CreateCommandStream(IConfigurationSection section)
@@ -37,13 +36,13 @@ namespace MATSys.Factories
             if (!lazy.IsValueCreated)
             {
                 lazy = new Lazy<CommandServerContext>(() => new CommandServerContext(config));
-            }            
+            }
         }
 
         private CommandServerContext(IConfiguration config)
         {
             Configuration = config;
-
+            AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
             string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -58,7 +57,7 @@ namespace MATSys.Factories
             //Find all assemblies inherited from IDataRecorder
             foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
             {
-                 var assem = Assembly.LoadFile(item);
+                var assem = Assembly.LoadFile(item);
                 //load dependent assemblies
                 foreach (var dependent in assem.GetReferencedAssemblies())
                 {
@@ -70,11 +69,11 @@ namespace MATSys.Factories
             }
 
         }
-        public Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
+        private Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
         {
             string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            string s2 = LibrariesFolder + args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            if(File.Exists(s1))
+            string s2 = Path.Combine(LibrariesFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
+            if (File.Exists(s1))
             {
                 return Assembly.LoadFile(Path.GetFullPath(s1));
             }

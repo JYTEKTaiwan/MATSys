@@ -10,14 +10,15 @@ namespace MATSys.Factories
         {
             DataRecorderContext.Configure(configuration);
             //Register assembly resolve event(in case that dynamically loaded assembly had dependent issue)
-            AppDomain.CurrentDomain.AssemblyResolve += DataRecorderContext.Instance.AssemblyResolve;
-       
+
         }
 
         public IDataRecorder CreateRecorder(IConfigurationSection section)
         {
             return DataRecorderContext.Instance.CreateInstance(section);
         }
+
+
 
 
     }
@@ -42,9 +43,26 @@ namespace MATSys.Factories
                 lazy = new Lazy<DataRecorderContext>(() => new DataRecorderContext(config));
             }
         }
-
+        private Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
+        {
+            string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
+            string s2 = Path.Combine(LibrariesFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
+            if (File.Exists(s1))
+            {
+                return Assembly.LoadFile(Path.GetFullPath(s1));
+            }
+            else if (File.Exists(s2))
+            {
+                return Assembly.LoadFile(Path.GetFullPath(s2));
+            }
+            else
+            {
+                throw new TypeLoadException($"Dependent assemaaably not found : {args.Name}");
+            }
+        }
         private DataRecorderContext(IConfiguration config)
-        {            
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
             Configuration = config;
             string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -55,7 +73,7 @@ namespace MATSys.Factories
             //loadmodules folder path from configuration, if not,  use .\modules\
             var tempRoot = config.GetValue<string>("ModulesFolder");
             ModulesFolder = string.IsNullOrEmpty(tempRoot) ? Path.Combine(baseFolder, "modules") : tempRoot;
-            
+
             //Find all assemblies inherited from IDataRecorder
             foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
             {
@@ -70,23 +88,6 @@ namespace MATSys.Factories
                 Types.AddRange(types);
             }
 
-        }
-        public Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
-        {            
-            string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            string s2 = LibrariesFolder + args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            if(File.Exists(s1))
-            {
-                return Assembly.LoadFile(Path.GetFullPath(s1));
-            }
-            else if (File.Exists(s2))
-            {
-                return Assembly.LoadFile(Path.GetFullPath(s2));
-            }
-            else
-            {
-                throw new FileNotFoundException($"Dependent assemaaably not found : {args.Name}");
-            }
         }
         public IDataRecorder CreateInstance(IConfigurationSection section)
         {

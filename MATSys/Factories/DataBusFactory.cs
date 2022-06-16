@@ -10,7 +10,7 @@ namespace MATSys.Factories
         {
             DataBusContext.Configure(configuration);
             //Register assembly resolve event(in case that dynamically loaded assembly had dependent issue)
-            AppDomain.CurrentDomain.AssemblyResolve += DataBusContext.Instance.AssemblyResolve;
+
         }
 
         public IDataBus CreatePublisher(IConfigurationSection section)
@@ -44,7 +44,7 @@ namespace MATSys.Factories
         private DataBusContext(IConfiguration config)
         {
             Configuration = config;
-
+            AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
             string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
 
             //load library folder path from configuration, if not,  use .\libs\
@@ -70,11 +70,11 @@ namespace MATSys.Factories
             }
 
         }
-        public Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
+        private Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
         {
             string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            string s2 = LibrariesFolder + args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            if(File.Exists(s1))
+            string s2 = Path.Combine(LibrariesFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
+            if (File.Exists(s1))
             {
                 return Assembly.LoadFile(Path.GetFullPath(s1));
             }
