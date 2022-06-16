@@ -7,6 +7,7 @@ namespace UT_MATSys;
 public class UT_DataRecrderFactory
 {
     [Test]
+    [Category("DataRecorder")]
     public void CreateFromFile()
     {
         var jsonStr = @"{ ""DataRecorder"": {""Type"": ""csv""},
