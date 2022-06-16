@@ -10,7 +10,7 @@ public class UT_DataRecrderFactory
     public void CreateFromFile()
     {
         var jsonStr = @"{ ""DataRecorder"": {""Type"": ""csv""},
-        ""ModulesFolder"": ""..\\..\\..\\..\\examples\\Test\\bin\\Debug\\net6.0\\modules"",
+        ""ModulesFolder"": ""C:\\Users\\Way-Develop\\MATSys\\UT_MATSys\\bin\\Debug\\net6.0\\modules"",
         }";
         var ms = new MemoryStream(Encoding.ASCII.GetBytes(jsonStr));
         ConfigurationBuilder cb = new ConfigurationBuilder();
