@@ -21,7 +21,7 @@ public class UT_DeviceBase
     [Category("Initialize")]
     public void CreateFromNullCommandServer()
     {
-        ICommandServer server = null;
+        ICommandServer server = null!;
         IDataBus bus = new EmptyDataBus();
         IDataRecorder recorder = new EmptyDataRecorder();
         IDevice dev = new NormalDevice(server, bus, recorder);
@@ -32,7 +32,7 @@ public class UT_DeviceBase
     public void CreateFromNullDataBus()
     {
         ICommandServer server = new EmptyCommandServer();
-        IDataBus bus = null;
+        IDataBus bus = null!;
         IDataRecorder recorder = new EmptyDataRecorder();
         IDevice dev = new NormalDevice(server, bus, recorder);
         Assert.IsTrue(dev.DataBus.Name == nameof(EmptyDataBus));
@@ -43,7 +43,7 @@ public class UT_DeviceBase
     {
         ICommandServer server = new EmptyCommandServer();
         IDataBus bus = new EmptyDataBus();
-        IDataRecorder recorder = null;
+        IDataRecorder recorder = null!;
         IDevice dev = new NormalDevice(server, bus, recorder);
         Assert.IsTrue(dev.DataRecorder.Name == nameof(EmptyDataRecorder));
     }
@@ -93,7 +93,7 @@ public class UT_DeviceBase
     [Category("StartStop")]
     public void StopBeforeStart()
     {
-        IDevice dev = new NormalDevice(null, null, null);
+        IDevice dev = new NormalDevice(null!, null!, null!);
         dev.StopService();
         Assert.IsTrue(!dev.IsRunning);
     }
@@ -103,7 +103,7 @@ public class UT_DeviceBase
     public void StartMultipleTimes()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null, null, null);
+        IDevice dev = new NormalDevice(null!, null!, null!);
         dev.StartServiceAsync(cts.Token).Wait();
         dev.StartServiceAsync(cts.Token).Wait();
         Assert.IsTrue(dev.IsRunning);
@@ -113,7 +113,7 @@ public class UT_DeviceBase
     public void StopMultipleTimes()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null, null, null);
+        IDevice dev = new NormalDevice(null!, null!, null!);
         dev.StartServiceAsync(cts.Token).Wait();
         dev.StopService();
         dev.StopService();
@@ -124,7 +124,7 @@ public class UT_DeviceBase
     public void ExecuteInString()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null, null, null);
+        IDevice dev = new NormalDevice(null!, null!, null!);
         dev.StartServiceAsync(cts.Token).Wait();
         var res = dev.Execute(Newtonsoft.Json.JsonConvert.SerializeObject(CommandBase.Create("Hi")));
         dev.StopService();
@@ -135,7 +135,7 @@ public class UT_DeviceBase
     public void ExecuteInCommand()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null, null, null);
+        IDevice dev = new NormalDevice(null!, null!, null!);
         dev.StartServiceAsync(cts.Token).Wait();
         var res = dev.Execute(CommandBase.Create("Hi"));
         dev.StopService();
@@ -146,7 +146,7 @@ public class UT_DeviceBase
     public void ExecuteWhenCommandNotFound()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null, null, null);
+        IDevice dev = new NormalDevice(null!, null!, null!);
         dev.StartServiceAsync(cts.Token).Wait();
         var res = dev.Execute(CommandBase.Create("HO"));
         dev.StopService();
@@ -157,7 +157,7 @@ public class UT_DeviceBase
     public void ExecuteWhenCommandNotFoundInString()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null, null, null);
+        IDevice dev = new NormalDevice(null!, null!, null!);
         dev.StartServiceAsync(cts.Token).Wait();
         var res = dev.Execute(Newtonsoft.Json.JsonConvert.SerializeObject(CommandBase.Create("HO")));
         dev.StopService();
@@ -168,7 +168,7 @@ public class UT_DeviceBase
     public void ExecuteThrowExceptionInMethod()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null, null, null);
+        IDevice dev = new NormalDevice(null!, null!, null!);
         dev.StartServiceAsync(cts.Token).Wait();
         var res = dev.Execute(CommandBase.Create("Exception"));
         dev.StopService();
@@ -179,7 +179,7 @@ public class UT_DeviceBase
     public void ExecuteWrongArguments()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null, null, null);
+        IDevice dev = new NormalDevice(null!, null!, null!);
         dev.StartServiceAsync(cts.Token).Wait();
         var res = dev.Execute(CommandBase.Create("WrongArgs", 1));
         dev.StopService();

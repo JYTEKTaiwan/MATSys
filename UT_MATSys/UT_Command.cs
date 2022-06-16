@@ -22,7 +22,7 @@ public class UT_Command
         var cmd = CommandBase.Create("Test", 1, 2.0);
         var str = Newtonsoft.Json.JsonConvert.SerializeObject(cmd);
         var res = Newtonsoft.Json.JsonConvert.DeserializeObject(str, cmd.GetType()) as Command<int, double>;
-        Assert.IsTrue(res.Parameter.Item1 == 1 && res.Parameter.Item2 == 2.0);
+        Assert.IsTrue(res!.Parameter.Item1 == 1 && res.Parameter.Item2 == 2.0);
     }
 
     [Test]
@@ -31,7 +31,7 @@ public class UT_Command
         var cmd = CommandBase.Create("Test", 1, new Test(20));
         var str = Newtonsoft.Json.JsonConvert.SerializeObject(cmd);
         var res = Newtonsoft.Json.JsonConvert.DeserializeObject(str, cmd.GetType()) as Command<int, Test>;
-        Assert.IsTrue(res.Parameter.Item1 == 1 && res.Parameter.Item2.A == 20);
+        Assert.IsTrue(res!.Parameter.Item1 == 1 && res.Parameter.Item2.A == 20);
     }
     private class Test
     {
