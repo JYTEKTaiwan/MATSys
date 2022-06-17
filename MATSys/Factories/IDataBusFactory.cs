@@ -4,6 +4,6 @@ namespace MATSys.Factories
 {
     public interface IDataBusFactory
     {
-        IDataBus CreatePublisher(IConfigurationSection section);
+        IDataBus CreateDataBus(IConfigurationSection section);
     }
 }

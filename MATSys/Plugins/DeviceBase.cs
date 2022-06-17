@@ -51,7 +51,7 @@ namespace MATSys.Plugins
                 Load(section);
                 _dataRecorder = services.GetRequiredService<IDataRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
                 _logger.Trace($"{_dataRecorder.Name} is injected");
-                _dataBus = services.GetRequiredService<IDataBusFactory>().CreatePublisher(section.GetSection(key_publisher));
+                _dataBus = services.GetRequiredService<IDataBusFactory>().CreateDataBus(section.GetSection(key_publisher));
                 _dataBus.OnNewDataReadyEvent += NewDataReady;
                 _logger.Trace($"{_dataBus.Name} is injected");
                 _server = services.GetRequiredService<ICommandServerFactory>().CreateCommandStream(section.GetSection(key_server));
