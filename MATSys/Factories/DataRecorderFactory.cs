@@ -36,7 +36,7 @@ namespace MATSys.Factories
                     }
 
                     //if key has value, search the type with the default class name. eg. xxx=>xxxDataRecorder
-                    t = Types.First(x => x.Name.ToLower() == $"{type}{prefix}".ToLower())!;
+                    t = Types.FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower())!;
                     if (t == null)
                     {
                         //cannot parse any type, use default datarecorder
@@ -63,7 +63,7 @@ namespace MATSys.Factories
         private Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
         {
             string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            string s2 = Path.Combine(loader.LibraryFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
+            string s2 = Path.Combine(loader.LibrariesFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
             if (File.Exists(s1))
             {
                 return Assembly.LoadFile(Path.GetFullPath(s1));
