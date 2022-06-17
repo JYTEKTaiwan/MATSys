@@ -17,6 +17,8 @@ namespace MATSys.Plugins
 
         public const string cmd_notFound = "NOTFOUND";
         public const string cmd_execError = "EXEC_ERROR";
+
+        private readonly DependencyLoader _loader;
         private readonly Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
         private readonly ILogger _logger;
         private readonly ICommandServer _server;
@@ -47,6 +49,9 @@ namespace MATSys.Plugins
                 LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
                 //Create internal logger using alias name
                 _logger = NLog.LogManager.GetLogger(Name);
+
+                _loader = new DependencyLoader(config);
+                AppDomain.CurrentDomain.AssemblyResolve +=AssemblyResolve;
 
                 Load(section);
                 _dataRecorder = services.GetRequiredService<IDataRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
@@ -232,8 +237,8 @@ namespace MATSys.Plugins
                 }
                 catch (Exception ex)
                 {
-                    bool check=ex is TargetException |ex is ArgumentException|
-                    ex is TargetParameterCountException| ex is MethodAccessException| ex is InvalidOperationException|
+                    bool check = ex is TargetException | ex is ArgumentException |
+                    ex is TargetParameterCountException | ex is MethodAccessException | ex is InvalidOperationException |
                     ex is NotSupportedException;
                     if (check)
                     {
@@ -241,21 +246,21 @@ namespace MATSys.Plugins
                         _logger.Warn(ex);
                         return $"{cmd_execError}: [{ex}]";
                     }
-                    else 
+                    else
                     {
                         //custom class error, use inner error
                         _logger.Warn(ex.InnerException);
                         return $"{cmd_execError}: [{ex.InnerException}]";
                     }
-                   
+
                 }
 
             }
             else
             {
-                var res=$"{cmd_notFound}: [{cmd.MethodName}]";
-                 _logger.Warn(res);
-                 return res;
+                var res = $"{cmd_notFound}: [{cmd.MethodName}]";
+                _logger.Warn(res);
+                return res;
             }
         }
 
@@ -283,5 +288,25 @@ namespace MATSys.Plugins
                 throw new Exception($"Execute command failed", ex);
             }
         }
+
+        private Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
+        {
+            string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
+            string s2 = Path.Combine(_loader.LibraryFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
+            if (File.Exists(s1))
+            {
+                return Assembly.LoadFile(Path.GetFullPath(s1));
+            }
+            else if (File.Exists(s2))
+            {
+                return Assembly.LoadFile(Path.GetFullPath(s2));
+            }
+            else
+            {
+                throw new FileLoadException($"Dependent assembly not found : {args.Name}");
+            }
+
+        }
+
     }
 }
