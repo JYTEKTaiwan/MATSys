@@ -18,7 +18,8 @@ public class UT_DataRecrderFactory
         var config = cb.AddJsonStream(ms).Build();
         ms.Close();
         var fac = new DataRecorderFactory(config);
-        var recorder = fac.CreateRecorder(config.GetSection("DataRecorder"));        
+        var recorder = fac.CreateRecorder(config.GetSection("DataRecorder"));   
+        recorder.StartServiceAsync(new CancellationToken());     
         Assert.IsTrue(recorder.Name == "CSVDataRecorder");
     }
 
