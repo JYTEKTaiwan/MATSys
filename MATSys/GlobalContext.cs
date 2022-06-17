@@ -6,16 +6,48 @@ namespace MATSys;
 
 internal class DependencyLoader
 {
-    public string ModulesFolder { get; } = AppDomain.CurrentDomain.BaseDirectory;
-    public string LibraryFolder { get; } = AppDomain.CurrentDomain.BaseDirectory;
+    private static Lazy<DependencyLoader> _lazy = new Lazy<DependencyLoader>(() => new DependencyLoader());
+    public string ModulesFolder { get; }
+    public string LibrariesFolder { get; }
+
+    public static DependencyLoader Instance => _lazy.Value;
+    private DependencyLoader()
+    {
+        var template = new DependencyInformation();
+
+        var path = "appsettings.json";
+        if (File.Exists(path))
+        {
+            var str = File.ReadAllText(path);
+            var config = Newtonsoft.Json.JsonConvert.DeserializeObject<DependencyInformation>(str);
+            //load library folder path from configuration, if not,  use .\libs\        
+            if (config != null)
+            {
+                LibrariesFolder = config.LibraryFolder;
+                ModulesFolder = config.ModulesFolder;
+            }
+            else
+            {
+
+                LibrariesFolder = template.LibraryFolder;
+                ModulesFolder = template.ModulesFolder;
+            }
+
+        }
+        else
+        {
+            LibrariesFolder = template.LibraryFolder;
+            ModulesFolder = template.ModulesFolder;
+        }
 
 
+    }
     public DependencyLoader(IConfiguration config)
     {
         var baseFolder = AppDomain.CurrentDomain.BaseDirectory;
         //load library folder path from configuration, if not,  use .\libs\
         var temp = config.GetValue<string>("LibrariesFolder");
-        LibraryFolder = string.IsNullOrEmpty(temp) ? Path.Combine(baseFolder, "libs") : temp;
+        LibrariesFolder = string.IsNullOrEmpty(temp) ? Path.Combine(baseFolder, "libs") : temp;
 
         //loadmodules folder path from configuration, if not,  use .\modules\
         var tempRoot = config.GetValue<string>("ModulesFolder");
@@ -49,7 +81,6 @@ internal class DependencyLoader
                 yield return t;
             }
         }
-
     }
     private TModule CreateAndLoadInstance<TModule>(Type defaultType, IConfigurationSection section) where TModule : IModule
     {
@@ -58,6 +89,15 @@ internal class DependencyLoader
         return obj;
     }
 
-    
+
+
+}
+
+
+
+internal class DependencyInformation
+{
+    public string ModulesFolder { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules");
+    public string LibraryFolder { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libs");
 
 }

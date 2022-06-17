@@ -16,6 +16,8 @@ namespace MATSys.Plugins
 
         public string Name => nameof(CSVDataRecorder);
 
+        public IDataRecorder.AssemblyResolve ResolveAction => throw new NotImplementedException();
+
         public void Load(IConfigurationSection section)
         {
             _config = section.Get<CSVDataRecorderConfiguration>();
@@ -114,6 +116,8 @@ namespace MATSys.Plugins
         private Task _task = Task.CompletedTask;
 
         public string Name => nameof(CSVDataRecorder);
+
+        public IDataRecorder.AssemblyResolve ResolveAction => throw new NotImplementedException();
 
         public void Load(IConfigurationSection section)
         {

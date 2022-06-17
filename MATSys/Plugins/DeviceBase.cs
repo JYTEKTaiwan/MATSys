@@ -14,10 +14,8 @@ namespace MATSys.Plugins
         private const string key_dataRecorder = "DataRecorder";
         private const string key_publisher = "DataBus";
         private const string key_server = "CommandServer";
-
         public const string cmd_notFound = "NOTFOUND";
         public const string cmd_execError = "EXEC_ERROR";
-
         private readonly DependencyLoader _loader;
         private readonly Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
         private readonly ILogger _logger;
@@ -292,7 +290,7 @@ namespace MATSys.Plugins
         private Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
         {
             string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            string s2 = Path.Combine(_loader.LibraryFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
+            string s2 = Path.Combine(_loader.LibrariesFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
             if (File.Exists(s1))
             {
                 return Assembly.LoadFile(Path.GetFullPath(s1));

@@ -1,6 +1,8 @@
 ﻿namespace MATSys
 {
-    public interface IDataRecorder : IModule
+
+
+    public interface IDataRecorder : IModule, IDynamicLoadable
     {
         /// <summary>
         /// Write data to the instance
@@ -13,6 +15,8 @@
         /// </summary>
         /// <param name="data">Data to be written</param>
         Task WriteAsync(object data);
+
+
     }
 
     public interface IDataRecorder<in T> : IDataRecorder

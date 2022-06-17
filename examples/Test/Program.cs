@@ -19,7 +19,7 @@ foreach (var item in hub.Devices)
         Console.WriteLine(cmd);
     }
 }
-Console.ReadLine();
+Console.ReadKey();
 var sub = new NetMQ.Sockets.SubscriberSocket();
 sub.Connect("inproc://127.0.0.1:12345");
 sub.Subscribe("AA");
@@ -42,10 +42,11 @@ for (int i = 0; i < 10; i++)
     //Console.WriteLine($"{a}");
 }
 Console.WriteLine("PRESS ANY KEY TO STOP");
-Console.ReadLine();
+Console.ReadKey();
 
 hub.Stop();
-
+Console.WriteLine("PRESS ANY KEY TO EXIT");
+Console.ReadKey();
 public class AnotherTest : DeviceBase
 {
     public AnotherTest(IServiceProvider services, string configurationKey) : base(services, configurationKey)

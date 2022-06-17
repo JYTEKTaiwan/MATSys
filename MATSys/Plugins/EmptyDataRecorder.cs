@@ -1,34 +1,39 @@
 ﻿using Microsoft.Extensions.Configuration;
+using CsvHelper;
+using System.Reflection;
 
 namespace MATSys.Plugins
 {
-    public sealed class EmptyDataRecorder : IDataRecorder
-    {
+    public sealed class EmptyDataRecorder : DartaRecorderBase
+    {        
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public string Name => nameof(EmptyDataRecorder);
+        public override string Name => nameof(EmptyDataRecorder);       
 
-        public void StopService()
+        public override void StopService()
         {
         }
 
-        public Task StartServiceAsync(CancellationToken token)
+        public override Task StartServiceAsync(CancellationToken token)
+        {            
+            return Task.CompletedTask;
+        }
+
+        public override void Write(object data)
+        {
+        }
+
+        public override Task WriteAsync(object data)
         {
             return Task.CompletedTask;
         }
 
-        public void Write(object data)
-        {
-        }
-
-        public Task WriteAsync(object data)
-        {
-            return Task.CompletedTask;
-        }
-
-        public void Load(IConfigurationSection section)
-        {
+        public override void Load(IConfigurationSection section)
+        {            
             _logger.Info($"{nameof(EmptyDataRecorder)} is initiated");
         }
+
+       
+        
     }
 }

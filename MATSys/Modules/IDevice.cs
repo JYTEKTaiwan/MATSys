@@ -2,6 +2,7 @@
 {
     public interface IDevice : IModule
     {
+
         delegate void NewDataReady(string jsonString);
         event NewDataReady? OnDataReady;
         IDataBus DataBus { get; }

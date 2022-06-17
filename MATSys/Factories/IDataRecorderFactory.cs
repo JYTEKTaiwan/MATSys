@@ -5,5 +5,6 @@ namespace MATSys.Factories
     public interface IDataRecorderFactory
     {
         IDataRecorder CreateRecorder(IConfigurationSection section);
+        
     }
 }
