@@ -13,9 +13,8 @@ namespace MATSys.Factories
         public IEnumerable<Type> Types { get; }
         public DataRecorderFactory(IConfiguration configuration)
         {
-            loader = new DependencyLoader(configuration);
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
-            Types = loader.ListTypes<IDataRecorder>();
+            Types = DependencyLoader.Instance.ListTypes<IDataRecorder>();
         }
 
         public IDataRecorder CreateRecorder(IConfigurationSection section)

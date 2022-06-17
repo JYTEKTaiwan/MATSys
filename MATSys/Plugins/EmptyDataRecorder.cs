@@ -1,19 +1,24 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿
+using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Plugins
 {
     public sealed class EmptyDataRecorder : DataRecorderBase
-    {        
+    {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public override string Name => nameof(EmptyDataRecorder);       
+        public override string Name => nameof(EmptyDataRecorder);
 
+        public EmptyDataRecorder()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += base.AssemblyResolve;
+        }
         public override void StopService()
         {
         }
 
         public override Task StartServiceAsync(CancellationToken token)
-        {            
+        {
             return Task.CompletedTask;
         }
 
@@ -27,11 +32,11 @@ namespace MATSys.Plugins
         }
 
         public override void Load(IConfigurationSection section)
-        {            
+        {
             _logger.Info($"{nameof(EmptyDataRecorder)} is initiated");
         }
 
-       
-        
+
+
     }
 }

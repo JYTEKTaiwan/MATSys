@@ -107,7 +107,7 @@ namespace MATSys.Plugins
         }
     }
 
-    public class CSVDataRecorder : IDataRecorder
+    public class CSVDataRecorder : DataRecorderBase
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
         private Channel<object>? _queue;
@@ -115,23 +115,24 @@ namespace MATSys.Plugins
         private CancellationTokenSource _localCts = new CancellationTokenSource();
         private Task _task = Task.CompletedTask;
 
-        public string Name => nameof(CSVDataRecorder);
-
-        public IDataRecorder.AssemblyResolve ResolveAction => throw new NotImplementedException();
-
-        public void Load(IConfigurationSection section)
+        public override string Name => nameof(CSVDataRecorder);
+        public CSVDataRecorder()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += base.AssemblyResolve;
+        }
+        public override void Load(IConfigurationSection section)
         {
             _config = section.Get<CSVDataRecorderConfiguration>();
             _queue = Channel.CreateBounded<object>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVDataRecorder initiated");
         }
 
-        public void Write(object data)
+        public override void Write(object data)
         {
             WriteAsync(data).Wait();
         }
 
-        public void StopService()
+        public override void StopService()
         {
             if (_config!.WaitForComplete)
             {
@@ -149,7 +150,7 @@ namespace MATSys.Plugins
             return t.Status == TaskStatus.RanToCompletion || t.Status == TaskStatus.Canceled || t.Status == TaskStatus.Faulted;
         }
 
-        public Task StartServiceAsync(CancellationToken token)
+        public override Task StartServiceAsync(CancellationToken token)
         {
             return Task.Run(() =>
             {
@@ -167,7 +168,7 @@ namespace MATSys.Plugins
             {
                 _localCts = new CancellationTokenSource();
                 string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
-                var filename = Path.Combine(baseFolder,DateTime.Now.ToString("HHmmssfff") + ".csv");
+                var filename = Path.Combine(baseFolder, DateTime.Now.ToString("HHmmssfff") + ".csv");
                 var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
                 object? data;
                 StreamWriter streamWriter = new StreamWriter(filename);
@@ -192,7 +193,7 @@ namespace MATSys.Plugins
             });
         }
 
-        public Task WriteAsync(object data)
+        public override Task WriteAsync(object data)
         {
             return Task.Run(() =>
             {
