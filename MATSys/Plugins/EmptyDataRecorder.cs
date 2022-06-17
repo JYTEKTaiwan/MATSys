@@ -1,10 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
-using CsvHelper;
-using System.Reflection;
 
 namespace MATSys.Plugins
 {
-    public sealed class EmptyDataRecorder : DartaRecorderBase
+    public sealed class EmptyDataRecorder : DataRecorderBase
     {        
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
