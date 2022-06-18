@@ -25,6 +25,7 @@ namespace MATSys
                     .AddSingleton<IDataRecorderFactory, DataRecorderFactory>()
                     .AddSingleton<IDataBusFactory, DataBusFactory>()
                     .AddSingleton<ICommandServerFactory, CommandServerFactory>()
+                    .AddSingleton<DependencyLoader>()
                     )
                     .ConfigureLogging(logging => logging
                     .AddNLog()
@@ -45,14 +46,15 @@ namespace MATSys
             try
             {
                 if (!isRunning)
-                {
+                {                    
                     //start the host and delay 500ms
                     host.RunAsync().Wait(500);
+                    host.Services.GetService<DependencyLoader>();
                     var devFactory = host.Services.GetRequiredService<IDeviceFactory>() as DeviceFactory;
                     foreach (var item in devFactory!.DeviceInfos)
                     {
                         var dev = devFactory.CreateDevice(item);
-                        dev!.StartServiceAsync(cts.Token);
+                        dev!.StartService(cts.Token);
                         Devices.Add(dev);
                     }
                     isRunning = true;
