@@ -16,8 +16,6 @@ namespace MATSys.Plugins
 
         public string Name => nameof(CSVDataRecorder);
 
-        public IDataRecorder.AssemblyResolve ResolveAction => throw new NotImplementedException();
-
         public void Load(IConfigurationSection section)
         {
             _config = section.Get<CSVDataRecorderConfiguration>();
@@ -41,47 +39,39 @@ namespace MATSys.Plugins
             return t.Status == TaskStatus.RanToCompletion || t.Status == TaskStatus.Canceled || t.Status == TaskStatus.Faulted;
         }
 
-        public Task StartServiceAsync(CancellationToken token)
+        public void StartService(CancellationToken token)
         {
             _logger.Trace("Prepare to run");
+            _localCts = new CancellationTokenSource();
+            var filename = DateTime.Now.ToString("HHmmssfff") + ".csv";
+            _queue = Channel.CreateBounded<T>(new BoundedChannelOptions(2000) { FullMode = BoundedChannelFullMode.DropOldest });
+            var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
+            T? data;
+            StreamWriter streamWriter = new StreamWriter(filename);
+            CsvWriter writer = new CsvWriter(streamWriter, System.Globalization.CultureInfo.InvariantCulture);
+            writer.WriteHeader<T>();
+            writer.NextRecord();
 
-            if (TaskStatusCheck(_task))
+            Task.Run(() =>
             {
-                _task = Task.Run(() =>
+                while (!_linkedCts.IsCancellationRequested)
                 {
-                    _localCts = new CancellationTokenSource();
-                    var filename = DateTime.Now.ToString("HHmmssfff") + ".csv";
-                    _queue = Channel.CreateBounded<T>(new BoundedChannelOptions(2000) { FullMode = BoundedChannelFullMode.DropOldest });
-                    var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
-                    T? data;
-                    StreamWriter streamWriter = new StreamWriter(filename);
-                    CsvWriter writer = new CsvWriter(streamWriter, System.Globalization.CultureInfo.InvariantCulture);
-                    writer.WriteHeader<T>();
-                    writer.NextRecord();
-
-                    while (!_linkedCts.IsCancellationRequested)
+                    if (_queue.Reader.TryRead(out data))
                     {
-                        if (_queue.Reader.TryRead(out data))
-                        {
-                            writer.WriteRecord(data);
-                            writer.NextRecord();
-                            _logger.Debug($"Data is written to file, elements in queue:{_queue.Reader.Count}");
-                        }
-                        SpinWait.SpinUntil(() => token.IsCancellationRequested, 1);
+                        writer.WriteRecord(data);
+                        writer.NextRecord();
+                        _logger.Debug($"Data is written to file, elements in queue:{_queue.Reader.Count}");
                     }
-
-                    writer.Flush();
-                    _queue.Writer.Complete();
-                    streamWriter.Flush();
-                    streamWriter.Close();
-                    _logger.Debug("File stream and queue are closed");
-
-                    _localCts.Dispose();
-                });
-            }
-            return _task;
+                    SpinWait.SpinUntil(() => token.IsCancellationRequested, 1);
+                }
+                writer.Flush();
+                _queue.Writer.Complete();
+                streamWriter.Flush();
+                streamWriter.Close();
+                _logger.Debug("File stream and queue are closed");
+                _localCts.Dispose();
+            });
         }
-
         public Task WriteAsync(T data)
         {
             return Task.Run(() =>
@@ -107,7 +97,7 @@ namespace MATSys.Plugins
         }
     }
 
-    public class CSVDataRecorder : DataRecorderBase
+    public class CSVDataRecorder : IDataRecorder
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
         private Channel<object>? _queue;
@@ -115,24 +105,20 @@ namespace MATSys.Plugins
         private CancellationTokenSource _localCts = new CancellationTokenSource();
         private Task _task = Task.CompletedTask;
 
-        public override string Name => nameof(CSVDataRecorder);
-        public CSVDataRecorder()
-        {
-            AppDomain.CurrentDomain.AssemblyResolve += base.AssemblyResolve;
-        }
-        public override void Load(IConfigurationSection section)
+        public string Name => nameof(CSVDataRecorder);
+        public void Load(IConfigurationSection section)
         {
             _config = section.Get<CSVDataRecorderConfiguration>();
             _queue = Channel.CreateBounded<object>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVDataRecorder initiated");
         }
 
-        public override void Write(object data)
+        public void Write(object data)
         {
             WriteAsync(data).Wait();
         }
 
-        public override void StopService()
+        public void StopService()
         {
             if (_config!.WaitForComplete)
             {
@@ -150,22 +136,11 @@ namespace MATSys.Plugins
             return t.Status == TaskStatus.RanToCompletion || t.Status == TaskStatus.Canceled || t.Status == TaskStatus.Faulted;
         }
 
-        public override Task StartServiceAsync(CancellationToken token)
+        public void StartService(CancellationToken token)
         {
-            return Task.Run(() =>
+            try
             {
                 _logger.Trace("Prepare to run");
-                if (TaskStatusCheck(_task))
-                {
-                    StartService(token);
-                }
-            });
-        }
-
-        private void StartService(CancellationToken token)
-        {
-            _task = Task.Run(() =>
-            {
                 _localCts = new CancellationTokenSource();
                 string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
                 var filename = Path.Combine(baseFolder, DateTime.Now.ToString("HHmmssfff") + ".csv");
@@ -173,27 +148,36 @@ namespace MATSys.Plugins
                 object? data;
                 StreamWriter streamWriter = new StreamWriter(filename);
                 CsvWriter writer = new CsvWriter(streamWriter, System.Globalization.CultureInfo.InvariantCulture);
-
-                while (!_linkedCts.IsCancellationRequested)
+                Task.Run(() =>
                 {
-                    if (_queue!.Reader.TryRead(out data))
+                    while (!_linkedCts.IsCancellationRequested)
                     {
-                        writer.WriteRecord(data);
-                        writer.NextRecord();
-                        _logger.Debug($"Data is written to file, elements in queue:{_queue.Reader.Count}");
+                        if (_queue!.Reader.TryRead(out data))
+                        {
+                            writer.WriteRecord(data);
+                            writer.NextRecord();
+                            _logger.Debug($"Data is written to file, elements in queue:{_queue.Reader.Count}");
+                        }
+                        SpinWait.SpinUntil(() => token.IsCancellationRequested, 1);
                     }
-                    SpinWait.SpinUntil(() => token.IsCancellationRequested, 1);
-                }
-                writer.Flush();
-                _queue!.Writer.Complete();
-                streamWriter.Flush();
-                streamWriter.Close();
-                _logger.Debug("File stream and queue are closed");
-                _localCts.Dispose();
-            });
+                    writer.Flush();
+                    _queue!.Writer.Complete();
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                    _logger.Debug("File stream and queue are closed");
+                    _localCts.Dispose();
+
+                });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public override Task WriteAsync(object data)
+
+
+        public Task WriteAsync(object data)
         {
             return Task.Run(() =>
             {
