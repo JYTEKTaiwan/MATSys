@@ -1,6 +1,6 @@
 ﻿namespace MATSys
 {    
-        public interface IDataRecorder : IModule, IDynamicLoadable
+        public interface IDataRecorder : IModule
     {
         /// <summary>
         /// Write data to the instance
