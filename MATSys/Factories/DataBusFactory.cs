@@ -13,7 +13,6 @@ namespace MATSys.Factories
         public DataBusFactory(IConfiguration configuration)
         {
             loader = new DependencyLoader(configuration);
-            AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
             Types = loader.ListTypes<IDataBus>();
         }
 
@@ -58,23 +57,6 @@ namespace MATSys.Factories
                 throw ex;
             }
 
-        }
-        private Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
-        {
-            string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            string s2 = Path.Combine(loader.LibrariesFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
-            if (File.Exists(s1))
-            {
-                return Assembly.LoadFile(Path.GetFullPath(s1));
-            }
-            else if (File.Exists(s2))
-            {
-                return Assembly.LoadFile(Path.GetFullPath(s2));
-            }
-            else
-            {
-                throw new FileLoadException($"Dependent assembly not found : {args.Name}");
-            }
         }
 
         private IDataBus CreateAndLoadInstance(Type defaultType, IConfigurationSection section)
