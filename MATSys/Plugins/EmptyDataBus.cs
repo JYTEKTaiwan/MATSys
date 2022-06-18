@@ -24,9 +24,8 @@ namespace MATSys.Plugins
         {
         }
 
-        public Task StartServiceAsync(CancellationToken token)
+        public void StartService(CancellationToken token)
         {
-            return Task.CompletedTask;
         }
 
         public void StopService()
