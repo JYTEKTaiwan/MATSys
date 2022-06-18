@@ -15,15 +15,7 @@ namespace MATSys.Plugins
 
         public string Name => nameof(NetMQCommandServer);
 
-        public Task StartServiceAsync(CancellationToken token)
-        {
-            return Task.Run(() =>
-            {
-                StartService(token);
-            });
-        }
-
-        private void StartService(CancellationToken token)
+        public void StartService(CancellationToken token)
         {
             _localCts = new CancellationTokenSource();
             var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
@@ -33,10 +25,11 @@ namespace MATSys.Plugins
             _logger.Debug($"Binds to {address}");
             _routerSocket.Bind(address);
 
-            Task.Run(() =>
+            _logger.Info("Start service");
+            RoutingKey key = new RoutingKey();
+
+             Task.Run(() =>
             {
-                _logger.Info("Start service");
-                RoutingKey key = new RoutingKey();
                 while (!_linkedCts.IsCancellationRequested)
                 {
                     if (_routerSocket.TryReceiveRoutingKey(TimeSpan.FromSeconds(1), ref key))
@@ -58,6 +51,7 @@ namespace MATSys.Plugins
                 _logger.Info("Stop service");
             });
         }
+
 
         public void StopService()
         {
