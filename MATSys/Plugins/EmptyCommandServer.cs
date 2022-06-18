@@ -14,9 +14,9 @@ namespace MATSys.Plugins
             _logger.Info($"{nameof(EmptyCommandServer)} is initiated");
         }
 
-        public Task StartServiceAsync(CancellationToken token)
+        public  void StartService(CancellationToken token)
         {
-            return Task.CompletedTask;
+            
         }
 
         public void StopService()
