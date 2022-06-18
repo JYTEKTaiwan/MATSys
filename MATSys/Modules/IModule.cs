@@ -8,7 +8,7 @@ namespace MATSys
 
         void Load(IConfigurationSection section);
 
-        Task StartServiceAsync(CancellationToken token);
+        void StartService(CancellationToken token);
 
         void StopService();
     }
