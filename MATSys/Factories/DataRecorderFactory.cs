@@ -13,8 +13,8 @@ namespace MATSys.Factories
         public IEnumerable<Type> Types { get; }
         public DataRecorderFactory(IConfiguration configuration)
         {
-            AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
-            Types = DependencyLoader.Instance.ListTypes<IDataRecorder>();
+            loader = new DependencyLoader(configuration);
+            Types = loader.ListTypes<IDataRecorder>();
         }
 
         public IDataRecorder CreateRecorder(IConfigurationSection section)
@@ -59,24 +59,6 @@ namespace MATSys.Factories
             }
 
         }
-        private Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
-        {
-            string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            string s2 = Path.Combine(loader.LibrariesFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
-            if (File.Exists(s1))
-            {
-                return Assembly.LoadFile(Path.GetFullPath(s1));
-            }
-            else if (File.Exists(s2))
-            {
-                return Assembly.LoadFile(Path.GetFullPath(s2));
-            }
-            else
-            {
-                throw new FileLoadException($"Dependent assembly not found : {args.Name}");
-            }
-        }
-
         private IDataRecorder CreateAndLoadInstance(Type defaultType, IConfigurationSection section)
         {
             var obj = (IDataRecorder)Activator.CreateInstance(defaultType)!;
