@@ -4,55 +4,47 @@ using Microsoft.Extensions.Configuration;
 namespace MATSys;
 
 
-internal class DependencyLoader
+public class DependencyLoader
 {
-    private static Lazy<DependencyLoader> _lazy = new Lazy<DependencyLoader>(() => new DependencyLoader());
     public string ModulesFolder { get; }
     public string LibrariesFolder { get; }
 
-    public static DependencyLoader Instance => _lazy.Value;
-    private DependencyLoader()
+    public DependencyLoader(IConfiguration config)
     {
+        AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         var template = new DependencyInformation();
 
-        var path = "appsettings.json";
-        if (File.Exists(path))
+        var modTemp =config.GetValue<string>("ModulesFolder");
+        ModulesFolder=string.IsNullOrEmpty(modTemp)?template.ModulesFolder:modTemp;
+        var libTemp = config.GetValue<string>("LibrariesFolder");
+        LibrariesFolder = string.IsNullOrEmpty(libTemp) ? template.LibraryFolder : libTemp;
+
+    }
+
+    private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+    {
+        throw e.ExceptionObject as Exception;
+    }
+
+    private Assembly? CurrentDomain_AssemblyResolve(object? sender, ResolveEventArgs args)
+    {
+        string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
+        string s2 = Path.Combine(LibrariesFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
+        if (File.Exists(s1))
         {
-            var str = File.ReadAllText(path);
-            var config = Newtonsoft.Json.JsonConvert.DeserializeObject<DependencyInformation>(str);
-            //load library folder path from configuration, if not,  use .\libs\        
-            if (config != null)
-            {
-                LibrariesFolder = config.LibraryFolder;
-                ModulesFolder = config.ModulesFolder;
-            }
-            else
-            {
-
-                LibrariesFolder = template.LibraryFolder;
-                ModulesFolder = template.ModulesFolder;
-            }
-
+            return Assembly.LoadFile(Path.GetFullPath(s1));
+        }
+        else if (File.Exists(s2))
+        {
+            return Assembly.LoadFile(Path.GetFullPath(s2));
         }
         else
         {
-            LibrariesFolder = template.LibraryFolder;
-            ModulesFolder = template.ModulesFolder;
+            throw new FileLoadException($"Assembly not found {args.Name}");
         }
-
-
     }
-    public DependencyLoader(IConfiguration config)
-    {
-        var baseFolder = AppDomain.CurrentDomain.BaseDirectory;
-        //load library folder path from configuration, if not,  use .\libs\
-        var temp = config.GetValue<string>("LibrariesFolder");
-        LibrariesFolder = string.IsNullOrEmpty(temp) ? Path.Combine(baseFolder, "libs") : temp;
 
-        //loadmodules folder path from configuration, if not,  use .\modules\
-        var tempRoot = config.GetValue<string>("ModulesFolder");
-        ModulesFolder = string.IsNullOrEmpty(tempRoot) ? Path.Combine(baseFolder, "modules") : tempRoot;
-    }
     public IEnumerable<Type> ListTypes<T>() where T : IModule
     {
         //Find all assemblies inherited from IDataRecorder
