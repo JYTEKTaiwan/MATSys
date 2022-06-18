@@ -36,12 +36,10 @@ namespace MATSys.Plugins
             }
         }
 
-        public Task StartServiceAsync(CancellationToken token)
+        public void StartService(CancellationToken token)
         {
-            return Task.Run(() =>
-            {
-                _ch = Channel.CreateBounded<string>(new BoundedChannelOptions(config!.QueueLength) { FullMode = config.Mode });
-            });
+            _ch = Channel.CreateBounded<string>(new BoundedChannelOptions(config!.QueueLength) { FullMode = config.Mode });
+
         }
 
         public void StopService()

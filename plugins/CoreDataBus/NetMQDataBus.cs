@@ -45,16 +45,21 @@ namespace MATSys.Plugins
             }
         }
 
-        public Task StartServiceAsync(CancellationToken token)
+        public void StartService(CancellationToken token)
         {
-            return Task.Run(() =>
+            try
             {
                 _pub.Bind($"{_config!.Protocal}://{_config.Address}");
                 _sub.Connect($"{_config.Protocal}://{_config.Address}");
                 _sub.Subscribe(_config.Topic);
                 isConnected = true;
                 _logger.Info("Starts service");
-            });
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public void StopService()
