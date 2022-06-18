@@ -104,8 +104,8 @@ public class UT_DeviceBase
     {
         var cts = new CancellationTokenSource();
         IDevice dev = new NormalDevice(null!, null!, null!);
-        dev.StartServiceAsync(cts.Token).Wait();
-        dev.StartServiceAsync(cts.Token).Wait();
+        dev.StartService(cts.Token);
+        dev.StartService(cts.Token);
         Assert.IsTrue(dev.IsRunning);
     }
     [Test]
@@ -114,7 +114,7 @@ public class UT_DeviceBase
     {
         var cts = new CancellationTokenSource();
         IDevice dev = new NormalDevice(null!, null!, null!);
-        dev.StartServiceAsync(cts.Token).Wait();
+        dev.StartService(cts.Token);
         dev.StopService();
         dev.StopService();
         Assert.IsTrue(!dev.IsRunning);
@@ -125,7 +125,7 @@ public class UT_DeviceBase
     {
         var cts = new CancellationTokenSource();
         IDevice dev = new NormalDevice(null!, null!, null!);
-        dev.StartServiceAsync(cts.Token).Wait();
+        dev.StartService(cts.Token);
         var res = dev.Execute(Newtonsoft.Json.JsonConvert.SerializeObject(CommandBase.Create("Hi")));
         dev.StopService();
         Assert.IsTrue(res == "WORLD");
@@ -136,7 +136,7 @@ public class UT_DeviceBase
     {
         var cts = new CancellationTokenSource();
         IDevice dev = new NormalDevice(null!, null!, null!);
-        dev.StartServiceAsync(cts.Token).Wait();
+        dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("Hi"));
         dev.StopService();
         Assert.IsTrue(res == "WORLD");
@@ -147,7 +147,7 @@ public class UT_DeviceBase
     {
         var cts = new CancellationTokenSource();
         IDevice dev = new NormalDevice(null!, null!, null!);
-        dev.StartServiceAsync(cts.Token).Wait();
+        dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("HO"));
         dev.StopService();
         Assert.IsTrue(res.Contains("NOTFOUND"));
@@ -158,7 +158,7 @@ public class UT_DeviceBase
     {
         var cts = new CancellationTokenSource();
         IDevice dev = new NormalDevice(null!, null!, null!);
-        dev.StartServiceAsync(cts.Token).Wait();
+        dev.StartService(cts.Token);
         var res = dev.Execute(Newtonsoft.Json.JsonConvert.SerializeObject(CommandBase.Create("HO")));
         dev.StopService();
         Assert.IsTrue(res.Contains("NOTFOUND"));
@@ -169,7 +169,7 @@ public class UT_DeviceBase
     {
         var cts = new CancellationTokenSource();
         IDevice dev = new NormalDevice(null!, null!, null!);
-        dev.StartServiceAsync(cts.Token).Wait();
+        dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("Exception"));
         dev.StopService();
         Assert.IsTrue(res.Contains("EXEC_ERROR"));
@@ -180,7 +180,7 @@ public class UT_DeviceBase
     {
         var cts = new CancellationTokenSource();
         IDevice dev = new NormalDevice(null!, null!, null!);
-        dev.StartServiceAsync(cts.Token).Wait();
+        dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("WrongArgs", 1));
         dev.StopService();
         Assert.IsTrue(res.Contains("EXEC_ERROR"));
