@@ -6,8 +6,8 @@ using Microsoft.Extensions.Configuration;
 using NetMQ;
 using Newtonsoft.Json;
 
-Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
 Console.WriteLine("Hello, World!");
+
 var hub = DevicesHub.Instance;
 hub.Start();
 hub.Devices["Dev1"].OnDataReady += ((result) => Console.WriteLine(result));
