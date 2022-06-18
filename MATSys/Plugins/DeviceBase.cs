@@ -16,7 +16,6 @@ namespace MATSys.Plugins
         private const string key_server = "CommandServer";
         public const string cmd_notFound = "NOTFOUND";
         public const string cmd_execError = "EXEC_ERROR";
-        private readonly DependencyLoader _loader;
         private readonly Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
         private readonly ILogger _logger;
         private readonly ICommandServer _server;
@@ -47,9 +46,6 @@ namespace MATSys.Plugins
                 LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
                 //Create internal logger using alias name
                 _logger = NLog.LogManager.GetLogger(Name);
-
-                _loader = new DependencyLoader(config);
-                AppDomain.CurrentDomain.AssemblyResolve +=AssemblyResolve;
 
                 Load(section);
                 _dataRecorder = services.GetRequiredService<IDataRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
@@ -163,38 +159,29 @@ namespace MATSys.Plugins
             }
         }
 
-        public virtual Task StartServiceAsync(CancellationToken token)
+        public void StartService(CancellationToken token)
         {
             if (!isRunning)
             {
-                return Task.Run(() =>
+                try
                 {
-                    try
-                    {
-                        _logger.Trace("Starts the DataRecorder");
-                        var t1 = _dataRecorder.StartServiceAsync(token); ;
+                    _logger.Trace("Starts the DataRecorder");
+                    _dataRecorder.StartService(token);
 
-                        _logger.Trace("Starts the Publisher");
-                        var t2 = _dataBus.StartServiceAsync(token); ;
+                    _logger.Trace("Starts the Publisher");
+                    _dataBus.StartService(token);
 
-                        _logger.Trace("Starts the CommandServer");
-                        var t3 = _server.StartServiceAsync(token); ;
+                    _logger.Trace("Starts the CommandServer");
+                    _server.StartService(token);
 
-                        Task.WaitAll(t1, t2, t3);
-                        isRunning = true;
-
-                        _logger.Info("Starts service");
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.Error(ex);
-                        throw new Exception($"RunAsync failed", ex);
-                    }
-                });
-            }
-            else
-            {
-                return Task.CompletedTask;
+                    isRunning = true;
+                    _logger.Info("Starts service");
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex);
+                    throw new Exception($"RunAsync failed", ex);
+                }
             }
         }
 
@@ -286,25 +273,5 @@ namespace MATSys.Plugins
                 throw new Exception($"Execute command failed", ex);
             }
         }
-
-        private Assembly? AssemblyResolve(object? sender, ResolveEventArgs args)
-        {
-            string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-            string s2 = Path.Combine(_loader.LibrariesFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
-            if (File.Exists(s1))
-            {
-                return Assembly.LoadFile(Path.GetFullPath(s1));
-            }
-            else if (File.Exists(s2))
-            {
-                return Assembly.LoadFile(Path.GetFullPath(s2));
-            }
-            else
-            {
-                throw new FileLoadException($"Dependent assembly not found : {args.Name}");
-            }
-
-        }
-
     }
 }
