@@ -24,7 +24,7 @@ public class DependencyLoader
 
     private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
-        throw e.ExceptionObject as Exception;
+        throw (Exception)e.ExceptionObject;
     }
 
     private Assembly? CurrentDomain_AssemblyResolve(object? sender, ResolveEventArgs args)
