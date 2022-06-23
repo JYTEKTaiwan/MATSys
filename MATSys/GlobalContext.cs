@@ -6,7 +6,7 @@ namespace MATSys;
 
 public class DependencyLoader
 {
-    private IConfiguration _config;
+    private readonly IConfiguration? _config;
     public string ModulesFolder { get; }
     public string LibrariesFolder { get; }
 
@@ -15,7 +15,7 @@ public class DependencyLoader
         AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-_config=config;
+        _config = config;
         var modTemp = config.GetValue<string>("ModulesFolder");
         ModulesFolder = string.IsNullOrEmpty(modTemp) ? DefaultPathInfo.ModulesFolder : modTemp;
         var libTemp = config.GetValue<string>("LibrariesFolder");
@@ -67,12 +67,13 @@ _config=config;
             }
         }
     }
-    public IEnumerable<DeviceInformation> ListDevices()
+    public IEnumerable<DeviceInformation> ListDevices(IConfiguration? config=null)
     {
-        if (_config.GetSection("Devices").Exists())
-        {          
+        var configuration=config==null?_config:config;
+        if (configuration!.GetSection("Devices").Exists())
+        {
 
-            var pairs = _config.GetSection("Devices").AsEnumerable(true).Where(x => x.Value != null);
+            var pairs = configuration.GetSection("Devices").AsEnumerable(true).Where(x => x.Value != null);
             foreach (var item in pairs)
             {
                 var info = Parse(item);
