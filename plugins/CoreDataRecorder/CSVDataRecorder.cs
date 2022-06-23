@@ -18,7 +18,7 @@ namespace MATSys.Plugins
 
         public void Load(IConfigurationSection section)
         {
-            _config = section.Get<CSVDataRecorderConfiguration>();
+            _config = section.Get<CSVDataRecorderConfiguration>() ??CSVDataRecorderConfiguration.Default;
             _queue = Channel.CreateBounded<T>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVDataRecorder initiated");
         }
@@ -108,7 +108,7 @@ namespace MATSys.Plugins
         public string Name => nameof(CSVDataRecorder);
         public void Load(IConfigurationSection section)
         {
-            _config = section.Get<CSVDataRecorderConfiguration>();
+            _config = section.Get<CSVDataRecorderConfiguration>()??CSVDataRecorderConfiguration.Default;;
             _queue = Channel.CreateBounded<object>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVDataRecorder initiated");
         }
@@ -193,7 +193,10 @@ namespace MATSys.Plugins
         public bool WaitForComplete { get; set; } = true;
         public int QueueSize { get; set; } = 2000;
         public int WaitForCompleteTimeout { get; set; } = 5000;
+        public static CSVDataRecorderConfiguration Default = new CSVDataRecorderConfiguration();
+
 
         public BoundedChannelFullMode BoundedChannelFullMode { get; set; } = BoundedChannelFullMode.DropOldest;
+
     }
 }
