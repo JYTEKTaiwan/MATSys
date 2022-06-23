@@ -9,12 +9,10 @@ namespace MATSys.Factories
 
         private const string prefix = "DataRecorder";
         private readonly Type DefaultType = typeof(EmptyDataRecorder);
-        private readonly DependencyLoader loader;
-        public IEnumerable<Type> Types { get; }
-        public DataRecorderFactory(IConfiguration configuration)
+        public readonly IEnumerable<Type> _types;
+        public DataRecorderFactory(DependencyLoader loder)
         {
-            loader = new DependencyLoader(configuration);
-            Types = loader.ListTypes<IDataRecorder>();
+            _types = loder.ListTypes<IDataRecorder>();
         }
 
         public IDataRecorder CreateRecorder(IConfigurationSection section)
@@ -35,7 +33,7 @@ namespace MATSys.Factories
                     }
 
                     //if key has value, search the type with the default class name. eg. xxx=>xxxDataRecorder
-                    t = Types.FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower())!;
+                    t = _types.FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower())!;
                     if (t == null)
                     {
                         //cannot parse any type, use default datarecorder

@@ -8,12 +8,10 @@ namespace MATSys.Factories
     {
         private const string prefix = "DataBus";
         private readonly Type DefaultType = typeof(EmptyDataBus);
-        private readonly DependencyLoader loader;
-        public IEnumerable<Type> Types { get; }
-        public DataBusFactory(IConfiguration configuration)
+        public readonly IEnumerable<Type> _types;
+        public DataBusFactory(DependencyLoader loader)
         {
-            loader = new DependencyLoader(configuration);
-            Types = loader.ListTypes<IDataBus>();
+            _types = loader.ListTypes<IDataBus>();
         }
 
         public IDataBus CreateDataBus(IConfigurationSection section)
@@ -34,7 +32,7 @@ namespace MATSys.Factories
                     }
 
                     //if key has value, search the type with the default class name. eg. xxx=>xxxDataRecorder
-                    t = Types.FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower())!;
+                    t = _types.FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower())!;
                     if (t == null)
                     {
                         //cannot parse any type, use default datarecorder

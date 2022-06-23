@@ -7,13 +7,12 @@ namespace MATSys.Factories
     public sealed class CommandServerFactory : ICommandServerFactory
     {
         private const string prefix = "CommandServer";
-        private readonly Type DefaultType = typeof(EmptyCommandServer);
-        private readonly DependencyLoader loader;
-        public IEnumerable<Type> Types { get; }
-        public CommandServerFactory(IConfiguration configuration)
+        private readonly Type DefaultType = typeof(EmptyCommandServer);        
+        public  readonly IEnumerable<Type> _types;
+        public CommandServerFactory(DependencyLoader loader)
         {
-            loader = new DependencyLoader(configuration);
-            Types = loader.ListTypes<ICommandServer>();
+           
+            _types = loader.ListTypes<ICommandServer>();
         }
 
         public ICommandServer CreateCommandStream(IConfigurationSection section)
@@ -34,7 +33,7 @@ namespace MATSys.Factories
                     }
 
                     //if key has value, search the type with the default class name. eg. xxx=>xxxDataRecorder
-                    t = Types.FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower())!;
+                    t = _types.FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower())!;
                     if (t == null)
                     {
                         //cannot parse any type, use default datarecorder
