@@ -13,19 +13,17 @@ public class DependencyLoader
     {
         AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-        var template = new DependencyInformation();
 
         var modTemp = config.GetValue<string>("ModulesFolder");
-        ModulesFolder = string.IsNullOrEmpty(modTemp) ? template.ModulesFolder : modTemp;
+        ModulesFolder = string.IsNullOrEmpty(modTemp) ? DefaultPathInfo.ModulesFolder : modTemp;
         var libTemp = config.GetValue<string>("LibrariesFolder");
-        LibrariesFolder = string.IsNullOrEmpty(libTemp) ? template.LibraryFolder : libTemp;
+        LibrariesFolder = string.IsNullOrEmpty(libTemp) ? DefaultPathInfo.LibraryFolder : libTemp;
 
     }
     public DependencyLoader(string modFolder, string libFolder)
     {
-         var template = new DependencyInformation();
-        ModulesFolder = string.IsNullOrEmpty(modFolder) ? template.ModulesFolder : modFolder;       
-        LibrariesFolder = string.IsNullOrEmpty(libFolder) ? template.LibraryFolder : libFolder;
+        ModulesFolder = string.IsNullOrEmpty(modFolder) ? DefaultPathInfo.ModulesFolder : modFolder;
+        LibrariesFolder = string.IsNullOrEmpty(libFolder) ? DefaultPathInfo.LibraryFolder : libFolder;
 
     }
 
@@ -52,7 +50,7 @@ public class DependencyLoader
         }
     }
 
-    public IEnumerable<Type> ListTypes<T>() where T : IModule
+    public IEnumerable<Type> ListModuleTypes<T>() where T : IModule
     {
         //Find all assemblies inherited from IDataRecorder
         foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
@@ -67,40 +65,90 @@ public class DependencyLoader
             }
         }
     }
-    public IEnumerable<Type> ListTypes<T>(Func<Type, bool> func) where T : IModule
+    public IEnumerable<DeviceInformation> ListDevices(IConfiguration config)
     {
-        //Find all assemblies inherited from IDataRecorder
-        foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
-        {
-            var assem = Assembly.LoadFile(item);
-            //load dependent assemblies        
-            var types = assem.GetTypes().Where(func);
-            foreach (var t in types)
+        if (config.GetSection("Devices").Exists())
+        {          
+
+            var pairs = config.GetSection("Devices").AsEnumerable(true).Where(x => x.Value != null);
+            foreach (var item in pairs)
             {
-                yield return t;
+                var info = Parse(item);
+                if (!string.IsNullOrEmpty(info.Name))
+                {
+                    yield return info;
+                }
             }
+
         }
     }
-    private TModule CreateAndLoadInstance<TModule>(Type defaultType, IConfigurationSection section) where TModule : IModule
+
+    private DeviceInformation Parse(KeyValuePair<string, string> kvPair)
     {
-        var obj = (TModule)Activator.CreateInstance(defaultType)!;
-        obj.Load(section);
-        return obj;
+        var searchKey = kvPair.Key.Contains(':') ? kvPair.Key.Split(':')[0] : kvPair.Key;
+
+        var info = DeviceInformation.Empty;
+
+        bool isModFound = false;
+        foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
+        {
+
+            var types = Assembly.LoadFile(item).GetTypes().Where
+                (x => x.Name == searchKey && x.GetInterface(typeof(IDevice).FullName!) != null);
+            if (types.Count() > 0)
+            {
+                info = new DeviceInformation(types.First(), kvPair.Value);
+                isModFound = true;
+                break;
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        if (!isModFound)
+        {
+            foreach (var item in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                var types = item.GetTypes().Where
+                    (x => x.Name == searchKey && x.GetInterface(typeof(IDevice).FullName!) != null);
+                if (types.Count() > 0)
+                {
+                    info = new DeviceInformation(types.First(), kvPair.Value);
+                    isModFound = true;
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+        return isModFound ? info : DeviceInformation.Empty;
     }
-
-
 
 }
 
 
-
-internal struct DependencyInformation
+public struct DeviceInformation
 {
-    public string ModulesFolder { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules");
-    public string LibraryFolder { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libs");
-    public DependencyInformation()
+    public Type DeviceType { get; }
+    public string Name { get; }
+
+    public DeviceInformation(Type deviceType, string name)
     {
-        
+        DeviceType = deviceType;
+        Name = name;
     }
+
+    public static DeviceInformation Empty => new DeviceInformation(null!, "");
+}
+
+
+internal class DefaultPathInfo
+{
+    public static string ModulesFolder { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules");
+    public static string LibraryFolder { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libs");
 
 }
