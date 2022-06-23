@@ -11,7 +11,7 @@ namespace MATSys.Factories
         public readonly IEnumerable<Type> _types;
         public DataBusFactory(DependencyLoader loader)
         {
-            _types = loader.ListTypes<IDataBus>();
+            _types = loader.ListModuleTypes<IDataBus>();
         }
 
         public IDataBus CreateDataBus(IConfigurationSection section)

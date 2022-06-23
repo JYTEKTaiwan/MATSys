@@ -12,7 +12,7 @@ namespace MATSys.Factories
         public readonly IEnumerable<Type> _types;
         public DataRecorderFactory(DependencyLoader loder)
         {
-            _types = loder.ListTypes<IDataRecorder>();
+            _types = loder.ListModuleTypes<IDataRecorder>();
         }
 
         public IDataRecorder CreateRecorder(IConfigurationSection section)

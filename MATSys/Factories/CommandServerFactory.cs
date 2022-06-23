@@ -12,7 +12,7 @@ namespace MATSys.Factories
         public CommandServerFactory(DependencyLoader loader)
         {
            
-            _types = loader.ListTypes<ICommandServer>();
+            _types = loader.ListModuleTypes<ICommandServer>();
         }
 
         public ICommandServer CreateCommandStream(IConfigurationSection section)
