@@ -15,10 +15,17 @@ public class DependencyLoader
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         var template = new DependencyInformation();
 
-        var modTemp =config.GetValue<string>("ModulesFolder");
-        ModulesFolder=string.IsNullOrEmpty(modTemp)?template.ModulesFolder:modTemp;
+        var modTemp = config.GetValue<string>("ModulesFolder");
+        ModulesFolder = string.IsNullOrEmpty(modTemp) ? template.ModulesFolder : modTemp;
         var libTemp = config.GetValue<string>("LibrariesFolder");
         LibrariesFolder = string.IsNullOrEmpty(libTemp) ? template.LibraryFolder : libTemp;
+
+    }
+    public DependencyLoader(string modFolder, string libFolder)
+    {
+         var template = new DependencyInformation();
+        ModulesFolder = string.IsNullOrEmpty(modFolder) ? template.ModulesFolder : modFolder;       
+        LibrariesFolder = string.IsNullOrEmpty(libFolder) ? template.LibraryFolder : libFolder;
 
     }
 
@@ -87,9 +94,13 @@ public class DependencyLoader
 
 
 
-internal class DependencyInformation
+internal struct DependencyInformation
 {
     public string ModulesFolder { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules");
     public string LibraryFolder { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libs");
+    public DependencyInformation()
+    {
+        
+    }
 
 }
