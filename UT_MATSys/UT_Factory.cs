@@ -12,7 +12,7 @@ public class UT_DataReocrderFactory
     [Category("DataRecorder")]
     public void CreateFromFile()
     {
-        Assert.Catch<FileLoadException>(() => 
+        Assert.Catch<FileNotFoundException>(() => 
         {
             var jsonStr = @"{ ""DataRecorder"": {""Type"": ""csv""}
         
@@ -25,7 +25,6 @@ public class UT_DataReocrderFactory
             var recorder = fac.CreateRecorder(config.GetSection("DataRecorder"));
             recorder.StartService(new CancellationToken());
             recorder.StopService();
-
         });
         
     }
