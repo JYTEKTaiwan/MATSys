@@ -11,23 +11,21 @@ public class DependencyLoader
 {
     private readonly IConfiguration? _config;
     public string ModulesFolder { get; }
-    public string LibrariesFolder { get; }
-
     public DependencyLoader(IConfiguration config)
-    {      
+    {
+
+#if NETSTANDARD2_0_OR_GREATER
         AppDomain.CurrentDomain.AssemblyResolve+=CurrentDomain_AssemblyResolve;
         AppDomain.CurrentDomain.UnhandledException +=CurrentDomain_UnhandledException;
+#endif
+
         _config = config;
         var modTemp = config.GetValue<string>("ModulesFolder");
         ModulesFolder = string.IsNullOrEmpty(modTemp) ? DefaultPathInfo.ModulesFolder : modTemp;
-        var libTemp = config.GetValue<string>("LibrariesFolder");
-        LibrariesFolder = string.IsNullOrEmpty(libTemp) ? DefaultPathInfo.LibraryFolder : libTemp;
-
     }
     public DependencyLoader(string modFolder, string libFolder)
     {
         ModulesFolder = string.IsNullOrEmpty(modFolder) ? DefaultPathInfo.ModulesFolder : modFolder;
-        LibrariesFolder = string.IsNullOrEmpty(libFolder) ? DefaultPathInfo.LibraryFolder : libFolder;
 
     }
 
@@ -39,7 +37,7 @@ public class DependencyLoader
     private Assembly? CurrentDomain_AssemblyResolve(object? sender, ResolveEventArgs args)
     {
         string s1 = args.Name.Remove(args.Name.IndexOf(',')) + ".dll";
-        string s2 = Path.Combine(LibrariesFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
+        string s2 = Path.Combine(ModulesFolder, args.Name.Remove(args.Name.IndexOf(',')) + ".dll");
         if (File.Exists(s1))
         {
             return Assembly.LoadFile(Path.GetFullPath(s1));
@@ -59,11 +57,13 @@ public class DependencyLoader
         //Find all assemblies inherited from IDataRecorder
         foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
         {
-            #if NET6_0_OR_GREATER
+#if NET6_0_OR_GREATER
             var loader = new PluginLoader(item);
             var assem = loader.LoadFromAssemblyPath(item);
-            #endif
-            
+#endif
+#if NETSTANDARD2_0_OR_GREATER
+var assem=Assembly.LoadFile(item);
+#endif
             //load dependent assemblies        
             var types = assem.GetTypes().Where
                 (x => x.GetInterface(typeof(T).FullName!) != null);
@@ -101,8 +101,14 @@ public class DependencyLoader
         bool isModFound = false;
         foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
         {
-
-            var types = Assembly.LoadFile(item).GetTypes().Where
+#if NET6_0_OR_GREATER
+            var loader = new PluginLoader(item);
+            var assem = loader.LoadFromAssemblyPath(item);
+#endif
+#if NETSTANDARD2_0_OR_GREATER
+var assem=Assembly.LoadFile(item);
+#endif
+            var types = assem.GetTypes().Where
                 (x => x.Name == searchKey && x.GetInterface(typeof(IDevice).FullName!) != null);
             if (types.Count() > 0)
             {
