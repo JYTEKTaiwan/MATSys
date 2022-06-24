@@ -28,27 +28,38 @@ namespace MATSys.Plugins
             _logger.Info("Start service");
             RoutingKey key = new RoutingKey();
 
+            //Errors happened in the internal loop were clarified as Fatal error
              Task.Run(() =>
             {
-                while (!_linkedCts.IsCancellationRequested)
+                try
                 {
-                    if (_routerSocket.TryReceiveRoutingKey(TimeSpan.FromSeconds(1), ref key))
+                    while (!_linkedCts.IsCancellationRequested)
                     {
-                        //index 0: CommandBase object in json format
-                        var content = _routerSocket.ReceiveMultipartStrings();
-                        _logger.Debug($"New message received {content[0]}");
+                        if (_routerSocket.TryReceiveRoutingKey(TimeSpan.FromSeconds(1), ref key))
+                        {
+                            //index 0: CommandBase object in json format
+                            var content = _routerSocket.ReceiveMultipartStrings();
+                            _logger.Debug($"New message received {content[0]}");
 
-                        var response = OnCommandReady?.Invoke(this, content[0])!;
-                        _logger.Trace("Message is executed");
+                            var response = OnCommandReady?.Invoke(this, content[0])!;
+                            _logger.Trace("Message is executed");
 
-                        _routerSocket.SendMoreFrame(key);
-                        _routerSocket.SendFrame(response);
-                        _logger.Debug($"Response sent back {response}");
+                            _routerSocket.SendMoreFrame(key);
+                            _routerSocket.SendFrame(response);
+                            _logger.Debug($"Response sent back {response}");
+                        }
                     }
                 }
-                _routerSocket.Unbind(address);
-                _logger.Debug($"Unbind to {address}");
-                _logger.Info("Stop service");
+                catch (Exception ex)
+                {
+                    _logger.Fatal(ex);
+                }
+                finally
+                {
+                    _routerSocket.Unbind(address);
+                    _logger.Debug($"Unbind to {address}");
+                    _logger.Info("Stop service");
+                }
             });
         }
 
