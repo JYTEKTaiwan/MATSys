@@ -18,7 +18,7 @@ namespace MATSys.Plugins
 
         public void Load(IConfigurationSection section)
         {
-            _config = section.Get<CSVDataRecorderConfiguration>() ??CSVDataRecorderConfiguration.Default;
+            _config = section.Get<CSVDataRecorderConfiguration>() ?? CSVDataRecorderConfiguration.Default;
             _queue = Channel.CreateBounded<T>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVDataRecorder initiated");
         }
@@ -54,27 +54,39 @@ namespace MATSys.Plugins
 
             Task.Run(() =>
             {
-                while (!_linkedCts.IsCancellationRequested)
-                {
-                    if (_queue.Reader.TryRead(out data))
+                //errors happened in the internal loop were clarified as fatal error 
+                try
+                {                  
+                    while (!_linkedCts.IsCancellationRequested)
                     {
-                        writer.WriteRecord(data);
-                        writer.NextRecord();
-                        _logger.Debug($"Data is written to file, elements in queue:{_queue.Reader.Count}");
-                    }
-                    SpinWait.SpinUntil(() => token.IsCancellationRequested, 1);
+                        if (_queue.Reader.TryRead(out data))
+                        {
+                            writer.WriteRecord(data);
+                            writer.NextRecord();
+                            _logger.Debug($"Data is written to file, elements in queue:{_queue.Reader.Count}");
+                        }
+                        SpinWait.SpinUntil(() => token.IsCancellationRequested, 1);
+                    }                   
                 }
-                writer.Flush();
-                _queue.Writer.Complete();
-                streamWriter.Flush();
-                streamWriter.Close();
-                _logger.Debug("File stream and queue are closed");
-                _localCts.Dispose();
+                catch (Exception ex)
+                {
+                    _logger.Fatal(ex);
+                }
+                finally
+                {
+                    writer.Flush();
+                    _queue.Writer.Complete();
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                    _logger.Debug("File stream and queue are closed");
+                    _localCts.Dispose();
+                }
             });
         }
-        public Task WriteAsync(T data)
+
+        public async Task WriteAsync(T data)
         {
-            return Task.Run(() =>
+            await Task.Run(() =>
             {
                 _queue!.Writer.TryWrite(data);
                 _logger.Info("Data is queued to filestream");
@@ -86,9 +98,9 @@ namespace MATSys.Plugins
             WriteAsync(data).Wait();
         }
 
-        public Task WriteAsync(object data)
+        public async Task WriteAsync(object data)
         {
-            return WriteAsync((T)data);
+            await WriteAsync((T)data);
         }
 
         public IDataRecorder CreateInstance()
@@ -177,9 +189,9 @@ namespace MATSys.Plugins
 
 
 
-        public Task WriteAsync(object data)
+        public async Task WriteAsync(object data)
         {
-            return Task.Run(() =>
+            await Task.Run(() =>
             {
                 _logger.Debug(JsonConvert.SerializeObject(data));
                 _queue!.Writer.TryWrite(data);
