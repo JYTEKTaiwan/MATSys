@@ -1,9 +1,11 @@
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
+
+#if NET6_0_OR_GREATER
 using System.Runtime.Loader;
+#endif
 
 namespace MATSys;
-
 
 public class DependencyLoader
 {
@@ -12,8 +14,7 @@ public class DependencyLoader
     public string LibrariesFolder { get; }
 
     public DependencyLoader(IConfiguration config)
-    {
-        
+    {      
         AppDomain.CurrentDomain.AssemblyResolve+=CurrentDomain_AssemblyResolve;
         AppDomain.CurrentDomain.UnhandledException +=CurrentDomain_UnhandledException;
         _config = config;
@@ -58,8 +59,11 @@ public class DependencyLoader
         //Find all assemblies inherited from IDataRecorder
         foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
         {
+            #if NET6_0_OR_GREATER
             var loader = new PluginLoader(item);
             var assem = loader.LoadFromAssemblyPath(item);
+            #endif
+            
             //load dependent assemblies        
             var types = assem.GetTypes().Where
                 (x => x.GetInterface(typeof(T).FullName!) != null);
