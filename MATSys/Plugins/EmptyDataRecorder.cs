@@ -21,9 +21,9 @@ namespace MATSys.Plugins
         {
         }
 
-        public Task WriteAsync(object data)
+        public async Task WriteAsync(object data)
         {
-            return Task.CompletedTask;
+            await Task.CompletedTask;
         }
 
         public void Load(IConfigurationSection section)
