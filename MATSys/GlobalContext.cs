@@ -1,5 +1,6 @@
-using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
+using System.Runtime.Loader;
 
 namespace MATSys;
 
@@ -12,9 +13,9 @@ public class DependencyLoader
 
     public DependencyLoader(IConfiguration config)
     {
-        AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-        AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-
+        
+        AppDomain.CurrentDomain.AssemblyResolve+=CurrentDomain_AssemblyResolve;
+        AppDomain.CurrentDomain.UnhandledException +=CurrentDomain_UnhandledException;
         _config = config;
         var modTemp = config.GetValue<string>("ModulesFolder");
         ModulesFolder = string.IsNullOrEmpty(modTemp) ? DefaultPathInfo.ModulesFolder : modTemp;
@@ -57,7 +58,8 @@ public class DependencyLoader
         //Find all assemblies inherited from IDataRecorder
         foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
         {
-            var assem = Assembly.LoadFile(item);
+            var loader = new PluginLoader(item);
+            var assem = loader.LoadFromAssemblyPath(item);
             //load dependent assemblies        
             var types = assem.GetTypes().Where
                 (x => x.GetInterface(typeof(T).FullName!) != null);
@@ -67,9 +69,9 @@ public class DependencyLoader
             }
         }
     }
-    public IEnumerable<DeviceInformation> ListDevices(IConfiguration? config=null)
+    public IEnumerable<DeviceInformation> ListDevices(IConfiguration? config = null)
     {
-        var configuration=config==null?_config:config;
+        var configuration = config == null ? _config : config;
         if (configuration!.GetSection("Devices").Exists())
         {
 
@@ -133,6 +135,38 @@ public class DependencyLoader
 
 }
 
+#if NET6_0_OR_GREATER
+internal class PluginLoader : AssemblyLoadContext
+{
+    private AssemblyDependencyResolver resolver;
+    public PluginLoader(string? name, bool isCollectible = false) : base(name, isCollectible)
+    {
+        resolver = new AssemblyDependencyResolver(name!);
+    }
+
+    protected override Assembly? Load(AssemblyName assemblyName)
+    {
+        string assemblyPath = resolver.ResolveAssemblyToPath(assemblyName)!;
+        if (assemblyPath != null)
+        {
+            return LoadFromAssemblyPath(assemblyPath);
+        }
+        return null;
+
+    }
+    protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
+    {
+        string libraryPath = resolver.ResolveUnmanagedDllToPath(unmanagedDllName)!;
+        if (libraryPath != null)
+        {
+            return LoadUnmanagedDllFromPath(libraryPath);
+        }
+
+        return IntPtr.Zero;
+    }
+}
+
+#endif  
 
 public struct DeviceInformation
 {
