@@ -7,7 +7,7 @@
         event NewDataReady? OnDataReady;
         IDataBus DataBus { get; }
         NLog.ILogger Logger { get; }
-        IDataRecorder DataRecorder { get; }
+        IRecorder DataRecorder { get; }
         ICommandServer Server { get; }
 
         bool IsRunning { get; }

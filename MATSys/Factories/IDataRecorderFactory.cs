@@ -4,7 +4,7 @@ namespace MATSys.Factories
 {
     public interface IDataRecorderFactory
     {
-        IDataRecorder CreateRecorder(IConfigurationSection section);
+        IRecorder CreateRecorder(IConfigurationSection section);
         
     }
 }

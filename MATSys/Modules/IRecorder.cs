@@ -1,6 +1,6 @@
 ﻿namespace MATSys
 {    
-        public interface IDataRecorder : IModule
+        public interface IRecorder : IModule
     {
         /// <summary>
         /// Write data to the instance
@@ -17,7 +17,7 @@
 
     }
 
-    public interface IDataRecorder<in T> : IDataRecorder
+    public interface IRecorder<in T> : IRecorder
     {
         void Write(T data);
 

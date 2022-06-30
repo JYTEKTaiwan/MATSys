@@ -19,7 +19,7 @@ namespace MATSys.Plugins
         private readonly Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
         private readonly ILogger _logger;
         private readonly ICommandServer _server;
-        private readonly IDataRecorder _dataRecorder;
+        private readonly IRecorder _dataRecorder;
         private readonly IDataBus _dataBus;
         public volatile bool isRunning = false;
 
@@ -27,7 +27,7 @@ namespace MATSys.Plugins
         public event IDevice.NewDataReady? OnDataReady;
 
         ILogger IDevice.Logger => _logger;
-        IDataRecorder IDevice.DataRecorder => _dataRecorder;
+        IRecorder IDevice.DataRecorder => _dataRecorder;
         ICommandServer IDevice.Server => _server;
         IDataBus IDevice.DataBus => _dataBus;
         public string Name { get; }
@@ -66,14 +66,14 @@ namespace MATSys.Plugins
             }
         }
 
-        public DeviceBase(ICommandServer server, IDataBus bus, IDataRecorder recorder)
+        public DeviceBase(ICommandServer server, IDataBus bus, IRecorder recorder)
         {
             Name = $"{this.GetType().Name}_{this.GetHashCode().ToString("X2")}";
             _logger = NLog.LogManager.GetLogger(Name);
 
             if (recorder == null)
             {
-                _dataRecorder = new EmptyDataRecorder();
+                _dataRecorder = new EmptyRecorder();
                 _logger.Trace($"Null reference is detected, {_dataRecorder.Name} is injected");
             }
             else

@@ -8,14 +8,14 @@ namespace MATSys.Factories
     {
 
         private const string prefix = "DataRecorder";
-        private readonly Type DefaultType = typeof(EmptyDataRecorder);
+        private readonly Type DefaultType = typeof(EmptyRecorder);
         public readonly IEnumerable<Type> _types;
         public DataRecorderFactory(DependencyLoader loder)
         {
-            _types = loder.ListModuleTypes<IDataRecorder>();
+            _types = loder.ListModuleTypes<IRecorder>();
         }
 
-        public IDataRecorder CreateRecorder(IConfigurationSection section)
+        public IRecorder CreateRecorder(IConfigurationSection section)
         {
             try
             {
@@ -57,9 +57,9 @@ namespace MATSys.Factories
             }
 
         }
-        private IDataRecorder CreateAndLoadInstance(Type defaultType, IConfigurationSection section)
+        private IRecorder CreateAndLoadInstance(Type defaultType, IConfigurationSection section)
         {
-            var obj = (IDataRecorder)Activator.CreateInstance(defaultType)!;
+            var obj = (IRecorder)Activator.CreateInstance(defaultType)!;
             obj.Load(section);
             return obj;
         }

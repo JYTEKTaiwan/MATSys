@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreCommandServer", "plugin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDataBus", "plugins\CoreDataBus\CoreDataBus.csproj", "{64F73B29-900F-4702-96C0-F99708B85441}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDataRecorder", "plugins\CoreDataRecorder\CoreDataRecorder.csproj", "{0A3492ED-CCB2-4AD4-A627-6CBCDB0B9427}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSVRecorder", "plugins\CoreDataRecorder\CSVRecorder.csproj", "{0A3492ED-CCB2-4AD4-A627-6CBCDB0B9427}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "examples\Test\Test.csproj", "{DD18C823-30F9-4116-8B1A-C4E56FB3D1A5}"
 EndProject
@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys", "MATSys\MATSys.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontPanel", "examples\FrontPanel\FrontPanel.csproj", "{F29177DA-DD5C-48B4-9824-5A0F9B5AD14C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UT_MATSys", "UT_MATSys\UT_MATSys.csproj", "{432A5E3A-DF9D-4ED6-813E-40A51BBF919F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UT_MATSys", "UT_MATSys\UT_MATSys.csproj", "{432A5E3A-DF9D-4ED6-813E-40A51BBF919F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -242,7 +242,7 @@ Global
 		{F29177DA-DD5C-48B4-9824-5A0F9B5AD14C} = {3787A6AD-AE85-4828-8476-2DE0E4E7F6CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_StartDate = 2000/1/1
 		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
+		BuildVersion_StartDate = 2000/1/1
 	EndGlobalSection
 EndGlobal

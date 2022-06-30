@@ -13,7 +13,7 @@ public class UT_DeviceBase
     {
         ICommandServer server = new EmptyCommandServer();
         IDataBus bus = new EmptyDataBus();
-        IDataRecorder recorder = new EmptyDataRecorder();
+        IRecorder recorder = new EmptyRecorder();
         IDevice dev = new NormalDevice(server, bus, recorder);
         Assert.IsTrue(dev != null);
     }
@@ -23,7 +23,7 @@ public class UT_DeviceBase
     {
         ICommandServer server = null!;
         IDataBus bus = new EmptyDataBus();
-        IDataRecorder recorder = new EmptyDataRecorder();
+        IRecorder recorder = new EmptyRecorder();
         IDevice dev = new NormalDevice(server, bus, recorder);
         Assert.IsTrue(dev.Server.Name == nameof(EmptyCommandServer));
     }
@@ -33,7 +33,7 @@ public class UT_DeviceBase
     {
         ICommandServer server = new EmptyCommandServer();
         IDataBus bus = null!;
-        IDataRecorder recorder = new EmptyDataRecorder();
+        IRecorder recorder = new EmptyRecorder();
         IDevice dev = new NormalDevice(server, bus, recorder);
         Assert.IsTrue(dev.DataBus.Name == nameof(EmptyDataBus));
     }
@@ -43,9 +43,9 @@ public class UT_DeviceBase
     {
         ICommandServer server = new EmptyCommandServer();
         IDataBus bus = new EmptyDataBus();
-        IDataRecorder recorder = null!;
+        IRecorder recorder = null!;
         IDevice dev = new NormalDevice(server, bus, recorder);
-        Assert.IsTrue(dev.DataRecorder.Name == nameof(EmptyDataRecorder));
+        Assert.IsTrue(dev.DataRecorder.Name == nameof(EmptyRecorder));
     }
     private class NormalDevice : DeviceBase
     {
@@ -53,7 +53,7 @@ public class UT_DeviceBase
         {
 
         }
-        public NormalDevice(ICommandServer server, IDataBus bus, IDataRecorder recorder) : base(server, bus, recorder)
+        public NormalDevice(ICommandServer server, IDataBus bus, IRecorder recorder) : base(server, bus, recorder)
         {
 
         }

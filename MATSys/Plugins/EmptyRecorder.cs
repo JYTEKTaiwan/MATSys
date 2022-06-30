@@ -3,11 +3,11 @@ using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Plugins
 {
-    public sealed class EmptyDataRecorder : IDataRecorder
+    public sealed class EmptyRecorder : IRecorder
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public string Name => nameof(EmptyDataRecorder);
+        public string Name => nameof(EmptyRecorder);
 
         public void StopService()
         {
@@ -28,7 +28,7 @@ namespace MATSys.Plugins
 
         public void Load(IConfigurationSection section)
         {
-            _logger.Info($"{nameof(EmptyDataRecorder)} is initiated");
+            _logger.Info($"{nameof(EmptyRecorder)} is initiated");
         }
 
 

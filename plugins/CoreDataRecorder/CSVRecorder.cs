@@ -5,20 +5,20 @@ using System.Threading.Channels;
 
 namespace MATSys.Plugins
 {
-    public class CSVDataRecorder<T> : IDataRecorder<T> where T : class
+    public class CSVRecorder<T> : IRecorder<T> where T : class
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
         private Channel<T>? _queue;
-        private CSVDataRecorderConfiguration? _config;
+        private CSVRecorderConfiguration? _config;
 
         private CancellationTokenSource _localCts = new CancellationTokenSource();
         private Task _task = Task.CompletedTask;
 
-        public string Name => nameof(CSVDataRecorder);
+        public string Name => nameof(CSVRecorder);
 
         public void Load(IConfigurationSection section)
         {
-            _config = section.Get<CSVDataRecorderConfiguration>() ?? CSVDataRecorderConfiguration.Default;
+            _config = section.Get<CSVRecorderConfiguration>() ?? CSVRecorderConfiguration.Default;
             _queue = Channel.CreateBounded<T>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVDataRecorder initiated");
         }
@@ -103,24 +103,24 @@ namespace MATSys.Plugins
             await WriteAsync((T)data);
         }
 
-        public IDataRecorder CreateInstance()
+        public IRecorder CreateInstance()
         {
-            return new CSVDataRecorder<T>();
+            return new CSVRecorder<T>();
         }
     }
 
-    public class CSVDataRecorder : IDataRecorder
+    public class CSVRecorder : IRecorder
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
         private Channel<object>? _queue;
-        private CSVDataRecorderConfiguration? _config;
+        private CSVRecorderConfiguration? _config;
         private CancellationTokenSource _localCts = new CancellationTokenSource();
         private Task _task = Task.CompletedTask;
 
-        public string Name => nameof(CSVDataRecorder);
+        public string Name => nameof(CSVRecorder);
         public void Load(IConfigurationSection section)
         {
-            _config = section.Get<CSVDataRecorderConfiguration>()??CSVDataRecorderConfiguration.Default;;
+            _config = section.Get<CSVRecorderConfiguration>()??CSVRecorderConfiguration.Default;;
             _queue = Channel.CreateBounded<object>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVDataRecorder initiated");
         }
@@ -200,12 +200,12 @@ namespace MATSys.Plugins
         }
     }
 
-    public class CSVDataRecorderConfiguration
+    public class CSVRecorderConfiguration
     {
         public bool WaitForComplete { get; set; } = true;
         public int QueueSize { get; set; } = 2000;
         public int WaitForCompleteTimeout { get; set; } = 5000;
-        public static CSVDataRecorderConfiguration Default = new CSVDataRecorderConfiguration();
+        public static CSVRecorderConfiguration Default = new CSVRecorderConfiguration();
 
 
         public BoundedChannelFullMode BoundedChannelFullMode { get; set; } = BoundedChannelFullMode.DropOldest;
