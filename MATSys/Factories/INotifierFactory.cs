@@ -2,7 +2,7 @@
 
 namespace MATSys.Factories
 {
-    public interface INotifuerFactory
+    public interface INotifierFactory
     {
         INotifier CreateDataBus(IConfigurationSection section);
     }

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Factories
 {
-    public sealed class NotifierFactory : INotifuerFactory
+    public sealed class NotifierFactory : INotifierFactory
     {
         private const string prefix = "Notifier";
         private readonly Type DefaultType = typeof(EmptyNotifier);

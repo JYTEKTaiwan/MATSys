@@ -24,7 +24,7 @@ namespace MATSys
                     .AddSingleton<IDeviceFactory, DeviceFactory>()
                     .AddSingleton<IRecorderFactory, RecorderFactory>()
                     .AddSingleton<INotifuerFactory, NotifierFactory>()
-                    .AddSingleton<IITransceiverFactory, TransceiverFactory>()
+                    .AddSingleton<ITransceiverFactory, TransceiverFactory>()
                     .AddSingleton<DependencyLoader>()
                     )
                     .ConfigureLogging(logging => logging
