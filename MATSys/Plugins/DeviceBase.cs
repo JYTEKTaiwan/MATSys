@@ -120,9 +120,9 @@ namespace MATSys.Plugins
         {
             var methodlist = GetType().GetMethods().Where(x =>
             {
-                return x.GetCustomAttributes<PrortotypeAttribute>(false).Count() > 0;
+                return x.GetCustomAttributes<PrototypeAttribute>(false).Count() > 0;
             }).ToArray();
-            return methodlist.ToDictionary(x => x.GetCustomAttribute<PrortotypeAttribute>()!.Name);
+            return methodlist.ToDictionary(x => x.GetCustomAttribute<PrototypeAttribute>()!.Name);
         }
 
         private string OnCommandDataReady(object sender, string commandObjectInJson)
@@ -136,7 +136,7 @@ namespace MATSys.Plugins
                 if (methods.ContainsKey(parsedName))
                 {
                     var method = methods[parsedName];
-                    var att = method.GetCustomAttribute<PrortotypeAttribute>();
+                    var att = method.GetCustomAttribute<PrototypeAttribute>();
                     var cmd = JsonConvert.DeserializeObject(commandObjectInJson, att!.CommandType) as ICommand;
                     _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
 
@@ -253,10 +253,10 @@ namespace MATSys.Plugins
 
         public virtual IEnumerable<string> PrintCommands()
         {
-            var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<PrortotypeAttribute>().Count() > 0);
+            var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<PrototypeAttribute>().Count() > 0);
             foreach (var item in cmds)
             {
-                yield return item.GetCustomAttribute<PrortotypeAttribute>()!.GetJsonString();
+                yield return item.GetCustomAttribute<PrototypeAttribute>()!.GetJsonString();
             }
         }
 

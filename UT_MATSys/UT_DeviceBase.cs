@@ -63,14 +63,14 @@ public class UT_DeviceBase
 
         }
 
-        [Prortotype("Hi", typeof(Command))]
+        [Prototype("Hi", typeof(Command))]
         public string Hello()
         {
             return "WORLD";
 
         }
 
-        [Prortotype("Exception", typeof(Command))]
+        [Prototype("Exception", typeof(Command))]
         public void Exception()
         {
 
@@ -78,7 +78,7 @@ public class UT_DeviceBase
 
 
         }
-        [Prortotype("WrongArgs", typeof(Command<int>))]
+        [Prototype("WrongArgs", typeof(Command<int>))]
         public void WrongArgs()
         {
 
