@@ -196,6 +196,4 @@ public struct DeviceInformation
 internal class DefaultPathInfo
 {
     public static string ModulesFolder { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules");
-    public static string LibraryFolder { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "libs");
-
 }

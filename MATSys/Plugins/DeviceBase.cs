@@ -20,7 +20,7 @@ namespace MATSys.Plugins
         private readonly ILogger _logger;
         private readonly ICommandServer _server;
         private readonly IRecorder _dataRecorder;
-        private readonly IDataBus _dataBus;
+        private readonly INotifier _dataBus;
         public volatile bool isRunning = false;
 
         public bool IsRunning => isRunning;
@@ -29,7 +29,7 @@ namespace MATSys.Plugins
         ILogger IDevice.Logger => _logger;
         IRecorder IDevice.DataRecorder => _dataRecorder;
         ICommandServer IDevice.Server => _server;
-        IDataBus IDevice.DataBus => _dataBus;
+        INotifier IDevice.DataBus => _dataBus;
         public string Name { get; }
         public IDevice Instance => this;
 
@@ -50,7 +50,7 @@ namespace MATSys.Plugins
                 Load(section);
                 _dataRecorder = services.GetRequiredService<IRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
                 _logger.Trace($"{_dataRecorder.Name} is injected");
-                _dataBus = services.GetRequiredService<IDataBusFactory>().CreateDataBus(section.GetSection(key_publisher));
+                _dataBus = services.GetRequiredService<INotifuerFactory>().CreateDataBus(section.GetSection(key_publisher));
                 _dataBus.OnNewDataReadyEvent += NewDataReady;
                 _logger.Trace($"{_dataBus.Name} is injected");
                 _server = services.GetRequiredService<ICommandServerFactory>().CreateCommandStream(section.GetSection(key_server));
@@ -66,7 +66,7 @@ namespace MATSys.Plugins
             }
         }
 
-        public DeviceBase(ICommandServer server, IDataBus bus, IRecorder recorder)
+        public DeviceBase(ICommandServer server, INotifier bus, IRecorder recorder)
         {
             Name = $"{this.GetType().Name}_{this.GetHashCode().ToString("X2")}";
             _logger = NLog.LogManager.GetLogger(Name);
@@ -84,7 +84,7 @@ namespace MATSys.Plugins
 
             if (bus == null)
             {
-                _dataBus = new EmptyDataBus();
+                _dataBus = new EmptyNotifier();
                 _logger.Trace($"Null reference is detected, {_dataBus.Name} is injected");
             }
             else

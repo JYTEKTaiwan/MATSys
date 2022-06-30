@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace MATSys.Plugins
 {
-    internal sealed class NetMQDataBus : IDataBus
+    internal sealed class NetMQNotifier : INotifier
     {
         private PublisherSocket _pub = new PublisherSocket();
         private SubscriberSocket _sub = new SubscriberSocket();
@@ -14,9 +14,9 @@ namespace MATSys.Plugins
         private NetMQConfiguration? _config;
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public string Name => nameof(NetMQDataBus);
+        public string Name => nameof(NetMQNotifier);
 
-        public event IDataBus.NewDataEvent? OnNewDataReadyEvent;
+        public event INotifier.NewDataEvent? OnNewDataReadyEvent;
 
         private void CurrentDomain_ProcessExit(object? sender, EventArgs e)
         {
@@ -85,7 +85,7 @@ namespace MATSys.Plugins
             return _sub.ReceiveMultipartStrings()[1];
         }
 
-        ~NetMQDataBus()
+        ~NetMQNotifier()
         {
         }
 

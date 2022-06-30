@@ -4,15 +4,15 @@ using System.Threading.Channels;
 
 namespace MATSys.Plugins
 {
-    internal sealed class QueueDataBus : IDataBus
+    internal sealed class QueueNotifier : INotifier
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
         private Channel<string>? _ch;
         private QueueDataBusConfiguration? config;
 
-        public string Name => nameof(QueueDataBus);
+        public string Name => nameof(QueueNotifier);
 
-        public event IDataBus.NewDataEvent? OnNewDataReadyEvent;
+        public event INotifier.NewDataEvent? OnNewDataReadyEvent;
 
         public object? GetData(int timeoutInMilliseconds = 1000)
         {

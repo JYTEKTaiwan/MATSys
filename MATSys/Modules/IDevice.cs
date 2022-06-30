@@ -5,7 +5,7 @@
 
         delegate void NewDataReady(string jsonString);
         event NewDataReady? OnDataReady;
-        IDataBus DataBus { get; }
+        INotifier DataBus { get; }
         NLog.ILogger Logger { get; }
         IRecorder DataRecorder { get; }
         ICommandServer Server { get; }

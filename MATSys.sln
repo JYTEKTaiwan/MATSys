@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{A57D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreCommandServer", "plugins\CoreCommandServers\CoreCommandServer.csproj", "{5C5F306F-4894-467E-9D77-AE974E6E2AB6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreDataBus", "plugins\CoreDataBus\CoreDataBus.csproj", "{64F73B29-900F-4702-96C0-F99708B85441}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotifier", "plugins\CoreDataBus\CoreNotifier.csproj", "{64F73B29-900F-4702-96C0-F99708B85441}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSVRecorder", "plugins\CoreDataRecorder\CSVRecorder.csproj", "{0A3492ED-CCB2-4AD4-A627-6CBCDB0B9427}"
 EndProject

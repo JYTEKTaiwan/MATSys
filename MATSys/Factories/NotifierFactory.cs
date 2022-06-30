@@ -4,17 +4,17 @@ using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Factories
 {
-    public sealed class DataBusFactory : IDataBusFactory
+    public sealed class NotifierFactory : INotifuerFactory
     {
-        private const string prefix = "DataBus";
-        private readonly Type DefaultType = typeof(EmptyDataBus);
+        private const string prefix = "Notifier";
+        private readonly Type DefaultType = typeof(EmptyNotifier);
         public readonly IEnumerable<Type> _types;
-        public DataBusFactory(DependencyLoader loader)
+        public NotifierFactory(DependencyLoader loader)
         {
-            _types = loader.ListModuleTypes<IDataBus>();
+            _types = loader.ListModuleTypes<INotifier>();
         }
 
-        public IDataBus CreateDataBus(IConfigurationSection section)
+        public INotifier CreateDataBus(IConfigurationSection section)
         {
             try
             {
@@ -57,9 +57,9 @@ namespace MATSys.Factories
 
         }
 
-        private IDataBus CreateAndLoadInstance(Type defaultType, IConfigurationSection section)
+        private INotifier CreateAndLoadInstance(Type defaultType, IConfigurationSection section)
         {
-            var obj = (IDataBus)Activator.CreateInstance(defaultType)!;
+            var obj = (INotifier)Activator.CreateInstance(defaultType)!;
             obj.Load(section);
             return obj;
         }
