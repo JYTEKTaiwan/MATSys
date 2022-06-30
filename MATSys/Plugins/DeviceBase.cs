@@ -18,7 +18,7 @@ namespace MATSys.Plugins
         public const string cmd_execError = "EXEC_ERROR";
         private readonly Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
         private readonly ILogger _logger;
-        private readonly ICommandServer _server;
+        private readonly ITransceiver _server;
         private readonly IRecorder _dataRecorder;
         private readonly INotifier _dataBus;
         public volatile bool isRunning = false;
@@ -28,7 +28,7 @@ namespace MATSys.Plugins
 
         ILogger IDevice.Logger => _logger;
         IRecorder IDevice.DataRecorder => _dataRecorder;
-        ICommandServer IDevice.Server => _server;
+        ITransceiver IDevice.Server => _server;
         INotifier IDevice.DataBus => _dataBus;
         public string Name { get; }
         public IDevice Instance => this;
@@ -53,7 +53,7 @@ namespace MATSys.Plugins
                 _dataBus = services.GetRequiredService<INotifuerFactory>().CreateDataBus(section.GetSection(key_publisher));
                 _dataBus.OnNewDataReadyEvent += NewDataReady;
                 _logger.Trace($"{_dataBus.Name} is injected");
-                _server = services.GetRequiredService<ICommandServerFactory>().CreateCommandStream(section.GetSection(key_server));
+                _server = services.GetRequiredService<IITransceiverFactory>().CreateCommandStream(section.GetSection(key_server));
                 _logger.Trace($"{_server.Name} is injected");
                 _server.OnCommandReady += OnCommandDataReady; ;
                 methods = ParseSupportedMethods();
@@ -66,7 +66,7 @@ namespace MATSys.Plugins
             }
         }
 
-        public DeviceBase(ICommandServer server, INotifier bus, IRecorder recorder)
+        public DeviceBase(ITransceiver server, INotifier bus, IRecorder recorder)
         {
             Name = $"{this.GetType().Name}_{this.GetHashCode().ToString("X2")}";
             _logger = NLog.LogManager.GetLogger(Name);

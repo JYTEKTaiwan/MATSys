@@ -11,7 +11,7 @@ public class UT_DeviceBase
     [Category("Initialize")]
     public void CreateFromInterface()
     {
-        ICommandServer server = new EmptyCommandServer();
+        ITransceiver server = new EmptyTransceiver();
         INotifier bus = new EmptyNotifier();
         IRecorder recorder = new EmptyRecorder();
         IDevice dev = new NormalDevice(server, bus, recorder);
@@ -21,17 +21,17 @@ public class UT_DeviceBase
     [Category("Initialize")]
     public void CreateFromNullCommandServer()
     {
-        ICommandServer server = null!;
+        ITransceiver server = null!;
         INotifier bus = new EmptyNotifier();
         IRecorder recorder = new EmptyRecorder();
         IDevice dev = new NormalDevice(server, bus, recorder);
-        Assert.IsTrue(dev.Server.Name == nameof(EmptyCommandServer));
+        Assert.IsTrue(dev.Server.Name == nameof(EmptyTransceiver));
     }
     [Test]
     [Category("Initialize")]
     public void CreateFromNullDataBus()
     {
-        ICommandServer server = new EmptyCommandServer();
+        ITransceiver server = new EmptyTransceiver();
         INotifier bus = null!;
         IRecorder recorder = new EmptyRecorder();
         IDevice dev = new NormalDevice(server, bus, recorder);
@@ -41,7 +41,7 @@ public class UT_DeviceBase
     [Category("Initialize")]
     public void CreateFromNullDataRecorder()
     {
-        ICommandServer server = new EmptyCommandServer();
+        ITransceiver server = new EmptyTransceiver();
         INotifier bus = new EmptyNotifier();
         IRecorder recorder = null!;
         IDevice dev = new NormalDevice(server, bus, recorder);
@@ -53,7 +53,7 @@ public class UT_DeviceBase
         {
 
         }
-        public NormalDevice(ICommandServer server, INotifier bus, IRecorder recorder) : base(server, bus, recorder)
+        public NormalDevice(ITransceiver server, INotifier bus, IRecorder recorder) : base(server, bus, recorder)
         {
 
         }

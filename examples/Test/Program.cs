@@ -64,7 +64,7 @@ public class TestBase : DeviceBase
     {
     }
 
-    public TestBase(ICommandServer server, INotifier bus, IRecorder recorder) : base(server, bus, recorder)
+    public TestBase(ITransceiver server, INotifier bus, IRecorder recorder) : base(server, bus, recorder)
     {
     }
 

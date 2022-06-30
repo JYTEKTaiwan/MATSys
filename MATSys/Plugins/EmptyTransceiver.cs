@@ -2,16 +2,16 @@
 
 namespace MATSys.Plugins
 {
-    public sealed class EmptyCommandServer : ICommandServer
+    public sealed class EmptyTransceiver : ITransceiver
     {  
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
-        public string Name => nameof(EmptyCommandServer);
+        public string Name => nameof(EmptyTransceiver);
 
-        public event ICommandServer.CommandReadyEvent? OnCommandReady;
+        public event ITransceiver.CommandReadyEvent? OnCommandReady;
 
         public void Load(IConfigurationSection section)
         {
-            _logger.Info($"{nameof(EmptyCommandServer)} is initiated");
+            _logger.Info($"{nameof(EmptyTransceiver)} is initiated");
         }
 
         public  void StartService(CancellationToken token)

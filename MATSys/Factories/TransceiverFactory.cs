@@ -4,18 +4,18 @@ using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Factories
 {
-    public sealed class CommandServerFactory : ICommandServerFactory
+    public sealed class TransceiverFactory : ITransceiverFactory
     {
-        private const string prefix = "CommandServer";
-        private readonly Type DefaultType = typeof(EmptyCommandServer);        
+        private const string prefix = "Transceiver";
+        private readonly Type DefaultType = typeof(EmptyTransceiver);        
         public  readonly IEnumerable<Type> _types;
-        public CommandServerFactory(DependencyLoader loader)
+        public TransceiverFactory(DependencyLoader loader)
         {
            
-            _types = loader.ListModuleTypes<ICommandServer>();
+            _types = loader.ListModuleTypes<ITransceiver>();
         }
 
-        public ICommandServer CreateCommandStream(IConfigurationSection section)
+        public ITransceiver CreateCommandStream(IConfigurationSection section)
         {
             try
             {
@@ -57,9 +57,9 @@ namespace MATSys.Factories
             }
 
         }
-        private ICommandServer CreateAndLoadInstance(Type defaultType, IConfigurationSection section)
+        private ITransceiver CreateAndLoadInstance(Type defaultType, IConfigurationSection section)
         {
-            var obj = (ICommandServer)Activator.CreateInstance(defaultType)!;
+            var obj = (ITransceiver)Activator.CreateInstance(defaultType)!;
             obj.Load(section);
             return obj;
         }

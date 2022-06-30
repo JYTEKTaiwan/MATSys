@@ -8,7 +8,7 @@
         INotifier DataBus { get; }
         NLog.ILogger Logger { get; }
         IRecorder DataRecorder { get; }
-        ICommandServer Server { get; }
+        ITransceiver Server { get; }
 
         bool IsRunning { get; }
 

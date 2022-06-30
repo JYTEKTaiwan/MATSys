@@ -3,17 +3,17 @@ using NetMQ;
 
 namespace MATSys.Plugins
 {
-    internal sealed class NetMQCommandServer : ICommandServer
+    internal sealed class NetMQTransceiver : ITransceiver
     {
         private NetMQ.Sockets.RouterSocket _routerSocket = new NetMQ.Sockets.RouterSocket();
         private NetMQCommandStreamConfiguration? _config;
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public event ICommandServer.CommandReadyEvent? OnCommandReady;
+        public event ITransceiver.CommandReadyEvent? OnCommandReady;
 
         private CancellationTokenSource _localCts = new CancellationTokenSource();
 
-        public string Name => nameof(NetMQCommandServer);
+        public string Name => nameof(NetMQTransceiver);
 
         public void StartService(CancellationToken token)
         {

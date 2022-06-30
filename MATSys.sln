@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{37
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{A57D9273-7ECC-464C-A9FC-75B9A3379FA3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreCommandServer", "plugins\CoreCommandServers\CoreCommandServer.csproj", "{5C5F306F-4894-467E-9D77-AE974E6E2AB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreTransceiver", "plugins\CoreCommandServers\CoreTransceiver.csproj", "{5C5F306F-4894-467E-9D77-AE974E6E2AB6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotifier", "plugins\CoreDataBus\CoreNotifier.csproj", "{64F73B29-900F-4702-96C0-F99708B85441}"
 EndProject
