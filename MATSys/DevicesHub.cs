@@ -23,7 +23,7 @@ namespace MATSys
                     .ConfigureServices(services => services
                     .AddSingleton<IDeviceFactory, DeviceFactory>()
                     .AddSingleton<IRecorderFactory, RecorderFactory>()
-                    .AddSingleton<INotifuerFactory, NotifierFactory>()
+                    .AddSingleton<INotifierFactory, NotifierFactory>()
                     .AddSingleton<ITransceiverFactory, TransceiverFactory>()
                     .AddSingleton<DependencyLoader>()
                     )
