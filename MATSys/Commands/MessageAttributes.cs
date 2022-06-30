@@ -7,7 +7,7 @@ namespace MATSys.Commands
     /// Attribute that represent the method information for MATSys to use
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    public sealed class MATSysCommandAttribute : Attribute
+    public sealed class MessageAttribute : Attribute
     {
         /// <summary>
         /// Name of the MATSysCommand object
@@ -23,7 +23,7 @@ namespace MATSys.Commands
         /// </summary>
         /// <param name="name">name</param>
         /// <param name="t"></param>
-        public MATSysCommandAttribute(string name, Type t)
+        public MessageAttribute(string name, Type t)
         {
             Name = name;
             CommandType = t;

@@ -63,14 +63,14 @@ public class UT_DeviceBase
 
         }
 
-        [MATSysCommand("Hi", typeof(Command))]
+        [Message("Hi", typeof(Command))]
         public string Hello()
         {
             return "WORLD";
 
         }
 
-        [MATSysCommand("Exception", typeof(Command))]
+        [Message("Exception", typeof(Command))]
         public void Exception()
         {
 
@@ -78,7 +78,7 @@ public class UT_DeviceBase
 
 
         }
-        [MATSysCommand("WrongArgs", typeof(Command<int>))]
+        [Message("WrongArgs", typeof(Command<int>))]
         public void WrongArgs()
         {
 

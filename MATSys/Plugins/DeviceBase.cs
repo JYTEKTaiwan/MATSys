@@ -53,7 +53,7 @@ namespace MATSys.Plugins
                 _dataBus = services.GetRequiredService<INotifuerFactory>().CreateDataBus(section.GetSection(key_publisher));
                 _dataBus.OnNewDataReadyEvent += NewDataReady;
                 _logger.Trace($"{_dataBus.Name} is injected");
-                _server = services.GetRequiredService<IITransceiverFactory>().CreateCommandStream(section.GetSection(key_server));
+                _server = services.GetRequiredService<ITransceiverFactory>().CreateCommandStream(section.GetSection(key_server));
                 _logger.Trace($"{_server.Name} is injected");
                 _server.OnCommandReady += OnCommandDataReady; ;
                 methods = ParseSupportedMethods();
@@ -97,7 +97,7 @@ namespace MATSys.Plugins
 
             if (server == null)
             {
-                _server = new EmptyCommandServer();
+                _server = new EmptyTransceiver();
                 _logger.Trace($"Null reference is detected, {_server.Name} is injected");
             }
             else
@@ -120,9 +120,9 @@ namespace MATSys.Plugins
         {
             var methodlist = GetType().GetMethods().Where(x =>
             {
-                return x.GetCustomAttributes<MATSysCommandAttribute>(false).Count() > 0;
+                return x.GetCustomAttributes<MessageAttribute>(false).Count() > 0;
             }).ToArray();
-            return methodlist.ToDictionary(x => x.GetCustomAttribute<MATSysCommandAttribute>()!.Name);
+            return methodlist.ToDictionary(x => x.GetCustomAttribute<MessageAttribute>()!.Name);
         }
 
         private string OnCommandDataReady(object sender, string commandObjectInJson)
@@ -136,7 +136,7 @@ namespace MATSys.Plugins
                 if (methods.ContainsKey(parsedName))
                 {
                     var method = methods[parsedName];
-                    var att = method.GetCustomAttribute<MATSysCommandAttribute>();
+                    var att = method.GetCustomAttribute<MessageAttribute>();
                     var cmd = JsonConvert.DeserializeObject(commandObjectInJson, att!.CommandType) as ICommand;
                     _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
 
@@ -253,10 +253,10 @@ namespace MATSys.Plugins
 
         public virtual IEnumerable<string> PrintCommands()
         {
-            var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<MATSysCommandAttribute>().Count() > 0);
+            var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<MessageAttribute>().Count() > 0);
             foreach (var item in cmds)
             {
-                yield return item.GetCustomAttribute<MATSysCommandAttribute>()!.GetJsonString();
+                yield return item.GetCustomAttribute<MessageAttribute>()!.GetJsonString();
             }
         }
 
