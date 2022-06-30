@@ -2,7 +2,7 @@
 
 namespace MATSys.Factories
 {
-    public interface IDataRecorderFactory
+    public interface IRecorderFactory
     {
         IRecorder CreateRecorder(IConfigurationSection section);
         

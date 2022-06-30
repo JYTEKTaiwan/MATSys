@@ -48,7 +48,7 @@ namespace MATSys.Plugins
                 _logger = NLog.LogManager.GetLogger(Name);
 
                 Load(section);
-                _dataRecorder = services.GetRequiredService<IDataRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
+                _dataRecorder = services.GetRequiredService<IRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
                 _logger.Trace($"{_dataRecorder.Name} is injected");
                 _dataBus = services.GetRequiredService<IDataBusFactory>().CreateDataBus(section.GetSection(key_publisher));
                 _dataBus.OnNewDataReadyEvent += NewDataReady;

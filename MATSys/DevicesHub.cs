@@ -22,7 +22,7 @@ namespace MATSys
                 host = Host.CreateDefaultBuilder()
                     .ConfigureServices(services => services
                     .AddSingleton<IDeviceFactory, DeviceFactory>()
-                    .AddSingleton<IDataRecorderFactory, DataRecorderFactory>()
+                    .AddSingleton<IRecorderFactory, RecorderFactory>()
                     .AddSingleton<IDataBusFactory, DataBusFactory>()
                     .AddSingleton<ICommandServerFactory, CommandServerFactory>()
                     .AddSingleton<DependencyLoader>()

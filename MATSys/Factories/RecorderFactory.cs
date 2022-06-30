@@ -4,13 +4,13 @@ using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Factories
 {
-    public sealed class DataRecorderFactory : IDataRecorderFactory
+    public sealed class RecorderFactory : IRecorderFactory
     {
 
-        private const string prefix = "DataRecorder";
+        private const string prefix = "Recorder";
         private readonly Type DefaultType = typeof(EmptyRecorder);
         public readonly IEnumerable<Type> _types;
-        public DataRecorderFactory(DependencyLoader loder)
+        public RecorderFactory(DependencyLoader loder)
         {
             _types = loder.ListModuleTypes<IRecorder>();
         }
