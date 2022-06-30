@@ -9,12 +9,12 @@ namespace UT_MATSys;
 public class UT_DataReocrderFactory
 {
     [Test]
-    [Category("DataRecorder")]
+    [Category("Recorder")]
     public void CreateFromFile()
     {
         Assert.Catch<FileNotFoundException>(() => 
         {
-            var jsonStr = @"{ ""DataRecorder"": {""Type"": ""csv""}
+            var jsonStr = @"{ ""Recorder"": {""Type"": ""csv""}
         
         }";
             var ms = new MemoryStream(Encoding.ASCII.GetBytes(jsonStr));
@@ -22,7 +22,7 @@ public class UT_DataReocrderFactory
             var config = cb.AddJsonStream(ms).Build();
             ms.Close();
             var fac = new RecorderFactory(new DependencyLoader("",""));
-            var recorder = fac.CreateRecorder(config.GetSection("DataRecorder"));
+            var recorder = fac.CreateRecorder(config.GetSection("Recorder"));
             recorder.StartService(new CancellationToken());
             recorder.StopService();
         });
