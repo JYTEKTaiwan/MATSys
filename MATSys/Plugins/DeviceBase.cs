@@ -11,9 +11,9 @@ namespace MATSys.Plugins
 {
     public abstract class DeviceBase : IDevice
     {
-        private const string key_dataRecorder = "DataRecorder";
-        private const string key_publisher = "DataBus";
-        private const string key_server = "CommandServer";
+        private const string key_dataRecorder = "Recorder";
+        private const string key_publisher = "Notifier";
+        private const string key_server = "Transceiver";
         public const string cmd_notFound = "NOTFOUND";
         public const string cmd_execError = "EXEC_ERROR";
         private readonly Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
@@ -50,10 +50,10 @@ namespace MATSys.Plugins
                 Load(section);
                 _dataRecorder = services.GetRequiredService<IRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
                 _logger.Trace($"{_dataRecorder.Name} is injected");
-                _dataBus = services.GetRequiredService<INotifierFactory>().CreateDataBus(section.GetSection(key_publisher));
+                _dataBus = services.GetRequiredService<INotifierFactory>().CreateNotifier(section.GetSection(key_publisher));
                 _dataBus.OnNewDataReadyEvent += NewDataReady;
                 _logger.Trace($"{_dataBus.Name} is injected");
-                _server = services.GetRequiredService<ITransceiverFactory>().CreateCommandStream(section.GetSection(key_server));
+                _server = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(section.GetSection(key_server));
                 _logger.Trace($"{_server.Name} is injected");
                 _server.OnCommandReady += OnCommandDataReady; ;
                 methods = ParseSupportedMethods();
@@ -120,9 +120,9 @@ namespace MATSys.Plugins
         {
             var methodlist = GetType().GetMethods().Where(x =>
             {
-                return x.GetCustomAttributes<MessageAttribute>(false).Count() > 0;
+                return x.GetCustomAttributes<PrortotypeAttribute>(false).Count() > 0;
             }).ToArray();
-            return methodlist.ToDictionary(x => x.GetCustomAttribute<MessageAttribute>()!.Name);
+            return methodlist.ToDictionary(x => x.GetCustomAttribute<PrortotypeAttribute>()!.Name);
         }
 
         private string OnCommandDataReady(object sender, string commandObjectInJson)
@@ -136,7 +136,7 @@ namespace MATSys.Plugins
                 if (methods.ContainsKey(parsedName))
                 {
                     var method = methods[parsedName];
-                    var att = method.GetCustomAttribute<MessageAttribute>();
+                    var att = method.GetCustomAttribute<PrortotypeAttribute>();
                     var cmd = JsonConvert.DeserializeObject(commandObjectInJson, att!.CommandType) as ICommand;
                     _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
 
@@ -253,10 +253,10 @@ namespace MATSys.Plugins
 
         public virtual IEnumerable<string> PrintCommands()
         {
-            var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<MessageAttribute>().Count() > 0);
+            var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<PrortotypeAttribute>().Count() > 0);
             foreach (var item in cmds)
             {
-                yield return item.GetCustomAttribute<MessageAttribute>()!.GetJsonString();
+                yield return item.GetCustomAttribute<PrortotypeAttribute>()!.GetJsonString();
             }
         }
 

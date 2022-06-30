@@ -15,7 +15,7 @@ namespace MATSys.Factories
             _types = loader.ListModuleTypes<ITransceiver>();
         }
 
-        public ITransceiver CreateCommandStream(IConfigurationSection section)
+        public ITransceiver CreateTransceiver(IConfigurationSection section)
         {
             try
             {

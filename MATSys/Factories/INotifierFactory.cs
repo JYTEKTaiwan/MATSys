@@ -4,6 +4,6 @@ namespace MATSys.Factories
 {
     public interface INotifierFactory
     {
-        INotifier CreateDataBus(IConfigurationSection section);
+        INotifier CreateNotifier(IConfigurationSection section);
     }
 }

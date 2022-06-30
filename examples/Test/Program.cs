@@ -74,7 +74,7 @@ public class TestBase : DeviceBase
         public double Number { get; set; } = 0.0;
     }
 
-    [Message("Test", typeof(Command<Data>))]
+    [Prortotype("Test", typeof(Command<Data>))]
     public string TAAest(Data a)
     {
         Instance.DataRecorder.Write(a);
@@ -82,7 +82,7 @@ public class TestBase : DeviceBase
         return a.Date + "---" + a.Number.ToString();
     }
 
-    [Message("Tes1t", typeof(Command<string>))]
+    [Prortotype("Tes1t", typeof(Command<string>))]
     public string TA2Aest(string c)
     {
         return c;

@@ -14,7 +14,7 @@ namespace MATSys.Factories
             _types = loader.ListModuleTypes<INotifier>();
         }
 
-        public INotifier CreateDataBus(IConfigurationSection section)
+        public INotifier CreateNotifier(IConfigurationSection section)
         {
             try
             {

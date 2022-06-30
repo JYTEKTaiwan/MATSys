@@ -4,6 +4,6 @@ namespace MATSys.Factories
 {
     public interface ITransceiverFactory
     {
-        ITransceiver CreateCommandStream(IConfigurationSection section);
+        ITransceiver CreateTransceiver(IConfigurationSection section);
     }
 }
