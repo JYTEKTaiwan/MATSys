@@ -5,10 +5,10 @@
 
         delegate void NewDataReady(string jsonString);
         event NewDataReady? OnDataReady;
-        INotifier DataBus { get; }
+        INotifier Notifier { get; }
         NLog.ILogger Logger { get; }
-        IRecorder DataRecorder { get; }
-        ITransceiver Server { get; }
+        IRecorder Recorder { get; }
+        ITransceiver Transceiver { get; }
 
         bool IsRunning { get; }
 

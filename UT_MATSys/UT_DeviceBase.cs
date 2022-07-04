@@ -25,7 +25,7 @@ public class UT_DeviceBase
         INotifier bus = new EmptyNotifier();
         IRecorder recorder = new EmptyRecorder();
         IDevice dev = new NormalDevice(null, server, bus, recorder);
-        Assert.IsTrue(dev.Server.Name == nameof(EmptyTransceiver));
+        Assert.IsTrue(dev.Transceiver.Name == nameof(EmptyTransceiver));
     }
     [Test]
     [Category("Initialize")]
@@ -35,7 +35,7 @@ public class UT_DeviceBase
         INotifier bus = null!;
         IRecorder recorder = new EmptyRecorder();
         IDevice dev = new NormalDevice(null, server, bus, recorder);
-        Assert.IsTrue(dev.DataBus.Name == nameof(EmptyNotifier));
+        Assert.IsTrue(dev.Notifier.Name == nameof(EmptyNotifier));
     }
     [Test]
     [Category("Initialize")]
@@ -45,7 +45,7 @@ public class UT_DeviceBase
         INotifier bus = new EmptyNotifier();
         IRecorder recorder = null!;
         IDevice dev = new NormalDevice(null,server, bus, recorder);
-        Assert.IsTrue(dev.DataRecorder.Name == nameof(EmptyRecorder));
+        Assert.IsTrue(dev.Recorder.Name == nameof(EmptyRecorder));
     }
     private class NormalDevice : DeviceBase
     {

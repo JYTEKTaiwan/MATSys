@@ -18,18 +18,18 @@ namespace MATSys.Plugins
         public const string cmd_execError = "EXEC_ERROR";
         private readonly Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
         private readonly ILogger _logger;
-        private readonly ITransceiver _server;
-        private readonly IRecorder _dataRecorder;
-        private readonly INotifier _dataBus;
+        private readonly ITransceiver transceiverr;
+        private readonly IRecorder _recorder;
+        private readonly INotifier _notifier;
         public volatile bool isRunning = false;
         private object _config;
         public bool IsRunning => isRunning;
         public event IDevice.NewDataReady? OnDataReady;
 
         ILogger IDevice.Logger => _logger;
-        IRecorder IDevice.DataRecorder => _dataRecorder;
-        ITransceiver IDevice.Server => _server;
-        INotifier IDevice.DataBus => _dataBus;
+        IRecorder IDevice.Recorder => _recorder;
+        ITransceiver IDevice.Transceiver => transceiverr;
+        INotifier IDevice.Notifier => _notifier;
         public string Name { get; }
         public IDevice Instance => this;
 
@@ -48,14 +48,14 @@ namespace MATSys.Plugins
                 _logger = NLog.LogManager.GetLogger(Name);
                 
                 Load(section);
-                _dataRecorder = services.GetRequiredService<IRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
-                _logger.Trace($"{_dataRecorder.Name} is injected");
-                _dataBus = services.GetRequiredService<INotifierFactory>().CreateNotifier(section.GetSection(key_publisher));
-                _dataBus.OnNewDataReadyEvent += NewDataReady;
-                _logger.Trace($"{_dataBus.Name} is injected");
-                _server = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(section.GetSection(key_server));
-                _logger.Trace($"{_server.Name} is injected");
-                _server.OnCommandReady += OnCommandDataReady; ;
+                _recorder = services.GetRequiredService<IRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
+                _logger.Trace($"{_recorder.Name} is injected");
+                _notifier = services.GetRequiredService<INotifierFactory>().CreateNotifier(section.GetSection(key_publisher));
+                _notifier.OnNewDataReadyEvent += NewDataReady;
+                _logger.Trace($"{_notifier.Name} is injected");
+                transceiverr = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(section.GetSection(key_server));
+                _logger.Trace($"{transceiverr.Name} is injected");
+                transceiverr.OnCommandReady += OnCommandDataReady; ;
                 methods = ParseSupportedMethods();
                 _logger.Info($"{Name} base class initialization is completed");
             }
@@ -78,40 +78,40 @@ namespace MATSys.Plugins
             }
             if (recorder == null)
             {
-                _dataRecorder = new EmptyRecorder();
-                _logger.Trace($"Null reference is detected, {_dataRecorder.Name} is injected");
+                _recorder = new EmptyRecorder();
+                _logger.Trace($"Null reference is detected, {_recorder.Name} is injected");
             }
             else
             {
-                _dataRecorder = recorder;
-                _logger.Trace($"{_dataRecorder.Name} is injected");
+                _recorder = recorder;
+                _logger.Trace($"{_recorder.Name} is injected");
             }
 
             if (bus == null)
             {
-                _dataBus = new EmptyNotifier();
-                _logger.Trace($"Null reference is detected, {_dataBus.Name} is injected");
+                _notifier = new EmptyNotifier();
+                _logger.Trace($"Null reference is detected, {_notifier.Name} is injected");
             }
             else
             {
-                _dataBus = bus;
-                _logger.Trace($"{_dataBus.Name} is injected");
+                _notifier = bus;
+                _logger.Trace($"{_notifier.Name} is injected");
             }
 
-            _dataBus.OnNewDataReadyEvent += NewDataReady;
+            _notifier.OnNewDataReadyEvent += NewDataReady;
 
             if (server == null)
             {
-                _server = new EmptyTransceiver();
-                _logger.Trace($"Null reference is detected, {_server.Name} is injected");
+                transceiverr = new EmptyTransceiver();
+                _logger.Trace($"Null reference is detected, {transceiverr.Name} is injected");
             }
             else
             {
-                _server = server;
-                _logger.Trace($"{_server.Name} is injected");
+                transceiverr = server;
+                _logger.Trace($"{transceiverr.Name} is injected");
             }
 
-            _server.OnCommandReady += OnCommandDataReady; ;
+            transceiverr.OnCommandReady += OnCommandDataReady; ;
             methods = ParseSupportedMethods();
             _logger.Info($"{Name} base class initialization is completed");
         }
@@ -171,13 +171,13 @@ namespace MATSys.Plugins
                 try
                 {
                     _logger.Trace("Starts the DataRecorder");
-                    _dataRecorder.StartService(token);
+                    _recorder.StartService(token);
 
                     _logger.Trace("Starts the Publisher");
-                    _dataBus.StartService(token);
+                    _notifier.StartService(token);
 
                     _logger.Trace("Starts the CommandServer");
-                    _server.StartService(token);
+                    transceiverr.StartService(token);
 
                     isRunning = true;
                     _logger.Info("Starts service");
@@ -197,13 +197,13 @@ namespace MATSys.Plugins
                 if (isRunning)
                 {
                     _logger.Trace("Stops the CommandStream");
-                    _server.StopService();
+                    transceiverr.StopService();
 
                     _logger.Trace("Stops the DataRecorder");
-                    _dataRecorder.StopService();
+                    _recorder.StopService();
 
                     _logger.Trace("Stops the Publisher");
-                    _dataBus.StopService();
+                    _notifier.StopService();
                     isRunning = false;
                     _logger.Info("Stops service");
                 }
