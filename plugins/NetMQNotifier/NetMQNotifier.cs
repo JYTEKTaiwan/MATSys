@@ -77,13 +77,13 @@ namespace MATSys.Plugins
         {
             _config = section.Get<NetMQConfiguration>();
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-            _logger.Info("NetMQPublisher is initiated");
+            _logger.Info("NetMQNotifier is initiated");
         }
         public void LoadFromObject(object configuration)
         {
             _config = configuration as NetMQConfiguration;
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
-            _logger.Info("NetMQPublisher is initiated");
+            _logger.Info("NetMQNotifier is initiated");
         }
 
         public object GetData(int timeoutInMilliseconds)

@@ -14,7 +14,7 @@ public class UT_DeviceBase
         ITransceiver server = new EmptyTransceiver();
         INotifier bus = new EmptyNotifier();
         IRecorder recorder = new EmptyRecorder();
-        IDevice dev = new NormalDevice(server, bus, recorder);
+        IDevice dev = new NormalDevice(null, server, bus, recorder);
         Assert.IsTrue(dev != null);
     }
     [Test]
@@ -24,7 +24,7 @@ public class UT_DeviceBase
         ITransceiver server = null!;
         INotifier bus = new EmptyNotifier();
         IRecorder recorder = new EmptyRecorder();
-        IDevice dev = new NormalDevice(server, bus, recorder);
+        IDevice dev = new NormalDevice(null, server, bus, recorder);
         Assert.IsTrue(dev.Server.Name == nameof(EmptyTransceiver));
     }
     [Test]
@@ -34,7 +34,7 @@ public class UT_DeviceBase
         ITransceiver server = new EmptyTransceiver();
         INotifier bus = null!;
         IRecorder recorder = new EmptyRecorder();
-        IDevice dev = new NormalDevice(server, bus, recorder);
+        IDevice dev = new NormalDevice(null, server, bus, recorder);
         Assert.IsTrue(dev.DataBus.Name == nameof(EmptyNotifier));
     }
     [Test]
@@ -44,7 +44,7 @@ public class UT_DeviceBase
         ITransceiver server = new EmptyTransceiver();
         INotifier bus = new EmptyNotifier();
         IRecorder recorder = null!;
-        IDevice dev = new NormalDevice(server, bus, recorder);
+        IDevice dev = new NormalDevice(null,server, bus, recorder);
         Assert.IsTrue(dev.DataRecorder.Name == nameof(EmptyRecorder));
     }
     private class NormalDevice : DeviceBase
@@ -53,9 +53,9 @@ public class UT_DeviceBase
         {
 
         }
-        public NormalDevice(ITransceiver server, INotifier bus, IRecorder recorder) : base(server, bus, recorder)
-        {
 
+        public NormalDevice(object option, ITransceiver server, INotifier bus, IRecorder recorder) : base(option, server, bus, recorder)
+        {
         }
 
         public override void Load(IConfigurationSection section)
@@ -87,13 +87,16 @@ public class UT_DeviceBase
 
         }
 
+        public override void LoadFromObject(object configuration)
+        {
+        }
     }
 
     [Test]
     [Category("StartStop")]
     public void StopBeforeStart()
     {
-        IDevice dev = new NormalDevice(null!, null!, null!);
+        IDevice dev = new NormalDevice(null!,null!, null!, null!);
         dev.StopService();
         Assert.IsTrue(!dev.IsRunning);
     }
@@ -103,7 +106,7 @@ public class UT_DeviceBase
     public void StartMultipleTimes()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null!, null!, null!);
+        IDevice dev = new NormalDevice(null!,null!, null!, null!);
         dev.StartService(cts.Token);
         dev.StartService(cts.Token);
         Assert.IsTrue(dev.IsRunning);
@@ -113,7 +116,7 @@ public class UT_DeviceBase
     public void StopMultipleTimes()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null!, null!, null!);
+        IDevice dev = new NormalDevice(null!, null!, null!, null!);
         dev.StartService(cts.Token);
         dev.StopService();
         dev.StopService();
@@ -124,7 +127,7 @@ public class UT_DeviceBase
     public void ExecuteInString()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null!, null!, null!);
+        IDevice dev = new NormalDevice(null!, null!, null!, null!);
         dev.StartService(cts.Token);
         var res = dev.Execute(Newtonsoft.Json.JsonConvert.SerializeObject(CommandBase.Create("Hi")));
         dev.StopService();
@@ -135,7 +138,7 @@ public class UT_DeviceBase
     public void ExecuteInCommand()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null!, null!, null!);
+        IDevice dev = new NormalDevice(null!, null!, null!, null!);
         dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("Hi"));
         dev.StopService();
@@ -146,7 +149,7 @@ public class UT_DeviceBase
     public void ExecuteWhenCommandNotFound()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null!, null!, null!);
+        IDevice dev = new NormalDevice(null!, null!, null!, null!);
         dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("HO"));
         dev.StopService();
@@ -157,7 +160,7 @@ public class UT_DeviceBase
     public void ExecuteWhenCommandNotFoundInString()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null!, null!, null!);
+        IDevice dev = new NormalDevice(null!, null!, null!, null!);
         dev.StartService(cts.Token);
         var res = dev.Execute(Newtonsoft.Json.JsonConvert.SerializeObject(CommandBase.Create("HO")));
         dev.StopService();
@@ -168,7 +171,7 @@ public class UT_DeviceBase
     public void ExecuteThrowExceptionInMethod()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null!, null!, null!);
+        IDevice dev = new NormalDevice(null!, null!, null!, null!);
         dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("Exception"));
         dev.StopService();
@@ -179,7 +182,7 @@ public class UT_DeviceBase
     public void ExecuteWrongArguments()
     {
         var cts = new CancellationTokenSource();
-        IDevice dev = new NormalDevice(null!, null!, null!);
+        IDevice dev = new NormalDevice(null!, null!, null!, null!);
         dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("WrongArgs", 1));
         dev.StopService();
