@@ -23,10 +23,9 @@ public class DependencyLoader
         var modTemp = config.GetValue<string>("ModulesFolder");
         ModulesFolder = string.IsNullOrEmpty(modTemp) ? DefaultPathInfo.ModulesFolder : modTemp;
     }
-    public DependencyLoader(string modFolder, string libFolder)
+    public DependencyLoader(string modFolder)
     {
         ModulesFolder = string.IsNullOrEmpty(modFolder) ? DefaultPathInfo.ModulesFolder : modFolder;
-
     }
 
     private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
