@@ -62,7 +62,7 @@ namespace MATSys.Plugins
             catch (Exception ex)
             {
                 _logger?.Error(ex.Message);
-                throw new Exception($"Initialization of DeviceBase failed", ex);
+                 throw new Exception($"Initialization of DeviceBase failed", ex);
             }
         }
 

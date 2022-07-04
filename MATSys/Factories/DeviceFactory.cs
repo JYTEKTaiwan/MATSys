@@ -19,6 +19,7 @@ namespace MATSys.Factories
     
         public IDevice CreateDevice(DeviceInformation info)
         {
+            var f = _services.GetRequiredService<IConfiguration>();
             return (IDevice)Activator.CreateInstance(info.DeviceType!, new object[] { _services, info.Name })!;
         }
     }

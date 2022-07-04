@@ -1,73 +1,73 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <BaseOutputPath>..\bin\</BaseOutputPath>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
-    <Authors>Way Lin</Authors>
-    <Company>JYTEK TAIWAN CORP.</Company>
-    <Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
-    <PackageIcon>JYTek.png</PackageIcon>
-    
-	  <VersionPrefix>1.1.0</VersionPrefix>
-	  <RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/tree/master/Core</RepositoryUrl>
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<BaseOutputPath>..\bin\</BaseOutputPath>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+		<Authors>Way Lin</Authors>
+		<Company>JYTEK TAIWAN CORP.</Company>
+		<Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
+		<PackageIcon>JYTek.png</PackageIcon>
 
-	  <PackageReadmeFile>README.md</PackageReadmeFile>
-	  <LangVersion>10.0</LangVersion>
-	  <Deterministic>False</Deterministic>
-	  <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+		<VersionPrefix>1.1.1</VersionPrefix>
+		<RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/tree/master/Core</RepositoryUrl>
 
-  </PropertyGroup>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<LangVersion>10.0</LangVersion>
+		<Deterministic>False</Deterministic>
+		<PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
-    <Deterministic>False</Deterministic>
-  </PropertyGroup>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
-    <Deterministic>False</Deterministic>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0|AnyCPU'">
+		<Deterministic>False</Deterministic>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-    <Deterministic>False</Deterministic>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net6.0|AnyCPU'">
+		<Deterministic>False</Deterministic>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-    <Deterministic>False</Deterministic>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+		<Deterministic>False</Deterministic>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Include="..\icon\JYTek.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+		<Deterministic>False</Deterministic>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="NLog" Version="5.0.0" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="5.0.0" />
-	  <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" PrivateAssets="all" />
-	  <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
-        <PackageReference Include="System.Runtime.Loader" Version="4.3.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Include="..\icon\JYTek.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="config\appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="NLog" Version="5.0.0" />
+		<PackageReference Include="NLog.Extensions.Logging" Version="5.0.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.1" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="config\appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
 
 </Project>

@@ -24,6 +24,9 @@
     <Reference Include="MATSys">
       <HintPath>..\..\bin\Debug\net6.0\MATSys.dll</HintPath>
     </Reference>
+    <Reference Include="TestDevice">
+      <HintPath>..\..\plugins\TestDevice\bin\Debug\net6.0\TestDevice.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

@@ -33,11 +33,11 @@ Task.Run(() =>
 var s = new NetMQ.Sockets.DealerSocket();
 s.Connect("tcp://127.0.0.1:1234");
 for (int i = 0; i < 10; i++)
-{
+{ 
     //Thread.Sleep();
-    s.SendFrame(JsonConvert.SerializeObject(CommandBase.Create<TestBase.Data>
+    s.SendFrame(JsonConvert.SerializeObject(CommandBase.Create<TestDevice.TestDevice.Data>
         ("Test",
-        new TestBase.Data() { Date = DateTime.Now.ToString(), Number = new Random().NextDouble() })));
+        new TestDevice.TestDevice.Data() { Date = DateTime.Now.ToString(), Number = new Random().NextDouble() })));
     //var a = hub.Devices["Dev1"].DataBus.GetData();
     //Console.WriteLine($"{a}");
 }
@@ -57,44 +57,6 @@ public class AnotherTest : DeviceBase
     {
     }
 
-    public override void LoadFromObject(object configuration)
-    {
-    }
-}
-
-public class TestBase : DeviceBase
-{
-    public TestBase(IServiceProvider services, string configurationKey) : base(services, configurationKey)
-    {
-    }
-
-    public TestBase(object option, ITransceiver server, INotifier bus, IRecorder recorder) : base(option,server, bus, recorder)
-    {
-    }
-
-    public class Data
-    {
-        public string Date { get; set; } = "";
-        public double Number { get; set; } = 0.0;
-    }
-
-    [Prototype("Test", typeof(Command<Data>))]
-    public string TAAest(Data a)
-    {
-        Instance.DataRecorder.Write(a);
-        Instance.DataBus.Publish(a);
-        return a.Date + "---" + a.Number.ToString();
-    }
-
-    [Prototype("Tes1t", typeof(Command<string>))]
-    public string TA2Aest(string c)
-    {
-        return c;
-    }
-
-    public override void Load(IConfigurationSection section)
-    {
-    }
     public override void LoadFromObject(object configuration)
     {
     }

@@ -49,7 +49,6 @@ namespace MATSys
                 {                    
                     //start the host and delay 500ms
                     host.RunAsync().Wait(500);
-                    host.Services.GetService<DependencyLoader>();
                     var devFactory = host.Services.GetRequiredService<IDeviceFactory>() as DeviceFactory;
                     foreach (var item in devFactory!.DeviceInfos)
                     {

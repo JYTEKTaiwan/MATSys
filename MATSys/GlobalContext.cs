@@ -21,11 +21,13 @@ public class DependencyLoader
 
         _config = config;
         var modTemp = config.GetValue<string>("ModulesFolder");
-        ModulesFolder = string.IsNullOrEmpty(modTemp) ? DefaultPathInfo.ModulesFolder : modTemp;
+        bool wrongDirectory= string.IsNullOrEmpty(modTemp)||!Directory.Exists(modTemp);
+        ModulesFolder = wrongDirectory ? DefaultPathInfo.ModulesFolder : modTemp;
     }
     public DependencyLoader(string modFolder)
     {
-        ModulesFolder = string.IsNullOrEmpty(modFolder) ? DefaultPathInfo.ModulesFolder : modFolder;
+        bool wrongDirectory = string.IsNullOrEmpty(modFolder) || !Directory.Exists(modFolder);
+        ModulesFolder = wrongDirectory ? DefaultPathInfo.ModulesFolder : modFolder;
     }
 
     private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
@@ -53,7 +55,6 @@ public class DependencyLoader
 
     public IEnumerable<Type> ListModuleTypes<T>() where T : IModule
     {
-        //Find all assemblies inherited from IDataRecorder
         foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
         {
 #if NET6_0_OR_GREATER
@@ -61,7 +62,7 @@ public class DependencyLoader
             var assem = loader.LoadFromAssemblyPath(item);
 #endif
 #if NETSTANDARD2_0_OR_GREATER
-var assem=Assembly.LoadFile(item);
+            var assem = Assembly.LoadFile(item);
 #endif
             //load dependent assemblies        
             var types = assem.GetTypes().Where
@@ -98,48 +99,67 @@ var assem=Assembly.LoadFile(item);
         var info = DeviceInformation.Empty;
 
         bool isModFound = false;
-        foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
+        if (Directory.Exists(Path.GetFullPath(ModulesFolder)))
         {
-#if NET6_0_OR_GREATER
-            var loader = new PluginLoader(item);
-            var assem = loader.LoadFromAssemblyPath(item);
-#endif
-#if NETSTANDARD2_0_OR_GREATER
-var assem=Assembly.LoadFile(item);
-#endif
-            var types = assem.GetTypes().Where
-                (x => x.Name == searchKey && x.GetInterface(typeof(IDevice).FullName!) != null);
-            if (types.Count() > 0)
-            {
-                info = new DeviceInformation(types.First(), kvPair.Value);
-                isModFound = true;
-                break;
-            }
-            else
-            {
-                continue;
-            }
-        }
 
-        if (!isModFound)
-        {
-            foreach (var item in AppDomain.CurrentDomain.GetAssemblies())
+            //Search in the ModulesFolder
+            foreach (var item in Directory.GetFiles(Path.GetFullPath(ModulesFolder), "*.dll"))
             {
-                var types = item.GetTypes().Where
+        #if NET6_0_OR_GREATER
+                    var loader = new PluginLoader(item);
+                    var assem = loader.LoadFromAssemblyPath(item);
+        #endif
+
+        #if NETSTANDARD2_0_OR_GREATER
+                    var assem = Assembly.LoadFile(item);
+        #endif
+
+                var types = assem.GetTypes().Where
                     (x => x.Name == searchKey && x.GetInterface(typeof(IDevice).FullName!) != null);
                 if (types.Count() > 0)
-                {
-                    info = new DeviceInformation(types.First(), kvPair.Value);
+                {                    
                     isModFound = true;
-                    break;
+                    info= new DeviceInformation(types.First(), kvPair.Value);
                 }
                 else
                 {
                     continue;
                 }
             }
+
+            //search base directoy if no modules were found is the ModulesFolder
+            if (!isModFound)
+            {
+                info= SearchDeviceInBaseDirectory(searchKey, kvPair.Value);
+            }
         }
-        return isModFound ? info : DeviceInformation.Empty;
+        else
+        {
+            //ModulesFolder is not exists, search BaseDirectory instead
+            info =SearchDeviceInBaseDirectory(searchKey, kvPair.Value);
+        }
+        return info;
+    }
+    private DeviceInformation SearchDeviceInBaseDirectory(string key, string value)
+    {
+        bool isModFound = false;
+        foreach (var item in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            var types = item.GetTypes().Where
+                (x => x.Name == key && x.GetInterface(typeof(IDevice).FullName!) != null);
+            if (types.Count() > 0)
+            {
+                isModFound = true;
+                return new DeviceInformation(types.First(), value);
+            }
+            else
+            {
+                continue;
+            }
+        }
+        return DeviceInformation.Empty;
+
+
     }
 
 }
@@ -194,5 +214,5 @@ public struct DeviceInformation
 
 internal class DefaultPathInfo
 {
-    public static string ModulesFolder { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "modules");
+    public static string ModulesFolder { get; } = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"modules");
 }
