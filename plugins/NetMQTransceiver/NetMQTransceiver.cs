@@ -6,7 +6,7 @@ namespace MATSys.Plugins
     internal sealed class NetMQTransceiver : ITransceiver
     {
         private NetMQ.Sockets.RouterSocket _routerSocket = new NetMQ.Sockets.RouterSocket();
-        private NetMQCommandStreamConfiguration? _config;
+        private NetMQTransceiverConfiguration? _config;
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         public event ITransceiver.CommandReadyEvent? OnCommandReady;
@@ -72,16 +72,16 @@ namespace MATSys.Plugins
 
         public void Load(IConfigurationSection section)
         {
-            _config = section.Get<NetMQCommandStreamConfiguration>();
-            _logger.Info("NetMQCommandServer is initiated");
+            _config = section.Get<NetMQTransceiverConfiguration>();
+            _logger.Info("NetMQTransceiver is initiated");
         }
         public void LoadFromObject(object configuration)
         {
-            _config = configuration as NetMQCommandStreamConfiguration;
-            _logger.Info("NetMQCommandServer is initiated");
+            _config = configuration as NetMQTransceiverConfiguration;
+            _logger.Info("NetMQTransceiver is initiated");
         }
 
-        internal class NetMQCommandStreamConfiguration
+        internal class NetMQTransceiverConfiguration
         {
             public string AliasName { get; set; } = "";
             public string LocalIP { get; set; } = "";

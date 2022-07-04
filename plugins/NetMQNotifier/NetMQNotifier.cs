@@ -11,7 +11,7 @@ namespace MATSys.Plugins
         private SubscriberSocket _sub = new SubscriberSocket();
         private bool isConnected = false;
 
-        private NetMQConfiguration? _config;
+        private NetMQNotifierConfiguration? _config;
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         public string Name => nameof(NetMQNotifier);
@@ -75,13 +75,13 @@ namespace MATSys.Plugins
 
         public void Load(IConfigurationSection section)
         {
-            _config = section.Get<NetMQConfiguration>();
+            _config = section.Get<NetMQNotifierConfiguration>();
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
             _logger.Info("NetMQNotifier is initiated");
         }
         public void LoadFromObject(object configuration)
         {
-            _config = configuration as NetMQConfiguration;
+            _config = configuration as NetMQNotifierConfiguration;
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
             _logger.Info("NetMQNotifier is initiated");
         }
@@ -95,7 +95,7 @@ namespace MATSys.Plugins
         {
         }
 
-        internal class NetMQConfiguration
+        internal class NetMQNotifierConfiguration
         {
             public string Address { get; set; } = "";
             public string Protocal { get; set; } = "";

@@ -8,7 +8,7 @@ namespace MATSys.Plugins
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
         private Channel<string>? _ch;
-        private QueueDataBusConfiguration? config;
+        private QueueNotifierConfiguration? config;
 
         public string Name => nameof(QueueNotifier);
 
@@ -23,13 +23,13 @@ namespace MATSys.Plugins
 
         public void Load(IConfigurationSection section)
         {
-            config = section.Get<QueueDataBusConfiguration>();
-            _logger.Info("QueueDataBus is initiated");
+            config = section.Get<QueueNotifierConfiguration>();
+            _logger.Info("QueueNotifier is initiated");
         }
         public void LoadFromObject(object configuration)
         {
-            config = configuration as QueueDataBusConfiguration;
-            _logger.Info("QueueDataBus is initiated");
+            config = configuration as QueueNotifierConfiguration;
+            _logger.Info("QueueNotifier is initiated");
         }
         public void Publish(object data)
         {
@@ -52,7 +52,7 @@ namespace MATSys.Plugins
         }
     }
 
-    internal sealed class QueueDataBusConfiguration
+    internal sealed class QueueNotifierConfiguration
     {
         public bool DisableEvent { get; set; } = true;
         public int QueueLength { get; set; } = 1000;
