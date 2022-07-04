@@ -30,7 +30,11 @@ namespace MATSys.Plugins
         {
             _logger.Info($"{nameof(EmptyRecorder)} is initiated");
         }
-
+        public void LoadFromObject(object configuration)
+        {
+            _logger.Info($"{nameof(EmptyRecorder)} is initiated");
+        }
+        
 
 
     }

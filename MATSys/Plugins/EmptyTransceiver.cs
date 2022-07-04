@@ -13,7 +13,10 @@ namespace MATSys.Plugins
         {
             _logger.Info($"{nameof(EmptyTransceiver)} is initiated");
         }
-
+        public void LoadFromObject(object configuration)
+        {
+            _logger.Info($"{nameof(EmptyTransceiver)} is initiated");
+        }
         public  void StartService(CancellationToken token)
         {
             

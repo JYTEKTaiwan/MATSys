@@ -26,7 +26,11 @@ namespace MATSys.Plugins
             config = section.Get<QueueDataBusConfiguration>();
             _logger.Info("QueueDataBus is initiated");
         }
-
+        public void LoadFromObject(object configuration)
+        {
+            config = configuration as QueueDataBusConfiguration;
+            _logger.Info("QueueDataBus is initiated");
+        }
         public void Publish(object data)
         {
             _ch!.Writer.TryWrite(JsonConvert.SerializeObject(data));

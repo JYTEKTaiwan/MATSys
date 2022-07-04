@@ -22,7 +22,7 @@ namespace MATSys.Plugins
         private readonly IRecorder _dataRecorder;
         private readonly INotifier _dataBus;
         public volatile bool isRunning = false;
-
+        private object _config;
         public bool IsRunning => isRunning;
         public event IDevice.NewDataReady? OnDataReady;
 
@@ -46,7 +46,7 @@ namespace MATSys.Plugins
                 LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
                 //Create internal logger using alias name
                 _logger = NLog.LogManager.GetLogger(Name);
-
+                
                 Load(section);
                 _dataRecorder = services.GetRequiredService<IRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
                 _logger.Trace($"{_dataRecorder.Name} is injected");
@@ -66,11 +66,16 @@ namespace MATSys.Plugins
             }
         }
 
-        public DeviceBase(ITransceiver server, INotifier bus, IRecorder recorder)
+        public DeviceBase(object option,ITransceiver server, INotifier bus, IRecorder recorder)
         {
             Name = $"{this.GetType().Name}_{this.GetHashCode().ToString("X2")}";
             _logger = NLog.LogManager.GetLogger(Name);
 
+            if (option!=null)
+            {
+                _config = option;
+                LoadFromObject(option);
+            }
             if (recorder == null)
             {
                 _dataRecorder = new EmptyRecorder();
@@ -250,6 +255,7 @@ namespace MATSys.Plugins
         }
 
         public abstract void Load(IConfigurationSection section);
+        public abstract void LoadFromObject(object configuration);
 
         public virtual IEnumerable<string> PrintCommands()
         {

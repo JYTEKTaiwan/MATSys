@@ -56,6 +56,10 @@ public class AnotherTest : DeviceBase
     public override void Load(IConfigurationSection section)
     {
     }
+
+    public override void LoadFromObject(object configuration)
+    {
+    }
 }
 
 public class TestBase : DeviceBase
@@ -64,7 +68,7 @@ public class TestBase : DeviceBase
     {
     }
 
-    public TestBase(ITransceiver server, INotifier bus, IRecorder recorder) : base(server, bus, recorder)
+    public TestBase(object option, ITransceiver server, INotifier bus, IRecorder recorder) : base(option,server, bus, recorder)
     {
     }
 
@@ -89,6 +93,9 @@ public class TestBase : DeviceBase
     }
 
     public override void Load(IConfigurationSection section)
+    {
+    }
+    public override void LoadFromObject(object configuration)
     {
     }
 }

@@ -19,7 +19,10 @@ namespace MATSys.Plugins
         {
             _logger.Info($"{nameof(EmptyNotifier)} is initiated");
         }
-
+        public void LoadFromObject(object configuration)
+        {
+            _logger.Info($"{nameof(EmptyNotifier)} is initiated");
+        }
         public void Publish(object data)
         {
         }

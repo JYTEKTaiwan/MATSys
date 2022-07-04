@@ -75,6 +75,11 @@ namespace MATSys.Plugins
             _config = section.Get<NetMQCommandStreamConfiguration>();
             _logger.Info("NetMQCommandServer is initiated");
         }
+        public void LoadFromObject(object configuration)
+        {
+            _config = configuration as NetMQCommandStreamConfiguration;
+            _logger.Info("NetMQCommandServer is initiated");
+        }
 
         internal class NetMQCommandStreamConfiguration
         {
