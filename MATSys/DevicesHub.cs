@@ -25,7 +25,6 @@ namespace MATSys
                     .AddSingleton<IRecorderFactory, RecorderFactory>()
                     .AddSingleton<INotifierFactory, NotifierFactory>()
                     .AddSingleton<ITransceiverFactory, TransceiverFactory>()
-                    .AddSingleton<DependencyLoader>()
                     )
                     .ConfigureLogging(logging => logging
                     .AddNLog()
@@ -50,9 +49,12 @@ namespace MATSys
                     //start the host and delay 500ms
                     host.RunAsync().Wait(500);
                     var devFactory = host.Services.GetRequiredService<IDeviceFactory>() as DeviceFactory;
+
                     foreach (var item in devFactory!.DeviceInfos)
                     {
+
                         var dev = devFactory.CreateDevice(item);
+
                         dev!.StartService(cts.Token);
                         Devices.Add(dev);
                     }
