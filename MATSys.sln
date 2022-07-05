@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetMQNotifier", "plugins\Ne
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetMQTransceiver", "plugins\NetMQTransceiver\NetMQTransceiver.csproj", "{0A675D39-BE4B-45C3-85D0-2E4DEDF38852}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestDevice", "plugins\TestDevice\TestDevice.csproj", "{BAAC3371-A45E-49D0-919A-871C5262E98A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDevice", "plugins\TestDevice\TestDevice.csproj", "{BAAC3371-A45E-49D0-919A-871C5262E98A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -265,7 +265,7 @@ Global
 		{BAAC3371-A45E-49D0-919A-871C5262E98A} = {A57D9273-7ECC-464C-A9FC-75B9A3379FA3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
 	EndGlobalSection
 EndGlobal
