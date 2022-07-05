@@ -35,9 +35,9 @@ s.Connect("tcp://127.0.0.1:1234");
 for (int i = 0; i < 10; i++)
 { 
     //Thread.Sleep();
-    s.SendFrame(JsonConvert.SerializeObject(CommandBase.Create<TestDevice.TestDevice.Data>
+    s.SendFrame(JsonConvert.SerializeObject(CommandBase.Create<TestDevice.Data>
         ("Test",
-        new TestDevice.TestDevice.Data() { Date = DateTime.Now.ToString(), Number = new Random().NextDouble() })));
+        new TestDevice.Data() { Date = DateTime.Now.ToString(), Number = new Random().NextDouble() })));
     //var a = hub.Devices["Dev1"].DataBus.GetData();
     //Console.WriteLine($"{a}");
 }
@@ -47,9 +47,9 @@ Console.ReadKey();
 hub.Stop();
 Console.WriteLine("PRESS ANY KEY TO EXIT");
 Console.ReadKey();
-public class AnotherTest : DeviceBase
+public class TestDevice : DeviceBase
 {
-    public AnotherTest(IServiceProvider services, string configurationKey) : base(services, configurationKey)
+    public TestDevice(IServiceProvider services, string configurationKey) : base(services, configurationKey)
     {
     }
 
@@ -60,4 +60,24 @@ public class AnotherTest : DeviceBase
     public override void LoadFromObject(object configuration)
     {
     }
+    public class Data
+    {
+        public string Date { get; set; } = "";
+        public double Number { get; set; } = 0.0;
+    }
+
+    [Prototype("Test", typeof(Command<Data>))]
+    public string Test(Data a)
+    {
+        Instance.Recorder.Write(a);
+        Instance.Notifier.Publish(a);
+        return a.Date + "---" + a.Number.ToString();
+    }
+
+    [Prototype("Methhh4od", typeof(Command<string>))]
+    public string Method(string c)
+    {
+        return c;
+    }
+
 }
