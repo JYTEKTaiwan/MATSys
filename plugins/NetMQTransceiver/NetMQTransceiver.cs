@@ -29,40 +29,39 @@ namespace MATSys.Plugins
             RoutingKey key = new RoutingKey();
 
             //Errors happened in the internal loop were clarified as Fatal error
-             Task.Run(() =>
-            {
-                try
-                {
-                    while (!_linkedCts.IsCancellationRequested)
-                    {
-                        if (_routerSocket.TryReceiveRoutingKey(TimeSpan.FromSeconds(1), ref key))
-                        {
-                            //index 0: CommandBase object in json format
-                            var content = _routerSocket.ReceiveMultipartStrings();
-                            _logger.Debug($"New message received {content[0]}");
+            Task.Run(() =>
+           {
+               try
+               {
+                   while (!_linkedCts.IsCancellationRequested)
+                   {
+                       if (_routerSocket.TryReceiveRoutingKey(TimeSpan.FromSeconds(1), ref key))
+                       {
+                           //index 0: CommandBase object in json format
+                           var content = _routerSocket.ReceiveMultipartStrings();
+                           _logger.Debug($"New message received {content[0]}");
 
-                            var response = OnCommandReady?.Invoke(this, content[0])!;
-                            _logger.Trace("Message is executed");
+                           var response = OnCommandReady?.Invoke(this, content[0])!;
+                           _logger.Trace("Message is executed");
 
-                            _routerSocket.SendMoreFrame(key);
-                            _routerSocket.SendFrame(response);
-                            _logger.Debug($"Response sent back {response}");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _logger.Fatal(ex);
-                }
-                finally
-                {
-                    _routerSocket.Unbind(address);
-                    _logger.Debug($"Unbind to {address}");
-                    _logger.Info("Stop service");
-                }
-            });
+                           _routerSocket.SendMoreFrame(key);
+                           _routerSocket.SendFrame(response);
+                           _logger.Debug($"Response sent back {response}");
+                       }
+                   }
+               }
+               catch (Exception ex)
+               {
+                   _logger.Fatal(ex);
+               }
+               finally
+               {
+                   _routerSocket.Unbind(address);
+                   _logger.Debug($"Unbind to {address}");
+                   _logger.Info("Stop service");
+               }
+           });
         }
-
 
         public void StopService()
         {
@@ -75,6 +74,7 @@ namespace MATSys.Plugins
             _config = section.Get<NetMQTransceiverConfiguration>();
             _logger.Info("NetMQTransceiver is initiated");
         }
+
         public void LoadFromObject(object configuration)
         {
             _config = configuration as NetMQTransceiverConfiguration;

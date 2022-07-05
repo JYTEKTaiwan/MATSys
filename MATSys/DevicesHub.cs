@@ -45,14 +45,13 @@ namespace MATSys
             try
             {
                 if (!isRunning)
-                {                    
+                {
                     //start the host and delay 500ms
                     host.RunAsync().Wait(500);
                     var devFactory = host.Services.GetRequiredService<IDeviceFactory>() as DeviceFactory;
 
                     foreach (var item in devFactory!.DeviceInfos)
                     {
-
                         var dev = devFactory.CreateDevice(item);
 
                         dev!.StartService(cts.Token);
@@ -66,7 +65,6 @@ namespace MATSys
                 throw new Exception($"DeviceHub starts failed", ex);
             }
         }
-
 
         public void Stop()
         {

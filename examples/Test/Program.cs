@@ -33,7 +33,7 @@ Task.Run(() =>
 var s = new NetMQ.Sockets.DealerSocket();
 s.Connect("tcp://127.0.0.1:1234");
 for (int i = 0; i < 10; i++)
-{ 
+{
     //Thread.Sleep();
     s.SendFrame(JsonConvert.SerializeObject(CommandBase.Create<TestDevice.Data>
         ("Test",
@@ -47,6 +47,7 @@ Console.ReadKey();
 hub.Stop();
 Console.WriteLine("PRESS ANY KEY TO EXIT");
 Console.ReadKey();
+
 public class TestDevice : DeviceBase
 {
     public TestDevice(IServiceProvider services, string configurationKey) : base(services, configurationKey)
@@ -60,6 +61,7 @@ public class TestDevice : DeviceBase
     public override void LoadFromObject(object configuration)
     {
     }
+
     public class Data
     {
         public string Date { get; set; } = "";
@@ -79,5 +81,4 @@ public class TestDevice : DeviceBase
     {
         return c;
     }
-
 }

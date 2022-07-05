@@ -13,6 +13,7 @@ namespace MATSys.Commands
         /// Name of the MATSysCommand object
         /// </summary>
         public string Name { get; }
+
         /// <summary>
         /// Type of the parameter
         /// </summary>
@@ -28,7 +29,6 @@ namespace MATSys.Commands
             Name = name;
             CommandType = t;
         }
-
 
         /// <summary>
         /// Return the MATSys object json string

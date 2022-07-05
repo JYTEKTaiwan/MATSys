@@ -24,6 +24,7 @@ namespace MATSys.Plugins
         public volatile bool isRunning = false;
         private object _config;
         public bool IsRunning => isRunning;
+
         public event IDevice.NewDataReady? OnDataReady;
 
         ILogger IDevice.Logger => _logger;
@@ -46,7 +47,7 @@ namespace MATSys.Plugins
                 LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
                 //Create internal logger using alias name
                 _logger = NLog.LogManager.GetLogger(Name);
-                
+
                 Load(section);
                 _recorder = services.GetRequiredService<IRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
                 _logger.Trace($"{_recorder.Name} is injected");
@@ -62,16 +63,16 @@ namespace MATSys.Plugins
             catch (Exception ex)
             {
                 _logger?.Error(ex.Message);
-                 throw new Exception($"Initialization of DeviceBase failed", ex);
+                throw new Exception($"Initialization of DeviceBase failed", ex);
             }
         }
 
-        public DeviceBase(object option,ITransceiver server, INotifier bus, IRecorder recorder)
+        public DeviceBase(object option, ITransceiver server, INotifier bus, IRecorder recorder)
         {
             Name = $"{this.GetType().Name}_{this.GetHashCode().ToString("X2")}";
             _logger = NLog.LogManager.GetLogger(Name);
 
-            if (option!=null)
+            if (option != null)
             {
                 _config = option;
                 LoadFromObject(option);
@@ -155,7 +156,6 @@ namespace MATSys.Plugins
                 {
                     return $"{cmd_notFound}:[{parsedName}]";
                 }
-
             }
             catch (Exception ex)
             {
@@ -242,9 +242,7 @@ namespace MATSys.Plugins
                         _logger.Warn(ex.InnerException);
                         return $"{cmd_execError}: [{ex.InnerException}]";
                     }
-
                 }
-
             }
             else
             {
@@ -255,6 +253,7 @@ namespace MATSys.Plugins
         }
 
         public abstract void Load(IConfigurationSection section);
+
         public abstract void LoadFromObject(object configuration);
 
         public virtual IEnumerable<string> PrintCommands()

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace MATSys.Factories
 {
@@ -9,7 +8,7 @@ namespace MATSys.Factories
         private const string sectionKey = "Plugins:Devices";
         private readonly IServiceProvider _services;
         public List<DeviceInformation> DeviceInfos { get; }
-        
+
         public DeviceFactory(IServiceProvider services)
         {
             _services = services;
@@ -30,7 +29,7 @@ namespace MATSys.Factories
         public List<DeviceInformation> ListDevices(IConfiguration? config = null)
         {
             var devices = new List<DeviceInformation>();
-            if (config!=null&& config!.GetSection("Devices").Exists())
+            if (config != null && config!.GetSection("Devices").Exists())
             {
                 //List all available assemblies
                 var assems = AppDomain.CurrentDomain.GetAssemblies();
@@ -41,21 +40,19 @@ namespace MATSys.Factories
                 foreach (var item in pairs)
                 {
                     var searchKey = item.Key.Contains(':') ? item.Key.Split(':')[0] : item.Key;
-                   //search the type by name in the assemblies
+                    //search the type by name in the assemblies
                     foreach (var assem in assems)
                     {
-                        var t=assem.GetType(searchKey);
-                        if (t!=null)
+                        var t = assem.GetType(searchKey);
+                        if (t != null)
                         {
                             devices.Add(new DeviceInformation(t, item.Value));
                             break;
                         }
                     }
                 }
-
             }
             return devices;
-
         }
     }
 }

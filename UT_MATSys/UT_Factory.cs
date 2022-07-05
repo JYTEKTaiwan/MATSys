@@ -1,8 +1,7 @@
-using System.Reflection;
-using System.Text;
+using MATSys;
 using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
-using MATSys;
+using System.Text;
 
 namespace UT_MATSys;
 
@@ -12,10 +11,9 @@ public class UT_DataReocrderFactory
     [Category("Recorder")]
     public void CreateFromFile()
     {
-        Assert.Catch<FileNotFoundException>(() => 
+        Assert.Catch<FileNotFoundException>(() =>
         {
             var jsonStr = @"{ ""Recorder"": {""Type"": ""csv""}
-        
         }";
             var ms = new MemoryStream(Encoding.ASCII.GetBytes(jsonStr));
             ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -26,7 +24,5 @@ public class UT_DataReocrderFactory
             recorder.StartService(new CancellationToken());
             recorder.StopService();
         });
-        
     }
-
 }

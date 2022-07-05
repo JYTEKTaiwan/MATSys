@@ -1,6 +1,6 @@
 ﻿namespace MATSys
-{    
-        public interface IRecorder : IModule
+{
+    public interface IRecorder : IModule
     {
         /// <summary>
         /// Write data to the instance
@@ -13,8 +13,6 @@
         /// </summary>
         /// <param name="data">Data to be written</param>
         Task WriteAsync(object data);
-
-
     }
 
     public interface IRecorder<in T> : IRecorder

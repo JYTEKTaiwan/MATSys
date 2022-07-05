@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using MATSys.Plugins;
+﻿using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Factories
@@ -10,6 +9,7 @@ namespace MATSys.Factories
         private const string prefix = "Transceiver";
         private readonly Type DefaultType = typeof(EmptyTransceiver);
         private readonly IConfiguration _configuration;
+
         public TransceiverFactory(IConfiguration config)
         {
             _configuration = config;
@@ -46,24 +46,20 @@ namespace MATSys.Factories
                             }
                         }
                     }
-
                 }
                 return CreateAndLoadInstance(t, section);
-
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
         }
+
         private ITransceiver CreateAndLoadInstance(Type defaultType, IConfigurationSection section)
         {
             var obj = (ITransceiver)Activator.CreateInstance(defaultType)!;
             obj.Load(section);
             return obj;
         }
-
     }
-
 }

@@ -17,6 +17,7 @@ namespace TestDevice
         public override void LoadFromObject(object configuration)
         {
         }
+
         public class Data
         {
             public string Date { get; set; } = "";
@@ -36,6 +37,5 @@ namespace TestDevice
         {
             return c;
         }
-
     }
 }

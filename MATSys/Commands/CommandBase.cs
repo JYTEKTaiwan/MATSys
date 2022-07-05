@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Reflection;
-using System.Text;  
+using System.Text;
 
 namespace MATSys.Commands
 {
@@ -42,24 +42,22 @@ namespace MATSys.Commands
         /// <returns></returns>
         public virtual string SimplifiedString()
         {
-
-            StringBuilder sb=new StringBuilder();
-            var param=GetParameters();
-            if  (param!=null)
+            StringBuilder sb = new StringBuilder();
+            var param = GetParameters();
+            if (param != null)
             {
                 foreach (var item in param)
                 {
                     sb.Append($"{item},");
                 }
-                var len=sb.Length;
-                sb.Remove(len-1,1);
-            }            
-            return $"[{MethodName}]: {sb.ToString()}";           
+                var len = sb.Length;
+                sb.Remove(len - 1, 1);
+            }
+            return $"[{MethodName}]: {sb.ToString()}";
         }
 
-
         /// <summary>
-        /// Get all parameter values 
+        /// Get all parameter values
         /// </summary>
         /// <returns>parameter values</returns>
         public abstract object[]? GetParameters();
@@ -123,7 +121,7 @@ namespace MATSys.Commands
         /// <typeparam name="T2">Type of the second parameter</typeparam>
         /// <typeparam name="T3">Type of the third parameter</typeparam>
         /// <typeparam name="T4">Type of the 4th parameter</typeparam>
-        /// <param name="methodName">name</param>    
+        /// <param name="methodName">name</param>
         /// <param name="param1">parameter value</param>
         /// <param name="param2">parameter value</param>
         /// <param name="param3">parameter value</param>
@@ -142,7 +140,7 @@ namespace MATSys.Commands
         /// <typeparam name="T3">Type of the third parameter</typeparam>
         /// <typeparam name="T4">Type of the 4th parameter</typeparam>
         /// <typeparam name="T5">Type of the 5th parameter</typeparam>
-        /// <param name="methodName">name</param>    
+        /// <param name="methodName">name</param>
         /// <param name="param1">parameter value</param>
         /// <param name="param2">parameter value</param>
         /// <param name="param3">parameter value</param>
@@ -163,7 +161,7 @@ namespace MATSys.Commands
         /// <typeparam name="T4">Type of the 4th parameter</typeparam>
         /// <typeparam name="T5">Type of the 5th parameter</typeparam>
         /// <typeparam name="T6">Type of the 6th parameter</typeparam>
-        /// <param name="methodName">name</param>    
+        /// <param name="methodName">name</param>
         /// <param name="param1">parameter value</param>
         /// <param name="param2">parameter value</param>
         /// <param name="param3">parameter value</param>
@@ -186,7 +184,7 @@ namespace MATSys.Commands
         /// <typeparam name="T5">Type of the 5th parameter</typeparam>
         /// <typeparam name="T6">Type of the 6th parameter</typeparam>
         /// <typeparam name="T7">Type of the 7th parameter</typeparam>
-        /// <param name="methodName">name</param>    
+        /// <param name="methodName">name</param>
         /// <param name="param1">parameter value</param>
         /// <param name="param2">parameter value</param>
         /// <param name="param3">parameter value</param>
@@ -199,9 +197,8 @@ namespace MATSys.Commands
         {
             return new Command<T1, T2, T3, T4, T5, T6, T7>(methodName, param1, param2, param3, param4, param5, param6, param7);
         }
-
     }
-    
+
     /// <summary>
     /// Command object without any parameter
     /// </summary>
@@ -221,36 +218,37 @@ namespace MATSys.Commands
         }
     }
 
-/// <summary>
-/// Command object with 1 parameter
-/// </summary>
-/// <typeparam name="T1"></typeparam>
+    /// <summary>
+    /// Command object with 1 parameter
+    /// </summary>
+    /// <typeparam name="T1"></typeparam>
     public sealed class Command<T1> : CommandBase
     {
         [JsonProperty(Order = 1)]
         public ValueTuple<T1> Parameter { get; set; }
-        
+
         public Command(string name, T1 param1) : base(name)
         {
             Parameter = ValueTuple.Create(param1);
         }
+
         /// <summary>
         /// return the parameters in object array
         /// </summary>
         /// <returns></returns>
         public override object[]? GetParameters()
-        {            
+        {
             return new object[] { Parameter.Item1! };
         }
     }
-/// <summary>
-/// Command object with 2 parameters
-/// </summary>
-/// <typeparam name="T1"></typeparam>
-/// <typeparam name="T2"></typeparam>
+
+    /// <summary>
+    /// Command object with 2 parameters
+    /// </summary>
+    /// <typeparam name="T1"></typeparam>
+    /// <typeparam name="T2"></typeparam>
     public sealed class Command<T1, T2> : CommandBase
     {
-        
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2> Parameter { get; set; }
 
@@ -264,15 +262,15 @@ namespace MATSys.Commands
             return new object[] { Parameter.Item1!, Parameter.Item2! };
         }
     }
-/// <summary>
-/// Command object with 3 parameters
-/// </summary>
-/// <typeparam name="T1"></typeparam>
-/// <typeparam name="T2"></typeparam>
-/// <typeparam name="T3"></typeparam>
+
+    /// <summary>
+    /// Command object with 3 parameters
+    /// </summary>
+    /// <typeparam name="T1"></typeparam>
+    /// <typeparam name="T2"></typeparam>
+    /// <typeparam name="T3"></typeparam>
     public sealed class Command<T1, T2, T3> : CommandBase
     {
-       
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3> Parameter { get; set; }
 
@@ -286,16 +284,16 @@ namespace MATSys.Commands
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3! };
         }
     }
-/// <summary>
-/// Command object with 4 parameters
-/// </summary>
-/// <typeparam name="T1"></typeparam>
-/// <typeparam name="T2"></typeparam>
-/// <typeparam name="T3"></typeparam>
-/// <typeparam name="T4"></typeparam>
+
+    /// <summary>
+    /// Command object with 4 parameters
+    /// </summary>
+    /// <typeparam name="T1"></typeparam>
+    /// <typeparam name="T2"></typeparam>
+    /// <typeparam name="T3"></typeparam>
+    /// <typeparam name="T4"></typeparam>
     public sealed class Command<T1, T2, T3, T4> : CommandBase
     {
-       
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4> Parameter { get; set; }
 
@@ -309,17 +307,17 @@ namespace MATSys.Commands
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4! };
         }
     }
-/// <summary>
-/// Command object with 5 parameters
-/// </summary>
-/// <typeparam name="T1"></typeparam>
-/// <typeparam name="T2"></typeparam>
-/// <typeparam name="T3"></typeparam>
-/// <typeparam name="T4"></typeparam>
-/// <typeparam name="T5"></typeparam>
+
+    /// <summary>
+    /// Command object with 5 parameters
+    /// </summary>
+    /// <typeparam name="T1"></typeparam>
+    /// <typeparam name="T2"></typeparam>
+    /// <typeparam name="T3"></typeparam>
+    /// <typeparam name="T4"></typeparam>
+    /// <typeparam name="T5"></typeparam>
     public sealed class Command<T1, T2, T3, T4, T5> : CommandBase
     {
-       
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4, T5> Parameter { get; set; }
 
@@ -333,18 +331,18 @@ namespace MATSys.Commands
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5! };
         }
     }
-/// <summary>
-/// Command object with 6 parameters
-/// </summary>
-/// <typeparam name="T1"></typeparam>
-/// <typeparam name="T2"></typeparam>
-/// <typeparam name="T3"></typeparam>
-/// <typeparam name="T4"></typeparam>
-/// <typeparam name="T5"></typeparam>
-/// <typeparam name="T6"></typeparam>
+
+    /// <summary>
+    /// Command object with 6 parameters
+    /// </summary>
+    /// <typeparam name="T1"></typeparam>
+    /// <typeparam name="T2"></typeparam>
+    /// <typeparam name="T3"></typeparam>
+    /// <typeparam name="T4"></typeparam>
+    /// <typeparam name="T5"></typeparam>
+    /// <typeparam name="T6"></typeparam>
     public sealed class Command<T1, T2, T3, T4, T5, T6> : CommandBase
     {
-        
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4, T5, T6> Parameter { get; set; }
 
@@ -358,19 +356,19 @@ namespace MATSys.Commands
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5!, Parameter.Item6! };
         }
     }
-/// <summary>
-/// Command object with 7 parameters
-/// </summary>
-/// <typeparam name="T1"></typeparam>
-/// <typeparam name="T2"></typeparam>
-/// <typeparam name="T3"></typeparam>
-/// <typeparam name="T4"></typeparam>
-/// <typeparam name="T5"></typeparam>
-/// <typeparam name="T6"></typeparam>
-/// <typeparam name="T7"></typeparam>
+
+    /// <summary>
+    /// Command object with 7 parameters
+    /// </summary>
+    /// <typeparam name="T1"></typeparam>
+    /// <typeparam name="T2"></typeparam>
+    /// <typeparam name="T3"></typeparam>
+    /// <typeparam name="T4"></typeparam>
+    /// <typeparam name="T5"></typeparam>
+    /// <typeparam name="T6"></typeparam>
+    /// <typeparam name="T7"></typeparam>
     public sealed class Command<T1, T2, T3, T4, T5, T6, T7> : CommandBase
     {
-        
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4, T5, T6, T7> Parameter { get; set; }
 

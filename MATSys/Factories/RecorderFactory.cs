@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using MATSys.Plugins;
+﻿using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Factories
@@ -54,14 +53,13 @@ namespace MATSys.Factories
             {
                 throw ex;
             }
-
         }
+
         private IRecorder CreateAndLoadInstance(Type defaultType, IConfigurationSection section)
         {
             var obj = (IRecorder)Activator.CreateInstance(defaultType)!;
             obj.Load(section);
             return obj;
         }
-
     }
 }

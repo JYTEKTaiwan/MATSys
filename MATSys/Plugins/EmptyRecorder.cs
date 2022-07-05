@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Plugins
 {
@@ -30,12 +29,10 @@ namespace MATSys.Plugins
         {
             _logger.Info($"{nameof(EmptyRecorder)} is initiated");
         }
+
         public void LoadFromObject(object configuration)
         {
             _logger.Info($"{nameof(EmptyRecorder)} is initiated");
         }
-        
-
-
     }
 }

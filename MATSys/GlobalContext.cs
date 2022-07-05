@@ -1,8 +1,9 @@
-using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 #if NET6_0_OR_GREATER
+
 using System.Runtime.Loader;
+
 #endif
 
 namespace MATSys;
@@ -23,13 +24,15 @@ public class DependencyLoader
  Assembly.LoadFile(p);
 #endif
         }
-
     }
 }
+
 #if NET6_0_OR_GREATER
+
 internal class PluginLoader : AssemblyLoadContext
 {
     private AssemblyDependencyResolver resolver;
+
     public PluginLoader(string? name, bool isCollectible = false) : base(name, isCollectible)
     {
         resolver = new AssemblyDependencyResolver(name!);
@@ -43,8 +46,8 @@ internal class PluginLoader : AssemblyLoadContext
             return LoadFromAssemblyPath(assemblyPath);
         }
         return null;
-
     }
+
     protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
     {
         string libraryPath = resolver.ResolveUnmanagedDllToPath(unmanagedDllName)!;
@@ -57,7 +60,7 @@ internal class PluginLoader : AssemblyLoadContext
     }
 }
 
-#endif  
+#endif
 
 public struct DeviceInformation
 {

@@ -54,7 +54,6 @@ namespace MATSys.Plugins
                 _sub.Subscribe(_config.Topic);
                 isConnected = true;
                 _logger.Info("Starts service");
-
             }
             catch (Exception ex)
             {
@@ -79,6 +78,7 @@ namespace MATSys.Plugins
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
             _logger.Info("NetMQNotifier is initiated");
         }
+
         public void LoadFromObject(object configuration)
         {
             _config = configuration as NetMQNotifierConfiguration;

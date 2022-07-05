@@ -22,7 +22,7 @@ namespace MATSys.Plugins
             _queue = Channel.CreateBounded<T>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVRecorder initiated");
         }
-        
+
         public void LoadFromObject(object configuration)
         {
             _config = (configuration as CSVRecorderConfiguration) ?? CSVRecorderConfiguration.Default;
@@ -61,9 +61,9 @@ namespace MATSys.Plugins
 
             Task.Run(() =>
             {
-                //errors happened in the internal loop were clarified as fatal error 
+                //errors happened in the internal loop were clarified as fatal error
                 try
-                {                  
+                {
                     while (!_linkedCts.IsCancellationRequested)
                     {
                         if (_queue.Reader.TryRead(out data))
@@ -73,7 +73,7 @@ namespace MATSys.Plugins
                             _logger.Debug($"Data is written to file, elements in queue:{_queue.Reader.Count}");
                         }
                         SpinWait.SpinUntil(() => token.IsCancellationRequested, 1);
-                    }                   
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -125,12 +125,14 @@ namespace MATSys.Plugins
         private Task _task = Task.CompletedTask;
 
         public string Name => nameof(CSVRecorder);
+
         public void Load(IConfigurationSection section)
         {
-            _config = section.Get<CSVRecorderConfiguration>()??CSVRecorderConfiguration.Default;;
+            _config = section.Get<CSVRecorderConfiguration>() ?? CSVRecorderConfiguration.Default; ;
             _queue = Channel.CreateBounded<object>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVRecorder initiated");
         }
+
         public void LoadFromObject(object configuration)
         {
             _config = (configuration as CSVRecorderConfiguration) ?? CSVRecorderConfiguration.Default;
@@ -191,7 +193,6 @@ namespace MATSys.Plugins
                     streamWriter.Close();
                     _logger.Debug("File stream and queue are closed");
                     _localCts.Dispose();
-
                 });
             }
             catch (Exception ex)
@@ -199,8 +200,6 @@ namespace MATSys.Plugins
                 throw ex;
             }
         }
-
-
 
         public async Task WriteAsync(object data)
         {
@@ -220,8 +219,6 @@ namespace MATSys.Plugins
         public int WaitForCompleteTimeout { get; set; } = 5000;
         public static CSVRecorderConfiguration Default = new CSVRecorderConfiguration();
 
-
         public BoundedChannelFullMode BoundedChannelFullMode { get; set; } = BoundedChannelFullMode.DropOldest;
-
     }
 }

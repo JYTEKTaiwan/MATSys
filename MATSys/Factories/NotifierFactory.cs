@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using MATSys.Plugins;
+﻿using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Factories
@@ -10,6 +9,7 @@ namespace MATSys.Factories
         private const string prefix = "Notifier";
         private readonly Type DefaultType = typeof(EmptyNotifier);
         private readonly IConfiguration _configuration;
+
         public NotifierFactory(IConfiguration config)
         {
             _configuration = config;
@@ -46,16 +46,13 @@ namespace MATSys.Factories
                             }
                         }
                     }
-
                 }
                 return CreateAndLoadInstance(t, section);
-
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
         }
 
         private INotifier CreateAndLoadInstance(Type defaultType, IConfigurationSection section)

@@ -26,11 +26,13 @@ namespace MATSys.Plugins
             config = section.Get<QueueNotifierConfiguration>();
             _logger.Info("QueueNotifier is initiated");
         }
+
         public void LoadFromObject(object configuration)
         {
             config = configuration as QueueNotifierConfiguration;
             _logger.Info("QueueNotifier is initiated");
         }
+
         public void Publish(object data)
         {
             _ch!.Writer.TryWrite(JsonConvert.SerializeObject(data));
@@ -43,7 +45,6 @@ namespace MATSys.Plugins
         public void StartService(CancellationToken token)
         {
             _ch = Channel.CreateBounded<string>(new BoundedChannelOptions(config!.QueueLength) { FullMode = config.Mode });
-
         }
 
         public void StopService()
