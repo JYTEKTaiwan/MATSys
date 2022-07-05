@@ -6,21 +6,56 @@ namespace MATSys.Factories
 {
     public sealed class DeviceFactory : IDeviceFactory
     {
-        private readonly DependencyLoader _loader;
+        private const string sectionKey = "Plugins:Devices";
         private readonly IServiceProvider _services;
-        public IEnumerable<DeviceInformation> DeviceInfos { get; } 
-
+        public List<DeviceInformation> DeviceInfos { get; }
+        
         public DeviceFactory(IServiceProvider services)
-        {            
+        {
             _services = services;
-            _loader = services.GetRequiredService<DependencyLoader>();            
-            DeviceInfos = _loader.ListDevices();
+            var config = _services.GetRequiredService<IConfiguration>();
+            var plugins = config.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
+
+            //Load plugin assemblies into memoery
+            DependencyLoader.LoadPluginAssemblies(plugins);
+
+            DeviceInfos = ListDevices(config);
         }
-    
+
         public IDevice CreateDevice(DeviceInformation info)
         {
-            var f = _services.GetRequiredService<IConfiguration>();
             return (IDevice)Activator.CreateInstance(info.DeviceType!, new object[] { _services, info.Name })!;
+        }
+
+        public List<DeviceInformation> ListDevices(IConfiguration? config = null)
+        {
+            var devices = new List<DeviceInformation>();
+            if (config!=null&& config!.GetSection("Devices").Exists())
+            {
+                //List all available assemblies
+                var assems = AppDomain.CurrentDomain.GetAssemblies();
+
+                //Parse all assigned devices from configuration file
+                var pairs = config.GetSection("Devices").AsEnumerable(true).Where(x => x.Value != null);
+
+                foreach (var item in pairs)
+                {
+                    var searchKey = item.Key.Contains(':') ? item.Key.Split(':')[0] : item.Key;
+                   //search the type by name in the assemblies
+                    foreach (var assem in assems)
+                    {
+                        var t=assem.GetType(searchKey);
+                        if (t!=null)
+                        {
+                            devices.Add(new DeviceInformation(t, item.Value));
+                            break;
+                        }
+                    }
+                }
+
+            }
+            return devices;
+
         }
     }
 }

@@ -6,49 +6,50 @@ namespace MATSys.Factories
 {
     public sealed class NotifierFactory : INotifierFactory
     {
+        private const string sectionKey = "Plugins:Notifiers";
         private const string prefix = "Notifier";
         private readonly Type DefaultType = typeof(EmptyNotifier);
-        public readonly IEnumerable<Type> _types;
-        public NotifierFactory(DependencyLoader loader)
+        private readonly IConfiguration _configuration;
+        public NotifierFactory(IConfiguration config)
         {
-            _types = loader.ListModuleTypes<INotifier>();
+            _configuration = config;
+            var plugins = _configuration.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
+
+            //Load plugin assemblies into memoery
+            DependencyLoader.LoadPluginAssemblies(plugins);
         }
 
         public INotifier CreateNotifier(IConfigurationSection section)
         {
             try
             {
+                Type t = DefaultType;
                 //check if section in the json configuration exits
                 if (section.Exists())
                 {
-
-                    Type t;
-
+                    var assems = AppDomain.CurrentDomain.GetAssemblies();
                     string type = section.GetValue<string>("Type");
-                    if (string.IsNullOrEmpty(type))
+                    if (!string.IsNullOrEmpty(type))
                     {
-                        //if key is empty or null, return immediately with dafault datarecorder object.
-                        return CreateAndLoadInstance(DefaultType, section);
+                        //if key has value, search the type with the default class name. eg. xxx=>xxxDataRecorder
+                        foreach (var assem in assems)
+                        {
+                            var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower());
+                            if (dummy == null)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                t = dummy;
+                                break;
+                            }
+                        }
                     }
 
-                    //if key has value, search the type with the default class name. eg. xxx=>xxxDataRecorder
-                    t = _types.FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower())!;
-                    if (t == null)
-                    {
-                        //cannot parse any type, use default datarecorder
-                        return CreateAndLoadInstance(DefaultType, section);
-                    }
-                    else
-                    {
-                        //dynamically load the assembly and object                    
-                        return CreateAndLoadInstance(t, section);
-                    }
                 }
-                else
-                {
-                    //section is missing, use default DataRecorder object.
-                    return CreateAndLoadInstance(DefaultType, section);
-                }
+                return CreateAndLoadInstance(t, section);
+
             }
             catch (Exception ex)
             {
