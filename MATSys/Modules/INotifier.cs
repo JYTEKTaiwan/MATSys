@@ -1,6 +1,6 @@
 ﻿namespace MATSys
 {
-    public interface INotifier : IModule
+    public interface INotifier : IEmbededModule
     {
         delegate void NewDataEvent(string dataInJson);
         event NewDataEvent? OnNewDataReadyEvent;
