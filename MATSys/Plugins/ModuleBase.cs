@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace MATSys.Plugins
 {
-    public abstract class DeviceBase : IDevice
+    public abstract class ModuleBase : IModule
     {
         private const string key_dataRecorder = "Recorder";
         private const string key_publisher = "Notifier";
@@ -25,16 +25,16 @@ namespace MATSys.Plugins
         private object _config;
         public bool IsRunning => isRunning;
 
-        public event IDevice.NewDataReady? OnDataReady;
+        public event IModule.NewDataReady? OnDataReady;
 
-        ILogger IDevice.Logger => _logger;
-        IRecorder IDevice.Recorder => _recorder;
-        ITransceiver IDevice.Transceiver => transceiverr;
-        INotifier IDevice.Notifier => _notifier;
+        ILogger IModule.Logger => _logger;
+        IRecorder IModule.Recorder => _recorder;
+        ITransceiver IModule.Transceiver => transceiverr;
+        INotifier IModule.Notifier => _notifier;
         public string Name { get; }
-        public IDevice Instance => this;
+        public IModule Instance => this;
 
-        public DeviceBase(IServiceProvider services, string configurationKey)
+        public ModuleBase(IServiceProvider services, string configurationKey)
         {
             try
             {
@@ -67,7 +67,7 @@ namespace MATSys.Plugins
             }
         }
 
-        public DeviceBase(object option, ITransceiver server, INotifier bus, IRecorder recorder)
+        public ModuleBase(object option, ITransceiver server, INotifier bus, IRecorder recorder)
         {
             Name = $"{this.GetType().Name}_{this.GetHashCode().ToString("X2")}";
             _logger = NLog.LogManager.GetLogger(Name);
