@@ -3,13 +3,13 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace MATSys.Factories
 {
-    public sealed class DeviceFactory : IDeviceFactory
+    public sealed class ModuleFactory : IModuleFactory
     {
         private const string sectionKey = "Plugins:Devices";
         private readonly IServiceProvider _services;
         public List<DeviceInformation> DeviceInfos { get; }
 
-        public DeviceFactory(IServiceProvider services)
+        public ModuleFactory(IServiceProvider services)
         {
             _services = services;
             var config = _services.GetRequiredService<IConfiguration>();
@@ -21,9 +21,9 @@ namespace MATSys.Factories
             DeviceInfos = ListDevices(config);
         }
 
-        public IDevice CreateDevice(DeviceInformation info)
+        public IModule CreateDevice(DeviceInformation info)
         {
-            return (IDevice)Activator.CreateInstance(info.DeviceType!, new object[] { _services, info.Name })!;
+            return (IModule)Activator.CreateInstance(info.DeviceType!, new object[] { _services, info.Name })!;
         }
 
         public List<DeviceInformation> ListDevices(IConfiguration? config = null)
