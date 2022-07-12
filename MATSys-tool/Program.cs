@@ -53,7 +53,7 @@ static void ListDevices(string path)
     foreach (var item in Directory.GetFiles(Path.GetFullPath(folder), "*.dll"))
     {
         var types = Assembly.LoadFile(item).GetTypes().Where
-            (x => !x.IsInterface && !x.IsAbstract && x.GetInterface(typeof(IDevice).FullName!) != null);
+            (x => !x.IsInterface && !x.IsAbstract && x.GetInterface(typeof(IModule).FullName!) != null);
         foreach (var t in types)
         {
             Console.WriteLine($"{t.Name.PadRight(50)}  {item}");
@@ -81,7 +81,7 @@ static void DisplayDevice(string path, string name)
     foreach (var item in Directory.GetFiles(Path.GetFullPath(folder), "*.dll"))
     {
         var type = Assembly.LoadFile(item).GetTypes().FirstOrDefault
-            (x => x.Name == name && x.GetInterface(typeof(IDevice).FullName!) != null);
+            (x => x.Name == name && x.GetInterface(typeof(IModule).FullName!) != null);
         if (type != null)
         {
             var methodlist = type.GetMethods().Where(x =>

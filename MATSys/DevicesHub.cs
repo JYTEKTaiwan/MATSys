@@ -21,7 +21,7 @@ namespace MATSys
             {
                 host = Host.CreateDefaultBuilder()
                     .ConfigureServices(services => services
-                    .AddSingleton<IDeviceFactory, DeviceFactory>()
+                    .AddSingleton<IModuleFactory, ModuleFactory>()
                     .AddSingleton<IRecorderFactory, RecorderFactory>()
                     .AddSingleton<INotifierFactory, NotifierFactory>()
                     .AddSingleton<ITransceiverFactory, TransceiverFactory>()
@@ -48,7 +48,7 @@ namespace MATSys
                 {
                     //start the host and delay 500ms
                     host.RunAsync().Wait(500);
-                    var devFactory = host.Services.GetRequiredService<IDeviceFactory>() as DeviceFactory;
+                    var devFactory = host.Services.GetRequiredService<IModuleFactory>() as ModuleFactory;
 
                     foreach (var item in devFactory!.DeviceInfos)
                     {
@@ -88,12 +88,12 @@ namespace MATSys
         }
     }
 
-    public sealed class DeviceCollection : List<IDevice>
+    public sealed class DeviceCollection : List<IModule>
     {
         public DeviceCollection() : base()
         {
         }
 
-        public IDevice this[string name] => this.FirstOrDefault(x => x.Name == name)!;
+        public IModule this[string name] => this.FirstOrDefault(x => x.Name == name)!;
     }
 }

@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace TestDevice
 {
-    public class TestDevice : DeviceBase
+    public class TestDevice : ModuleBase
     {
         public TestDevice(IServiceProvider services, string configurationKey) : base(services, configurationKey)
         {
