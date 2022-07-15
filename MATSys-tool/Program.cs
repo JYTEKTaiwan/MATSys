@@ -86,12 +86,12 @@ static void DisplayDevice(string path, string name)
         {
             var methodlist = type.GetMethods().Where(x =>
             {
-                return x.GetCustomAttributes<PrototypeAttribute>(false).Count() > 0;
+                return x.GetCustomAttributes<MethodNameAttribute>(false).Count() > 0;
             }).ToArray();
 
             foreach (var method in methodlist)
             {
-                var att = method.GetCustomAttribute<PrototypeAttribute>();
+                var att = method.GetCustomAttribute<MethodNameAttribute>();
                 Console.WriteLine($"{method.ToString().PadRight(50)} \t {att.GetJsonString()}");
             }
             return;

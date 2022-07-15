@@ -7,7 +7,7 @@ namespace MATSys.Commands
     /// Attribute that represent the method information for MATSys to use
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    public sealed class PrototypeAttribute : Attribute
+    public sealed class MethodNameAttribute : Attribute
     {
         /// <summary>
         /// Name of the MATSysCommand object
@@ -24,7 +24,7 @@ namespace MATSys.Commands
         /// </summary>
         /// <param name="name">name</param>
         /// <param name="t"></param>
-        public PrototypeAttribute(string name, Type t)
+        public MethodNameAttribute(string name, Type t)
         {
             Name = name;
             CommandType = t;

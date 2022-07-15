@@ -65,19 +65,19 @@ public class UT_DeviceBase
         {
         }
 
-        [Prototype("Hi", typeof(Command))]
+        [MethodName("Hi", typeof(Command))]
         public string Hello()
         {
             return "WORLD";
         }
 
-        [Prototype("Exception", typeof(Command))]
+        [MethodName("Exception", typeof(Command))]
         public void Exception()
         {
             throw new Exception("Exception");
         }
 
-        [Prototype("WrongArgs", typeof(Command<int>))]
+        [MethodName("WrongArgs", typeof(Command<int>))]
         public void WrongArgs()
         {
             throw new Exception("WrongArgs");

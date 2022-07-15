@@ -68,7 +68,7 @@ public class TestDevice : DeviceBase
         public double Number { get; set; } = 0.0;
     }
 
-    [Prototype("Test", typeof(Command<Data>))]
+    [MethodName("Test", typeof(Command<Data>))]
     public string Test(Data a)
     {
         Instance.Recorder.Write(a);
@@ -76,7 +76,7 @@ public class TestDevice : DeviceBase
         return a.Date + "---" + a.Number.ToString();
     }
 
-    [Prototype("Methhh4od", typeof(Command<string>))]
+    [MethodName("Methhh4od", typeof(Command<string>))]
     public string Method(string c)
     {
         return c;

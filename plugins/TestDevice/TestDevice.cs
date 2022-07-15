@@ -24,7 +24,7 @@ namespace TestDevice
             public double Number { get; set; } = 0.0;
         }
 
-        [Prototype("Test", typeof(Command<Data>))]
+        [MethodName("Test", typeof(Command<Data>))]
         public string Test(Data a)
         {
             Instance.Recorder.Write(a);
@@ -32,7 +32,7 @@ namespace TestDevice
             return a.Date + "---" + a.Number.ToString();
         }
 
-        [Prototype("Method", typeof(Command<string>))]
+        [MethodName("Method", typeof(Command<string>))]
         public string Method(string c)
         {
             return c;
