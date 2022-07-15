@@ -19,7 +19,7 @@ public class UT_DataReocrderFactory
             ConfigurationBuilder cb = new ConfigurationBuilder();
             var config = cb.AddJsonStream(ms).Build();
             ms.Close();
-            var fac = new RecorderFactory(new DependencyLoader(""));
+            var fac = new RecorderFactory(config);
             var recorder = fac.CreateRecorder(config.GetSection("Recorder"));
             recorder.StartService(new CancellationToken());
             recorder.StopService();

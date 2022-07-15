@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace MATSys.Factories
 {
@@ -53,6 +54,22 @@ namespace MATSys.Factories
                 }
             }
             return devices;
+        }
+
+        public static IModule CreateNew<T>(object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder) where T:IModule
+        {
+            return (IModule)Activator.CreateInstance(typeof(T),new object[] {parameter,transceiver,notifier,recorder});
+        }
+        public static IModule CreateNew(Type moduleType,object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder)
+        {
+            if (typeof(IModule).IsAssignableFrom(moduleType))
+            {
+                return (IModule)Activator.CreateInstance(moduleType, new object[] { parameter, transceiver, notifier, recorder });
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

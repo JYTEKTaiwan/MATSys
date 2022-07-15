@@ -1,5 +1,6 @@
 ﻿using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace MATSys.Factories
 {
@@ -7,7 +8,9 @@ namespace MATSys.Factories
     {
         private const string sectionKey = "Plugins:Transceivers";
         private const string prefix = "Transceiver";
-        private readonly Type DefaultType = typeof(EmptyTransceiver);
+        private readonly static Type DefaultType = typeof(EmptyTransceiver);
+        private static ITransceiver DefaultInstance => new EmptyTransceiver();
+
         private readonly IConfiguration _configuration;
 
         public TransceiverFactory(IConfiguration config)
@@ -61,5 +64,52 @@ namespace MATSys.Factories
             obj.Load(section);
             return obj;
         }
+        public static ITransceiver CreateNew(string assemblyPath, string typeString, object args)
+        {
+            var assems = AppDomain.CurrentDomain.GetAssemblies();
+            var assembly = Assembly.LoadFile(Path.GetFullPath(assemblyPath));
+            if (assems.FirstOrDefault(x => x.FullName == assembly.FullName) != null)
+            {
+                //exists
+            }
+            else
+            {
+                DependencyLoader.LoadPluginAssemblies(new string[] { assemblyPath });
+            }
+            try
+            {
+
+                assems = AppDomain.CurrentDomain.GetAssemblies();
+
+                Type t = DefaultType;
+                //check if section in the json configuration exits
+
+                if (!string.IsNullOrEmpty(typeString))
+                {
+                    //if key has value, search the type with the default class name. eg. xxx=>xxxDataRecorder
+                    foreach (var assem in assems)
+                    {
+                        var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{typeString}{prefix}".ToLower());
+                        if (dummy == null)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            t = dummy;
+                            break;
+                        }
+                    }
+                }
+                var obj = (ITransceiver)Activator.CreateInstance(t)!;
+                obj.LoadFromObject(args);
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

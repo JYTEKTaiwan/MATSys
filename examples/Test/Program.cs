@@ -1,14 +1,16 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MATSys;
 using MATSys.Commands;
+using MATSys.Factories;
 using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 using NetMQ;
 using Newtonsoft.Json;
+using System.Threading.Channels;
 
 Console.WriteLine("Hello, World!");
-
 var hub = DevicesHub.Instance;
+
 hub.Start();
 hub.Devices["Dev1"].OnDataReady += ((result) => Console.WriteLine(result));
 foreach (var item in hub.Devices)
@@ -48,7 +50,7 @@ hub.Stop();
 Console.WriteLine("PRESS ANY KEY TO EXIT");
 Console.ReadKey();
 
-public class TestDevice : DeviceBase
+public class TestDevice : ModuleBase
 {
     public TestDevice(IServiceProvider services, string configurationKey) : base(services, configurationKey)
     {
@@ -81,4 +83,16 @@ public class TestDevice : DeviceBase
     {
         return c;
     }
+}
+
+
+
+public class CSVRecorderConfiguration
+{
+    public bool WaitForComplete { get; set; } = true;
+    public int QueueSize { get; set; } = 2000;
+    public int WaitForCompleteTimeout { get; set; } = 5000;
+    public static CSVRecorderConfiguration Default = new CSVRecorderConfiguration();
+
+    public BoundedChannelFullMode BoundedChannelFullMode { get; set; } = BoundedChannelFullMode.DropOldest;
 }
