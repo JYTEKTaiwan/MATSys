@@ -56,9 +56,9 @@ namespace MATSys.Factories
             return devices;
         }
 
-        public static IModule CreateNew<T>(object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder) where T:IModule
+        public static T CreateNew<T>(object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder) where T:IModule
         {
-            return (IModule)Activator.CreateInstance(typeof(T),new object[] {parameter,transceiver,notifier,recorder});
+            return (T)Activator.CreateInstance(typeof(T),new object[] {parameter,transceiver,notifier,recorder});
         }
         public static IModule CreateNew(Type moduleType,object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder)
         {
