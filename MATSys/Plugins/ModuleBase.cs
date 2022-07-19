@@ -164,7 +164,7 @@ namespace MATSys.Plugins
             }
         }
 
-        public void StartService(CancellationToken token)
+        public virtual void StartService(CancellationToken token)
         {
             if (!isRunning)
             {
