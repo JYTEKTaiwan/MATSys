@@ -11,7 +11,7 @@
 		<Company>JYTEK TAIWAN CORP.</Company>
 		<Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
 		<PackageIcon>JYTek.png</PackageIcon>
-		<VersionPrefix>1.1.4</VersionPrefix>
+		<VersionPrefix>1.1.5</VersionPrefix>
 		<RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/tree/master/Core</RepositoryUrl>
 
 		<PackageReadmeFile>README.md</PackageReadmeFile>
