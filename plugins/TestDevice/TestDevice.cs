@@ -1,5 +1,5 @@
-﻿using MATSys.Commands;
-using MATSys.Plugins;
+﻿using MATSys;
+using MATSys.Commands;
 using Microsoft.Extensions.Configuration;
 
 namespace TestDevice

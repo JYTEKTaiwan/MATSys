@@ -1,6 +1,16 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿
+/* Unmerged change from project 'MATSys (netstandard2.0)'
+Before:
+using Microsoft.Extensions.Configuration;
+After:
+using MATSys;
+using MATSys;
+using MATSys.Plugins;
+using Microsoft.Extensions.Configuration;
+*/
+using Microsoft.Extensions.Configuration;
 
-namespace MATSys.Plugins
+namespace MATSys
 {
     public sealed class EmptyRecorder : IRecorder
     {
@@ -30,7 +40,7 @@ namespace MATSys.Plugins
             _logger.Info($"{nameof(EmptyRecorder)} is initiated");
         }
 
-        public void LoadFromObject(object configuration)
+        public void Load(object configuration)
         {
             _logger.Info($"{nameof(EmptyRecorder)} is initiated");
         }

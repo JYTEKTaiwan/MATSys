@@ -7,7 +7,7 @@ using NLog;
 using NLog.Extensions.Logging;
 using System.Reflection;
 
-namespace MATSys.Plugins
+namespace MATSys
 {
     public abstract class ModuleBase : IModule
     {
@@ -45,7 +45,7 @@ namespace MATSys.Plugins
                 //set name of the Device base object
                 Name = configurationKey;
                 //Create internal logger using alias name
-                _logger = NLog.LogManager.GetLogger(Name);
+                _logger = LogManager.GetLogger(Name);
 
                 Load(section);
                 _recorder = services.GetRequiredService<IRecorderFactory>().CreateRecorder(section.GetSection(key_recorder));
@@ -65,11 +65,11 @@ namespace MATSys.Plugins
                 throw new Exception($"Initialization of DeviceBase failed", ex);
             }
         }
-        public ModuleBase(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey="")
+        public ModuleBase(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "")
         {
-            Name = string.IsNullOrEmpty(configurationKey)?$"{this.GetType().Name}_{this.GetHashCode().ToString("X2")}": configurationKey;
+            Name = string.IsNullOrEmpty(configurationKey) ? $"{GetType().Name}_{GetHashCode().ToString("X2")}" : configurationKey;
 
-            _logger = NLog.LogManager.GetLogger(Name);
+            _logger = LogManager.GetLogger(Name);
 
             _config = LoadAndSetup(configuration);
             _recorder = InjectRecorder(recorder);
@@ -80,7 +80,7 @@ namespace MATSys.Plugins
         }
         private object LoadAndSetup(object option)
         {
-            object config=null; 
+            object config = null;
             if (option != null)
             {
                 config = option;
@@ -109,14 +109,14 @@ namespace MATSys.Plugins
             if (server == null)
             {
                 _logger.Trace($"Null reference is detected, {transceiver.Name} is injected");
-                transceiver= new EmptyTransceiver();
+                transceiver = new EmptyTransceiver();
             }
             else
             {
                 _logger.Trace($"{server.Name} is injected");
-                transceiver= server;
+                transceiver = server;
             }
-            transceiver.OnCommandReady += OnCommandDataReady; 
+            transceiver.OnCommandReady += OnCommandDataReady;
             return transceiver;
         }
         private INotifier InjectNotifier(INotifier bus)
@@ -125,13 +125,13 @@ namespace MATSys.Plugins
             if (bus == null)
             {
                 _logger.Trace($"Null reference is detected, {_notifier.Name} is injected");
-                notifier= new EmptyNotifier();
+                notifier = new EmptyNotifier();
 
             }
             else
             {
                 _logger.Trace($"{_notifier.Name} is injected");
-                notifier=bus;
+                notifier = bus;
             }
             notifier.OnNewDataReadyEvent += NewDataReady;
             return notifier;
