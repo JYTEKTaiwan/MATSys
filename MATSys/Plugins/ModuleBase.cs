@@ -11,25 +11,25 @@ namespace MATSys.Plugins
 {
     public abstract class ModuleBase : IModule
     {
-        private const string key_dataRecorder = "Recorder";
-        private const string key_publisher = "Notifier";
-        private const string key_server = "Transceiver";
+        private const string key_recorder = "Recorder";
+        private const string key_notifier = "Notifier";
+        private const string key_transceiver = "Transceiver";
         public const string cmd_notFound = "NOTFOUND";
         public const string cmd_execError = "EXEC_ERROR";
-        private readonly Dictionary<string, MethodInfo> methods = new Dictionary<string, MethodInfo>();
+        private readonly Dictionary<string, MethodInfo> _methods = new Dictionary<string, MethodInfo>();
         private readonly ILogger _logger;
-        private readonly ITransceiver transceiverr;
+        private readonly ITransceiver _transceiver;
         private readonly IRecorder _recorder;
         private readonly INotifier _notifier;
-        public volatile bool isRunning = false;
+        public volatile bool _isRunning = false;
         private object _config;
-        public bool IsRunning => isRunning;
+        public bool IsRunning => _isRunning;
 
         public event IModule.NewDataReady? OnDataReady;
 
         ILogger IModule.Logger => _logger;
         IRecorder IModule.Recorder => _recorder;
-        ITransceiver IModule.Transceiver => transceiverr;
+        ITransceiver IModule.Transceiver => _transceiver;
         INotifier IModule.Notifier => _notifier;
         public string Name { get; }
         public IModule Base => this;
@@ -38,26 +38,25 @@ namespace MATSys.Plugins
         {
             try
             {
-                var config = services.GetRequiredService<IConfiguration>();
+                var _config = services.GetRequiredService<IConfiguration>();
                 //sec might be null (will be checked in the factory)
-                var section = config.GetSection(configurationKey);
+                var section = _config.GetSection(configurationKey);
 
                 //set name of the Device base object
                 Name = configurationKey;
-                LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
                 //Create internal logger using alias name
                 _logger = NLog.LogManager.GetLogger(Name);
 
                 Load(section);
-                _recorder = services.GetRequiredService<IRecorderFactory>().CreateRecorder(section.GetSection(key_dataRecorder));
+                _recorder = services.GetRequiredService<IRecorderFactory>().CreateRecorder(section.GetSection(key_recorder));
                 _logger.Trace($"{_recorder.Name} is injected");
-                _notifier = services.GetRequiredService<INotifierFactory>().CreateNotifier(section.GetSection(key_publisher));
+                _notifier = services.GetRequiredService<INotifierFactory>().CreateNotifier(section.GetSection(key_notifier));
                 _notifier.OnNewDataReadyEvent += NewDataReady;
                 _logger.Trace($"{_notifier.Name} is injected");
-                transceiverr = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(section.GetSection(key_server));
-                _logger.Trace($"{transceiverr.Name} is injected");
-                transceiverr.OnCommandReady += OnCommandDataReady; ;
-                methods = ParseSupportedMethods();
+                _transceiver = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(section.GetSection(key_transceiver));
+                _logger.Trace($"{_transceiver.Name} is injected");
+                _transceiver.OnCommandReady += OnCommandDataReady; ;
+                _methods = ParseSupportedMethods();
                 _logger.Info($"{Name} base class initialization is completed");
             }
             catch (Exception ex)
@@ -66,62 +65,82 @@ namespace MATSys.Plugins
                 throw new Exception($"Initialization of DeviceBase failed", ex);
             }
         }
-
-        public ModuleBase(object option, ITransceiver server, INotifier bus, IRecorder recorder)
+        public ModuleBase(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey="")
         {
-            Name = $"{this.GetType().Name}_{this.GetHashCode().ToString("X2")}";
+            Name = string.IsNullOrEmpty(configurationKey)?$"{this.GetType().Name}_{this.GetHashCode().ToString("X2")}": configurationKey;
+
             _logger = NLog.LogManager.GetLogger(Name);
 
+            _config = LoadAndSetup(configuration);
+            _recorder = InjectRecorder(recorder);
+            _notifier = InjectNotifier(bus);
+            _transceiver = InjectTransceiver(server);
+            _methods = ParseSupportedMethods();
+            _logger.Info($"{Name} base class initialization is completed");
+        }
+        private object LoadAndSetup(object option)
+        {
+            object config=null; 
             if (option != null)
             {
-                _config = option;
-                Load(option);                
+                config = option;
+                Load(option);
             }
+            return config;
+        }
+        private IRecorder InjectRecorder(IRecorder recorder)
+        {
+            IRecorder _recorder = null;
             if (recorder == null)
             {
                 _recorder = new EmptyRecorder();
-                _logger.Trace($"Null reference is detected, {_recorder.Name} is injected");
+                _logger.Trace($"Null reference is detected, {this._recorder.Name} is injected");
             }
             else
             {
                 _recorder = recorder;
-                _logger.Trace($"{_recorder.Name} is injected");
+                _logger.Trace($"{this._recorder.Name} is injected");
             }
-
-            if (bus == null)
-            {
-                _notifier = new EmptyNotifier();
-                _logger.Trace($"Null reference is detected, {_notifier.Name} is injected");
-            }
-            else
-            {
-                _notifier = bus;
-                _logger.Trace($"{_notifier.Name} is injected");
-            }
-
-            _notifier.OnNewDataReadyEvent += NewDataReady;
-
+            return _recorder;
+        }
+        private ITransceiver InjectTransceiver(ITransceiver server)
+        {
+            ITransceiver transceiver = null;
             if (server == null)
             {
-                transceiverr = new EmptyTransceiver();
-                _logger.Trace($"Null reference is detected, {transceiverr.Name} is injected");
+                _logger.Trace($"Null reference is detected, {transceiver.Name} is injected");
+                transceiver= new EmptyTransceiver();
             }
             else
             {
-                transceiverr = server;
-                _logger.Trace($"{transceiverr.Name} is injected");
+                _logger.Trace($"{server.Name} is injected");
+                transceiver= server;
             }
-
-            transceiverr.OnCommandReady += OnCommandDataReady; ;
-            methods = ParseSupportedMethods();
-            _logger.Info($"{Name} base class initialization is completed");
+            transceiver.OnCommandReady += OnCommandDataReady; 
+            return transceiver;
         }
+        private INotifier InjectNotifier(INotifier bus)
+        {
+            INotifier notifier = null;
+            if (bus == null)
+            {
+                _logger.Trace($"Null reference is detected, {_notifier.Name} is injected");
+                notifier= new EmptyNotifier();
 
+            }
+            else
+            {
+                _logger.Trace($"{_notifier.Name} is injected");
+                notifier=bus;
+            }
+            notifier.OnNewDataReadyEvent += NewDataReady;
+            return notifier;
+
+        }
         private void NewDataReady(string dataInJson)
         {
             OnDataReady?.Invoke(dataInJson);
         }
-
         private Dictionary<string, MethodInfo> ParseSupportedMethods()
         {
             var methodlist = GetType().GetMethods().Where(x =>
@@ -130,7 +149,6 @@ namespace MATSys.Plugins
             }).ToArray();
             return methodlist.ToDictionary(x => x.GetCustomAttribute<MethodNameAttribute>()!.Name);
         }
-
         private string OnCommandDataReady(object sender, string commandObjectInJson)
         {
             try
@@ -139,9 +157,9 @@ namespace MATSys.Plugins
                 _logger.Trace($"OnDataReady event fired");
                 _logger.Debug($"New command object string is received: {commandObjectInJson}");
                 var parsedName = commandObjectInJson.Split(new string[] { "MethodName\"" }, StringSplitOptions.RemoveEmptyEntries)[1].Split('\"')[1];
-                if (methods.ContainsKey(parsedName))
+                if (_methods.ContainsKey(parsedName))
                 {
-                    var method = methods[parsedName];
+                    var method = _methods[parsedName];
                     var att = method.GetCustomAttribute<MethodNameAttribute>();
                     var cmd = JsonConvert.DeserializeObject(commandObjectInJson, att!.CommandType) as ICommand;
                     _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
@@ -163,10 +181,9 @@ namespace MATSys.Plugins
                 throw new Exception($"Execution of command ready event failed", ex);
             }
         }
-
         public virtual void StartService(CancellationToken token)
         {
-            if (!isRunning)
+            if (!_isRunning)
             {
                 try
                 {
@@ -177,9 +194,9 @@ namespace MATSys.Plugins
                     _notifier.StartService(token);
 
                     _logger.Trace("Starts the CommandServer");
-                    transceiverr.StartService(token);
+                    _transceiver.StartService(token);
 
-                    isRunning = true;
+                    _isRunning = true;
                     _logger.Info("Starts service");
                 }
                 catch (Exception ex)
@@ -189,22 +206,21 @@ namespace MATSys.Plugins
                 }
             }
         }
-
         public virtual void StopService()
         {
             try
             {
-                if (isRunning)
+                if (_isRunning)
                 {
                     _logger.Trace("Stops the CommandStream");
-                    transceiverr.StopService();
+                    _transceiver.StopService();
 
                     _logger.Trace("Stops the DataRecorder");
                     _recorder.StopService();
 
                     _logger.Trace("Stops the Publisher");
                     _notifier.StopService();
-                    isRunning = false;
+                    _isRunning = false;
                     _logger.Info("Stops service");
                 }
             }
@@ -214,12 +230,11 @@ namespace MATSys.Plugins
                 throw new Exception("Stop failed", ex);
             }
         }
-
         public string Execute(ICommand cmd)
         {
-            if (methods.ContainsKey(cmd.MethodName))
+            if (_methods.ContainsKey(cmd.MethodName))
             {
-                var method = methods[cmd.MethodName];
+                var method = _methods[cmd.MethodName];
                 try
                 {
                     var result = method.Invoke(this, cmd.GetParameters())!;
@@ -251,11 +266,8 @@ namespace MATSys.Plugins
                 return res;
             }
         }
-
         public abstract void Load(IConfigurationSection section);
-
         public abstract void Load(object configuration);
-
         public virtual IEnumerable<string> PrintCommands()
         {
             var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<MethodNameAttribute>().Count() > 0);
@@ -264,7 +276,6 @@ namespace MATSys.Plugins
                 yield return item.GetCustomAttribute<MethodNameAttribute>()!.GetJsonString();
             }
         }
-
         public string Execute(string cmdInJson)
         {
             try
