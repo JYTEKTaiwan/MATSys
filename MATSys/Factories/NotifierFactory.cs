@@ -9,7 +9,8 @@ namespace MATSys.Factories
         private const string sectionKey = "Plugins:Notifiers";
         private const string prefix = "Notifier";
         private readonly static Type DefaultType = typeof(EmptyNotifier);
-        private static INotifier DefaultInstance => new EmptyNotifier();
+        private static Lazy<INotifier> _default=new Lazy<INotifier>(()=> new EmptyNotifier());
+        private static INotifier DefaultInstance => _default.Value;
 
         private readonly IConfiguration _configuration;
 

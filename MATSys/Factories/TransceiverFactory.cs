@@ -9,7 +9,8 @@ namespace MATSys.Factories
         private const string sectionKey = "Plugins:Transceivers";
         private const string prefix = "Transceiver";
         private readonly static Type DefaultType = typeof(EmptyTransceiver);
-        private static ITransceiver DefaultInstance => new EmptyTransceiver();
+        private static Lazy<ITransceiver> _default = new Lazy<ITransceiver>(() => new EmptyTransceiver());
+        private static ITransceiver DefaultInstance => _default.Value;
 
         private readonly IConfiguration _configuration;
 
