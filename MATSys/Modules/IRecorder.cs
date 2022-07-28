@@ -1,6 +1,6 @@
 ﻿namespace MATSys
 {
-    public interface IRecorder : IEmbededModule
+    public interface IRecorder : IPlugin
     {
         /// <summary>
         /// Write data to the instance

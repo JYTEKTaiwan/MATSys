@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MATSys
 {
-    public interface IEmbededModule:IService
+    public interface IPlugin:IService
     {
     }
 }
