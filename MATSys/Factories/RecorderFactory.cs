@@ -49,7 +49,7 @@ namespace MATSys.Factories
                         }
                     }
                 }
-                return CreateAndLoadInstance(t, section);
+                return CreateRecorder(t, section);
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace MATSys.Factories
             }
         }
 
-        private IRecorder CreateAndLoadInstance(Type type, IConfigurationSection section)
+        private IRecorder CreateRecorder(Type type, IConfigurationSection section)
         {
             var obj = (IRecorder)Activator.CreateInstance(type)!;
             obj.Load(section);
@@ -102,7 +102,7 @@ namespace MATSys.Factories
                     }
                 }
                 var obj = (IRecorder)Activator.CreateInstance(t)!;
-                obj.LoadFromObject(args);
+                obj.Load(args);
                 return obj;
             }
             catch (Exception ex)
@@ -110,5 +110,19 @@ namespace MATSys.Factories
                 throw ex;
             }
         }
+
+        public static T CreateNew<T>(object args) where T: IRecorder
+        {
+            var obj=(T)Activator.CreateInstance(typeof(T));
+            obj.Load(args);
+            return obj;
+        }
+        public static IRecorder CreateNew(Type t,object args)
+        {
+            var obj = Activator.CreateInstance(t) as IRecorder;
+            obj.Load(args);
+            return obj;
+        }
+
     }
 }
