@@ -27,8 +27,8 @@ namespace TestDevice
         [MethodName("Test", typeof(Command<Data>))]
         public string Test(Data a)
         {
-            Instance.Recorder.Write(a);
-            Instance.Notifier.Publish(a);
+            Base.Recorder.Write(a);
+            Base.Notifier.Publish(a);
             return a.Date + "---" + a.Number.ToString();
         }
 

@@ -17,7 +17,7 @@ namespace MATSys
         string Execute(string cmdInJson);
 
         IEnumerable<string> PrintCommands();
-        IModule Instance { get; }
+        IModule Base { get; }
 
     }
 }

@@ -32,7 +32,7 @@ namespace MATSys.Plugins
         ITransceiver IModule.Transceiver => transceiverr;
         INotifier IModule.Notifier => _notifier;
         public string Name { get; }
-        public IModule Instance => this;
+        public IModule Base => this;
 
         public ModuleBase(IServiceProvider services, string configurationKey)
         {
