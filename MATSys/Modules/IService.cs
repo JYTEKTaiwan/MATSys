@@ -13,7 +13,7 @@ namespace MATSys
 
         void Load(IConfigurationSection section);
 
-        void LoadFromObject(object configuration);
+        void Load(object configuration);
 
         void StartService(CancellationToken token);
 

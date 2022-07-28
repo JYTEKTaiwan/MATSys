@@ -75,7 +75,7 @@ namespace MATSys.Plugins
             if (option != null)
             {
                 _config = option;
-                LoadFromObject(option);
+                Load(option);                
             }
             if (recorder == null)
             {
@@ -254,7 +254,7 @@ namespace MATSys.Plugins
 
         public abstract void Load(IConfigurationSection section);
 
-        public abstract void LoadFromObject(object configuration);
+        public abstract void Load(object configuration);
 
         public virtual IEnumerable<string> PrintCommands()
         {
