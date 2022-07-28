@@ -102,7 +102,7 @@ namespace MATSys.Factories
                     }
                 }
                 var obj = (INotifier)Activator.CreateInstance(t)!;
-                obj.LoadFromObject(args);
+                obj.Load(args);
                 return obj;
             }
             catch (Exception ex)
@@ -110,6 +110,20 @@ namespace MATSys.Factories
                 throw ex;
             }
         }
+
+        public static T CreateNew<T>(object args) where T : INotifier
+        {
+            var obj = (T)Activator.CreateInstance(typeof(T));
+            obj.Load(args);
+            return obj;
+        }
+        public static INotifier CreateNew(Type t, object args)
+        {
+            var obj = Activator.CreateInstance(t) as INotifier;
+            obj.Load(args);
+            return obj;
+        }
+
 
     }
 }
