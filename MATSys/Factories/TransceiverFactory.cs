@@ -102,13 +102,26 @@ namespace MATSys.Factories
                     }
                 }
                 var obj = (ITransceiver)Activator.CreateInstance(t)!;
-                obj.LoadFromObject(args);
+                obj.Load(args);
                 return obj;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        public static T CreateNew<T>(object args) where T : ITransceiver
+        {
+            var obj = (T)Activator.CreateInstance(typeof(T));
+            obj.Load(args);
+            return obj;
+        }
+        public static ITransceiver CreateNew(Type t, object args)
+        {
+            var obj = Activator.CreateInstance(t) as ITransceiver;
+            obj.Load(args);
+            return obj;
         }
 
     }
