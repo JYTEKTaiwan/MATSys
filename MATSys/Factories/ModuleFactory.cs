@@ -112,15 +112,15 @@ namespace MATSys.Factories
                 throw ex;
             }
         }
-        public static T CreateNew<T>(object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder) where T:IModule
+        public static T CreateNew<T>(object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string configurationKey = "") where T:IModule
         {
-            return (T)Activator.CreateInstance(typeof(T),new object[] {parameter,transceiver,notifier,recorder});
+            return (T)Activator.CreateInstance(typeof(T),new object[] {parameter,transceiver,notifier,recorder, configurationKey });
         }
-        public static IModule CreateNew(Type moduleType,object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder)
+        public static IModule CreateNew(Type moduleType,object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string configurationKey = "")
         {
             if (typeof(IModule).IsAssignableFrom(moduleType))
             {
-                return (IModule)Activator.CreateInstance(moduleType, new object[] { parameter, transceiver, notifier, recorder });
+                return (IModule)Activator.CreateInstance(moduleType, new object[] { parameter, transceiver, notifier, recorder, configurationKey });
             }
             else
             {
