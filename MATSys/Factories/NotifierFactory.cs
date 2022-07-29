@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace MATSys.Factories
@@ -11,12 +12,9 @@ namespace MATSys.Factories
         private static Lazy<INotifier> _default=new Lazy<INotifier>(()=> new EmptyNotifier());
         private static INotifier DefaultInstance => _default.Value;
 
-        private readonly IConfiguration _configuration;
-
         public NotifierFactory(IConfiguration config)
         {
-            _configuration = config;
-            var plugins = _configuration.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
+            var plugins = config.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
 
             //Load plugin assemblies into memoery
             DependencyLoader.LoadPluginAssemblies(plugins);

@@ -68,7 +68,50 @@ namespace MATSys.Factories
             }
             return devices;
         }
+        public static IModule CreateNew(string assemblyPath, string typeString, object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "")
+        {
+            var assems = AppDomain.CurrentDomain.GetAssemblies();
+            var assembly = Assembly.LoadFile(Path.GetFullPath(assemblyPath));
+            if (assems.FirstOrDefault(x => x.FullName == assembly.FullName) != null)
+            {
+                //exists
+            }
+            else
+            {
+                DependencyLoader.LoadPluginAssemblies(new string[] { assemblyPath });
+            }
+            try
+            {
 
+                assems = AppDomain.CurrentDomain.GetAssemblies();
+
+                Type t = null;
+                //check if section in the json configuration exits
+
+                if (!string.IsNullOrEmpty(typeString))
+                {
+                    foreach (var assem in assems)
+                    {
+                        var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{typeString}".ToLower());
+                        if (dummy == null)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            t = dummy;
+                            break;
+                        }
+                    }
+                }
+                var obj = (IModule)Activator.CreateInstance(t,new object[] {configuration,server,bus,recorder,configurationKey })!;
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public static T CreateNew<T>(object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder) where T:IModule
         {
             return (T)Activator.CreateInstance(typeof(T),new object[] {parameter,transceiver,notifier,recorder});

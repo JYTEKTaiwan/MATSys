@@ -9,7 +9,6 @@ using System.Threading.Channels;
 
 Console.WriteLine("Hello, World!");
 var hub = DevicesHub.Instance;
-
 hub.Start();
 hub.Devices["Dev1"].OnDataReady += ((result) => Console.WriteLine(result));
 foreach (var item in hub.Devices)

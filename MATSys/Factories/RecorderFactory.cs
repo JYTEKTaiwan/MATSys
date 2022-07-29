@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace MATSys.Factories
@@ -10,12 +11,10 @@ namespace MATSys.Factories
         private readonly static Type DefaultType = typeof(EmptyRecorder);
         private static Lazy<IRecorder> _default = new Lazy<IRecorder>(() => new EmptyRecorder());
         private static IRecorder DefaultInstance => _default.Value;
-        private readonly IConfiguration _configuration;
 
         public RecorderFactory(IConfiguration config)
         {
-            _configuration = config;
-            var plugins = _configuration.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
+            var plugins = config.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
 
             //Load plugin assemblies into memoery
             DependencyLoader.LoadPluginAssemblies(plugins);
