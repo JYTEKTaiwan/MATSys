@@ -52,9 +52,6 @@ public class UT_DeviceBase
 
     private class NormalDevice : ModuleBase
     {
-        public NormalDevice(IServiceProvider services, string configurationKey) : base(services, configurationKey)
-        {
-        }
 
         public NormalDevice(object option, ITransceiver server, INotifier bus, IRecorder recorder) : base(option, server, bus, recorder)
         {

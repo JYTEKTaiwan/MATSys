@@ -13,14 +13,13 @@ public class UT_DataReocrderFactory
     {
         Assert.Catch<FileNotFoundException>(() =>
         {
-            var jsonStr = @"{ ""Recorder"": {""Type"": ""csv""}
-        }";
+            var jsonStr = File.ReadAllText("appsettings.json");
             var ms = new MemoryStream(Encoding.ASCII.GetBytes(jsonStr));
             ConfigurationBuilder cb = new ConfigurationBuilder();
             var config = cb.AddJsonStream(ms).Build();
             ms.Close();
             var fac = new RecorderFactory(config);
-            var recorder = fac.CreateRecorder(config.GetSection("Recorder"));
+            var recorder = fac.CreateRecorder(config.GetSection("Dev1:Recorder"));
             recorder.StartService(new CancellationToken());
             recorder.StopService();
         });
@@ -30,12 +29,12 @@ public class UT_DataReocrderFactory
     [Category("Recorder")]
     public void CreateFromStaticMethod()
     {
-        var a = RecorderFactory.CreateNew<CSVRecorder>(null);
-        var b = RecorderFactory.CreateNew(typeof(CSVRecorder),null);
+        var a = RecorderFactory.CreateNew<CSVRecorder2>(null);
+        var b = RecorderFactory.CreateNew(typeof(CSVRecorder2),null);
 
         Assert.IsTrue(a != null&& b!=null);
     }
-    internal class CSVRecorder : IRecorder
+    internal class CSVRecorder2 : IRecorder
     {
         public string Name => "";
 
