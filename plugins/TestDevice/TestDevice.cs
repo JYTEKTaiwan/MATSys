@@ -14,7 +14,7 @@ namespace TestDevice
         {
         }
 
-        public override void LoadFromObject(object configuration)
+        public override void Load(object configuration)
         {
         }
 

@@ -79,7 +79,7 @@ namespace MATSys.Plugins
             _logger.Info("NetMQNotifier is initiated");
         }
 
-        public void LoadFromObject(object configuration)
+        public void Load(object configuration)
         {
             _config = configuration as NetMQNotifierConfiguration;
             AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;

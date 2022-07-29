@@ -23,7 +23,7 @@ namespace MATSys.Plugins
             _logger.Info("CSVRecorder initiated");
         }
 
-        public void LoadFromObject(object configuration)
+        public void Load(object configuration)
         {
             _config = (configuration as CSVRecorderConfiguration) ?? CSVRecorderConfiguration.Default;
             _queue = Channel.CreateBounded<T>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
@@ -133,7 +133,7 @@ namespace MATSys.Plugins
             _logger.Info("CSVRecorder initiated");
         }
 
-        public void LoadFromObject(object configuration)
+        public void Load(object configuration)
         {
             _config = (configuration as CSVRecorderConfiguration) ?? CSVRecorderConfiguration.Default;
             _queue = Channel.CreateBounded<object>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });

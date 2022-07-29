@@ -75,7 +75,7 @@ namespace MATSys.Plugins
             _logger.Info("NetMQTransceiver is initiated");
         }
 
-        public void LoadFromObject(object configuration)
+        public void Load(object configuration)
         {
             _config = configuration as NetMQTransceiverConfiguration;
             _logger.Info("NetMQTransceiver is initiated");

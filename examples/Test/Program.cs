@@ -2,7 +2,6 @@
 using MATSys;
 using MATSys.Commands;
 using MATSys.Factories;
-using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 using NetMQ;
 using Newtonsoft.Json;
@@ -52,7 +51,8 @@ Console.ReadKey();
 
 public class TestDevice : ModuleBase
 {
-    public TestDevice(IServiceProvider services, string configurationKey) : base(services, configurationKey)
+
+    public TestDevice(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "") : base(configuration, server, bus, recorder, configurationKey)
     {
     }
 
@@ -60,7 +60,7 @@ public class TestDevice : ModuleBase
     {
     }
 
-    public override void LoadFromObject(object configuration)
+    public override void Load(object configuration)
     {
     }
 
@@ -73,8 +73,8 @@ public class TestDevice : ModuleBase
     [MethodName("Test", typeof(Command<Data>))]
     public string Test(Data a)
     {
-        Instance.Recorder.Write(a);
-        Instance.Notifier.Publish(a);
+        Base.Recorder.Write(a);
+        Base.Notifier.Publish(a);
         return a.Date + "---" + a.Number.ToString();
     }
 

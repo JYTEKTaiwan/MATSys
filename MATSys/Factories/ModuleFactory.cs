@@ -7,15 +7,24 @@ namespace MATSys.Factories
     public sealed class ModuleFactory : IModuleFactory
     {
         private const string sectionKey = "Plugins:Devices";
+        private const string key_recorder = "Recorder";
+        private const string key_notifier = "Notifier";
+        private const string key_transceiver = "Transceiver";
+
         private readonly IServiceProvider _services;
+
+        private readonly IConfiguration _config;
+        private readonly ITransceiverFactory _transceiverFactory;
+        private readonly INotifierFactory _notifierFactory;
+        private readonly IRecorderFactory _recorderFactory;
         public List<DeviceInformation> DeviceInfos { get; }
-
-        public ModuleFactory(IServiceProvider services)
+        public ModuleFactory(IConfiguration config, ITransceiverFactory tran_factory, INotifierFactory noti_factory, IRecorderFactory rec_factory)
         {
-            _services = services;
-            var config = _services.GetRequiredService<IConfiguration>();
+            _config = config;
+            _transceiverFactory = tran_factory;
+            _notifierFactory = noti_factory;
+            _recorderFactory = rec_factory;
             var plugins = config.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
-
             //Load plugin assemblies into memoery
             DependencyLoader.LoadPluginAssemblies(plugins);
 
@@ -24,7 +33,11 @@ namespace MATSys.Factories
 
         public IModule CreateDevice(DeviceInformation info)
         {
-            return (IModule)Activator.CreateInstance(info.DeviceType!, new object[] { _services, info.Name })!;
+            var section = _config.GetSection(info.Name);
+            var trans = _transceiverFactory.CreateTransceiver(section.GetSection(key_transceiver));
+            var noti = _notifierFactory.CreateNotifier(section.GetSection(key_notifier));
+            var rec = _recorderFactory.CreateRecorder(section.GetSection(key_recorder));
+            return (IModule)Activator.CreateInstance(info.DeviceType!, new object[] { section, trans,noti,rec,info.Name })!;
         }
 
         public List<DeviceInformation> ListDevices(IConfiguration? config = null)

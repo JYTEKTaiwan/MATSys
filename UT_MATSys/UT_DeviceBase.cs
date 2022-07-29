@@ -82,7 +82,7 @@ public class UT_DeviceBase
             throw new Exception("WrongArgs");
         }
 
-        public override void LoadFromObject(object configuration)
+        public override void Load(object configuration)
         {
         }
     }

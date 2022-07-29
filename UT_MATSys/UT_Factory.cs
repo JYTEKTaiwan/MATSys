@@ -25,4 +25,43 @@ public class UT_DataReocrderFactory
             recorder.StopService();
         });
     }
+
+    [Test]
+    [Category("Recorder")]
+    public void CreateFromStaticMethod()
+    {
+        var a = RecorderFactory.CreateNew<CSVRecorder>(null);
+        var b = RecorderFactory.CreateNew(typeof(CSVRecorder),null);
+
+        Assert.IsTrue(a != null&& b!=null);
+    }
+    internal class CSVRecorder : IRecorder
+    {
+        public string Name => "";
+
+        public void Load(IConfigurationSection section)
+        {
+        }
+
+        public void Load(object configuration)
+        {
+        }
+
+        public void StartService(CancellationToken token)
+        {
+        }
+
+        public void StopService()
+        {
+        }
+
+        public void Write(object data)
+        {
+        }
+
+        public Task WriteAsync(object data)
+        {
+            return Task.CompletedTask;
+        }
+    }
 }

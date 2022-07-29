@@ -33,38 +33,6 @@ namespace MATSys
         INotifier IModule.Notifier => _notifier;
         public string Name { get; }
         public IModule Base => this;
-
-        public ModuleBase(IServiceProvider services, string configurationKey)
-        {
-            try
-            {
-                var _config = services.GetRequiredService<IConfiguration>();
-                //sec might be null (will be checked in the factory)
-                var section = _config.GetSection(configurationKey);
-
-                //set name of the Device base object
-                Name = configurationKey;
-                //Create internal logger using alias name
-                _logger = LogManager.GetLogger(Name);
-
-                Load(section);
-                _recorder = services.GetRequiredService<IRecorderFactory>().CreateRecorder(section.GetSection(key_recorder));
-                _logger.Trace($"{_recorder.Name} is injected");
-                _notifier = services.GetRequiredService<INotifierFactory>().CreateNotifier(section.GetSection(key_notifier));
-                _notifier.OnNewDataReadyEvent += NewDataReady;
-                _logger.Trace($"{_notifier.Name} is injected");
-                _transceiver = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(section.GetSection(key_transceiver));
-                _logger.Trace($"{_transceiver.Name} is injected");
-                _transceiver.OnCommandReady += OnCommandDataReady; ;
-                _methods = ParseSupportedMethods();
-                _logger.Info($"{Name} base class initialization is completed");
-            }
-            catch (Exception ex)
-            {
-                _logger?.Error(ex.Message);
-                throw new Exception($"Initialization of DeviceBase failed", ex);
-            }
-        }
         public ModuleBase(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "")
         {
             Name = string.IsNullOrEmpty(configurationKey) ? $"{GetType().Name}_{GetHashCode().ToString("X2")}" : configurationKey;
@@ -82,8 +50,12 @@ namespace MATSys
         {
             object config = null;
             if (option != null)
-            {
+            {                
                 config = option;
+                if (option.GetType().IsAssignableFrom(typeof(IConfigurationSection)))
+                {
+                    Load((IConfigurationSection)option);
+                }
                 Load(option);
             }
             return config;
@@ -94,12 +66,12 @@ namespace MATSys
             if (recorder == null)
             {
                 _recorder = new EmptyRecorder();
-                _logger.Trace($"Null reference is detected, {this._recorder.Name} is injected");
+                _logger.Trace($"Null reference is detected, {_recorder.Name} is injected");
             }
             else
             {
                 _recorder = recorder;
-                _logger.Trace($"{this._recorder.Name} is injected");
+                _logger.Trace($"{_recorder.Name} is injected");
             }
             return _recorder;
         }
@@ -108,13 +80,13 @@ namespace MATSys
             ITransceiver transceiver = null;
             if (server == null)
             {
-                _logger.Trace($"Null reference is detected, {transceiver.Name} is injected");
                 transceiver = new EmptyTransceiver();
+                _logger.Trace($"Null reference is detected, {transceiver.Name} is injected");
             }
             else
             {
-                _logger.Trace($"{server.Name} is injected");
                 transceiver = server;
+                _logger.Trace($"{transceiver.Name} is injected");
             }
             transceiver.OnCommandReady += OnCommandDataReady;
             return transceiver;
@@ -124,14 +96,13 @@ namespace MATSys
             INotifier notifier = null;
             if (bus == null)
             {
-                _logger.Trace($"Null reference is detected, {_notifier.Name} is injected");
                 notifier = new EmptyNotifier();
-
+                _logger.Trace($"Null reference is detected, {notifier.Name} is injected");
             }
             else
             {
-                _logger.Trace($"{_notifier.Name} is injected");
                 notifier = bus;
+                _logger.Trace($"{notifier.Name} is injected");
             }
             notifier.OnNewDataReadyEvent += NewDataReady;
             return notifier;

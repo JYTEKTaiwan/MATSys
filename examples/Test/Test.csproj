@@ -21,9 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="MATSys">
-      <HintPath>..\..\bin\Debug\net6.0\MATSys.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\MATSys\MATSys.csproj" />
   </ItemGroup>
 
   <ItemGroup>

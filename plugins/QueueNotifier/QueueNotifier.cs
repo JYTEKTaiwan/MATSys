@@ -27,7 +27,7 @@ namespace MATSys.Plugins
             _logger.Info("QueueNotifier is initiated");
         }
 
-        public void LoadFromObject(object configuration)
+        public void Load(object configuration)
         {
             config = configuration as QueueNotifierConfiguration;
             _logger.Info("QueueNotifier is initiated");
