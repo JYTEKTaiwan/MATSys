@@ -1,11 +1,11 @@
 ﻿using MATSys.Commands;
 
-namespace MATSys
+namespace MATSys.Modules
 {
-    public interface ITransceiver: IPlugin
+    public interface ITransceiver : IPlugin
     {
         delegate string CommandReadyEvent(object sender, string commandObjectInJson);
         event CommandReadyEvent? OnCommandReady;
-        
+
     }
 }

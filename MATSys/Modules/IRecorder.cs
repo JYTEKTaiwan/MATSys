@@ -1,4 +1,4 @@
-﻿namespace MATSys
+﻿namespace MATSys.Modules
 {
     public interface IRecorder : IPlugin
     {

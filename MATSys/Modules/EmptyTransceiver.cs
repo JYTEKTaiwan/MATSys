@@ -10,33 +10,23 @@ using Microsoft.Extensions.Configuration;
 */
 using Microsoft.Extensions.Configuration;
 
-namespace MATSys
+namespace MATSys.Modules
 {
-    public sealed class EmptyNotifier : INotifier
+    public sealed class EmptyTransceiver : ITransceiver
     {
         private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+        public string Name => nameof(EmptyTransceiver);
 
-        public string Name => nameof(EmptyNotifier);
-
-        public event INotifier.NewDataEvent? OnNewDataReadyEvent;
-
-        public object? GetData(int timeoutInMilliseconds = 1000)
-        {
-            return null!;
-        }
+        public event ITransceiver.CommandReadyEvent? OnCommandReady;
 
         public void Load(IConfigurationSection section)
         {
-            _logger.Info($"{nameof(EmptyNotifier)} is initiated");
+            _logger.Info($"{nameof(EmptyTransceiver)} is initiated");
         }
 
         public void Load(object configuration)
         {
-            _logger.Info($"{nameof(EmptyNotifier)} is initiated");
-        }
-
-        public void Publish(object data)
-        {
+            _logger.Info($"{nameof(EmptyTransceiver)} is initiated");
         }
 
         public void StartService(CancellationToken token)

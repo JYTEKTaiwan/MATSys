@@ -7,7 +7,7 @@ using NLog;
 using NLog.Extensions.Logging;
 using System.Reflection;
 
-namespace MATSys
+namespace MATSys.Modules
 {
     public abstract class ModuleBase : IModule
     {
@@ -50,7 +50,7 @@ namespace MATSys
         {
             object config = null;
             if (option != null)
-            {                
+            {
                 config = option;
                 if (option.GetType().IsAssignableFrom(typeof(IConfigurationSection)))
                 {

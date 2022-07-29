@@ -1,5 +1,6 @@
 ﻿using MATSys.Commands;
 using MATSys.Factories;
+using MATSys.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MATSys
+namespace MATSys.Modules
 {
     public interface IService
     {

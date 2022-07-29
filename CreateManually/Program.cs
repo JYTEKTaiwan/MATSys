@@ -1,6 +1,6 @@
-﻿using MATSys;
-using MATSys.Commands;
+﻿using MATSys.Commands;
 using MATSys.Factories;
+using MATSys.Modules;
 using Microsoft.Extensions.Configuration;
 
 //var a=ModuleFactory.CreateNew(typeof(TestModule),null, null, null, null,"TEST") as TestDevice ;

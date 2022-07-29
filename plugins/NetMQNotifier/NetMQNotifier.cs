@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MATSys.Modules;
+using Microsoft.Extensions.Configuration;
 using NetMQ;
 using NetMQ.Sockets;
 using Newtonsoft.Json;

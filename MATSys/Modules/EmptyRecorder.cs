@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 */
 using Microsoft.Extensions.Configuration;
 
-namespace MATSys
+namespace MATSys.Modules
 {
     public sealed class EmptyRecorder : IRecorder
     {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace MATSys
+namespace MATSys.Modules
 {
-    public interface IModule:IService
+    public interface IModule : IService
     {
         delegate void NewDataReady(string jsonString);
         event NewDataReady? OnDataReady;

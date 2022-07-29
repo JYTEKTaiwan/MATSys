@@ -2,6 +2,7 @@
 using MATSys;
 using MATSys.Commands;
 using MATSys.Factories;
+using MATSys.Modules;
 using Microsoft.Extensions.Configuration;
 using NetMQ;
 using Newtonsoft.Json;
