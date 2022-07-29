@@ -8,10 +8,10 @@ using Newtonsoft.Json;
 using System.Threading.Channels;
 
 Console.WriteLine("Hello, World!");
-var hub = DevicesHub.Instance;
+var hub = ModuleHub.Instance;
 hub.Start();
-hub.Devices["Dev1"].OnDataReady += ((result) => Console.WriteLine(result));
-foreach (var item in hub.Devices)
+hub.Modules["Dev1"].OnDataReady += ((result) => Console.WriteLine(result));
+foreach (var item in hub.Modules)
 {
     Console.WriteLine($"==={item.Name}===");
     foreach (var cmd in item.PrintCommands())

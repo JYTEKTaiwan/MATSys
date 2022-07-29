@@ -1,4 +1,5 @@
-﻿using MATSys.Factories;
+﻿using MATSys.Commands;
+using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -6,16 +7,16 @@ using NLog.Extensions.Logging;
 
 namespace MATSys
 {
-    public sealed class DevicesHub
+    public sealed class ModuleHub
     {
-        private static Lazy<DevicesHub> lazy = new Lazy<DevicesHub>(() => new DevicesHub());
+        private static Lazy<ModuleHub> lazy = new Lazy<ModuleHub>(() => new ModuleHub());
         private readonly IHost host;
         private CancellationTokenSource cts = new CancellationTokenSource();
         private volatile bool isRunning = false;
-        public DeviceCollection Devices { get; } = new DeviceCollection();
-        public static DevicesHub Instance => lazy.Value;
+        public ModuleCollection Modules { get; } = new ModuleCollection();
+        public static ModuleHub Instance => lazy.Value;
 
-        private DevicesHub()
+        private ModuleHub()
         {
             try
             {
@@ -55,7 +56,7 @@ namespace MATSys
                         var dev = devFactory.CreateDevice(item);
 
                         dev!.StartService(cts.Token);
-                        Devices.Add(dev);
+                        Modules.Add(dev);
                     }
                     isRunning = true;
                 }
@@ -66,6 +67,29 @@ namespace MATSys
             }
         }
 
+        public string Execute(string name, ICommand cmd)
+        {
+            if (Modules.Exists(x => x.Name == name))
+            {
+                return Modules[name].Execute(cmd);
+            }
+            else
+            {
+                return $"Module [{name}] is not Found";
+            }
+        }
+        public string Execute(string name, string cmd)
+        {
+            if (Modules.Exists(x => x.Name == name))
+            {
+                return Modules[name].Execute(cmd);
+            }
+            else
+            {
+                return $"Module [{name}] is not Found";
+            }
+        }
+
         public void Stop()
         {
             try
@@ -73,7 +97,7 @@ namespace MATSys
                 if (isRunning)
                 {
                     cts.Cancel();
-                    foreach (var item in Devices)
+                    foreach (var item in Modules)
                     {
                         item.StopService();
                     }
@@ -88,9 +112,9 @@ namespace MATSys
         }
     }
 
-    public sealed class DeviceCollection : List<IModule>
+    public sealed class ModuleCollection : List<IModule>
     {
-        public DeviceCollection() : base()
+        public ModuleCollection() : base()
         {
         }
 

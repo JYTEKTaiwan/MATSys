@@ -3,13 +3,19 @@ using MATSys.Commands;
 using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
 
-ModuleFactory.CreateNew<TestDevice>(null, null, null, null);
+//var a=ModuleFactory.CreateNew(typeof(TestModule),null, null, null, null,"TEST") as TestDevice ;
+//var a = ModuleFactory.CreateNew<TestModule>(null, null, null, null, "TEST");
+var a = ModuleFactory.CreateNew(@".\TestDevice.dll", "TestDevice", null, null, null, null, "TEST");
+var response =a.Execute(CommandBase.Create("Method", "HELLO"));
+
+Console.WriteLine(response);
+Console.ReadLine();
 
 
-public class TestDevice : ModuleBase
+public class TestModule : ModuleBase
 {
 
-    public TestDevice(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "") : base(configuration, server, bus, recorder, configurationKey)
+    public TestModule(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "") : base(configuration, server, bus, recorder, configurationKey)
     {
     }
 
@@ -35,9 +41,9 @@ public class TestDevice : ModuleBase
         return a.Date + "---" + a.Number.ToString();
     }
 
-    [MethodName("Methhh4od", typeof(Command<string>))]
+    [MethodName("Method", typeof(Command<string>))]
     public string Method(string c)
     {
-        return c;
+        return $"{c} from {Base.Name}";
     }
 }

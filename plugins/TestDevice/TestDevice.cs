@@ -6,7 +6,7 @@ namespace TestDevice
 {
     public class TestDevice : ModuleBase
     {
-        public TestDevice(IServiceProvider services, string configurationKey) : base(services, configurationKey)
+        public TestDevice(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "") : base(configuration, server, bus, recorder, configurationKey)
         {
         }
 
