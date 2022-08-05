@@ -1,6 +1,4 @@
-﻿using MATSys.Commands;
-
-namespace MATSys
+﻿namespace MATSys
 {
     public interface ITransceiver : IPlugin
     {

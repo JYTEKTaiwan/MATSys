@@ -1,19 +1,13 @@
 ﻿using MATSys.Commands;
-using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using NLog;
-using NLog.Extensions.Logging;
 using System.Reflection;
 
 namespace MATSys
 {
     public abstract class ModuleBase : IModule
     {
-        private const string key_recorder = "Recorder";
-        private const string key_notifier = "Notifier";
-        private const string key_transceiver = "Transceiver";
         public const string cmd_notFound = "NOTFOUND";
         public const string cmd_execError = "EXEC_ERROR";
         private readonly Dictionary<string, MethodInfo> _methods = new Dictionary<string, MethodInfo>();

@@ -1,5 +1,4 @@
-﻿
-/* Unmerged change from project 'MATSys (netstandard2.0)'
+﻿/* Unmerged change from project 'MATSys (netstandard2.0)'
 Before:
 using Microsoft.Extensions.Configuration;
 After:
@@ -8,7 +7,6 @@ using MATSys;
 using MATSys.Modules;
 using Microsoft.Extensions.Configuration;
 */
-using Microsoft.Extensions.Configuration;
 
 namespace MATSys
 {

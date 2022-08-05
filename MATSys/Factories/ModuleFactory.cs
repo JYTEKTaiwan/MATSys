@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace MATSys.Factories
@@ -37,7 +36,7 @@ namespace MATSys.Factories
             var trans = _transceiverFactory.CreateTransceiver(section.GetSection(key_transceiver));
             var noti = _notifierFactory.CreateNotifier(section.GetSection(key_notifier));
             var rec = _recorderFactory.CreateRecorder(section.GetSection(key_recorder));
-            return (IModule)Activator.CreateInstance(info.DeviceType!, new object[] { section, trans,noti,rec,info.Name })!;
+            return (IModule)Activator.CreateInstance(info.DeviceType!, new object[] { section, trans, noti, rec, info.Name })!;
         }
 
         public List<DeviceInformation> ListDevices(IConfiguration? config = null)
@@ -104,7 +103,7 @@ namespace MATSys.Factories
                         }
                     }
                 }
-                var obj = (IModule)Activator.CreateInstance(t,new object[] {configuration,server,bus,recorder,configurationKey })!;
+                var obj = (IModule)Activator.CreateInstance(t, new object[] { configuration, server, bus, recorder, configurationKey })!;
                 return obj;
             }
             catch (Exception ex)
@@ -112,11 +111,11 @@ namespace MATSys.Factories
                 throw ex;
             }
         }
-        public static T CreateNew<T>(object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string configurationKey = "") where T:IModule
+        public static T CreateNew<T>(object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string configurationKey = "") where T : IModule
         {
-            return (T)Activator.CreateInstance(typeof(T),new object[] {parameter,transceiver,notifier,recorder, configurationKey });
+            return (T)Activator.CreateInstance(typeof(T), new object[] { parameter, transceiver, notifier, recorder, configurationKey });
         }
-        public static IModule CreateNew(Type moduleType,object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string configurationKey = "")
+        public static IModule CreateNew(Type moduleType, object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string configurationKey = "")
         {
             if (typeof(IModule).IsAssignableFrom(moduleType))
             {
