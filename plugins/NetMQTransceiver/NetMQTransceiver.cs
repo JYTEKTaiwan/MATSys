@@ -1,5 +1,4 @@
-﻿using MATSys.Modules;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using NetMQ;
 
 namespace MATSys.Plugins

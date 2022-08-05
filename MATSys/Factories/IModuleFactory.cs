@@ -1,6 +1,4 @@
-﻿using MATSys.Modules;
-
-namespace MATSys.Factories
+﻿namespace MATSys.Factories
 {
     public interface IModuleFactory
     {

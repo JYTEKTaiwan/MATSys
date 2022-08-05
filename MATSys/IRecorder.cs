@@ -1,4 +1,13 @@
-﻿namespace MATSys.Modules
+﻿/* Unmerged change from project 'MATSys (netstandard2.0)'
+Before:
+namespace MATSys.Modules
+After:
+using MATSys;
+using MATSys;
+using MATSys.Modules
+*/
+
+namespace MATSys
 {
     public interface IRecorder : IPlugin
     {

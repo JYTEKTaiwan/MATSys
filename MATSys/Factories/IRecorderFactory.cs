@@ -1,5 +1,4 @@
-﻿using MATSys.Modules;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Factories
 {

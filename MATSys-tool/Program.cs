@@ -1,6 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using MATSys;
 using MATSys.Commands;
-using MATSys.Modules;
 using System.CommandLine;
 using System.Reflection;
 using Command = System.CommandLine.Command;

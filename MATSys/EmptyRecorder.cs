@@ -8,9 +8,18 @@ using MATSys;
 using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 */
+
+/* Unmerged change from project 'MATSys (netstandard2.0)'
+Before:
+using MATSys.Modules;
+After:
+using MATSys;
+using MATSys;
+using MATSys.Modules;
+*/
 using Microsoft.Extensions.Configuration;
 
-namespace MATSys.Modules
+namespace MATSys
 {
     public sealed class EmptyRecorder : IRecorder
     {

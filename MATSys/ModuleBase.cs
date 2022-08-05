@@ -7,7 +7,7 @@ using NLog;
 using NLog.Extensions.Logging;
 using System.Reflection;
 
-namespace MATSys.Modules
+namespace MATSys
 {
     public abstract class ModuleBase : IModule
     {
