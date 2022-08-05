@@ -4,8 +4,8 @@ using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
 
 //var a=ModuleFactory.CreateNew(typeof(TestModule),null, null, null, null,"TEST") as TestDevice ;
-//var a = ModuleFactory.CreateNew<TestModule>(null, null, null, null, "TEST");
-var a = ModuleFactory.CreateNew(@".\TestDevice.dll", "TestDevice", null, null, null, null, "TEST");
+var a = ModuleFactory.CreateNew<TestModule>(null, null, null, null, "TEST");
+//var a = ModuleFactory.CreateNew(@".\TestDevice.dll", "TestDevice", null, null, null, null, "TEST");
 var response =a.Execute(CommandBase.Create("Method", "HELLO"));
 
 Console.WriteLine(response);

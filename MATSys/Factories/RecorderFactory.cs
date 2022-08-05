@@ -31,7 +31,7 @@ namespace MATSys.Factories
                     string type = section.GetValue<string>("Type");
                     if (!string.IsNullOrEmpty(type))
                     {
-                        //if key has value, search the type with the default class name. eg. xxx=>xxxDataRecorder
+                        //if key has value, search the type with the default class name. eg. xxx=>xxxRecorder
                         foreach (var assem in assems)
                         {
                             var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower());
@@ -84,7 +84,7 @@ namespace MATSys.Factories
 
                 if (!string.IsNullOrEmpty(typeString))
                 {
-                    //if key has value, search the type with the default class name. eg. xxx=>xxxDataRecorder
+                    //if key has value, search the type with the default class name. eg. xxx=>xxxRecorder
                     foreach (var assem in assems)
                     {
                         var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{typeString}{prefix}".ToLower());

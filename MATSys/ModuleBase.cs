@@ -152,13 +152,13 @@ namespace MATSys
             {
                 try
                 {
-                    _logger.Trace("Starts the DataRecorder");
+                    _logger.Trace("Starts the Recorder");
                     _recorder.StartService(token);
 
-                    _logger.Trace("Starts the Publisher");
+                    _logger.Trace("Starts the Notifier");
                     _notifier.StartService(token);
 
-                    _logger.Trace("Starts the CommandServer");
+                    _logger.Trace("Starts the Transceiver");
                     _transceiver.StartService(token);
 
                     _isRunning = true;
@@ -177,13 +177,13 @@ namespace MATSys
             {
                 if (_isRunning)
                 {
-                    _logger.Trace("Stops the CommandStream");
+                    _logger.Trace("Stops the Transceiver");
                     _transceiver.StopService();
 
-                    _logger.Trace("Stops the DataRecorder");
+                    _logger.Trace("Stops the Recorder");
                     _recorder.StopService();
 
-                    _logger.Trace("Stops the Publisher");
+                    _logger.Trace("Stops the Notifier");
                     _notifier.StopService();
                     _isRunning = false;
                     _logger.Info("Stops service");
