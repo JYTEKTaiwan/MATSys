@@ -7,7 +7,7 @@ namespace MATSys.Plugins
     {
         private NetMQ.Sockets.RouterSocket _routerSocket = new NetMQ.Sockets.RouterSocket();
         private NetMQTransceiverConfiguration? _config;
-        private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
 
         public event ITransceiver.CommandReadyEvent? OnCommandReady;
 
@@ -72,17 +72,22 @@ namespace MATSys.Plugins
         public void Load(IConfigurationSection section)
         {
             _config = section.Get<NetMQTransceiverConfiguration>();
+            _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
+
             _logger.Info("NetMQTransceiver is initiated");
         }
 
         public void Load(object configuration)
         {
             _config = configuration as NetMQTransceiverConfiguration;
+            _logger =_config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
+
             _logger.Info("NetMQTransceiver is initiated");
         }
 
         internal class NetMQTransceiverConfiguration
         {
+            public bool EnableLogging { get; set; } = false;
             public string AliasName { get; set; } = "";
             public string LocalIP { get; set; } = "";
             public int Port { get; set; } = -1;

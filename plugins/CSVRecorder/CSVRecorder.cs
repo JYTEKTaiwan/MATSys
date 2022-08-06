@@ -7,7 +7,7 @@ namespace MATSys.Plugins
 {
     public class CSVRecorder<T> : IRecorder<T> where T : class
     {
-        private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
         private Channel<T>? _queue;
         private CSVRecorderConfiguration? _config;
 
@@ -15,10 +15,11 @@ namespace MATSys.Plugins
         private Task _task = Task.CompletedTask;
 
         public string Name => nameof(CSVRecorder);
-
         public void Load(IConfigurationSection section)
         {
             _config = section.Get<CSVRecorderConfiguration>() ?? CSVRecorderConfiguration.Default;
+            _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
+
             _queue = Channel.CreateBounded<T>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVRecorder initiated");
         }
@@ -26,6 +27,8 @@ namespace MATSys.Plugins
         public void Load(object configuration)
         {
             _config = (configuration as CSVRecorderConfiguration) ?? CSVRecorderConfiguration.Default;
+            _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
+
             _queue = Channel.CreateBounded<T>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVRecorder initiated");
         }
@@ -118,7 +121,7 @@ namespace MATSys.Plugins
 
     public class CSVRecorder : IRecorder
     {
-        private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
         private Channel<object>? _queue;
         private CSVRecorderConfiguration? _config;
         private CancellationTokenSource _localCts = new CancellationTokenSource();
@@ -128,7 +131,9 @@ namespace MATSys.Plugins
 
         public void Load(IConfigurationSection section)
         {
-            _config = section.Get<CSVRecorderConfiguration>() ?? CSVRecorderConfiguration.Default; ;
+            _config = section.Get<CSVRecorderConfiguration>() ?? CSVRecorderConfiguration.Default;
+            _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
+
             _queue = Channel.CreateBounded<object>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVRecorder initiated");
         }
@@ -136,6 +141,8 @@ namespace MATSys.Plugins
         public void Load(object configuration)
         {
             _config = (configuration as CSVRecorderConfiguration) ?? CSVRecorderConfiguration.Default;
+            _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
+
             _queue = Channel.CreateBounded<object>(new BoundedChannelOptions(_config.QueueSize) { FullMode = _config.BoundedChannelFullMode });
             _logger.Info("CSVRecorder initiated");
         }
@@ -214,6 +221,7 @@ namespace MATSys.Plugins
 
     public class CSVRecorderConfiguration
     {
+        public bool EnableLogging { get; set; } = false;
         public bool WaitForComplete { get; set; } = true;
         public int QueueSize { get; set; } = 2000;
         public int WaitForCompleteTimeout { get; set; } = 5000;

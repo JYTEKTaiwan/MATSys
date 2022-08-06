@@ -60,12 +60,12 @@ namespace MATSys
             if (recorder == null)
             {
                 _recorder = new EmptyRecorder();
-                _logger.Trace($"Null reference is detected, {_recorder.Name} is injected");
+                _logger.Info($"Null reference is detected, {_recorder.Name} is injected");
             }
             else
             {
                 _recorder = recorder;
-                _logger.Trace($"{_recorder.Name} is injected");
+                _logger.Info($"{_recorder.Name} is injected");
             }
             return _recorder;
         }
@@ -75,12 +75,12 @@ namespace MATSys
             if (server == null)
             {
                 transceiver = new EmptyTransceiver();
-                _logger.Trace($"Null reference is detected, {transceiver.Name} is injected");
+                _logger.Info($"Null reference is detected, {transceiver.Name} is injected");
             }
             else
             {
                 transceiver = server;
-                _logger.Trace($"{transceiver.Name} is injected");
+                _logger.Info($"{transceiver.Name} is injected");
             }
             transceiver.OnCommandReady += OnCommandDataReady;
             return transceiver;
@@ -91,12 +91,12 @@ namespace MATSys
             if (bus == null)
             {
                 notifier = new EmptyNotifier();
-                _logger.Trace($"Null reference is detected, {notifier.Name} is injected");
+                _logger.Info($"Null reference is detected, {notifier.Name} is injected");
             }
             else
             {
                 notifier = bus;
-                _logger.Trace($"{notifier.Name} is injected");
+                _logger.Info($"{notifier.Name} is injected");
             }
             notifier.OnNewDataReadyEvent += NewDataReady;
             return notifier;
@@ -152,13 +152,11 @@ namespace MATSys
             {
                 try
                 {
-                    _logger.Trace("Starts the Recorder");
+                    _logger.Trace($"Starts the {_recorder.Name}");
                     _recorder.StartService(token);
-
-                    _logger.Trace("Starts the Notifier");
+                    _logger.Trace($"Starts the {_notifier.Name}");
                     _notifier.StartService(token);
-
-                    _logger.Trace("Starts the Transceiver");
+                    _logger.Trace($"Starts the {_transceiver.Name}");
                     _transceiver.StartService(token);
 
                     _isRunning = true;
@@ -177,13 +175,13 @@ namespace MATSys
             {
                 if (_isRunning)
                 {
-                    _logger.Trace("Stops the Transceiver");
+                    _logger.Trace($"Stops the {_transceiver.Name}");
                     _transceiver.StopService();
 
-                    _logger.Trace("Stops the Recorder");
+                    _logger.Trace($"Stops the {_recorder.Name}");
                     _recorder.StopService();
 
-                    _logger.Trace("Stops the Notifier");
+                    _logger.Trace($"Stops the {_notifier.Name}");
                     _notifier.StopService();
                     _isRunning = false;
                     _logger.Info("Stops service");

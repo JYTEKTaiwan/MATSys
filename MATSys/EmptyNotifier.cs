@@ -23,9 +23,10 @@ namespace MATSys
 {
     public sealed class EmptyNotifier : INotifier
     {
-        private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
 
         public string Name => nameof(EmptyNotifier);
+
 
         public event INotifier.NewDataEvent? OnNewDataReadyEvent;
 

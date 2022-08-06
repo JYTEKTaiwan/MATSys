@@ -23,7 +23,7 @@ namespace MATSys
 {
     public sealed class EmptyTransceiver : ITransceiver
     {
-        private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
         public string Name => nameof(EmptyTransceiver);
 
         public event ITransceiver.CommandReadyEvent? OnCommandReady;

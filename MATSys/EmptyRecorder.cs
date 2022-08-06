@@ -23,10 +23,9 @@ namespace MATSys
 {
     public sealed class EmptyRecorder : IRecorder
     {
-        private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
 
         public string Name => nameof(EmptyRecorder);
-
         public void StopService()
         {
         }

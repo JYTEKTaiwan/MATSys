@@ -6,7 +6,7 @@ namespace MATSys.Plugins
 {
     internal sealed class QueueNotifier : INotifier
     {
-        private readonly NLog.ILogger _logger = NLog.LogManager.GetCurrentClassLogger();
+        private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
         private Channel<string>? _ch;
         private QueueNotifierConfiguration? config;
 
@@ -24,12 +24,14 @@ namespace MATSys.Plugins
         public void Load(IConfigurationSection section)
         {
             config = section.Get<QueueNotifierConfiguration>();
+            _logger = config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
             _logger.Info("QueueNotifier is initiated");
         }
 
         public void Load(object configuration)
         {
             config = configuration as QueueNotifierConfiguration;
+            _logger = config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
             _logger.Info("QueueNotifier is initiated");
         }
 
@@ -55,6 +57,7 @@ namespace MATSys.Plugins
 
     internal sealed class QueueNotifierConfiguration
     {
+        public bool EnableLogging { get; set; } = false;
         public bool DisableEvent { get; set; } = true;
         public int QueueLength { get; set; } = 1000;
         public BoundedChannelFullMode Mode { get; set; } = BoundedChannelFullMode.DropOldest;
