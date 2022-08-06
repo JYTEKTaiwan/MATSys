@@ -5,7 +5,7 @@ namespace MATSys.Factories
 {
     public sealed class ModuleFactory : IModuleFactory
     {
-        private const string sectionKey = "PluginReferences:Modules";
+        private const string sectionKey = "References:Modules";
         private const string key_module = "Modules";
         private const string key_recorder = "Recorder";
         private const string key_notifier = "Notifier";

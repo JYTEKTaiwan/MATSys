@@ -5,7 +5,7 @@ namespace MATSys.Factories
 {
     public sealed class NotifierFactory : INotifierFactory
     {
-        private const string sectionKey = "PluginReferences:Notifiers";
+        private const string sectionKey = "References:Notifiers";
         private const string prefix = "Notifier";
         private readonly static Type DefaultType = typeof(EmptyNotifier);
         private static Lazy<INotifier> _default = new Lazy<INotifier>(() => new EmptyNotifier());
