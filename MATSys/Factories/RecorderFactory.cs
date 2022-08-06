@@ -6,7 +6,7 @@ namespace MATSys.Factories
     public sealed class RecorderFactory : IRecorderFactory
     {
         private const string prefix = "Recorder";
-        private const string sectionKey = "Plugins:Recorders";
+        private const string sectionKey = "PluginReferences:Recorders";
         private readonly static Type DefaultType = typeof(EmptyRecorder);
         private static Lazy<IRecorder> _default = new Lazy<IRecorder>(() => new EmptyRecorder());
         private static IRecorder DefaultInstance => _default.Value;

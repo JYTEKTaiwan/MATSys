@@ -5,7 +5,8 @@ namespace MATSys.Factories
 {
     public sealed class ModuleFactory : IModuleFactory
     {
-        private const string sectionKey = "Plugins:Devices";
+        private const string sectionKey = "PluginReferences:Modules";
+        private const string key_module = "Modules";
         private const string key_recorder = "Recorder";
         private const string key_notifier = "Notifier";
         private const string key_transceiver = "Transceiver";
@@ -42,13 +43,13 @@ namespace MATSys.Factories
         public List<DeviceInformation> ListDevices(IConfiguration? config = null)
         {
             var devices = new List<DeviceInformation>();
-            if (config != null && config!.GetSection("Devices").Exists())
+            if (config != null && config!.GetSection(key_module).Exists())
             {
                 //List all available assemblies
                 var assems = AppDomain.CurrentDomain.GetAssemblies();
 
                 //Parse all assigned devices from configuration file
-                var pairs = config.GetSection("Devices").AsEnumerable(true).Where(x => x.Value != null);
+                var pairs = config.GetSection(key_module).AsEnumerable(true).Where(x => x.Value != null);
 
                 foreach (var item in pairs)
                 {
