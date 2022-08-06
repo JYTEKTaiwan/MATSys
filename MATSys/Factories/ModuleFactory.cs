@@ -35,7 +35,7 @@ namespace MATSys.Factories
             var trans = _transceiverFactory.CreateTransceiver(section.GetSection(key_transceiver));
             var noti = _notifierFactory.CreateNotifier(section.GetSection(key_notifier));
             var rec = _recorderFactory.CreateRecorder(section.GetSection(key_recorder));
-            return (IModule)Activator.CreateInstance(t,new  object[] { section, trans, noti, rec, name })!;
+            return (IModule)Activator.CreateInstance(t, new object[] { section, trans, noti, rec, name })!;
         }
         public Type ParseType(string typeString)
         {

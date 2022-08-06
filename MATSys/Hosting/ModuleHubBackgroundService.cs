@@ -4,8 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using NLog.Extensions.Logging;
 
 namespace MATSys
 {
@@ -24,11 +22,11 @@ namespace MATSys
                 var moduleCount = _config.GetSection("Modules").GetChildren().Count();
                 for (int i = 0; i < moduleCount; i++)
                 {
-                    var section= $"Modules:{i}";
+                    var section = $"Modules:{i}";
                     var modSection = _config.GetSection(section);
                     Modules.Add(_moduleFactory.CreateDevice(modSection));
                 }
-                _transceiver=services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(_config.GetSection("Transceiver"));
+                _transceiver = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(_config.GetSection("Transceiver"));
                 _transceiver.OnNewRequest += _transceiver_OnNewRequest; ;
             }
             catch (Exception ex)

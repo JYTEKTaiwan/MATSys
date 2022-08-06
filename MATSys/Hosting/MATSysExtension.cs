@@ -1,13 +1,8 @@
 ﻿using MATSys.Factories;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NLog.Extensions.Logging;
-using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Hosting
 {
