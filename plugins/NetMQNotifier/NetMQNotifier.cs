@@ -8,30 +8,20 @@ namespace MATSys.Plugins
     internal sealed class NetMQNotifier : INotifier
     {
         private PublisherSocket _pub = new PublisherSocket();
-        private SubscriberSocket _sub = new SubscriberSocket();
         private bool isConnected = false;
+        private string latestString = "";
 
         private NetMQNotifierConfiguration? _config;
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
 
         public string Name => nameof(NetMQNotifier);
 
-        public event INotifier.NewDataEvent? OnNewDataReadyEvent;
-
-        private void CurrentDomain_ProcessExit(object? sender, EventArgs e)
-        {
-            _logger.Trace("ProcessExit event fired");
-            if (isConnected)
-            {
-                _pub.Unbind(_pub.Options.LastEndpoint!);
-                isConnected = false;
-            }
-            _pub.Dispose();
-        }
+        public event INotifier.NotifyEvent? OnNotify;
 
         public void Publish(object data)
         {
             var json = JsonConvert.SerializeObject(data);
+            latestString = json;
             _logger.Trace("Ready to publish message");
             var msg = new NetMQMessage();
             msg.Append(_config!.Topic);
@@ -41,7 +31,7 @@ namespace MATSys.Plugins
             _logger.Info("Message has sent");
             if (!_config.DisableEvent)
             {
-                OnNewDataReadyEvent?.Invoke(json);
+                OnNotify?.Invoke(json);
             }
         }
 
@@ -50,8 +40,6 @@ namespace MATSys.Plugins
             try
             {
                 _pub.Bind($"{_config!.Protocal}://{_config.Address}");
-                _sub.Connect($"{_config.Protocal}://{_config.Address}");
-                _sub.Subscribe(_config.Topic);
                 isConnected = true;
                 _logger.Info("Starts service");
             }
@@ -65,7 +53,6 @@ namespace MATSys.Plugins
         {
             if (isConnected)
             {
-                _sub.Disconnect(_sub.Options.LastEndpoint!);
                 _pub.Unbind(_pub.Options.LastEndpoint!);
                 isConnected = false;
                 _logger.Info("Stop service");
@@ -77,7 +64,6 @@ namespace MATSys.Plugins
             _config = section.Get<NetMQNotifierConfiguration>();
             _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
 
-            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
             _logger.Info("NetMQNotifier is initiated");
         }
 
@@ -86,13 +72,12 @@ namespace MATSys.Plugins
             _config = configuration as NetMQNotifierConfiguration;
             _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
 
-            AppDomain.CurrentDomain.ProcessExit += CurrentDomain_ProcessExit;
             _logger.Info("NetMQNotifier is initiated");
         }
 
         public object GetData(int timeoutInMilliseconds)
         {
-            return _sub.ReceiveMultipartStrings()[1];
+            return latestString;
         }
 
         ~NetMQNotifier()

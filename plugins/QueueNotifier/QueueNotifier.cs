@@ -12,7 +12,7 @@ namespace MATSys.Plugins
 
         public string Name => nameof(QueueNotifier);
 
-        public event INotifier.NewDataEvent? OnNewDataReadyEvent;
+        public event INotifier.NotifyEvent? OnNotify;
 
         public object? GetData(int timeoutInMilliseconds = 1000)
         {
@@ -40,7 +40,7 @@ namespace MATSys.Plugins
             _ch!.Writer.TryWrite(JsonConvert.SerializeObject(data));
             if (!config!.DisableEvent)
             {
-                OnNewDataReadyEvent?.Invoke(JsonConvert.SerializeObject(data));
+                OnNotify?.Invoke(JsonConvert.SerializeObject(data));
             }
         }
 

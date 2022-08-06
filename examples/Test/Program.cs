@@ -1,53 +1,36 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MATSys;
 using MATSys.Commands;
-using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
-using NetMQ;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Hosting;
 using System.Threading.Channels;
+using MATSys.Hosting;
 
 Console.WriteLine("Hello, World!");
-var hub = ModuleHub.Instance;
-hub.Start();
-hub.Modules["Dev1"].OnDataReady += ((result) => Console.WriteLine(result));
-foreach (var item in hub.Modules)
+
+IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
+host.RunAsync().Wait(1000);;
+
+var dev = host.Services.GetMATSysHandle();
+dev.Modules["Dev1"].OnDataReady+= IModule_OnDataReady;
+
+void IModule_OnDataReady(string jsonString)
 {
-    Console.WriteLine($"==={item.Name}===");
-    foreach (var cmd in item.PrintCommands())
-    {
-        Console.WriteLine(cmd);
-    }
+    Console.WriteLine(jsonString);
 }
-Console.ReadKey();
-var sub = new NetMQ.Sockets.SubscriberSocket();
-sub.Connect("inproc://127.0.0.1:12345");
-sub.Subscribe("AA");
-Task.Run(() =>
-{
-    while (true)
-    {
-        Console.WriteLine(sub.ReceiveMultipartStrings()[1]);
-    }
-});
-var s = new NetMQ.Sockets.DealerSocket();
-s.Connect("tcp://127.0.0.1:1234");
+
 for (int i = 0; i < 10; i++)
 {
-    //Thread.Sleep();
-    s.SendFrame(JsonConvert.SerializeObject(CommandBase.Create<TestDevice.Data>
+   var response= dev.Execute("Dev1", CommandBase.Create<TestDevice.Data>
         ("Test",
-        new TestDevice.Data() { Date = DateTime.Now.ToString(), Number = new Random().NextDouble() })));
-    //var a = hub.Devices["Dev1"].DataBus.GetData();
-    //Console.WriteLine($"{a}");
+        new TestDevice.Data() { Date = DateTime.Now.ToString(), Number = new Random().NextDouble() }));
+    //Console.WriteLine(response);
 }
-Console.WriteLine("PRESS ANY KEY TO STOP");
-Console.ReadKey();
 
-hub.Stop();
 Console.WriteLine("PRESS ANY KEY TO EXIT");
-Console.ReadKey();
 
+Console.ReadKey();
+host.StopAsync();
 public class TestDevice : ModuleBase
 {
 
@@ -72,9 +55,10 @@ public class TestDevice : ModuleBase
     [MethodName("Test", typeof(Command<Data>))]
     public string Test(Data a)
     {
+        var res = a.Date + "---" + a.Number.ToString();
         Base.Recorder.Write(a);
         Base.Notifier.Publish(a);
-        return a.Date + "---" + a.Number.ToString();
+        return res;
     }
 
     [MethodName("Methhh4od", typeof(Command<string>))]

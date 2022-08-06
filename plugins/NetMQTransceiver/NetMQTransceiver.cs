@@ -9,7 +9,7 @@ namespace MATSys.Plugins
         private NetMQTransceiverConfiguration? _config;
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
 
-        public event ITransceiver.CommandReadyEvent? OnCommandReady;
+        public event ITransceiver.RequestFiredEvent? OnNewRequest;
 
         private CancellationTokenSource _localCts = new CancellationTokenSource();
 
@@ -41,7 +41,7 @@ namespace MATSys.Plugins
                            var content = _routerSocket.ReceiveMultipartStrings();
                            _logger.Debug($"New message received {content[0]}");
 
-                           var response = OnCommandReady?.Invoke(this, content[0])!;
+                           var response = OnNewRequest?.Invoke(this, content[0])!;
                            _logger.Trace("Message is executed");
 
                            _routerSocket.SendMoreFrame(key);

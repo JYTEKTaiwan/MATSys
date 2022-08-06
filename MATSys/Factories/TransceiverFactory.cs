@@ -5,7 +5,7 @@ namespace MATSys.Factories
 {
     public sealed class TransceiverFactory : ITransceiverFactory
     {
-        private const string sectionKey = "References:Transceivers";
+        private const string sectionKey = "MATSys:References:Transceivers";
         private const string prefix = "Transceiver";
         private readonly static Type DefaultType = typeof(EmptyTransceiver);
         private static Lazy<ITransceiver> _default = new Lazy<ITransceiver>(() => new EmptyTransceiver());

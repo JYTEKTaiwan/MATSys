@@ -82,7 +82,7 @@ namespace MATSys
                 transceiver = server;
                 _logger.Info($"{transceiver.Name} is injected");
             }
-            transceiver.OnCommandReady += OnCommandDataReady;
+            transceiver.OnNewRequest += OnCommandDataReady;
             return transceiver;
         }
         private INotifier InjectNotifier(INotifier bus)
@@ -98,7 +98,7 @@ namespace MATSys
                 notifier = bus;
                 _logger.Info($"{notifier.Name} is injected");
             }
-            notifier.OnNewDataReadyEvent += NewDataReady;
+            notifier.OnNotify += NewDataReady;
             return notifier;
 
         }

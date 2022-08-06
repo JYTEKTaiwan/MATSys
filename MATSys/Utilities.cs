@@ -61,19 +61,3 @@ internal class PluginLoader : AssemblyLoadContext
 }
 
 #endif
-
-public struct DeviceInformation
-{
-    public Type DeviceType { get; }
-    public string Name { get; }
-
-    public bool IsEmpty => string.IsNullOrEmpty(this.Name);
-
-    public DeviceInformation(Type deviceType, string name)
-    {
-        DeviceType = deviceType;
-        Name = name;
-    }
-
-    public static DeviceInformation Empty => new DeviceInformation(null!, "");
-}

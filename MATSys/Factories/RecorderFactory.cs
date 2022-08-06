@@ -6,7 +6,7 @@ namespace MATSys.Factories
     public sealed class RecorderFactory : IRecorderFactory
     {
         private const string prefix = "Recorder";
-        private const string sectionKey = "References:Recorders";
+        private const string sectionKey = "MATSys:References:Recorders";
         private readonly static Type DefaultType = typeof(EmptyRecorder);
         private static Lazy<IRecorder> _default = new Lazy<IRecorder>(() => new EmptyRecorder());
         private static IRecorder DefaultInstance => _default.Value;
@@ -18,7 +18,6 @@ namespace MATSys.Factories
             //Load plugin assemblies into memoery
             DependencyLoader.LoadPluginAssemblies(plugins);
         }
-
         public IRecorder CreateRecorder(IConfigurationSection section)
         {
             try
@@ -47,7 +46,7 @@ namespace MATSys.Factories
                         }
                     }
                 }
-                return CreateRecorder(t, section);
+                return CreateAndLoad(t, section);
             }
             catch (Exception ex)
             {
@@ -55,7 +54,7 @@ namespace MATSys.Factories
             }
         }
 
-        private IRecorder CreateRecorder(Type type, IConfigurationSection section)
+        private IRecorder CreateAndLoad(Type type, IConfigurationSection section)
         {
             var obj = (IRecorder)Activator.CreateInstance(type)!;
             obj.Load(section);

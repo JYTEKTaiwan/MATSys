@@ -28,7 +28,7 @@ namespace MATSys
         public string Name => nameof(EmptyNotifier);
 
 
-        public event INotifier.NewDataEvent? OnNewDataReadyEvent;
+        public event INotifier.NotifyEvent? OnNotify;
 
         public object? GetData(int timeoutInMilliseconds = 1000)
         {

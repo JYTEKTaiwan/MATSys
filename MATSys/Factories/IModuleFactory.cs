@@ -1,7 +1,10 @@
-﻿namespace MATSys.Factories
+﻿using Microsoft.Extensions.Configuration;
+
+namespace MATSys.Factories
 {
     public interface IModuleFactory
     {
-        IModule CreateDevice(DeviceInformation info);
+        IModule CreateDevice(IConfigurationSection info);
+
     }
 }

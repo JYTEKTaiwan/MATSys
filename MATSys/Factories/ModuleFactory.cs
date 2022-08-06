@@ -5,68 +5,61 @@ namespace MATSys.Factories
 {
     public sealed class ModuleFactory : IModuleFactory
     {
-        private const string sectionKey = "References:Modules";
+        private const string sectionKey = "MATSys:References:Modules";
         private const string key_module = "Modules";
         private const string key_recorder = "Recorder";
         private const string key_notifier = "Notifier";
         private const string key_transceiver = "Transceiver";
 
-        private readonly IServiceProvider _services;
-
         private readonly IConfiguration _config;
         private readonly ITransceiverFactory _transceiverFactory;
         private readonly INotifierFactory _notifierFactory;
         private readonly IRecorderFactory _recorderFactory;
-        public List<DeviceInformation> DeviceInfos { get; }
         public ModuleFactory(IConfiguration config, ITransceiverFactory tran_factory, INotifierFactory noti_factory, IRecorderFactory rec_factory)
         {
             _config = config;
             _transceiverFactory = tran_factory;
             _notifierFactory = noti_factory;
             _recorderFactory = rec_factory;
-            var plugins = config.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
+            var plugins = _config.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
             //Load plugin assemblies into memoery
             DependencyLoader.LoadPluginAssemblies(plugins);
-
-            DeviceInfos = ListDevices(config);
         }
-
-        public IModule CreateDevice(DeviceInformation info)
+        public IModule CreateDevice(IConfigurationSection section)
         {
-            var section = _config.GetSection(info.Name);
+            var _section = section;
+            var name = section.GetSection("Name").Get<string>();
+            var typeString = section.GetSection("Type").Get<string>();
+
+            Type t = ParseType(typeString);
             var trans = _transceiverFactory.CreateTransceiver(section.GetSection(key_transceiver));
             var noti = _notifierFactory.CreateNotifier(section.GetSection(key_notifier));
             var rec = _recorderFactory.CreateRecorder(section.GetSection(key_recorder));
-            return (IModule)Activator.CreateInstance(info.DeviceType!, new object[] { section, trans, noti, rec, info.Name })!;
+            return (IModule)Activator.CreateInstance(t,new  object[] { section, trans, noti, rec, name })!;
         }
-
-        public List<DeviceInformation> ListDevices(IConfiguration? config = null)
+        public Type ParseType(string typeString)
         {
-            var devices = new List<DeviceInformation>();
-            if (config != null && config!.GetSection(key_module).Exists())
+            var assems = AppDomain.CurrentDomain.GetAssemblies();
+            Type t = typeof(object);
+            //check if section in the json configuration exits
+            if (!string.IsNullOrEmpty(typeString))
             {
-                //List all available assemblies
-                var assems = AppDomain.CurrentDomain.GetAssemblies();
-
-                //Parse all assigned devices from configuration file
-                var pairs = config.GetSection(key_module).AsEnumerable(true).Where(x => x.Value != null);
-
-                foreach (var item in pairs)
+                //if key has value, search the type with the default class name. eg. xxx=>xxxRecorder
+                foreach (var assem in assems)
                 {
-                    var searchKey = item.Key.Contains(':') ? item.Key.Split(':')[0] : item.Key;
-                    //search the type by name in the assemblies
-                    foreach (var assem in assems)
+                    var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{typeString}".ToLower());
+                    if (dummy == null)
                     {
-                        var t = assem.GetType(searchKey);
-                        if (t != null)
-                        {
-                            devices.Add(new DeviceInformation(t, item.Value));
-                            break;
-                        }
+                        continue;
+                    }
+                    else
+                    {
+                        t = dummy;
+                        break;
                     }
                 }
             }
-            return devices;
+            return t;
         }
         public static IModule CreateNew(string assemblyPath, string typeString, object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "")
         {

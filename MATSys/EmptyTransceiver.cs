@@ -26,7 +26,7 @@ namespace MATSys
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
         public string Name => nameof(EmptyTransceiver);
 
-        public event ITransceiver.CommandReadyEvent? OnCommandReady;
+        public event ITransceiver.RequestFiredEvent? OnNewRequest;
 
         public void Load(IConfigurationSection section)
         {
