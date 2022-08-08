@@ -100,7 +100,18 @@ namespace MATSys.Factories
             }
             return t;
         }
-        public static IModule CreateNew(string assemblyPath, string typeString, object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "")
+        /// <summary>
+        /// Create new Module statically, loaded from dll path
+        /// </summary>
+        /// <param name="assemblyPath">assembly path</param>
+        /// <param name="typeString">string of type</param>
+        /// <param name="configuration">configuration object that will be loaded using Load method in IModule</param>
+        /// <param name="transceiver">transceiver instance</param>
+        /// <param name="notifier">notifier instance</param>
+        /// <param name="recorder">recorder instance</param>
+        /// <param name="aliasName">Alias name</param>
+        /// <returns>IModule instance</returns>
+        public static IModule CreateNew(string assemblyPath, string typeString, object configuration, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "")
         {
             var assems = AppDomain.CurrentDomain.GetAssemblies();
             var assembly = Assembly.LoadFile(Path.GetFullPath(assemblyPath));
@@ -136,7 +147,7 @@ namespace MATSys.Factories
                         }
                     }
                 }
-                var obj = (IModule)Activator.CreateInstance(t, new object[] { configuration, server, bus, recorder, configurationKey })!;
+                var obj = (IModule)Activator.CreateInstance(t, new object[] { configuration, transceiver, notifier, recorder, aliasName })!;
                 return obj;
             }
             catch (Exception ex)
@@ -144,15 +155,35 @@ namespace MATSys.Factories
                 throw ex;
             }
         }
-        public static T CreateNew<T>(object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string configurationKey = "") where T : IModule
+        /// <summary>
+        /// Create new Module of generic type statically 
+        /// </summary>
+        /// <param name="parameter">parameter object</param>
+        /// <param name="transceiver">transceiver instance</param>
+        /// <param name="notifier">transceiver instance</param>
+        /// <param name="recorder">recorder instance</param>
+        /// <param name="aliasName">Alias name</param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T CreateNew<T>(object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "") where T : IModule
         {
-            return (T)Activator.CreateInstance(typeof(T), new object[] { parameter, transceiver, notifier, recorder, configurationKey });
+            return (T)Activator.CreateInstance(typeof(T), new object[] { parameter, transceiver, notifier, recorder, aliasName });
         }
-        public static IModule CreateNew(Type moduleType, object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string configurationKey = "")
+        /// <summary>
+        /// Create new Module statically. return null if <paramref name="moduleType"/> is not inherited from IModule
+        /// </summary>
+        /// <param name="moduleType">typeof module</param>
+        /// <param name="parameter">parameter object</param>
+        /// <param name="transceiver">transceiver instance</param>
+        /// <param name="notifier">transceiver instance</param>
+        /// <param name="recorder">recorder instance</param>
+        /// <param name="aliasName">Alias name</param>
+        /// <returns>IModule instance</returns>
+        public static IModule CreateNew(Type moduleType, object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "")
         {
             if (typeof(IModule).IsAssignableFrom(moduleType))
             {
-                return (IModule)Activator.CreateInstance(moduleType, new object[] { parameter, transceiver, notifier, recorder, configurationKey });
+                return (IModule)Activator.CreateInstance(moduleType, new object[] { parameter, transceiver, notifier, recorder, aliasName });
             }
             else
             {
