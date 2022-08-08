@@ -27,9 +27,9 @@ namespace MATSys
         INotifier IModule.Notifier => _notifier;
         public string Name { get; }
         public IModule Base => this;
-        public ModuleBase(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "")
+        public ModuleBase(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string aliasName = "")
         {
-            Name = string.IsNullOrEmpty(configurationKey) ? $"{GetType().Name}_{GetHashCode().ToString("X2")}" : configurationKey;
+            Name = string.IsNullOrEmpty(aliasName) ? $"{GetType().Name}_{GetHashCode().ToString("X2")}" : aliasName;
 
             _logger = LogManager.GetLogger(Name);
 
