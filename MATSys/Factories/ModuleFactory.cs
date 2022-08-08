@@ -156,7 +156,7 @@ namespace MATSys.Factories
             }
         }
         /// <summary>
-        /// Create new Module of generic type statically 
+        /// Create new Module of <typeparamref name="T"/> statically 
         /// </summary>
         /// <param name="parameter">parameter object</param>
         /// <param name="transceiver">transceiver instance</param>
