@@ -21,7 +21,7 @@ namespace MATSys
                 _moduleFactory = services.GetRequiredService<IModuleFactory>();
                 foreach (var item in _config.GetSection("Modules").GetChildren())
                 {
-                    Modules.Add(_moduleFactory.CreateDevice(item));
+                    Modules.Add(_moduleFactory.CreateModule(item));
                 }                
                 _transceiver = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(_config.GetSection("Transceiver"));
                 _transceiver.OnNewRequest += _transceiver_OnNewRequest; ;
