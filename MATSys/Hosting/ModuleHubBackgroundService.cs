@@ -19,13 +19,10 @@ namespace MATSys
             {
                 _config = services.GetRequiredService<IConfiguration>().GetSection("MATSys");
                 _moduleFactory = services.GetRequiredService<IModuleFactory>();
-                var moduleCount = _config.GetSection("Modules").GetChildren().Count();
-                for (int i = 0; i < moduleCount; i++)
+                foreach (var item in _config.GetSection("Modules").GetChildren())
                 {
-                    var section = $"Modules:{i}";
-                    var modSection = _config.GetSection(section);
-                    Modules.Add(_moduleFactory.CreateDevice(modSection));
-                }
+                    Modules.Add(_moduleFactory.CreateDevice(item));
+                }                
                 _transceiver = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(_config.GetSection("Transceiver"));
                 _transceiver.OnNewRequest += _transceiver_OnNewRequest; ;
             }
