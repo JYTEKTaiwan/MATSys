@@ -252,7 +252,7 @@ namespace MATSys
                     _logger.Trace($"Command is ready to executed {cmd.SimplifiedString()}");
                     var result = method.Invoke(this, cmd.GetParameters())!;
                     var response = cmd.ConvertResultToString(result)!;
-                    _logger.Debug($"Command [{cmd.MethodName}] is executed with return value {response}");
+                    _logger.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
                     _logger.Info($"Command [{cmd.MethodName}] is executed successfully");
                     return response;
                 }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using System.Threading.Channels;
 using MATSys.Hosting;
+using NLog.Extensions.Logging;
 
 Console.WriteLine("Hello, World!");
 
@@ -44,6 +45,7 @@ public class TestDevice : ModuleBase
 
     public override void Load(object configuration)
     {
+       
     }
 
     public class Data

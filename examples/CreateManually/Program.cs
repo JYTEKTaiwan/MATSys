@@ -2,9 +2,10 @@
 using MATSys.Commands;
 using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
+using NLog.Extensions.Logging;
 
 //var a=ModuleFactory.CreateNew(typeof(TestModule),null, null, null, null,"TEST") as TestDevice ;
-var a = ModuleFactory.CreateNew<TestModule>(null, null, null, null, "TEST");
+var a = ModuleFactory.CreateNew<TestModule>(new object(), null, null, null, "TEST");
 
 //var a = ModuleFactory.CreateNew(@".\TestDevice.dll", "TestDevice", null, null, null, null, "TEST");
 var response =a.Execute(CommandBase.Create("Method", "HELLO"));
@@ -25,6 +26,14 @@ public class TestModule : ModuleBase
 
     public override void Load(object configuration)
     {
+        var config = new ConfigurationBuilder()
+   .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+   .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+   .Build();
+        if (config.GetSection("MATSys:EnableNLogInJsonFile").Get<bool>())
+        {
+            NLog.LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
+        }
     }
 
     public class Data
