@@ -27,7 +27,15 @@ namespace MATSys
         INotifier IModule.Notifier => _notifier;
         public string Name { get; }
         public IModule Base => this;
-        public ModuleBase(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string aliasName = "")
+        /// <summary>
+        /// ctor of ModuleBase class. 
+        /// </summary>
+        /// <param name="configuration">configuration object</param>
+        /// <param name="transceiver">transceiver instance</param>
+        /// <param name="notifier">notifier instance</param>
+        /// <param name="recorder">recorder instance</param>
+        /// <param name="aliasName">alias name</param>
+        public ModuleBase(object configuration, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "")
         {
             Name = string.IsNullOrEmpty(aliasName) ? $"{GetType().Name}_{GetHashCode().ToString("X2")}" : aliasName;
 
@@ -35,77 +43,106 @@ namespace MATSys
 
             _config = LoadAndSetup(configuration);
             _recorder = InjectRecorder(recorder);
-            _notifier = InjectNotifier(bus);
-            _transceiver = InjectTransceiver(server);
+            _notifier = InjectNotifier(notifier);
+            _transceiver = InjectTransceiver(transceiver);
             _methods = ParseSupportedMethods();
             _logger.Info($"{Name} base class initialization is completed");
         }
+        /// <summary>
+        /// load the configuration object
+        /// </summary>
+        /// <param name="option">parameter object</param>
+        /// <returns>configuration instance (null if <paramref name="option"/> is null</returns>
         private object LoadAndSetup(object option)
         {
-            object config = null;
             if (option != null)
             {
-                config = option;
-                if (option.GetType().IsAssignableFrom(typeof(IConfigurationSection)))
+                if (typeof(IConfigurationSection).IsAssignableFrom(option.GetType()))
                 {
                     Load((IConfigurationSection)option);
                 }
-                Load(option);
+                else
+                    Load(option);
             }
-            return config;
+            return null;
         }
+        /// <summary>
+        /// Inject the IRecorder instance
+        /// </summary>
+        /// <param name="recorder">recorder instance</param>
+        /// <returns>IRecorder instance (return EmptyRecorder if <paramref name="recorder"/> is null</returns>
         private IRecorder InjectRecorder(IRecorder recorder)
         {
-            IRecorder _recorder = null;
             if (recorder == null)
             {
-                _recorder = new EmptyRecorder();
+                var _recorder = new EmptyRecorder();
                 _logger.Info($"Null reference is detected, {_recorder.Name} is injected");
+                return _recorder;
             }
             else
             {
-                _recorder = recorder;
-                _logger.Info($"{_recorder.Name} is injected");
+                _logger.Info($"{recorder.Name} is injected");
+                return recorder;
             }
-            return _recorder;
-        }
-        private ITransceiver InjectTransceiver(ITransceiver server)
-        {
-            ITransceiver transceiver = null;
-            if (server == null)
-            {
-                transceiver = new EmptyTransceiver();
-                _logger.Info($"Null reference is detected, {transceiver.Name} is injected");
-            }
-            else
-            {
-                transceiver = server;
-                _logger.Info($"{transceiver.Name} is injected");
-            }
-            transceiver.OnNewRequest += OnCommandDataReady;
-            return transceiver;
-        }
-        private INotifier InjectNotifier(INotifier bus)
-        {
-            INotifier notifier = null;
-            if (bus == null)
-            {
-                notifier = new EmptyNotifier();
-                _logger.Info($"Null reference is detected, {notifier.Name} is injected");
-            }
-            else
-            {
-                notifier = bus;
-                _logger.Info($"{notifier.Name} is injected");
-            }
-            notifier.OnNotify += NewDataReady;
-            return notifier;
 
         }
-        private void NewDataReady(string dataInJson)
+        /// <summary>
+        /// Inject the ITransceiver instance
+        /// </summary>
+        /// <param name="transceiver">ITransceiver instance</param>
+        /// <returns>ITransceiver instance (return EmptyTransceiver if <paramref name="transceiver"/> is null</returns>
+        private ITransceiver InjectTransceiver(ITransceiver transceiver)
+        {
+            if (transceiver == null)
+            {
+                var _transceiver = new EmptyTransceiver();
+                _transceiver.OnNewRequest += OnRequestReceived;
+                _logger.Info($"Null reference is detected, {_transceiver.Name} is injected");
+                return _transceiver;
+            }
+            else
+            {
+                transceiver.OnNewRequest += OnRequestReceived;
+                _logger.Info($"{transceiver.Name} is injected");
+                return transceiver;
+            }
+
+
+        }
+        /// <summary>
+        /// Inject the INotifier instance
+        /// </summary>
+        /// <param name="notifier">INotifier instance</param>
+        /// <returns>INotifier instance (return EmptyNotifier if <paramref name="notifier"/> is null</returns>
+        private INotifier InjectNotifier(INotifier notifier)
+        {
+            if (notifier == null)
+            {
+                var _notifier = new EmptyNotifier();
+                _notifier.OnNotify += OnNewDateGenerated;
+                _logger.Info($"Null reference is detected, {notifier.Name} is injected");
+                return _notifier;
+            }
+            else
+            {
+                notifier.OnNotify += OnNewDateGenerated;
+                _logger.Info($"{notifier.Name} is injected");
+                return notifier;
+            }
+
+        }
+        /// <summary>
+        /// Event when new data is generated from ModuleBase internally
+        /// </summary>
+        /// <param name="dataInJson"></param>
+        private void OnNewDateGenerated(string dataInJson)
         {
             OnDataReady?.Invoke(dataInJson);
         }
+        /// <summary>
+        /// Get the all methods with MethodNameAttribute assigned
+        /// </summary>
+        /// <returns></returns>
         private Dictionary<string, MethodInfo> ParseSupportedMethods()
         {
             var methodlist = GetType().GetMethods().Where(x =>
@@ -114,13 +151,18 @@ namespace MATSys
             }).ToArray();
             return methodlist.ToDictionary(x => x.GetCustomAttribute<MethodNameAttribute>()!.Name);
         }
-        private string OnCommandDataReady(object sender, string commandObjectInJson)
+        /// <summary>
+        /// Event when new request is received
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="commandObjectInJson"></param>
+        /// <returns></returns>
+        private string OnRequestReceived(object sender, string commandObjectInJson)
         {
             try
             {
                 var answer = "";
-                _logger.Trace($"OnDataReady event fired");
-                _logger.Debug($"New command object string is received: {commandObjectInJson}");
+                _logger.Trace($"OnDataReady event fired: {commandObjectInJson}");                
                 var parsedName = commandObjectInJson.Split(new string[] { "MethodName\"" }, StringSplitOptions.RemoveEmptyEntries)[1].Split('\"')[1];
                 if (_methods.ContainsKey(parsedName))
                 {
@@ -128,11 +170,7 @@ namespace MATSys
                     var att = method.GetCustomAttribute<MethodNameAttribute>();
                     var cmd = JsonConvert.DeserializeObject(commandObjectInJson, att!.CommandType) as ICommand;
                     _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
-
                     answer = Execute(cmd);
-
-                    _logger.Debug($"Command object execution completed with return value {answer}");
-                    _logger.Info($"Command [{cmd.MethodName}] is executed successfully");
                     return answer;
                 }
                 else
@@ -143,9 +181,13 @@ namespace MATSys
             catch (Exception ex)
             {
                 _logger.Error(ex);
-                throw new Exception($"Execution of command ready event failed", ex);
+                throw new Exception($"Execution of command failed", ex);
             }
         }
+        /// <summary>
+        /// Start the service
+        /// </summary>
+        /// <param name="token"></param>
         public virtual void StartService(CancellationToken token)
         {
             if (!_isRunning)
@@ -158,7 +200,6 @@ namespace MATSys
                     _notifier.StartService(token);
                     _logger.Trace($"Starts the {_transceiver.Name}");
                     _transceiver.StartService(token);
-
                     _isRunning = true;
                     _logger.Info("Starts service");
                 }
@@ -169,6 +210,9 @@ namespace MATSys
                 }
             }
         }
+        /// <summary>
+        /// Stop the service
+        /// </summary>
         public virtual void StopService()
         {
             try
@@ -193,6 +237,11 @@ namespace MATSys
                 throw new Exception("Stop failed", ex);
             }
         }
+        /// <summary>
+        /// Execute the incoming command object
+        /// </summary>
+        /// <param name="cmd">ICommand instance</param>
+        /// <returns>reponse after execuing the commnad</returns>
         public string Execute(ICommand cmd)
         {
             if (_methods.ContainsKey(cmd.MethodName))
@@ -200,8 +249,12 @@ namespace MATSys
                 var method = _methods[cmd.MethodName];
                 try
                 {
+                    _logger.Trace($"Command is ready to executed {cmd.SimplifiedString()}");
                     var result = method.Invoke(this, cmd.GetParameters())!;
-                    return cmd.ConvertResultToString(result)!;
+                    var response = cmd.ConvertResultToString(result)!;
+                    _logger.Debug($"Command [{cmd.MethodName}] is executed with return value {response}");
+                    _logger.Info($"Command [{cmd.MethodName}] is executed successfully");
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -231,6 +284,7 @@ namespace MATSys
         }
         public abstract void Load(IConfigurationSection section);
         public abstract void Load(object configuration);
+
         public virtual IEnumerable<string> PrintCommands()
         {
             var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<MethodNameAttribute>().Count() > 0);
@@ -239,11 +293,16 @@ namespace MATSys
                 yield return item.GetCustomAttribute<MethodNameAttribute>()!.GetJsonString();
             }
         }
+        /// <summary>
+        /// Execute the incoming command object
+        /// </summary>
+        /// <param name="cmdInJson"></param>
+        /// <returns></returns>
         public string Execute(string cmdInJson)
         {
             try
             {
-                var result = OnCommandDataReady(this, cmdInJson);
+                var result = OnRequestReceived(this, cmdInJson);
                 return result!;
             }
             catch (Exception ex)
