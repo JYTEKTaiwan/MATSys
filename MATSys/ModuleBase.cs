@@ -120,7 +120,7 @@ namespace MATSys
             {
                 var _notifier = new EmptyNotifier();
                 _notifier.OnNotify += OnNewDateGenerated;
-                _logger.Info($"Null reference is detected, {notifier.Name} is injected");
+                _logger.Info($"Null reference is detected, {_notifier.Name} is injected");
                 return _notifier;
             }
             else
