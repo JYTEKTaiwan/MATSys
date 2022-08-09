@@ -97,11 +97,10 @@ namespace MATSys
     [JsonArray(AllowNullItems = true, NamingStrategyType = typeof(string))]
     public class AssemblyPathCollection
     {
-        public string[] Modules { get; set; }
-        public string[] Recorders { get; set; }
-        public string[] Notifiers { get; set; }
-
-        public string[] Transceivers { get; set; }
+        public string[] Modules { get; set; }=new string[1];
+        public string[] Recorders { get; set; }=new string[1];
+        public string[] Notifiers { get; set; }=new string[1];
+        public string[] Transceivers { get; set; }=new string[1];
     }
     public sealed class ModuleCollection : List<IModule>
     {

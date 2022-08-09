@@ -72,7 +72,7 @@ namespace MATSys.Factories
             }
         }
         /// <summary>
-        /// Create new INotifier instance (return null if <paramref name="defaultType"/> is not inherited from INotifier)
+        /// Create new INotifier instance (return DefaultInstance if <paramref name="defaultType"/> is not inherited from INotifier)
         /// </summary>
         /// <param name="defaultType">type of instance</param>
         /// <param name="section">section of configuration</param>
@@ -86,7 +86,7 @@ namespace MATSys.Factories
                 return obj;
             }
             else
-                return null;
+                return DefaultInstance;
 
         }
         /// <summary>
