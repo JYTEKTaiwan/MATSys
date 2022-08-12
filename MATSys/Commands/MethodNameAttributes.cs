@@ -10,12 +10,12 @@ namespace MATSys.Commands
     public sealed class MethodNameAttribute : Attribute
     {
         /// <summary>
-        /// Name of the MATSysCommand object
+        /// Name of the ICommand instance
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// Type of the parameter
+        /// Type of the ICommand instance
         /// </summary>
         public Type CommandType { get; }
 
@@ -31,7 +31,7 @@ namespace MATSys.Commands
         }
 
         /// <summary>
-        /// Return the MATSys object json string
+        /// Return the serialized json string
         /// </summary>
         /// <returns></returns>
         public string GetJsonString()
