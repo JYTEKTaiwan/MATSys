@@ -285,6 +285,10 @@ namespace MATSys
         public abstract void Load(IConfigurationSection section);
         public abstract void Load(object configuration);
 
+        /// <summary>
+        /// List all methods 
+        /// </summary>
+        /// <returns></returns>
         public virtual IEnumerable<string> PrintCommands()
         {
             var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<MethodNameAttribute>().Count() > 0);
@@ -294,7 +298,7 @@ namespace MATSys
             }
         }
         /// <summary>
-        /// Execute the incoming command object
+        /// Execute the incoming command object in string format
         /// </summary>
         /// <param name="cmdInJson"></param>
         /// <returns></returns>
