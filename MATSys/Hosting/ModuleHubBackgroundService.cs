@@ -87,21 +87,13 @@ namespace MATSys
                 Setup(stoppingToken);
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    Thread.Sleep(1);
+                    SpinWait.SpinUntil(()=>false, 0);
                 }
                 Cleanup();
             });
         }
     }
 
-    [JsonArray(AllowNullItems = true, NamingStrategyType = typeof(string))]
-    public class AssemblyPathCollection
-    {
-        public string[] Modules { get; set; }=new string[1];
-        public string[] Recorders { get; set; }=new string[1];
-        public string[] Notifiers { get; set; }=new string[1];
-        public string[] Transceivers { get; set; }=new string[1];
-    }
     public sealed class ModuleCollection : List<IModule>
     {
         public ModuleCollection() : base()

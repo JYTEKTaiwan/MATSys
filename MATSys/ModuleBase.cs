@@ -282,21 +282,6 @@ namespace MATSys
                 return res;
             }
         }
-        public abstract void Load(IConfigurationSection section);
-        public abstract void Load(object configuration);
-
-        /// <summary>
-        /// List all methods 
-        /// </summary>
-        /// <returns></returns>
-        public virtual IEnumerable<string> PrintCommands()
-        {
-            var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<MethodNameAttribute>().Count() > 0);
-            foreach (var item in cmds)
-            {
-                yield return item.GetCustomAttribute<MethodNameAttribute>()!.GetJsonString();
-            }
-        }
         /// <summary>
         /// Execute the incoming command object in string format
         /// </summary>
@@ -313,6 +298,44 @@ namespace MATSys
             {
                 _logger.Error(ex);
                 throw new Exception($"Execute command failed", ex);
+            }
+        }
+
+        public async Task<string> ExecuteAsync(ICommand cmd)
+        {
+           return await Task.Run(()=> 
+            {
+                Monitor.Enter(this);
+                var response=Execute(cmd);
+                Monitor.Exit(this);
+                return response;
+            });
+        }
+
+        public async Task<string> ExecuteAsync(string cmdInJson)
+        {
+            return await Task.Run(() =>
+            {
+                Monitor.Enter(this);
+                var response = Execute(cmdInJson);
+                Monitor.Exit(this);
+                return response;
+            });
+        }
+
+        public abstract void Load(IConfigurationSection section);
+        public abstract void Load(object configuration);
+
+        /// <summary>
+        /// List all methods 
+        /// </summary>
+        /// <returns></returns>
+        public virtual IEnumerable<string> PrintCommands()
+        {
+            var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<MethodNameAttribute>().Count() > 0);
+            foreach (var item in cmds)
+            {
+                yield return item.GetCustomAttribute<MethodNameAttribute>()!.GetJsonString();
             }
         }
     }
