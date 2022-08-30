@@ -163,7 +163,7 @@ namespace MATSys
             {
                 var answer = "";
                 _logger.Trace($"OnDataReady event fired: {commandObjectInJson}");                
-                var parsedName = commandObjectInJson.Split(new string[] { "MethodName\"" }, StringSplitOptions.RemoveEmptyEntries)[1].Split('\"')[1];
+                var parsedName = commandObjectInJson.Split('=')[0];
                 if (_methods.ContainsKey(parsedName))
                 {
                     var method = _methods[parsedName];
