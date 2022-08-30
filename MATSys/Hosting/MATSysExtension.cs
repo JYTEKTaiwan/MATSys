@@ -26,6 +26,7 @@ namespace MATSys.Hosting
                     .AddSingleton<IRecorderFactory, RecorderFactory>()
                     .AddSingleton<INotifierFactory, NotifierFactory>()
                     .AddSingleton<ITransceiverFactory, TransceiverFactory>()
+                    .AddSingleton<AutoTestScheduler>()
             )
             .ConfigureLogging(logging =>
                 logging.AddNLog()

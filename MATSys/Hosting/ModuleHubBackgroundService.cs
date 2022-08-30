@@ -1,5 +1,6 @@
 ﻿using MATSys.Commands;
 using MATSys.Factories;
+using MATSys.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -12,6 +13,8 @@ namespace MATSys
         private readonly IModuleFactory _moduleFactory;
         private readonly IConfiguration _config;
         private readonly ITransceiver _transceiver;
+        private readonly AutoTestScheduler scheduler;
+        private CancellationTokenSource cts;
         public ModuleCollection Modules { get; } = new ModuleCollection();
         public ModuleHubBackgroundService(IServiceProvider services)
         {
@@ -24,7 +27,8 @@ namespace MATSys
                     Modules.Add(_moduleFactory.CreateModule(item));
                 }                
                 _transceiver = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(_config.GetSection("Transceiver"));
-                _transceiver.OnNewRequest += _transceiver_OnNewRequest; ;
+                _transceiver.OnNewRequest += _transceiver_OnNewRequest;
+                scheduler=services.GetRequiredService<AutoTestScheduler>();
             }
             catch (Exception ex)
             {
@@ -62,7 +66,37 @@ namespace MATSys
                 return $"Module [{name}] is not Found";
             }
         }
-
+        public void RunTest(int iteration)
+        {
+            cts = new CancellationTokenSource();
+            Task.Run(() => AutoTesting(iteration,cts.Token));
+        }
+        public void StopTest()
+        {
+            cts.Cancel();
+        }
+        private void AutoTesting(int iteration,CancellationToken token)
+        {
+            scheduler.SingleTest();
+            int cnt = 1;
+            while (!cts.IsCancellationRequested)
+            {
+                if (cnt== iteration)
+                {
+                    cts.Cancel();
+                }
+                else if (!scheduler.IsAvailable)
+                {
+                    scheduler.SingleTest();
+                    Interlocked.Increment(ref cnt);
+                }
+                else
+                {
+                    SpinWait.SpinUntil(() => false, 5);
+                }
+                
+            }
+        }
         private void Setup(CancellationToken stoppingToken)
         {
             foreach (var item in Modules)
@@ -82,12 +116,16 @@ namespace MATSys
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            return Task.Run(() =>
+            return Task.Run(async() =>
             {
                 Setup(stoppingToken);
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    SpinWait.SpinUntil(()=>false, 0);
+                    if (SpinWait.SpinUntil(() => scheduler.IsAvailable, 5))
+                    {
+                        var item=await scheduler.Dequeue(stoppingToken);
+                        item.Execute();
+                    }                    
                 }
                 Cleanup();
             });
