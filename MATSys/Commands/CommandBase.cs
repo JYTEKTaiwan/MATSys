@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Data;
 using System.Reflection;
 using System.Text;
+using System.Xml.Linq;
 
 namespace MATSys.Commands
 {
@@ -71,7 +74,8 @@ namespace MATSys.Commands
         {
             return new Command(methodName);
         }
-
+        public abstract string Serialize();
+        
         /// <summary>
         /// Create command object with 1 parameter assigned
         /// </summary>
@@ -216,6 +220,14 @@ namespace MATSys.Commands
         {
             return null;
         }
+        public override string Serialize()
+        {
+            var sb = new StringBuilder();
+            sb.Append(MethodName);
+            sb.Append("=");
+            return sb.ToString();
+        }
+
     }
 
     /// <summary>
@@ -240,6 +252,15 @@ namespace MATSys.Commands
         {
             return new object[] { Parameter.Item1! };
         }
+        public override string Serialize()
+        {
+            var sb = new StringBuilder();
+            sb.Append(MethodName);
+            sb.Append("=");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            return sb.ToString();
+        }
+
     }
 
     /// <summary>
@@ -261,6 +282,19 @@ namespace MATSys.Commands
         {
             return new object[] { Parameter.Item1!, Parameter.Item2! };
         }
+        public override string Serialize()
+        {
+            var sb = new StringBuilder();
+            sb.Append(MethodName);
+            sb.Append("=");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
+
+            return sb.ToString();
+
+        }
+
     }
 
     /// <summary>
@@ -283,6 +317,21 @@ namespace MATSys.Commands
         {
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3! };
         }
+        public override string Serialize()
+        {
+            var sb = new StringBuilder();
+            sb.Append(MethodName);
+            sb.Append("=");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
+
+            return sb.ToString();
+
+        }
+
     }
 
     /// <summary>
@@ -306,6 +355,22 @@ namespace MATSys.Commands
         {
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4! };
         }
+        public override string Serialize()
+        {
+            var sb = new StringBuilder();
+            sb.Append(MethodName);
+            sb.Append("=");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
+            return sb.ToString();
+
+        }
+
     }
 
     /// <summary>
@@ -330,6 +395,24 @@ namespace MATSys.Commands
         {
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5! };
         }
+        public override string Serialize()
+        {
+            var sb = new StringBuilder();
+            sb.Append(MethodName);
+            sb.Append("=");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item5));
+            return sb.ToString();
+
+        }
+
     }
 
     /// <summary>
@@ -355,6 +438,26 @@ namespace MATSys.Commands
         {
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5!, Parameter.Item6! };
         }
+        public override string Serialize()
+        {
+            var sb = new StringBuilder();
+            sb.Append(MethodName);
+            sb.Append("=");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item5));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item6));
+            return sb.ToString();
+
+        }
+
     }
 
     /// <summary>
@@ -381,5 +484,27 @@ namespace MATSys.Commands
         {
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5!, Parameter.Item6!, Parameter.Item7! };
         }
+        public override string Serialize()
+        {
+            var sb = new StringBuilder();
+            sb.Append(MethodName);
+            sb.Append("=");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item5));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item6));
+            sb.Append(",");
+            sb.Append(JsonConvert.SerializeObject(Parameter.Item7));
+            return sb.ToString();
+
+        }
+
     }
 }

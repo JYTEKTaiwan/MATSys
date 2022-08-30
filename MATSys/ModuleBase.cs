@@ -168,7 +168,7 @@ namespace MATSys
                 {
                     var method = _methods[parsedName];
                     var att = method.GetCustomAttribute<MethodNameAttribute>();
-                    var cmd = JsonConvert.DeserializeObject(commandObjectInJson, att!.CommandType) as ICommand;
+                    var cmd = att.Deserialize(commandObjectInJson);
                     _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
                     answer = Execute(cmd);
                     return answer;

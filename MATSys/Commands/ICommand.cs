@@ -9,5 +9,6 @@
         object[]? GetParameters();
 
         string SimplifiedString();
+        string Serialize();
     }
 }
