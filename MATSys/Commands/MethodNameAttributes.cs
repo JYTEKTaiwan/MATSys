@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Reflection.Metadata;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -11,8 +13,7 @@ namespace MATSys.Commands
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class MethodNameAttribute : Attribute
     {
-
-        private Regex regex=new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}");
+        private Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}");
         /// <summary>
         /// Name of the ICommand instance
         /// </summary>
@@ -38,27 +39,27 @@ namespace MATSys.Commands
         /// Return the serialized json string
         /// </summary>
         /// <returns></returns>
-        public string GetJsonString()
+        public string GetTemplateString()
         {
-            JObject jRoot = new JObject();
-            jRoot.Add("MethodName", Name);
-
-            JObject jParam = new JObject();
             var args = CommandType.GenericTypeArguments;
+            var sb = new StringBuilder();
+            sb.Append(Name);
+            sb.Append("=");
             for (int i = 0; i < args.Length; i++)
             {
-                jParam.Add($"Item{i + 1}", args[i].FullName);
+                sb.Append(args[i].FullName);
+                if (i != args.Length - 1)
+                {
+                    sb.Append(",");
+                }
             }
-            jRoot.Add("Parameter", jParam);
-
-            return jRoot.ToString(Formatting.None);
+            return sb.ToString();
         }
 
         public ICommand Deserialize(string str)
         {
-            var jsonStr=ToJsonString(str);
-            var cmd=JsonConvert.DeserializeObject(jsonStr, CommandType) as ICommand;
-
+            var jsonStr = ToJsonString(str);
+            var cmd = JsonConvert.DeserializeObject(jsonStr, CommandType) as ICommand;
             return cmd;
         }
         private string ToJsonString(string input)

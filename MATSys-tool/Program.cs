@@ -92,7 +92,7 @@ static void DisplayDevice(string path, string name)
             foreach (var method in methodlist)
             {
                 var att = method.GetCustomAttribute<MethodNameAttribute>();
-                Console.WriteLine($"{method.ToString().PadRight(50)} \t {att.GetJsonString()}");
+                Console.WriteLine($"{method.ToString().PadRight(50)} \t {att.GetTemplateString()}");
             }
             return;
         }

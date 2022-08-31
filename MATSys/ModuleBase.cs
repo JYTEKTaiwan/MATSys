@@ -335,7 +335,7 @@ namespace MATSys
             var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<MethodNameAttribute>().Count() > 0);
             foreach (var item in cmds)
             {
-                yield return item.GetCustomAttribute<MethodNameAttribute>()!.GetJsonString();
+                yield return item.GetCustomAttribute<MethodNameAttribute>()!.GetTemplateString();
             }
         }
     }
