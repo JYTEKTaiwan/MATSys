@@ -47,6 +47,8 @@ namespace MATSys
 
         public void Publish(object data)
         {
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+            OnNotify.Invoke(json);
         }
 
         public void StartService(CancellationToken token)
