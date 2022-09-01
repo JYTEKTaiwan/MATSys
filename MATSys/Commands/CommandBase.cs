@@ -44,19 +44,8 @@ namespace MATSys.Commands
         /// </summary>
         /// <returns></returns>
         public virtual string SimplifiedString()
-        {
-            StringBuilder sb = new StringBuilder();
-            var param = GetParameters();
-            if (param != null)
-            {
-                foreach (var item in param)
-                {
-                    sb.Append($"{item},");
-                }
-                var len = sb.Length;
-                sb.Remove(len - 1, 1);
-            }
-            return $"[{MethodName}]: {sb.ToString()}";
+        {            
+            return Serialize();
         }
 
         /// <summary>
