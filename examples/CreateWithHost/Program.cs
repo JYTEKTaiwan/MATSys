@@ -13,20 +13,22 @@ IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
 host.RunAsync().Wait(1000);;
 
 var dev = host.Services.GetMATSysHandle();
-dev.Modules["Dev1"].OnDataReady+= IModule_OnDataReady;
+dev.Modules["Dev1"].OnDataReady += IModule_OnDataReady;
+
+dev.RunTest(1);
 
 void IModule_OnDataReady(string jsonString)
 {
     Console.WriteLine(jsonString);
 }
 
-for (int i = 0; i < 10; i++)
-{
-   var response= dev.Execute("Dev1", CommandBase.Create<TestDevice.Data>
-        ("Test",
-        new TestDevice.Data() { Date = DateTime.Now.ToString(), Number = new Random().NextDouble() }));
-    //Console.WriteLine(response);
-}
+//for (int i = 0; i < 10; i++)
+//{
+//   var response= dev.Execute("Dev1", CommandBase.Create<TestDevice.Data>
+//        ("Test",
+//        new TestDevice.Data() { Date = DateTime.Now.ToString(), Number = new Random().NextDouble() }));
+//    //Console.WriteLine(response);
+//}
 
 Console.WriteLine("PRESS ANY KEY TO EXIT");
 
@@ -63,9 +65,11 @@ public class TestDevice : ModuleBase
         return res;
     }
 
-    [MethodName("Methhh4od", typeof(Command<string>))]
+    [MethodName("StringMethod", typeof(Command<string>))]
     public string Method(string c)
     {
+        Base.Notifier.Publish(c);
+
         return c;
     }
 }
