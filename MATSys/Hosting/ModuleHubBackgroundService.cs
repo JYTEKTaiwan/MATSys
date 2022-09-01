@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
+using NLog;
+using System.Xml.Linq;
 
 namespace MATSys
 {
@@ -14,12 +16,14 @@ namespace MATSys
         private readonly IConfiguration _config;
         private readonly ITransceiver _transceiver;
         private readonly AutoTestScheduler scheduler;
+        private readonly ILogger _logger;
         private CancellationTokenSource cts;
         public ModuleCollection Modules { get; } = new ModuleCollection();
         public ModuleHubBackgroundService(IServiceProvider services)
         {
             try
             {
+                _logger = LogManager.GetCurrentClassLogger();
                 _config = services.GetRequiredService<IConfiguration>().GetSection("MATSys");
                 _moduleFactory = services.GetRequiredService<IModuleFactory>();
                 foreach (var item in _config.GetSection("Modules").GetChildren())
@@ -46,26 +50,44 @@ namespace MATSys
 
         public string Execute(string name, ICommand cmd)
         {
-            if (Modules.Exists(x => x.Name == name))
-            {
-                return Modules[name].Execute(cmd);
-            }
-            else
-            {
-                return $"Module [{name}] is not Found";
-            }
+            return ExecuteAsync(name, cmd).Result;
         }
         public string Execute(string name, string cmd)
         {
-            if (Modules.Exists(x => x.Name == name))
-            {
-                return Modules[name].Execute(cmd);
-            }
-            else
-            {
-                return $"Module [{name}] is not Found";
-            }
+            return ExecuteAsync(name, cmd).Result;
         }
+
+        public async Task<string> ExecuteAsync(string name, ICommand cmd)
+        {
+            return await Task.Run(async () => 
+            {
+                if (Modules.Exists(x => x.Name == name))
+                {
+                    return await Modules[name].ExecuteAsync(cmd);
+                }
+                else
+                {
+                    return  $"Module [{name}] is not Found";
+                }
+            });
+            
+        }
+        public async Task<string> ExecuteAsync(string name, string cmd)
+        {
+            return await Task.Run(async() => 
+            {
+                if (Modules.Exists(x => x.Name == name))
+                {
+                    return await Modules[name].ExecuteAsync(cmd);
+                }
+                else
+                {
+                    return $"Module [{name}] is not Found";
+                }
+
+            });
+        }
+
         public void RunTest(int iteration)
         {
             cts = new CancellationTokenSource();
@@ -124,7 +146,7 @@ namespace MATSys
                     if (SpinWait.SpinUntil(() => scheduler.IsAvailable, 5))
                     {
                         var item=await scheduler.Dequeue(stoppingToken);
-                        Execute(item.ModuleName, item.Command);
+                        var response=await ExecuteAsync(item.ModuleName, item.Command);
                     }
                 }
                 Cleanup();
