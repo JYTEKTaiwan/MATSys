@@ -124,8 +124,8 @@ namespace MATSys
                     if (SpinWait.SpinUntil(() => scheduler.IsAvailable, 5))
                     {
                         var item=await scheduler.Dequeue(stoppingToken);
-                        item.Execute();
-                    }                    
+                        Execute(item.ModuleName, item.Command);
+                    }
                 }
                 Cleanup();
             });

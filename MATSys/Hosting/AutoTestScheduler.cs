@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,69 +10,63 @@ namespace MATSys.Hosting
 {
     internal class AutoTestScheduler
     {
-        private readonly List<ITestItem> testItems=new List<ITestItem>();
-        private readonly Channel<ITestItem> _queue =  Channel.CreateUnbounded<ITestItem>();
+        private readonly Channel<TestItem> _queue =  Channel.CreateUnbounded<TestItem>();
+        private readonly TestScript script = new TestScript();
+        private List<TestItem> testItems = new List<TestItem>();
 
         public bool IsAvailable => _queue.Reader.Count > 0;
-        public AutoTestScheduler()
+        public AutoTestScheduler(IConfiguration config)
         {
-            testItems.Add(new PreTestItem());
-            testItems.Add(new TestItem());
-            testItems.Add(new UploadTestItem());
-            testItems.Add(new PostTestItem());
+            if (config.GetSection("MATSys:Scripts").Exists())
+            {
+                script = config.GetSection("MATSys:Scripts").Get<TestScript>();
+                testItems.AddRange(TestScript.GetTestItems(script.PreTest));
+                testItems.AddRange(TestScript.GetTestItems(script.Test));
+                testItems.AddRange(TestScript.GetTestItems(script.Result));
+                testItems.AddRange(TestScript.GetTestItems(script.PostTest));
+            }
+
         }
         public  void SingleTest()
         {
             foreach (var item in testItems)
             {
                 _queue.Writer.WriteAsync(item).AsTask().Wait(100);
-            }            
+
+            }
         }
-        public async Task<ITestItem> Dequeue(CancellationToken token)
+        public async Task<TestItem> Dequeue(CancellationToken token)
         {
             return await _queue.Reader.ReadAsync(token);
         }
 
     }
-
-    public interface ITestItem
+    internal class TestScript
     {
-        void Execute();
-
-    }
-    public class PreTestItem : ITestItem
-    {
-        public void Execute()
+        public string[] PreTest { get; set; }
+        public string[] Test { get; set; }
+        public string[] Result { get; set; }
+        public string[] PostTest { get; set; }
+        public static IEnumerable<TestItem> GetTestItems(string[] scripts)
         {
-            Console.WriteLine("I'm PreTest");
-
+            foreach (var item in scripts)
+            {
+                var pat = item.Split(':');
+                yield return new TestItem(pat[0], pat[1]);
+            }
         }
 
     }
-    public class TestItem : ITestItem
+
+    internal struct TestItem
     {
-        public void Execute()
+        public string ModuleName { get; set; }
+        public string Command { get; set; }
+        public TestItem(string name, string cmd)
         {
-            Console.WriteLine("I'm Test");
-
-        }
-
-    }
-    public class UploadTestItem:ITestItem
-    {
-        public void Execute()
-        {
-            Console.WriteLine("I'm Upload");
-
+            ModuleName = name;
+            Command = cmd;
         }
     }
-    public class PostTestItem : ITestItem
-    {
-        public void Execute()
-        {
-            Console.WriteLine("I'm PostTest");
-
-        }
-
-    }
+    
 }
