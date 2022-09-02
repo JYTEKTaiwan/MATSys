@@ -1,7 +1,4 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Reflection.Metadata;
-using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -13,6 +10,9 @@ namespace MATSys.Commands
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class MethodNameAttribute : Attribute
     {
+
+        //method string should look like this
+        // [MethodName]=[Param1],[Param2],...
         private Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}");
         /// <summary>
         /// Name of the ICommand instance
@@ -36,9 +36,9 @@ namespace MATSys.Commands
         }
 
         /// <summary>
-        /// Return the serialized json string
+        /// Generate the command string pattern
         /// </summary>
-        /// <returns></returns>
+        /// <returns>command string in simplified format</returns>
         public string GetTemplateString()
         {
             var args = CommandType.GenericTypeArguments;
@@ -56,12 +56,22 @@ namespace MATSys.Commands
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Deserialize the input string to ICommand object
+        /// </summary>
+        /// <param name="str">input string</param>
+        /// <returns>ICommand object</returns>
         public ICommand Deserialize(string str)
         {
             var jsonStr = ToJsonString(str);
             var cmd = JsonConvert.DeserializeObject(jsonStr, CommandType) as ICommand;
             return cmd!;
         }
+        /// <summary>
+        /// Convert the input string into the standard json format string
+        /// </summary>
+        /// <param name="input">input string</param>
+        /// <returns>command string in json format</returns>
         private string ToJsonString(string input)
         {
             var sb = new StringBuilder();
