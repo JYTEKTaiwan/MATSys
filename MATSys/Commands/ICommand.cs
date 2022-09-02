@@ -2,13 +2,34 @@
 {
     public interface ICommand
     {
+        /// <summary>
+        /// Name of the Command 
+        /// </summary>
+        /// <value></value>
         string MethodName { get; set; }
 
+        /// <summary>
+        /// Convert the object returned from the execution into string
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         string? ConvertResultToString(object obj);
 
+        /// <summary>
+        /// Get the list of the parameter objects in command
+        /// </summary>
+        /// <returns></returns>
         object[]? GetParameters();
 
+        /// <summary>
+        /// Get the simplified string of the command object
+        /// </summary>
+        /// <returns></returns>
         string SimplifiedString();
+        /// <summary>
+        /// Serialize the command object
+        /// </summary>
+        /// <returns></returns>
         string Serialize();
     }
 }
