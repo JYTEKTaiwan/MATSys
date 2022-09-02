@@ -69,9 +69,8 @@ namespace MATSys.Plugins
 
         public void Load(object configuration)
         {
-            _config = configuration as NetMQNotifierConfiguration;
-            _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
-
+            _config = (NetMQNotifierConfiguration)configuration;
+            _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); 
             _logger.Info("NetMQNotifier is initiated");
         }
 

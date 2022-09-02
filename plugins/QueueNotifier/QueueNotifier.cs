@@ -30,7 +30,7 @@ namespace MATSys.Plugins
 
         public void Load(object configuration)
         {
-            config = configuration as QueueNotifierConfiguration;
+            config = (QueueNotifierConfiguration)configuration;
             _logger = config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
             _logger.Info("QueueNotifier is initiated");
         }

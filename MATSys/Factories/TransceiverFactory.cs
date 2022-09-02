@@ -148,9 +148,9 @@ namespace MATSys.Factories
         /// <returns><typeparamref name="T"/> instance</returns>
         public static T CreateNew<T>(object args) where T : ITransceiver
         {
-            var obj = (T)Activator.CreateInstance(typeof(T));
-            obj.Load(args);
-            return obj;
+            var obj = (T)Activator.CreateInstance(typeof(T))!;
+            obj?.Load(args);
+            return obj!;
         }
         /// <summary>
         /// Create ITransceiver instance statically (return Default instance if <paramref name="T"/> is not inherited from ITransceiver)
@@ -163,8 +163,8 @@ namespace MATSys.Factories
             if (typeof(ITransceiver).IsAssignableFrom(t))
             {
                 var obj = Activator.CreateInstance(t) as ITransceiver;
-                obj.Load(args);
-                return obj;
+                obj?.Load(args);
+                return obj!;
             }
             else
 

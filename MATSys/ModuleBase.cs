@@ -64,7 +64,7 @@ namespace MATSys
                 else
                     Load(option);
             }
-            return null;
+            return option!;
         }
         /// <summary>
         /// Inject the IRecorder instance
@@ -168,7 +168,7 @@ namespace MATSys
                 {
                     var method = _methods[parsedName];
                     var att = method.GetCustomAttribute<MethodNameAttribute>();
-                    var cmd = att.Deserialize(commandObjectInJson);
+                    var cmd = att?.Deserialize(commandObjectInJson);
                     _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
                     answer = Execute(cmd);
                     return answer;

@@ -126,29 +126,22 @@ namespace MATSys.Factories
             try
             {
 
-                assems = AppDomain.CurrentDomain.GetAssemblies();
-
-                Type t = null;
-                //check if section in the json configuration exits
-
+                assems = AppDomain.CurrentDomain.GetAssemblies();                
+                
                 if (!string.IsNullOrEmpty(typeString))
                 {
                     foreach (var assem in assems)
                     {
-                        var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{typeString}".ToLower());
-                        if (dummy == null)
+                        var t = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{typeString}".ToLower());
+                        if (t != null)
                         {
-                            continue;
+                            var obj = (IModule)Activator.CreateInstance(t, new object[] { configuration, transceiver, notifier, recorder, aliasName })!;
+                            return obj;
                         }
-                        else
-                        {
-                            t = dummy;
-                            break;
-                        }
-                    }
-                }
-                var obj = (IModule)Activator.CreateInstance(t, new object[] { configuration, transceiver, notifier, recorder, aliasName })!;
-                return obj;
+                    }                    
+                }   
+                 return null!;                             
+                
             }
             catch (Exception ex)
             {
@@ -165,9 +158,9 @@ namespace MATSys.Factories
         /// <param name="aliasName">Alias name</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T CreateNew<T>(object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "") where T : IModule
+        public static T CreateNew<T>(object parameter, ITransceiver? transceiver=null, INotifier? notifier=null, IRecorder? recorder=null, string aliasName = "") where T : IModule
         {
-            return (T)Activator.CreateInstance(typeof(T), new object[] { parameter, transceiver, notifier, recorder, aliasName });
+            return (T)Activator.CreateInstance(typeof(T), new object[] { parameter, transceiver!, notifier!, recorder!, aliasName })!;
         }
         /// <summary>
         /// Create new Module statically. return null if <paramref name="moduleType"/> is not inherited from IModule
@@ -179,15 +172,15 @@ namespace MATSys.Factories
         /// <param name="recorder">recorder instance</param>
         /// <param name="aliasName">Alias name</param>
         /// <returns>IModule instance</returns>
-        public static IModule CreateNew(Type moduleType, object parameter, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "")
+        public static IModule CreateNew(Type moduleType, object parameter, ITransceiver? transceiver=null, INotifier? notifier=null, IRecorder? recorder=null, string aliasName = "")
         {
             if (typeof(IModule).IsAssignableFrom(moduleType))
             {
-                return (IModule)Activator.CreateInstance(moduleType, new object[] { parameter, transceiver, notifier, recorder, aliasName });
+                return (IModule)Activator.CreateInstance(moduleType, new object[] { parameter, transceiver!, notifier!, recorder!, aliasName })!;
             }
             else
             {
-                return null;
+                return null!;
             }
         }
     }

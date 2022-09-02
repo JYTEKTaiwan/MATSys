@@ -79,7 +79,7 @@ namespace MATSys.Plugins
 
         public void Load(object configuration)
         {
-            _config = configuration as NetMQTransceiverConfiguration;
+            _config = (NetMQTransceiverConfiguration)configuration;
             _logger =_config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
 
             _logger.Info("NetMQTransceiver is initiated");

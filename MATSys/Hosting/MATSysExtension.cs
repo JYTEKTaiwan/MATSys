@@ -36,7 +36,7 @@ namespace MATSys.Hosting
 
         public static ModuleHubBackgroundService GetMATSysHandle(this IServiceProvider provider)
         {
-            return provider.GetServices<IHostedService>().OfType<ModuleHubBackgroundService>().FirstOrDefault();
+            return provider.GetServices<IHostedService>().OfType<ModuleHubBackgroundService>().FirstOrDefault()!;
         }
     }
 }

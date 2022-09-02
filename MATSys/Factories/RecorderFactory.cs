@@ -148,9 +148,9 @@ namespace MATSys.Factories
         /// <returns><typeparamref name="T"/> instance</returns>
         public static T CreateNew<T>(object args) where T : IRecorder
         {
-            var obj = (T)Activator.CreateInstance(typeof(T));
-            obj.Load(args);
-            return obj;
+            var obj = (T)Activator.CreateInstance(typeof(T))!;
+            obj?.Load(args);
+            return obj!;
         }
         /// <summary>
         /// Create IRecorder instance statically (return Default instance if <paramref name="T"/> is not inherited from IRecorder)
@@ -163,8 +163,8 @@ namespace MATSys.Factories
             if (typeof(IRecorder).IsAssignableFrom(t))
             {
                 var obj = Activator.CreateInstance(t) as IRecorder;
-                obj.Load(args);
-                return obj;
+                obj?.Load(args);
+                return obj!;
             }
             else
            

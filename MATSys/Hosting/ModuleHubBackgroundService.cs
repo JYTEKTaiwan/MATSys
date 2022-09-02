@@ -17,12 +17,12 @@ namespace MATSys
         private readonly ITransceiver _transceiver;
         private readonly AutoTestScheduler scheduler;
         private readonly ILogger _logger;
-        private CancellationTokenSource cts;
+        private CancellationTokenSource cts=new CancellationTokenSource();
         public ModuleCollection Modules { get; } = new ModuleCollection();
         public ModuleHubBackgroundService(IServiceProvider services)
         {
             try
-            {
+            {                
                 _logger = LogManager.GetCurrentClassLogger();
                 _config = services.GetRequiredService<IConfiguration>().GetSection("MATSys");
                 _moduleFactory = services.GetRequiredService<IModuleFactory>();

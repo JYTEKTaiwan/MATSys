@@ -60,7 +60,7 @@ namespace MATSys.Commands
         {
             var jsonStr = ToJsonString(str);
             var cmd = JsonConvert.DeserializeObject(jsonStr, CommandType) as ICommand;
-            return cmd;
+            return cmd!;
         }
         private string ToJsonString(string input)
         {

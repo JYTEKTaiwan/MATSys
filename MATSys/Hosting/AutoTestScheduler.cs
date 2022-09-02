@@ -43,10 +43,10 @@ namespace MATSys.Hosting
     }
     internal class TestScript
     {
-        public string[] PreTest { get; set; }
-        public string[] Test { get; set; }
-        public string[] Result { get; set; }
-        public string[] PostTest { get; set; }
+        public string[] PreTest { get; set; }=new string[1];
+        public string[] Test { get; set; }=new string[1];
+        public string[] Result { get; set; }=new string[1];
+        public string[] PostTest { get; set; }=new string[1];
         public static IEnumerable<TestItem> GetTestItems(string[] scripts)
         {
             foreach (var item in scripts)
