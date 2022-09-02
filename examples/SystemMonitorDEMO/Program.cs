@@ -5,22 +5,27 @@ using SystemMonitorDEMO.Modules;
 Console.WriteLine("Hello, World!");
 
 
-var mon=ModuleFactory.CreateNew(typeof(SystemMonitor),null);
+var mon = ModuleFactory.CreateNew(typeof(SystemMonitor), null);
 //var mon = new SystemMonitor(null, null, null, new TextRecorder()) as IModule;
 mon.StartService(new CancellationToken());
-mon.Notifier.OnNotify += Notifier_OnNotify;
+mon.Notifier.OnNotify += (string dataInJson) => Console.WriteLine(dataInJson);
+var id = await mon.ExecuteAsync("ID=");
+var response = await mon.ExecuteAsync("Machine=");
 
-void Notifier_OnNotify(string dataInJson)
+mon.Execute("Start=");
+
+var cts = new CancellationTokenSource();
+Task.Run(() => 
 {
-    Console.WriteLine(dataInJson);
-}
+    while (!cts.IsCancellationRequested)
+    {
+        var data = mon.Execute("Read");
+        Console.Write("\r"+data);
+    }
+});
 
-var id =  mon.ExecuteAsync("ID=");
 
-var response =mon.ExecuteAsync("Machine=");
-
-Console.WriteLine(DateTime.Now);
-
-await Task.Delay(1000);
-
+Console.ReadLine();
+cts.Cancel();
+mon.Execute("Stop=");
 mon.StopService();
