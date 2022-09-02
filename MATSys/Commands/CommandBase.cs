@@ -8,7 +8,7 @@ using System.Xml.Linq;
 namespace MATSys.Commands
 {
     /// <summary>
-    /// Abstract class to generate command, convert the result.
+    /// base class to generate command and convert the result.
     /// </summary>
     public abstract class CommandBase : ICommand
     {
@@ -30,10 +30,10 @@ namespace MATSys.Commands
         }
 
         /// <summary>
-        /// Convert the response object to string
+        /// Convert the response object to string. This method is optional. Command object will use ToString() is this method is not implemented. Return empty string if <paramref name="obj"/> is null
         /// </summary>
         /// <param name="obj">response from the device object</param>
-        /// <returns>conver to string, use ToString() method as default. Return empty string if obj is null</returns>
+        /// <returns>result string</returns>
         public virtual string? ConvertResultToString(object obj)
         {
             return obj != null ? obj.ToString() : "";
@@ -386,7 +386,7 @@ namespace MATSys.Commands
         }
         public override string Serialize()
         {
-            var sb = new StringBuilder();
+                        var sb = new StringBuilder();
             sb.Append(MethodName);
             sb.Append("=");
             sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
