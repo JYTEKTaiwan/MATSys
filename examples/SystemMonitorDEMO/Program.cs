@@ -5,8 +5,8 @@ using SystemMonitorDEMO.Modules;
 Console.WriteLine("Hello, World!");
 
 
-//var mon=ModuleFactory.CreateNew(typeof(SystemMonitor),null,null,null, null,"System");
-var mon = new SystemMonitor(null, null, null, new TextRecorder()) as IModule;
+var mon=ModuleFactory.CreateNew(typeof(SystemMonitor),null);
+//var mon = new SystemMonitor(null, null, null, new TextRecorder()) as IModule;
 mon.StartService(new CancellationToken());
 mon.Notifier.OnNotify += Notifier_OnNotify;
 
