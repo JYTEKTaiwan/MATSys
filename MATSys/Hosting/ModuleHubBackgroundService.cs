@@ -15,7 +15,7 @@ namespace MATSys
         private readonly IModuleFactory _moduleFactory;
         private readonly IConfiguration _config;
         private readonly ITransceiver _transceiver;
-        private readonly AutoTestScheduler scheduler;
+        private readonly AutoTestScheduler _scheduler;
         private readonly ILogger _logger;
         private CancellationTokenSource cts=new CancellationTokenSource();
         public ModuleCollection Modules { get; } = new ModuleCollection();
@@ -32,14 +32,13 @@ namespace MATSys
                 }                
                 _transceiver = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(_config.GetSection("Transceiver"));
                 _transceiver.OnNewRequest += _transceiver_OnNewRequest;
-                scheduler=services.GetRequiredService<AutoTestScheduler>();
+                _scheduler=services.GetRequiredService<AutoTestScheduler>();
             }
             catch (Exception ex)
             {
                 throw new Exception($"ModuleHub Initialzation failed", ex);
             }
         }
-
         private string _transceiver_OnNewRequest(object sender, string commandObjectInJson)
         {
             //format is {Name}:{command in json formt}
@@ -99,7 +98,7 @@ namespace MATSys
         }
         private void AutoTesting(int iteration,CancellationToken token)
         {
-            scheduler.SingleTest();
+            _scheduler.SingleTest();
             int cnt = 1;
             while (!cts.IsCancellationRequested)
             {
@@ -107,9 +106,9 @@ namespace MATSys
                 {
                     cts.Cancel();
                 }
-                else if (!scheduler.IsAvailable)
+                else if (!_scheduler.IsAvailable)
                 {
-                    scheduler.SingleTest();
+                    _scheduler.SingleTest();
                     Interlocked.Increment(ref cnt);
                 }
                 else
@@ -118,6 +117,7 @@ namespace MATSys
                 }
                 
             }
+
         }
         private void Setup(CancellationToken stoppingToken)
         {
@@ -143,10 +143,10 @@ namespace MATSys
                 Setup(stoppingToken);
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    if (SpinWait.SpinUntil(() => scheduler.IsAvailable, 5))
+                    if (SpinWait.SpinUntil(() => _scheduler.IsAvailable, 5))
                     {
-                        var item=await scheduler.Dequeue(stoppingToken);
-                        var response=await ExecuteAsync(item.ModuleName, item.Command);
+                        var currentTestItem = await _scheduler.Dequeue(stoppingToken);
+                        var response=await ExecuteAsync(currentTestItem.ModuleName, currentTestItem.Command);
                     }
                 }
                 Cleanup();

@@ -10,10 +10,9 @@ namespace MATSys.Hosting
 {
     internal class AutoTestScheduler
     {
-        private readonly Channel<TestItem> _queue =  Channel.CreateUnbounded<TestItem>();
+        private readonly Channel<TestItem> _queue = Channel.CreateUnbounded<TestItem>();
         private readonly TestScript script = new TestScript();
         private List<TestItem> testItems = new List<TestItem>();
-
         public bool IsAvailable => _queue.Reader.Count > 0;
         public AutoTestScheduler(IConfiguration config)
         {
@@ -67,6 +66,8 @@ namespace MATSys.Hosting
             ModuleName = name;
             Command = cmd;
         }
+        public static TestItem Empty => new TestItem("", "");
+        
     }
     
 }

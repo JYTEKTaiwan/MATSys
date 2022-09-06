@@ -16,21 +16,8 @@ host.RunAsync().Wait(1000);;
 
 var dev = host.Services.GetMATSysHandle();
 dev.Modules["Dev1"].OnDataReady += IModule_OnDataReady;
-//dev.Modules["Dev1"].Execute(CommandBase.Create("Perf",1));
 
-Stopwatch sw = new Stopwatch();
-sw.Restart();
-
-for (int i = 0; i < 10; i++)
-{
-    var a=dev.Modules["Dev1"].Execute($"Perf=2.0");
-    Console.WriteLine(a);
-    //dev.Modules["Dev1"].Execute(CommandBase.Create("Perf",i));
-
-}
-sw.Stop();
-Console.WriteLine(sw.Elapsed.TotalSeconds);
-//dev.RunTest(1);
+dev.RunTest(1);
 
 void IModule_OnDataReady(string jsonString)
 {
@@ -71,7 +58,7 @@ public class TestDevice : ModuleBase
         public double Number { get; set; } = 0.0;
     }
 
-    [MATSysCommand ("Test", typeof(Command<Data>))]
+    [MATSysCommand]
     public string Test(Data a)
     {
         var res = a.Date + "---" + a.Number.ToString();
@@ -86,12 +73,6 @@ public class TestDevice : ModuleBase
         Base.Notifier.Publish(c);
 
         return c;
-    }
-    [MATSysCommand]
-    public int Perf(int a)
-    {
-        Console.Write(DateTime.Now+"\t");
-        return new Random().Next(0,10);
     }
 }
 

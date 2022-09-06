@@ -15,10 +15,10 @@ namespace MATSys
         /// <summary>
         /// Command string prefix
         /// </summary>
-        public const string cmd_notFound = "NOTFOUND";
-        public const string cmd_execError = "EXEC_ERROR";
-        public const string cmd_serDesError = "SerDes_ERROR";
-        public const string catchError = "Internal_ERROR";
+        public const string cmd_notFound = "ERR_NOTFOUND";
+        public const string cmd_execError = "ERR_EXEC";
+        public const string cmd_serDesError = "ERROR_SerDes";
+        public const string catchError = "ERR_Internal";
 
         /// <summary>
         /// Internal features injected
@@ -150,20 +150,20 @@ namespace MATSys
                     {
                         //exceptio from Invoke method
                         _logger.Warn(ex);
-                        return $"{cmd_execError}: [{ex}]";
+                        return $"[{cmd_execError}] {ex}";
                     }
                     else
                     {
                         //custom class error, use inner error
                         _logger.Warn(ex.InnerException);
-                        return $"{cmd_execError}: [{ex.InnerException}]";
+                        return $"[{cmd_execError}] {ex.InnerException}";
                     }
                 }
             }
 
             else
             {
-                var res = $"{cmd_notFound}: [{cmd.MethodName}]";
+                var res = $"[{cmd_notFound}] {cmd.Serialize()}";
                 _logger.Warn(res);
                 return res;
             }
@@ -403,7 +403,7 @@ namespace MATSys
                 }
                 else
                 {
-                    return $"{cmd_notFound}:[{parsedName}]";
+                    return $"[{cmd_notFound}]:{commandObjectInJson}";
                 }
             }
             catch (JsonReaderException ex)

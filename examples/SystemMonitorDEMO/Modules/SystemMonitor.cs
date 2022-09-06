@@ -32,7 +32,7 @@ namespace SystemMonitorDEMO.Modules
 
         }
 
-        [MATSysCommandAttribute ("Start", typeof(Command))]
+        [MATSysCommand]
         public void StartMonitor()
         {
             cts_pf = new CancellationTokenSource();
@@ -46,13 +46,13 @@ namespace SystemMonitorDEMO.Modules
             });
         }
 
-        [MATSysCommandAttribute ("Stop", typeof(Command))]
+        [MATSysCommand]
         public void StopMonitor()
         {
             cts_pf.Cancel();
         }
 
-        [MATSysCommandAttribute ("Machine",typeof(Command))]
+        [MATSysCommand("Machine")]
         public string MachineName()
         {
             var str = Environment.MachineName;
@@ -61,7 +61,7 @@ namespace SystemMonitorDEMO.Modules
             return str;
         }
 
-        [MATSysCommandAttribute ("ID", typeof(Command))]
+        [MATSysCommand("ID")]
         public string GetName()
         {
             Base.Notifier.Publish(Name);
@@ -69,7 +69,7 @@ namespace SystemMonitorDEMO.Modules
             return Name;
         }
 
-        [MATSysCommandAttribute ("Read",typeof(Command))]
+        [MATSysCommand]
         public string GetLatestData()
         {
              var result=_ch.Reader.ReadAsync().AsTask().Result;
