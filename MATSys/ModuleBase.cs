@@ -2,21 +2,28 @@
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using NLog;
+using System.Data;
 using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MATSys
 {
     public abstract class ModuleBase : IModule
     {
+        private static Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}");
+
         public const string cmd_notFound = "NOTFOUND";
         public const string cmd_execError = "EXEC_ERROR";
-        private readonly Dictionary<string, MethodInfo> _methods = new Dictionary<string, MethodInfo>();
         private readonly ILogger _logger;
         private readonly ITransceiver _transceiver;
         private readonly IRecorder _recorder;
         private readonly INotifier _notifier;
+        private readonly CommandLookUpTable cmdLUT;
         public volatile bool _isRunning = false;
         private object _config;
+
+
         public bool IsRunning => _isRunning;
 
         public event IModule.NewDataReady? OnDataReady;
@@ -45,7 +52,7 @@ namespace MATSys
             _recorder = InjectRecorder(recorder);
             _notifier = InjectNotifier(notifier);
             _transceiver = InjectTransceiver(transceiver);
-            _methods = ParseSupportedMethods();
+            cmdLUT = new CommandLookUpTable(GetSupportedMethods());
             _logger.Info($"{Name} base class initialization is completed");
         }
         /// <summary>
@@ -140,35 +147,32 @@ namespace MATSys
             OnDataReady?.Invoke(dataInJson);
         }
         /// <summary>
-        /// Get the all methods with MethodNameAttribute assigned
-        /// </summary>
-        /// <returns></returns>
-        private Dictionary<string, MethodInfo> ParseSupportedMethods()
-        {
-            var methodlist = GetType().GetMethods().Where(x =>
-            {
-                return x.GetCustomAttributes<MethodNameAttribute>(false).Count() > 0;
-            }).ToArray();
-            return methodlist.ToDictionary(x => x.GetCustomAttribute<MethodNameAttribute>()!.Name);
-        }
-        /// <summary>
         /// Event when new request is received
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="commandObjectInJson"></param>
         /// <returns></returns>
+        private MethodInfo[] GetSupportedMethods()
+        {
+            var methodlist = GetType().GetMethods().Where(x =>
+            {
+                return x.GetCustomAttributes<MATSysCommandAttribute>(false).Count() > 0;
+            }).ToArray();
+            return methodlist;
+        }
         private string OnRequestReceived(object sender, string commandObjectInJson)
         {
             try
             {
                 var answer = "";
-                _logger.Trace($"OnDataReady event fired: {commandObjectInJson}");                
+                _logger.Trace($"OnDataReady event fired: {commandObjectInJson}");
                 var parsedName = commandObjectInJson.Split('=')[0];
-                if (_methods.ContainsKey(parsedName))
+                var cmdStr = ToJsonString(commandObjectInJson);
+                
+                if (cmdLUT.IsExist(parsedName))
                 {
-                    var method = _methods[parsedName];
-                    var att = method.GetCustomAttribute<MethodNameAttribute>();
-                    var cmd = att?.Deserialize(commandObjectInJson);
+                    var item = cmdLUT[parsedName];
+                    var cmd = JsonConvert.DeserializeObject(cmdStr, item.CommandType) as ICommand;
                     _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
                     answer = Execute(cmd);
                     return answer;
@@ -243,14 +247,15 @@ namespace MATSys
         /// <param name="cmd">ICommand instance</param>
         /// <returns>reponse after execuing the commnad</returns>
         public string Execute(ICommand cmd)
-        {
-            if (_methods.ContainsKey(cmd.MethodName))
+        {            
+            if (cmdLUT.IsExist(cmd.MethodName))
             {
-                var method = _methods[cmd.MethodName];
+                var item = cmdLUT[cmd.MethodName];
                 try
                 {
                     _logger.Trace($"Command is ready to executed {cmd.SimplifiedString()}");
-                    var result = method.Invoke(this, cmd.GetParameters())!;
+                    var g = cmd.GetParameters();
+                    var result = item.MethodInfo.Invoke(this, cmd.GetParameters())!;
                     var response = cmd.ConvertResultToString(result)!;
                     _logger.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
                     _logger.Info($"Command [{cmd.MethodName}] is executed successfully");
@@ -275,6 +280,7 @@ namespace MATSys
                     }
                 }
             }
+
             else
             {
                 var res = $"{cmd_notFound}: [{cmd.MethodName}]";
@@ -303,13 +309,13 @@ namespace MATSys
 
         public async Task<string> ExecuteAsync(ICommand cmd)
         {
-           return await Task.Run(()=> 
-            {
-                Monitor.Enter(this);
-                var response=Execute(cmd);
-                Monitor.Exit(this);
-                return response;
-            });
+            return await Task.Run(() =>
+             {
+                 Monitor.Enter(this);
+                 var response = Execute(cmd);
+                 Monitor.Exit(this);
+                 return response;
+             });
         }
 
         public async Task<string> ExecuteAsync(string cmdInJson)
@@ -332,11 +338,180 @@ namespace MATSys
         /// <returns></returns>
         public virtual IEnumerable<string> PrintCommands()
         {
-            var cmds = GetType().GetMethods().Where(x => x.GetCustomAttributes<MethodNameAttribute>().Count() > 0);
-            foreach (var item in cmds)
+            foreach (var item in cmdLUT)
             {
-                yield return item.GetCustomAttribute<MethodNameAttribute>()!.GetTemplateString();
+                yield return GetTemplateString(item.CommandType);
             }
+        }
+
+        public Type GetCommandType(MethodInfo mi)
+        {
+            var types = mi.GetParameters().Select(x => x.ParameterType).ToArray();
+            Type t = GetGenericCommandType(types.Length);
+            if (t.IsGenericType)
+            {
+                return t.MakeGenericType(types);
+            }
+            else
+            {
+                return t;
+            }
+
+        }
+
+        public Type GetGenericCommandType(int count)
+        {
+            switch (count)
+            {
+                case 0:
+                    return typeof(Command);
+                case 1:
+                    return typeof(Command<>);
+                case 2:
+                    return typeof(Command<,>);
+                case 3:
+                    return typeof(Command<,,>);
+                case 4:
+                    return typeof(Command<,,,>);
+                case 5:
+                    return typeof(Command<,,,,>);
+                case 6:
+                    return typeof(Command<,,,,,>);
+                case 7:
+                    return typeof(Command<,,,,,,>);
+                default:
+                    return typeof(Command);
+            }
+
+        }
+
+        private string ToJsonString(string input)
+        {
+            var sb = new StringBuilder();
+            var matches = regex.Matches(input);
+            var cnt = matches.Count;
+            //Prepare header
+            sb.Append("{\"MethodName\":\"");
+            sb.Append(matches[0].Value);
+            sb.Append("\"");
+            //Prepare Parameter
+            if (cnt != 1)
+            {
+                //with parameter, continue
+                sb.Append(",\"Parameter\":{");
+                for (int i = 1; i < cnt; i++)
+                {
+                    if (i != 1)
+                    {
+                        sb.Append(",");
+                    }
+                    sb.Append($"\"Item{i}\":{matches[i].Value}");
+                }
+                sb.Append("}");
+            }
+            sb.Append("}");
+            return sb.ToString();
+        }
+        /// <summary>
+        /// Generate the command string pattern
+        /// </summary>
+        /// <returns>command string in simplified format</returns>
+        public string GetTemplateString(Type t)
+        {
+            var args = t.GenericTypeArguments;
+            var sb = new StringBuilder();
+            sb.Append(Name);
+            sb.Append("=");
+            for (int i = 0; i < args.Length; i++)
+            {
+                sb.Append(args[i].FullName);
+                if (i != args.Length - 1)
+                {
+                    sb.Append(",");
+                }
+            }
+            return sb.ToString();
+        }
+
+    }
+
+    internal class CommandLookUpTable: List<CommandItem>
+    {
+        public CommandItem this[string name]=> this.FirstOrDefault(x => x.Alias == name);
+        public CommandLookUpTable(MethodInfo[] methodInfos)
+        {
+            foreach (var item in methodInfos)
+            {
+                var att = item.GetCustomAttribute<MATSysCommandAttribute>();
+                Type t;
+                if (att.CommandType == null)
+                {
+                    t = GetCommandType(item);
+                }
+                else
+                {
+                    t = att.CommandType;
+                }
+                this.Add(new CommandItem(att.Name, item, t));
+            }
+        }
+        public bool IsExist(string name)
+        {
+            return this.Exists(x => x.Alias == name);
+        }
+        private Type GetCommandType(MethodInfo mi)
+        {
+            var types = mi.GetParameters().Select(x => x.ParameterType).ToArray();
+            Type t = GetGenericCommandType(types.Length);
+            if (t.IsGenericType)
+            {
+                return t.MakeGenericType(types);
+            }
+            else
+            {
+                return t;
+            }
+
+        }
+        private Type GetGenericCommandType(int count)
+        {
+            switch (count)
+            {
+                case 0:
+                    return typeof(Command);
+                case 1:
+                    return typeof(Command<>);
+                case 2:
+                    return typeof(Command<,>);
+                case 3:
+                    return typeof(Command<,,>);
+                case 4:
+                    return typeof(Command<,,,>);
+                case 5:
+                    return typeof(Command<,,,,>);
+                case 6:
+                    return typeof(Command<,,,,,>);
+                case 7:
+                    return typeof(Command<,,,,,,>);
+                default:
+                    return typeof(Command);
+            }
+
+        }
+
+
+    }
+    internal struct CommandItem
+    {
+        public string Alias { get; set; }
+        public MethodInfo MethodInfo { get; set; }
+        public Type CommandType { get; set; }
+
+        public CommandItem(string alias, MethodInfo info, Type t)
+        {
+            Alias = alias;
+            MethodInfo = info;
+            CommandType = t;
         }
     }
 }

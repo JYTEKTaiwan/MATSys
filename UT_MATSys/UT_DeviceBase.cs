@@ -61,19 +61,19 @@ public class UT_DeviceBase
         {
         }
 
-        [MethodName("Hi", typeof(Command))]
+        [MATSysCommandAttribute ("Hi", typeof(Command))]
         public string Hello()
         {
             return "WORLD";
         }
 
-        [MethodName("Exception", typeof(Command))]
+        [MATSysCommandAttribute ("Exception", typeof(Command))]
         public void Exception()
         {
             throw new Exception("Exception");
         }
 
-        [MethodName("WrongArgs", typeof(Command<int>))]
+        [MATSysCommandAttribute ("WrongArgs", typeof(Command<int>))]
         public void WrongArgs()
         {
             throw new Exception("WrongArgs");

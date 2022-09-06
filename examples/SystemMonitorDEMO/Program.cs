@@ -4,6 +4,9 @@ using MATSys.Factories;
 using SystemMonitorDEMO.Modules;
 Console.WriteLine("Hello, World!");
 
+var t = typeof(MATSys.Commands.Command<>);
+t.MakeGenericType();
+
 
 var mon = ModuleFactory.CreateNew(typeof(SystemMonitor), null);
 //var mon = new SystemMonitor(null, null, null, new TextRecorder()) as IModule;

@@ -86,12 +86,12 @@ static void DisplayDevice(string path, string name)
         {
             var methodlist = type.GetMethods().Where(x =>
             {
-                return x.GetCustomAttributes<MethodNameAttribute>(false).Count() > 0;
+                return x.GetCustomAttributes<MATSysCommandAttributes Attribute>(false).Count() > 0;
             }).ToArray();
 
             foreach (var method in methodlist)
             {
-                var att = method.GetCustomAttribute<MethodNameAttribute>();
+                var att = method.GetCustomAttribute<MATSysCommandAttributes Attribute>();
                 Console.WriteLine($"{method.ToString().PadRight(50)} \t {att.GetTemplateString()}");
             }
             return;

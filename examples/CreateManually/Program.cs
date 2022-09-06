@@ -42,7 +42,7 @@ public class TestModule : ModuleBase
         public double Number { get; set; } = 0.0;
     }
 
-    [MethodName("Test", typeof(Command<Data>))]
+    [MATSysCommandAttribute ("Test", typeof(Command<Data>))]
     public string Test(Data a)
     {
         Base.Recorder.Write(a);
@@ -50,7 +50,7 @@ public class TestModule : ModuleBase
         return a.Date + "---" + a.Number.ToString();
     }
 
-    [MethodName("Method", typeof(Command<string>))]
+    [MATSysCommandAttribute ("Method", typeof(Command<string>))]
     public string Method(string c)
     {
         return $"{c} from {Base.Name}";
