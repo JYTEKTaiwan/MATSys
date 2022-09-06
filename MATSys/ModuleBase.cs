@@ -17,7 +17,7 @@ namespace MATSys
         /// </summary>
         public const string cmd_notFound = "ERR_NOTFOUND";
         public const string cmd_execError = "ERR_EXEC";
-        public const string cmd_serDesError = "ERROR_SerDes";
+        public const string cmd_serDesError = "ERR_SerDes";
         public const string catchError = "ERR_Internal";
 
         /// <summary>
