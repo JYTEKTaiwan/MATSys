@@ -24,7 +24,7 @@ namespace MATSys.Commands
                 {
                     t = att.CommandType;
                 }
-                this.Add(new CommandItem(att.Name, item, t));
+                this.Add(new CommandItem(att.Alias, item, t));
             }
         }
         public bool IsExist(string name)

@@ -7,6 +7,7 @@ using System.Threading.Channels;
 using MATSys.Hosting;
 using NLog.Extensions.Logging;
 using System.Diagnostics;
+using System.Text;
 
 Console.WriteLine("Hello, World!");
 
@@ -22,7 +23,8 @@ sw.Restart();
 
 for (int i = 0; i < 10; i++)
 {
-    dev.Modules["Dev1"].Execute("Perf="+i.ToString());
+    var a=dev.Modules["Dev1"].Execute($"Perf=2.0");
+    Console.WriteLine(a);
     //dev.Modules["Dev1"].Execute(CommandBase.Create("Perf",i));
 
 }
@@ -69,7 +71,7 @@ public class TestDevice : ModuleBase
         public double Number { get; set; } = 0.0;
     }
 
-    [MATSysCommandAttribute ("Test", typeof(Command<Data>))]
+    [MATSysCommand ("Test", typeof(Command<Data>))]
     public string Test(Data a)
     {
         var res = a.Date + "---" + a.Number.ToString();
@@ -86,13 +88,37 @@ public class TestDevice : ModuleBase
         return c;
     }
     [MATSysCommand]
-    public void Perf(int i)
+    public int Perf(int a)
     {
-        Console.WriteLine(i);
+        Console.Write(DateTime.Now+"\t");
+        return new Random().Next(0,10);
     }
 }
 
+public class TestCommmand : CommandBase
+{
+    public TestCommmand(string name) : base(name)
+    {
+    }
 
+    public override string? ConvertResultToString(object obj)
+    {
+        return DateTime.Now.ToString()+base.ConvertResultToString(obj);
+    }
+
+    public override object[]? GetParameters()
+    {
+        return new object[0];
+    }
+
+    public override string Serialize()
+    {
+        var sb = new StringBuilder();
+        sb.Append(MethodName);
+        sb.Append("=");
+        return sb.ToString();
+    }
+}
 
 public class CSVRecorderConfiguration
 {

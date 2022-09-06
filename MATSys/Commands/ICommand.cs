@@ -27,7 +27,8 @@
         /// <returns></returns>
         string SimplifiedString();
         /// <summary>
-        /// Serialize the command object
+        /// Serialize the command object. Format is MethodName=Parameter1,Parameter2,...,
+        /// Each Parameter is in json format
         /// </summary>
         /// <returns></returns>
         string Serialize();

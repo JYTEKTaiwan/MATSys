@@ -14,7 +14,7 @@ namespace MATSys.Commands
         /// <summary>
         /// Name of the ICommand instance
         /// </summary>
-        public string Name { get; }
+        public string Alias { get; }
 
         /// <summary>
         /// Type of the ICommand instance
@@ -26,10 +26,10 @@ namespace MATSys.Commands
         /// </summary>
         /// <param name="name">name</param>
         /// <param name="t"></param>
-        public MATSysCommandAttribute([CallerMemberName]string name="", Type? t=null)
+        public MATSysCommandAttribute([CallerMemberName]string Name="", Type? Type=null)
         {
-            Name = name;
-            CommandType = t;
+            Alias = Name;
+            CommandType = Type;
         }
 
     }

@@ -17,6 +17,8 @@ namespace MATSys
         /// </summary>
         public const string cmd_notFound = "NOTFOUND";
         public const string cmd_execError = "EXEC_ERROR";
+        public const string cmd_serDesError = "SerDes_ERROR";
+        public const string catchError = "Internal_ERROR";
 
         /// <summary>
         /// Internal features injected
@@ -133,7 +135,6 @@ namespace MATSys
                 try
                 {
                     _logger.Trace($"Command is ready to executed {cmd.SimplifiedString()}");
-                    var g = cmd.GetParameters();
                     var result = item.MethodInfo.Invoke(this, cmd.GetParameters())!;
                     var response = cmd.ConvertResultToString(result)!;
                     _logger.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
@@ -178,11 +179,12 @@ namespace MATSys
             {
                 var result = OnRequestReceived(this, cmdInJson);
                 return result!;
-            }
+            }            
             catch (Exception ex)
             {
                 _logger.Error(ex);
-                throw new Exception($"Execute command failed", ex);
+                throw new Exception($"[{catchError}]", ex);
+
             }
         }
         public async Task<string> ExecuteAsync(ICommand cmd)
@@ -394,7 +396,7 @@ namespace MATSys
                 if (cmdLUT.IsExist(parsedName))
                 {
                     var item = cmdLUT[parsedName];
-                    var cmd = JsonConvert.DeserializeObject(cmdStr, item.CommandType) as ICommand;
+                    var cmd = CommandBase.Deserialize(cmdStr, item.CommandType);
                     _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
                     answer = Execute(cmd);
                     return answer;
@@ -404,10 +406,15 @@ namespace MATSys
                     return $"{cmd_notFound}:[{parsedName}]";
                 }
             }
+            catch (JsonReaderException ex)
+            {
+                _logger.Warn(ex);
+                return $"[{cmd_serDesError}] {commandObjectInJson}";
+            }
             catch (Exception ex)
             {
                 _logger.Error(ex);
-                throw new Exception($"Execution of command failed", ex);
+                throw ex;
             }
         }
         private string ToJsonString(string input)
@@ -437,7 +444,6 @@ namespace MATSys
             sb.Append("}");
             return sb.ToString();
         }
-
         #endregion
     }
 

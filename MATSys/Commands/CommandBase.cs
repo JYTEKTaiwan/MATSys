@@ -54,6 +54,19 @@ namespace MATSys.Commands
         /// <returns>parameter values</returns>
         public abstract object[]? GetParameters();
 
+        public static ICommand Deserialize(string str, Type t)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject(str, t) as ICommand;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+        }
+
         /// <summary>
         /// Create command object without any parameters
         /// </summary>
@@ -207,7 +220,7 @@ namespace MATSys.Commands
         /// <returns></returns>
         public override object[]? GetParameters()
         {
-            return null;
+            return new object[0];
         }
         public override string Serialize()
         {
