@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,14 +22,14 @@ namespace MATSys.Commands
         }
         private static Type GetInvokerType(MethodInfo mi)
         {
-            var isReturnTypeNull = mi.ReturnType == null;
+            var isNullReturn = mi.ReturnType.FullName == "System.Void";
             var parameters = mi.GetParameters().Select(x => x.ParameterType).ToArray();
             var returnType = mi.ReturnType;
             Type t;
             switch (parameters.Length)
             {
                 case 0:
-                    if (isReturnTypeNull)
+                    if (isNullReturn)
                     {
                         return typeof(Invoker);
                     }
@@ -36,7 +38,7 @@ namespace MATSys.Commands
                         return typeof(InvokerWithReturn<>).MakeGenericType(returnType);
                     }
                 case 1:
-                    if (isReturnTypeNull)
+                    if (isNullReturn)
                     {
                         return typeof(Invoker<>).MakeGenericType(parameters);
                     }
@@ -46,7 +48,7 @@ namespace MATSys.Commands
 
                     }
                 case 2:
-                    if (isReturnTypeNull)
+                    if (isNullReturn)
                     {
                         return typeof(Invoker<,>).MakeGenericType(parameters);
                     }
@@ -56,7 +58,7 @@ namespace MATSys.Commands
 
                     }
                 case 3:
-                    if (isReturnTypeNull)
+                    if (isNullReturn)
                     {
                         return typeof(Invoker<,,>).MakeGenericType(parameters);
                     }
@@ -66,7 +68,7 @@ namespace MATSys.Commands
 
                     }
                 case 4:
-                    if (isReturnTypeNull)
+                    if (isNullReturn)
                     {
                         return typeof(Invoker<,,,>).MakeGenericType(parameters);
                     }
@@ -76,7 +78,7 @@ namespace MATSys.Commands
 
                     }
                 case 5:
-                    if (isReturnTypeNull)
+                    if (isNullReturn)
                     {
                         return typeof(Invoker<,,,,>).MakeGenericType(parameters);
                     }
@@ -86,7 +88,7 @@ namespace MATSys.Commands
 
                     }
                 case 6:
-                    if (isReturnTypeNull)
+                    if (isNullReturn)
                     {
                         return typeof(Invoker<,,,,,>).MakeGenericType(parameters);
                     }
@@ -96,7 +98,7 @@ namespace MATSys.Commands
 
                     }
                 case 7:
-                    if (isReturnTypeNull)
+                    if (isNullReturn)
                     {
                         return typeof(Invoker<,,,,,,>).MakeGenericType(parameters);
                     }
@@ -124,7 +126,6 @@ namespace MATSys.Commands
             return null;
         }
     }
-
     internal class Invoker<T1> : MethodInvoker
     {
         private readonly Action<T1> _invoker;
@@ -138,7 +139,6 @@ namespace MATSys.Commands
             return null;
         }
     }
-
     internal class Invoker<T1, T2> : MethodInvoker
     {
         private readonly Action<T1, T2> _invoker;
