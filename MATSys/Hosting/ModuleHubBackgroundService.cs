@@ -28,7 +28,7 @@ namespace MATSys
                 _moduleFactory = services.GetRequiredService<IModuleFactory>();
                 foreach (var item in _config.GetSection("Modules").GetChildren())
                 {
-                    Modules.Add(_moduleFactory.CreateModule(item));
+                    Modules.Add(item.GetValue<string>("Name"),_moduleFactory.CreateModule(item));
                 }                
                 _transceiver = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(_config.GetSection("Transceiver"));
                 _transceiver.OnNewRequest += _transceiver_OnNewRequest;
@@ -44,47 +44,18 @@ namespace MATSys
             //format is {Name}:{command in json formt}
             var name = commandObjectInJson.Split(':')[0];
             var cmd = commandObjectInJson.Split(':')[1];
-            return Execute(name, cmd);
+            return ExecuteCommand(name, cmd);
         }
 
-        public string Execute(string name, ICommand cmd)
+        public string ExecuteCommand(string name, ICommand cmd)
         {
-            return ExecuteAsync(name, cmd).Result;
+            //return ExecuteAsync(name, cmd).Result;
+            return Modules[name].Execute(cmd);
         }
-        public string Execute(string name, string cmd)
+        public string ExecuteCommand(string name, string cmd)
         {
-            return ExecuteAsync(name, cmd).Result;
-        }
-
-        public async Task<string> ExecuteAsync(string name, ICommand cmd)
-        {
-            return await Task.Run(async () => 
-            {
-                if (Modules.Exists(x => x.Name == name))
-                {
-                    return await Modules[name].ExecuteAsync(cmd);
-                }
-                else
-                {
-                    return  $"Module [{name}] is not Found";
-                }
-            });
-            
-        }
-        public async Task<string> ExecuteAsync(string name, string cmd)
-        {
-            return await Task.Run(async() => 
-            {
-                if (Modules.Exists(x => x.Name == name))
-                {
-                    return await Modules[name].ExecuteAsync(cmd);
-                }
-                else
-                {
-                    return $"Module [{name}] is not Found";
-                }
-
-            });
+            //return ExecuteAsync(name, cmd).Result;
+            return Modules[name].Execute(cmd);
         }
 
         public void RunTest(int iteration)
@@ -121,7 +92,7 @@ namespace MATSys
         }
         private void Setup(CancellationToken stoppingToken)
         {
-            foreach (var item in Modules)
+            foreach (var item in Modules.Values)
             {
                 item.StartService(stoppingToken);
             }
@@ -130,7 +101,7 @@ namespace MATSys
 
         private void Cleanup()
         {
-            foreach (var item in Modules)
+            foreach (var item in Modules.Values)
             {
                 item.StopService();
             }
@@ -146,7 +117,7 @@ namespace MATSys
                     if (SpinWait.SpinUntil(() => _scheduler.IsAvailable, 5))
                     {
                         var currentTestItem = await _scheduler.Dequeue(stoppingToken);
-                        var response=await ExecuteAsync(currentTestItem.ModuleName, currentTestItem.Command);
+                        var response=ExecuteCommand(currentTestItem.ModuleName, currentTestItem.Command);
                     }
                 }
                 Cleanup();
@@ -154,13 +125,12 @@ namespace MATSys
         }
     }
 
-    public sealed class ModuleCollection : List<IModule>
+    public sealed class ModuleCollection : Dictionary<string,IModule>
     {
         public ModuleCollection() : base()
         {
         }
 
-        public IModule this[string name] => this.FirstOrDefault(x => x.Name == name)!;
     }
 
 }
