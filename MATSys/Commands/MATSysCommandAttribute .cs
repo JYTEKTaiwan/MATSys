@@ -19,7 +19,9 @@ namespace MATSys.Commands
         /// <summary>
         /// Type of the ICommand instance
         /// </summary>
-        public Type? CommandType { get; }
+        public Type? CommandType { get; set; }
+        
+        public MethodInvoker Invoker { get; set; }
 
         /// <summary>
         /// Constructor
