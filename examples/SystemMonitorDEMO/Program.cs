@@ -4,25 +4,21 @@ using MATSys.Factories;
 using SystemMonitorDEMO.Modules;
 Console.WriteLine("Hello, World!");
 
-var t = typeof(MATSys.Commands.Command<>);
-t.MakeGenericType();
-
-
 var mon = ModuleFactory.CreateNew(typeof(SystemMonitor), null);
 //var mon = new SystemMonitor(null, null, null, new TextRecorder()) as IModule;
 mon.StartService(new CancellationToken());
 mon.Notifier.OnNotify += (string dataInJson) => Console.WriteLine(dataInJson);
-var id = await mon.ExecuteAsync("ID=");
-var response = await mon.ExecuteAsync("Machine=");
+var id =  mon.Execute("ID=");
+var response =  mon.Execute("Machine=");
 
-mon.Execute("Start=");
+mon.Execute("StartMonitor=");
 
 var cts = new CancellationTokenSource();
 Task.Run(() => 
 {
     while (!cts.IsCancellationRequested)
     {
-        var data = mon.Execute("Read");
+        var data = mon.Execute("GetLatestData=");
         Console.Write("\r"+data);
     }
 });
@@ -30,5 +26,5 @@ Task.Run(() =>
 
 Console.ReadLine();
 cts.Cancel();
-mon.Execute("Stop=");
+mon.Execute("StopMonitor=");
 mon.StopService();
