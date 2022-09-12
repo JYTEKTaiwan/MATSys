@@ -31,10 +31,9 @@ namespace MATSys
         /// <summary>
         /// private field to use
         /// </summary>
-        private readonly CommandLookUpTable cmdLUT;
         private volatile bool _isRunning = false;
         private static Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}");
-
+        private readonly Dictionary<string, MATSysCommandAttribute> cmds;
         #endregion
 
         public bool IsRunning => _isRunning;
@@ -66,9 +65,38 @@ namespace MATSys
             _recorder = InjectRecorder(recorder);
             _notifier = InjectNotifier(notifier);
             _transceiver = InjectTransceiver(transceiver);
-            cmdLUT = new CommandLookUpTable(GetSupportedMethods());
+            cmds = ListMATSysCommands();
             _logger.Info($"{Name} base class initialization is completed");
         }
+
+        private Dictionary<string, MATSysCommandAttribute> ListMATSysCommands()
+        {
+            var mis = GetSupportedMethods();
+            var atts=mis.Select(x =>
+            {
+                var cmd = x.GetCustomAttribute<MATSysCommandAttribute>();
+                //configure CommandType property
+                if (cmd.CommandType == null)
+                {
+                    var types = x.GetParameters().Select(x => x.ParameterType).ToArray();
+                    Type t = GetGenericCommandType(types.Length);
+                    if (t.IsGenericType)
+                    {
+                        cmd.CommandType = t.MakeGenericType(types);
+                    }
+                    else
+                    {
+                        cmd.CommandType = t;
+                    }
+                }
+
+                //configure MethodInvoker property
+                cmd.Invoker = MethodInvoker.Create(this, x);
+                return cmd;
+            });
+            return atts.ToDictionary(x => x.Alias);
+        }
+
         /// <summary>
         /// Start the service
         /// </summary>
@@ -129,43 +157,40 @@ namespace MATSys
         /// <returns>reponse after execuing the commnad</returns>
         public string Execute(ICommand cmd)
         {
-            if (cmdLUT.IsExist(cmd.MethodName))
+            try
             {
-                var item = cmdLUT[cmd.MethodName];
-                try
-                {
-                    _logger.Trace($"Command is ready to executed {cmd.SimplifiedString()}");
-                    var result = item.MethodInfo.Invoke(this, cmd.GetParameters())!;
-                    var response = cmd.ConvertResultToString(result)!;
-                    _logger.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
-                    _logger.Info($"Command [{cmd.MethodName}] is executed successfully");
-                    return response;
-                }
-                catch (Exception ex)
-                {
-                    bool check = ex is TargetException | ex is ArgumentException |
-                    ex is TargetParameterCountException | ex is MethodAccessException | ex is InvalidOperationException |
-                    ex is NotSupportedException;
-                    if (check)
-                    {
-                        //exceptio from Invoke method
-                        _logger.Warn(ex);
-                        return $"[{cmd_execError}] {ex}";
-                    }
-                    else
-                    {
-                        //custom class error, use inner error
-                        _logger.Warn(ex.InnerException);
-                        return $"[{cmd_execError}] {ex.InnerException}";
-                    }
-                }
+                _logger.Trace($"Command is ready to executed {cmd.SimplifiedString()}");
+                var item = cmds[cmd.MethodName];
+                var result = item.Invoker.Invoke(cmd.GetParameters())!;
+                var response = cmd.ConvertResultToString(result)!;
+                _logger.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
+                _logger.Info($"Command [{cmd.MethodName}] is executed successfully");
+                return response;
             }
-
-            else
+            catch (KeyNotFoundException ex)
             {
                 var res = $"[{cmd_notFound}] {cmd.Serialize()}";
                 _logger.Warn(res);
                 return res;
+
+            }
+            catch (Exception ex)
+            {
+                bool check = ex is TargetException | ex is ArgumentException |
+                ex is TargetParameterCountException | ex is MethodAccessException | ex is InvalidOperationException |
+                ex is NotSupportedException;
+                if (check)
+                {
+                    //exceptio from Invoke method
+                    _logger.Warn(ex);
+                    return $"[{cmd_execError}] {ex}";
+                }
+                else
+                {
+                    //custom class error, use inner error
+                    _logger.Warn(ex.InnerException);
+                    return $"[{cmd_execError}] {ex.InnerException}";
+                }
             }
         }
         /// <summary>
@@ -184,28 +209,21 @@ namespace MATSys
             {
                 _logger.Error(ex);
                 throw new Exception($"[{catchError}]", ex);
-
             }
         }
         public async Task<string> ExecuteAsync(ICommand cmd)
         {
-            return await Task.Run(() =>
-             {
-                 Monitor.Enter(this);
-                 var response = Execute(cmd);
-                 Monitor.Exit(this);
-                 return response;
-             });
+            Monitor.Enter(cmd);
+            var response = Execute(cmd);
+            Monitor.Exit(cmd);
+            return response;
         }
         public async Task<string> ExecuteAsync(string cmdInJson)
         {
-            return await Task.Run(() =>
-            {
-                Monitor.Enter(this);
-                var response = Execute(cmdInJson);
-                Monitor.Exit(this);
-                return response;
-            });
+            Monitor.Enter(cmdInJson);
+            var response = Execute(cmdInJson);
+            Monitor.Exit(cmdInJson);
+            return response;            
         }
         public abstract void Load(IConfigurationSection section);
         public abstract void Load(object configuration);
@@ -215,7 +233,7 @@ namespace MATSys
         /// <returns></returns>
         public virtual IEnumerable<string> PrintCommands()
         {
-            foreach (var item in cmdLUT)
+            foreach (var item in cmds.Values)
             {
                 yield return GetTemplateString(item.CommandType);
             }
@@ -392,19 +410,17 @@ namespace MATSys
                 _logger.Trace($"OnDataReady event fired: {commandObjectInJson}");
                 var parsedName = commandObjectInJson.Split('=')[0];
                 var cmdStr = ToJsonString(commandObjectInJson);
-
-                if (cmdLUT.IsExist(parsedName))
-                {
-                    var item = cmdLUT[parsedName];
-                    var cmd = CommandBase.Deserialize(cmdStr, item.CommandType);
-                    _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
-                    answer = Execute(cmd);
-                    return answer;
-                }
-                else
-                {
-                    return $"[{cmd_notFound}]:{commandObjectInJson}";
-                }
+                var item = cmds[parsedName];
+                var cmd = CommandBase.Deserialize(cmdStr, item.CommandType);
+                _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
+                answer = Execute(cmd);
+                return answer;
+            }
+            catch (KeyNotFoundException ex)
+            {
+                var res = $"[{cmd_notFound}] {commandObjectInJson}";
+                _logger.Warn(res);
+                return res;
             }
             catch (JsonReaderException ex)
             {

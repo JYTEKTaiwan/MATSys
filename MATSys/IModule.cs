@@ -20,10 +20,6 @@ namespace MATSys
         ITransceiver Transceiver { get; }
 
         bool IsRunning { get; }
-
-
-        Task<string> ExecuteAsync(Commands.ICommand cmd);
-        Task<string> ExecuteAsync(string cmdInJson);
         string Execute(Commands.ICommand cmd);
         string Execute(string cmdInJson);
 
