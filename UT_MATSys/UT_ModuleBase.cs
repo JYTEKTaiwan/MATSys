@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace UT_MATSys;
 
-public class UT_DeviceBase
+public class UT_ModuleBase
 {
     [Test]
     [Category("Initialize")]
