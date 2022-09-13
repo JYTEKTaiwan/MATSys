@@ -54,6 +54,12 @@ namespace MATSys.Commands
         /// <returns>parameter values</returns>
         public abstract object[]? GetParameters();
 
+        /// <summary>
+        /// Deserialize the input string into ICommand object
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public static ICommand Deserialize(string str, Type t)
         {
             try

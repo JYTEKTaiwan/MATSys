@@ -18,7 +18,6 @@ namespace MATSys
         public const string cmd_notFound = "ERR_NOTFOUND";
         public const string cmd_execError = "ERR_EXEC";
         public const string cmd_serDesError = "ERR_SerDes";
-        public const string catchError = "ERR_Internal";
 
         /// <summary>
         /// Internal features injected
@@ -150,11 +149,12 @@ namespace MATSys
                 throw new Exception("Stop failed", ex);
             }
         }
+
         /// <summary>
         /// Execute the incoming command object
         /// </summary>
         /// <param name="cmd">ICommand instance</param>
-        /// <returns>reponse after execuing the commnad</returns>
+        /// <returns>reponse after executing the commnad</returns>
         public string Execute(ICommand cmd)
         {
             try
@@ -169,28 +169,14 @@ namespace MATSys
             }
             catch (KeyNotFoundException ex)
             {
-                var res = $"[{cmd_notFound}] {cmd.Serialize()}";
-                _logger.Warn(res);
-                return res;
+                _logger.Warn(ex);
+                return ExceptionHandler.PrintMessage(cmd_notFound, ex, cmd.Serialize());
 
             }
             catch (Exception ex)
             {
-                bool check = ex is TargetException | ex is ArgumentException |
-                ex is TargetParameterCountException | ex is MethodAccessException | ex is InvalidOperationException |
-                ex is NotSupportedException;
-                if (check)
-                {
-                    //exceptio from Invoke method
-                    _logger.Warn(ex);
-                    return $"[{cmd_execError}] {ex}";
-                }
-                else
-                {
-                    //custom class error, use inner error
-                    _logger.Warn(ex.InnerException);
-                    return $"[{cmd_execError}] {ex.InnerException}";
-                }
+                _logger.Error(ex);
+                return ExceptionHandler.PrintMessage(cmd_execError, ex, cmd.Serialize());
             }
         }
         /// <summary>
@@ -208,7 +194,7 @@ namespace MATSys
             catch (Exception ex)
             {
                 _logger.Error(ex);
-                throw new Exception($"[{catchError}]", ex);
+                return ExceptionHandler.PrintMessage(cmd_execError, ex, cmdInJson);
             }
         }
         public async Task<string> ExecuteAsync(ICommand cmd)
@@ -417,22 +403,33 @@ namespace MATSys
                 return answer;
             }
             catch (KeyNotFoundException ex)
-            {
-                var res = $"[{cmd_notFound}] {commandObjectInJson}";
-                _logger.Warn(res);
-                return res;
+            {                
+                _logger.Warn(ex);
+                return ExceptionHandler.PrintMessage(cmd_notFound, ex, commandObjectInJson);
             }
             catch (JsonReaderException ex)
             {
                 _logger.Warn(ex);
-                return $"[{cmd_serDesError}] {commandObjectInJson}";
+                return ExceptionHandler.PrintMessage(cmd_serDesError, ex, commandObjectInJson);
+            }
+            catch (JsonSerializationException ex)
+            {
+                _logger.Warn(ex);
+                return ExceptionHandler.PrintMessage(cmd_serDesError, ex, commandObjectInJson);
             }
             catch (Exception ex)
             {
                 _logger.Error(ex);
-                throw ex;
+                return ExceptionHandler.PrintMessage(cmd_execError, ex, commandObjectInJson);
             }
         }
+        /// <summary>
+        /// Convert the input string into MATSys-supported json format
+        /// </summary>
+        /// <param name="input">int string</param>
+        /// <returns>MATSys command in json format</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         private string ToJsonString(string input)
         {
             var sb = new StringBuilder();

@@ -9,10 +9,19 @@ using System.Threading.Tasks;
 
 namespace MATSys.Commands
 {
+    /// <summary>
+    /// Method Invoker class
+    /// </summary>
     public abstract class MethodInvoker
     {
         public abstract object? Invoke(params object[] parameter);
 
+        /// <summary>
+        /// Create new Invoker instance 
+        /// </summary>
+        /// <param name="target">taget object</param>
+        /// <param name="mi">method information</param>
+        /// <returns>Invoker instance</returns>
         public static MethodInvoker Create(object target, MethodInfo mi)
         {
             
@@ -20,6 +29,12 @@ namespace MATSys.Commands
             return (MethodInvoker)Activator.CreateInstance(t, target, mi.Name);
 
         }
+        /// <summary>
+        /// Derive the correct Invoker instance
+        /// </summary>
+        /// <param name="mi">MethodInfo</param>
+        /// <returns>Invoker Type</returns>
+        /// <exception cref="ArgumentException"></exception>        
         private static Type GetInvokerType(MethodInfo mi)
         {
             var isNullReturn = mi.ReturnType.FullName == "System.Void";
@@ -45,7 +60,6 @@ namespace MATSys.Commands
                     else
                     {
                         return typeof(InvokerWithReturn<,>).MakeGenericType(parameters.Append(returnType).ToArray());
-
                     }
                 case 2:
                     if (isNullReturn)
@@ -55,7 +69,6 @@ namespace MATSys.Commands
                     else
                     {
                         return typeof(InvokerWithReturn<,,>).MakeGenericType(parameters.Append(returnType).ToArray());
-
                     }
                 case 3:
                     if (isNullReturn)
@@ -65,7 +78,6 @@ namespace MATSys.Commands
                     else
                     {
                         return typeof(InvokerWithReturn<,,,>).MakeGenericType(parameters.Append(returnType).ToArray());
-
                     }
                 case 4:
                     if (isNullReturn)
@@ -75,7 +87,6 @@ namespace MATSys.Commands
                     else
                     {
                         return typeof(InvokerWithReturn<,,,,>).MakeGenericType(parameters.Append(returnType).ToArray());
-
                     }
                 case 5:
                     if (isNullReturn)
@@ -85,7 +96,6 @@ namespace MATSys.Commands
                     else
                     {
                         return typeof(InvokerWithReturn<,,,,,>).MakeGenericType(parameters.Append(returnType).ToArray());
-
                     }
                 case 6:
                     if (isNullReturn)
@@ -95,7 +105,6 @@ namespace MATSys.Commands
                     else
                     {
                         return typeof(InvokerWithReturn<,,,,,,>).MakeGenericType(parameters.Append(returnType).ToArray());
-
                     }
                 case 7:
                     if (isNullReturn)
@@ -105,11 +114,10 @@ namespace MATSys.Commands
                     else
                     {
                         return typeof(InvokerWithReturn<,,,,,,,>).MakeGenericType(parameters.Append(returnType).ToArray());
-
                     }
 
                 default:
-                    throw new Exception("Parameter length is incompatible");
+                    throw new ArgumentException("Parameter length is incompatible");
             }
         }
     }
@@ -235,7 +243,6 @@ namespace MATSys.Commands
             return null;
         }
     }
-
     internal class InvokerWithReturn<Tout> : MethodInvoker
     {
         private readonly Func<Tout> _invoker;
@@ -250,7 +257,6 @@ namespace MATSys.Commands
             return _invoker.Invoke();
         }
     }
-
     internal class InvokerWithReturn<T1, Tout> : MethodInvoker
     {
         private readonly Func<T1, Tout> _invoker;
@@ -281,7 +287,6 @@ namespace MATSys.Commands
                 (T2)parameter[1]);
         }
     }
-
     internal class InvokerWithReturn<T1, T2, T3, Tout> : MethodInvoker
     {
         private readonly Func<T1, T2, T3, Tout> _invoker;
