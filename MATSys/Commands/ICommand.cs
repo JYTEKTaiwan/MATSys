@@ -13,7 +13,7 @@
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        string? ConvertResultToString(object obj);
+        string? ConvertResultToString(object? obj);
 
         /// <summary>
         /// Get the list of the parameter objects in command

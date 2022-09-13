@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CreateWithHost", "examples\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemMonitorDEMO", "examples\SystemMonitorDEMO\SystemMonitorDEMO.csproj", "{BA3A8681-969D-498C-8BE0-0C7E6F5209F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "examples\Benchmark\Benchmark.csproj", "{11AE0A50-412B-483C-937D-F260096E0DC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark", "examples\Benchmark\Benchmark.csproj", "{11AE0A50-412B-483C-937D-F260096E0DC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -334,7 +334,7 @@ Global
 		{11AE0A50-412B-483C-937D-F260096E0DC7} = {3787A6AD-AE85-4828-8476-2DE0E4E7F6CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_StartDate = 2000/1/1
 		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
+		BuildVersion_StartDate = 2000/1/1
 	EndGlobalSection
 EndGlobal

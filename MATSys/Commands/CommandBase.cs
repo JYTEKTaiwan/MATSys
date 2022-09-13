@@ -34,7 +34,7 @@ namespace MATSys.Commands
         /// </summary>
         /// <param name="obj">response from the device object</param>
         /// <returns>result string</returns>
-        public virtual string? ConvertResultToString(object obj)
+        public virtual string ConvertResultToString(object? obj)
         {
             return obj != null ? obj.ToString() : "";
         }

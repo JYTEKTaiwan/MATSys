@@ -161,7 +161,7 @@ namespace MATSys
             {
                 _logger.Trace($"Command is ready to executed {cmd.SimplifiedString()}");
                 var item = cmds[cmd.MethodName];
-                var result = item.Invoker.Invoke(cmd.GetParameters())!;
+                var result = item.Invoker.Invoke(cmd.GetParameters());
                 var response = cmd.ConvertResultToString(result)!;
                 _logger.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
                 _logger.Info($"Command [{cmd.MethodName}] is executed successfully");
@@ -170,13 +170,13 @@ namespace MATSys
             catch (KeyNotFoundException ex)
             {
                 _logger.Warn(ex);
-                return ExceptionHandler.PrintMessage(cmd_notFound, ex, cmd.Serialize());
+                return ExceptionHandler.PrintMessage(cmd_notFound, ex, cmd);
 
             }
             catch (Exception ex)
             {
                 _logger.Error(ex);
-                return ExceptionHandler.PrintMessage(cmd_execError, ex, cmd.Serialize());
+                return ExceptionHandler.PrintMessage(cmd_execError, ex, cmd);
             }
         }
         /// <summary>

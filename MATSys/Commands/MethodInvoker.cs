@@ -14,7 +14,7 @@ namespace MATSys.Commands
     /// </summary>
     public abstract class MethodInvoker
     {
-        public abstract object? Invoke(params object[] parameter);
+        public abstract object? Invoke(params object[]? parameter);
 
         /// <summary>
         /// Create new Invoker instance 
@@ -123,79 +123,79 @@ namespace MATSys.Commands
     }
     internal class Invoker : MethodInvoker
     {
-        private readonly Action _invoker;
+        private readonly Action? _invoker;
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action), target, name) as Action;
         }
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            _invoker.Invoke();
+            _invoker?.Invoke();
             return null;
         }
     }
     internal class Invoker<T1> : MethodInvoker
     {
-        private readonly Action<T1> _invoker;
+        private readonly Action<T1>? _invoker;
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1>), target, name) as Action<T1>;
         }
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            _invoker.Invoke((T1)parameter[0]);
+            _invoker?.Invoke((T1)parameter[0]);
             return null;
         }
     }
     internal class Invoker<T1, T2> : MethodInvoker
     {
-        private readonly Action<T1, T2> _invoker;
+        private readonly Action<T1, T2>? _invoker;
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2>), target, name) as Action<T1, T2>;
         }
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            _invoker.Invoke((T1)parameter[0], (T2)parameter[1]);
+            _invoker?.Invoke((T1)parameter[0], (T2)parameter[1]);
             return null;
         }
     }
     internal class Invoker<T1, T2, T3> : MethodInvoker
     {
-        private readonly Action<T1, T2, T3> _invoker;
+        private readonly Action<T1, T2, T3>? _invoker;
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3>), target, name) as Action<T1, T2, T3>;
         }
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            _invoker.Invoke((T1)parameter[0], (T2)parameter[1], (T3)parameter[2]);
+            _invoker?.Invoke((T1)parameter[0], (T2)parameter[1], (T3)parameter[2]);
             return null;
         }
     }
     internal class Invoker<T1, T2, T3, T4> : MethodInvoker
     {
-        private readonly Action<T1, T2, T3, T4> _invoker;
+        private readonly Action<T1, T2, T3, T4>? _invoker;
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4>), target, name) as Action<T1, T2, T3, T4>;
         }
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            _invoker.Invoke((T1)parameter[0], (T2)parameter[1], (T3)parameter[2], (T4)parameter[3]);
+            _invoker?.Invoke((T1)parameter[0], (T2)parameter[1], (T3)parameter[2], (T4)parameter[3]);
             return null;
         }
     }
     internal class Invoker<T1, T2, T3, T4, T5> : MethodInvoker
     {
-        private readonly Action<T1, T2, T3, T4, T5> _invoker;
+        private readonly Action<T1, T2, T3, T4, T5>? _invoker;
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5>), target, name) as Action<T1, T2, T3, T4, T5>;
         }
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            _invoker.Invoke(
+            _invoker?.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
                 (T3)parameter[2],
@@ -206,14 +206,14 @@ namespace MATSys.Commands
     }
     internal class Invoker<T1, T2, T3, T4, T5, T6> : MethodInvoker
     {
-        private readonly Action<T1, T2, T3, T4, T5, T6> _invoker;
+        private readonly Action<T1, T2, T3, T4, T5, T6>? _invoker;
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5, T6>), target, name) as Action<T1, T2, T3, T4, T5, T6>;
         }
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            _invoker.Invoke(
+            _invoker?.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
                 (T3)parameter[2],
@@ -225,14 +225,14 @@ namespace MATSys.Commands
     }
     internal class Invoker<T1, T2, T3, T4, T5, T6, T7> : MethodInvoker
     {
-        private readonly Action<T1, T2, T3, T4, T5, T6, T7> _invoker;
+        private readonly Action<T1, T2, T3, T4, T5, T6, T7>? _invoker;
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5, T6, T7>), target, name) as Action<T1, T2, T3, T4, T5, T6, T7>;
         }
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            _invoker.Invoke(
+            _invoker?.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
                 (T3)parameter[2],
@@ -245,60 +245,60 @@ namespace MATSys.Commands
     }
     internal class InvokerWithReturn<Tout> : MethodInvoker
     {
-        private readonly Func<Tout> _invoker;
+        private readonly Func<Tout>? _invoker;
 
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<Tout>), target, name) as Func<Tout>;
         }
 
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
             return _invoker.Invoke();
         }
     }
     internal class InvokerWithReturn<T1, Tout> : MethodInvoker
     {
-        private readonly Func<T1, Tout> _invoker;
+        private readonly Func<T1, Tout>? _invoker;
 
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, Tout>), target, name) as Func<T1, Tout>;
         }
 
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            return _invoker.Invoke((T1)parameter[0]);
+            return _invoker!.Invoke((T1)parameter[0]);
         }
     }
     internal class InvokerWithReturn<T1, T2, Tout> : MethodInvoker
     {
-        private readonly Func<T1, T2, Tout> _invoker;
+        private readonly Func<T1, T2, Tout>? _invoker;
 
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, Tout>), target, name) as Func<T1, T2, Tout>;
         }
 
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            return _invoker.Invoke(
+            return _invoker!.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1]);
         }
     }
     internal class InvokerWithReturn<T1, T2, T3, Tout> : MethodInvoker
     {
-        private readonly Func<T1, T2, T3, Tout> _invoker;
+        private readonly Func<T1, T2, T3, Tout>? _invoker;
 
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, Tout>), target, name) as Func<T1, T2, T3, Tout>;
         }
 
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            return _invoker.Invoke(
+            return _invoker!.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
                 (T3)parameter[2]);
@@ -306,16 +306,16 @@ namespace MATSys.Commands
     }
     internal class InvokerWithReturn<T1, T2, T3, T4, Tout> : MethodInvoker
     {
-        private readonly Func<T1, T2, T3, T4, Tout> _invoker;
+        private readonly Func<T1, T2, T3, T4, Tout>? _invoker;
 
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, Tout>), target, name) as Func<T1, T2, T3, T4, Tout>;
         }
 
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            return _invoker.Invoke(
+            return _invoker!.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
                 (T3)parameter[2],
@@ -324,16 +324,16 @@ namespace MATSys.Commands
     }
     internal class InvokerWithReturn<T1, T2, T3, T4, T5, Tout> : MethodInvoker
     {
-        private readonly Func<T1, T2, T3, T4, T5, Tout> _invoker;
+        private readonly Func<T1, T2, T3, T4, T5, Tout>? _invoker;
 
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, Tout>), target, name) as Func<T1, T2, T3, T4, T5, Tout>;
         }
 
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            return _invoker.Invoke(
+            return _invoker!.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
                 (T3)parameter[2],
@@ -343,16 +343,16 @@ namespace MATSys.Commands
     }
     internal class InvokerWithReturn<T1, T2, T3, T4, T5, T6, Tout> : MethodInvoker
     {
-        private readonly Func<T1, T2, T3, T4, T5, T6, Tout> _invoker;
+        private readonly Func<T1, T2, T3, T4, T5, T6, Tout>? _invoker;
 
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, T6, Tout>), target, name) as Func<T1, T2, T3, T4, T5, T6, Tout>;
         }
 
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            return _invoker.Invoke(
+            return _invoker!.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
                 (T3)parameter[2],
@@ -363,16 +363,16 @@ namespace MATSys.Commands
     }
     internal class InvokerWithReturn<T1, T2, T3, T4, T5, T6, T7, Tout> : MethodInvoker
     {
-        private readonly Func<T1, T2, T3, T4, T5, T6, T7, Tout> _invoker;
+        private readonly Func<T1, T2, T3, T4, T5, T6, T7, Tout>? _invoker;
 
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, T6, T7, Tout>), target, name) as Func<T1, T2, T3, T4, T5, T6, T7, Tout>;
         }
 
-        public override object? Invoke(params object[] parameter)
+        public override object? Invoke(params object[]? parameter)
         {
-            return _invoker.Invoke(
+            return _invoker!.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
                 (T3)parameter[2],

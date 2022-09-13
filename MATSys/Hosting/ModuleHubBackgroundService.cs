@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using NLog;
+using System;
 using System.Xml.Linq;
 
 namespace MATSys
@@ -17,7 +18,16 @@ namespace MATSys
         private readonly ITransceiver _transceiver;
         private readonly AutoTestScheduler _scheduler;
         private readonly ILogger _logger;
+        private readonly bool _scriptMode = false;
+
         private CancellationTokenSource cts=new CancellationTokenSource();
+
+        
+        public delegate void ReadyToExecuteEvent(string module, string command);
+        public event ReadyToExecuteEvent OnReadyToExecute;
+        public delegate void ExecuteCompleteEvent(TestItem item, string result);
+        public event ExecuteCompleteEvent OnExecuteComplete;
+
         public ModuleCollection Modules { get; } = new ModuleCollection();
         public ModuleHubBackgroundService(IServiceProvider services)
         {
@@ -25,6 +35,7 @@ namespace MATSys
             {                
                 _logger = LogManager.GetCurrentClassLogger();
                 _config = services.GetRequiredService<IConfiguration>().GetSection("MATSys");
+                _scriptMode = _config.GetValue<bool>("ScriptMode");
                 _moduleFactory = services.GetRequiredService<IModuleFactory>();
                 foreach (var item in _config.GetSection("Modules").GetChildren())
                 {
@@ -60,12 +71,20 @@ namespace MATSys
 
         public void RunTest(int iteration)
         {
-            cts = new CancellationTokenSource();
-            Task.Run(() => AutoTesting(iteration,cts.Token));
+            if (_scriptMode)
+            {
+                cts = new CancellationTokenSource();
+                Task.Run(() => AutoTesting(iteration, cts.Token));
+            }
+            
         }
         public void StopTest()
         {
-            cts.Cancel();
+            if (_scriptMode)
+            {
+                cts.Cancel();
+
+            }
         }
         private void AutoTesting(int iteration,CancellationToken token)
         {
@@ -117,7 +136,9 @@ namespace MATSys
                     if (SpinWait.SpinUntil(() => _scheduler.IsAvailable, 5))
                     {
                         var currentTestItem = await _scheduler.Dequeue(stoppingToken);
+                        OnReadyToExecute.Invoke(currentTestItem.ModuleName, currentTestItem.Command);
                         var response=ExecuteCommand(currentTestItem.ModuleName, currentTestItem.Command);
+                        OnExecuteComplete.Invoke(currentTestItem, response);
                     }
                 }
                 Cleanup();

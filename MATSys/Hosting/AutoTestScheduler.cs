@@ -57,7 +57,7 @@ namespace MATSys.Hosting
 
     }
 
-    internal struct TestItem
+    public struct TestItem
     {
         public string ModuleName { get; set; }
         public string Command { get; set; }
