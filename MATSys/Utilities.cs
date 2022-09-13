@@ -1,3 +1,4 @@
+using MATSys.Commands;
 using System.Reflection;
 
 #if NET6_0_OR_GREATER
@@ -32,7 +33,9 @@ public class DependencyLoader
 }
 
 #if NET6_0_OR_GREATER
-
+/// <summary>
+/// Plugin class for .net6
+/// </summary>
 internal class PluginLoader : AssemblyLoadContext
 {
     private AssemblyDependencyResolver resolver;
@@ -63,5 +66,18 @@ internal class PluginLoader : AssemblyLoadContext
         return IntPtr.Zero;
     }
 }
-
 #endif
+
+internal class ExceptionHandler
+{
+    public static string PrintMessage(string prefix, Exception ex, string commandString)
+    {
+        return $"[{prefix}] {ex.Message} - {commandString}";
+    }
+    public static string PrintMessage(string prefix, Exception ex, ICommand command)
+    {
+        return $"[{prefix}] {ex.Message} - {command.Serialize()}";
+    }
+
+}
+
