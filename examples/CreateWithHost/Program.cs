@@ -15,6 +15,7 @@ IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
 host.RunAsync().Wait(1000);;
 
 var dev = host.Services.GetMATSysHandle();
+
 dev.Modules["Dev1"].OnDataReady += IModule_OnDataReady;
 
 dev.RunTest(1);
