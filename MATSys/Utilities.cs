@@ -15,14 +15,18 @@ public class DependencyLoader
         foreach (var item in plugins)
         {
             var p = Path.GetFullPath(item);
+            if (File.Exists(p))
+            {
 #if NET6_0_OR_GREATER
-            var loader = new PluginLoader(p);
-            loader.LoadFromAssemblyPath(p);
+                var loader = new PluginLoader(p);
+                loader.LoadFromAssemblyPath(p);
 
 #endif
 #if NETSTANDARD2_0_OR_GREATER
  Assembly.LoadFile(p);
 #endif
+            }
+
         }
     }
 }
