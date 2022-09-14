@@ -24,9 +24,9 @@ namespace MATSys
 
 
         public delegate void ReadyToExecuteEvent(string module, string command);
-        public event ReadyToExecuteEvent OnReadyToExecute;
+        public event ReadyToExecuteEvent? OnReadyToExecute;
         public delegate void ExecuteCompleteEvent(TestItem item, string result);
-        public event ExecuteCompleteEvent OnExecuteComplete;
+        public event ExecuteCompleteEvent? OnExecuteComplete;
 
         public ModuleCollection Modules { get; } = new ModuleCollection();
         public ModuleHubBackgroundService(IServiceProvider services)
