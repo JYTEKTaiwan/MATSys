@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,21 +20,40 @@ namespace MATSys.Hosting
             if (config.GetSection("MATSys:Scripts").Exists())
             {
                 script = config.GetSection("MATSys:Scripts").Get<TestScript>();
-                testItems.AddRange(TestScript.GetTestItems(script.PreTest));
+                testItems.AddRange(TestScript.GetTestItems(script.Setup));
                 testItems.AddRange(TestScript.GetTestItems(script.Test));
-                testItems.AddRange(TestScript.GetTestItems(script.Result));
-                testItems.AddRange(TestScript.GetTestItems(script.PostTest));
+                testItems.AddRange(TestScript.GetTestItems(script.Teardown));
             }
 
         }
-        public  void SingleTest()
-        {
-            foreach (var item in testItems)
+        public void RunSetup()
+        {    
+            //setup
+            foreach (var item in TestScript.GetTestItems(script.Setup))
             {
                 _queue.Writer.WriteAsync(item).AsTask().Wait(100);
+            }
 
+        }
+        public void RunTeardown()
+        {
+            //teardown
+            foreach (var item in TestScript.GetTestItems(script.Teardown))
+            {
+                _queue.Writer.WriteAsync(item).AsTask().Wait(100);
             }
         }
+
+        public void RunTestItem()
+        {
+            //test
+            foreach (var item in TestScript.GetTestItems(script.Test))
+            {
+                _queue.Writer.WriteAsync(item).AsTask().Wait(100);
+            }
+        }
+
+
         public async Task<TestItem> Dequeue(CancellationToken token)
         {
             return await _queue.Reader.ReadAsync(token);
@@ -42,10 +62,9 @@ namespace MATSys.Hosting
     }
     internal class TestScript
     {
-        public string[] PreTest { get; set; }
+        public string[] Setup { get; set; }
         public string[] Test { get; set; }
-        public string[] Result { get; set; }
-        public string[] PostTest { get; set; }
+        public string[] Teardown { get; set; }
         public static IEnumerable<TestItem> GetTestItems(string[] scripts)
         {
             foreach (var item in scripts)

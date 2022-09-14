@@ -19,7 +19,7 @@ var dev = host.Services.GetMATSysHandle();
 dev.Modules["Dev1"].OnDataReady += IModule_OnDataReady;
 dev.OnReadyToExecute += (mod, cmd) => { Console.WriteLine($"{mod}*{cmd}"); };
 dev.OnExecuteComplete += (item, res) => { Console.WriteLine($"{res}"); };
-dev.RunTest(1);
+dev.RunTest(3);
 
 void IModule_OnDataReady(string jsonString)
 {
