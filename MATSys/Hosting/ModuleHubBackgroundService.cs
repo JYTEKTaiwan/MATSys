@@ -20,9 +20,9 @@ namespace MATSys
         private readonly ILogger _logger;
         private readonly bool _scriptMode = false;
 
-        private CancellationTokenSource cts=new CancellationTokenSource();
+        private CancellationTokenSource cts = new CancellationTokenSource();
 
-        
+
         public delegate void ReadyToExecuteEvent(string module, string command);
         public event ReadyToExecuteEvent OnReadyToExecute;
         public delegate void ExecuteCompleteEvent(TestItem item, string result);
@@ -32,18 +32,18 @@ namespace MATSys
         public ModuleHubBackgroundService(IServiceProvider services)
         {
             try
-            {                
+            {
                 _logger = LogManager.GetCurrentClassLogger();
                 _config = services.GetRequiredService<IConfiguration>().GetSection("MATSys");
                 _scriptMode = _config.GetValue<bool>("ScriptMode");
                 _moduleFactory = services.GetRequiredService<IModuleFactory>();
                 foreach (var item in _config.GetSection("Modules").GetChildren())
                 {
-                    Modules.Add(item.GetValue<string>("Name"),_moduleFactory.CreateModule(item));
-                }                
+                    Modules.Add(item.GetValue<string>("Name"), _moduleFactory.CreateModule(item));
+                }
                 _transceiver = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(_config.GetSection("Transceiver"));
                 _transceiver.OnNewRequest += _transceiver_OnNewRequest;
-                _scheduler=services.GetRequiredService<AutoTestScheduler>();
+                _scheduler = services.GetRequiredService<AutoTestScheduler>();
             }
             catch (Exception ex)
             {
@@ -60,13 +60,26 @@ namespace MATSys
 
         public string ExecuteCommand(string name, ICommand cmd)
         {
-            //return ExecuteAsync(name, cmd).Result;
-            return Modules[name].Execute(cmd);
+            if (_scriptMode)
+            {
+                return "[Warn] Service is in script mode";
+            }
+            else
+            {
+                return Modules[name].Execute(cmd);
+            }
+
         }
         public string ExecuteCommand(string name, string cmd)
         {
-            //return ExecuteAsync(name, cmd).Result;
-            return Modules[name].Execute(cmd);
+            if (_scriptMode)
+            {
+                return "[Warn] Service is in script mode";
+            }
+            else
+            {
+                return Modules[name].Execute(cmd);
+            }
         }
 
         public void RunTest(int iteration)
@@ -76,7 +89,7 @@ namespace MATSys
                 cts = new CancellationTokenSource();
                 Task.Run(() => AutoTesting(iteration, cts.Token));
             }
-            
+
         }
         public void StopTest()
         {
@@ -86,14 +99,14 @@ namespace MATSys
 
             }
         }
-        private void AutoTesting(int iteration,CancellationToken token)
+        private void AutoTesting(int iteration, CancellationToken token)
         {
             _scheduler.RunSetup();
             _scheduler.RunTestItem();
             int cnt = 1;
             while (!cts.IsCancellationRequested)
             {
-                if (cnt== iteration)
+                if (cnt == iteration)
                 {
                     cts.Cancel();
                 }
@@ -106,7 +119,7 @@ namespace MATSys
                 {
                     SpinWait.SpinUntil(() => false, 5);
                 }
-                
+
             }
             _scheduler.RunTeardown();
 
@@ -119,7 +132,6 @@ namespace MATSys
             }
 
         }
-
         private void Cleanup()
         {
             foreach (var item in Modules.Values)
@@ -130,17 +142,17 @@ namespace MATSys
         }
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            return Task.Run(async() =>
+            return Task.Run(async () =>
             {
                 Setup(stoppingToken);
                 while (!stoppingToken.IsCancellationRequested)
                 {
                     if (SpinWait.SpinUntil(() => _scheduler.IsAvailable, 5))
                     {
-                        var currentTestItem = await _scheduler.Dequeue(stoppingToken);
-                        OnReadyToExecute.Invoke(currentTestItem.ModuleName, currentTestItem.Command);
-                        var response=ExecuteCommand(currentTestItem.ModuleName, currentTestItem.Command);
-                        OnExecuteComplete.Invoke(currentTestItem, response);
+                        var testItem = await _scheduler.Dequeue(stoppingToken);
+                        OnReadyToExecute.Invoke(testItem.ModuleName, testItem.Command);
+                        var response = Modules[testItem.ModuleName].Execute(testItem.Command);
+                        OnExecuteComplete.Invoke(testItem, response);
                     }
                 }
                 Cleanup();
@@ -148,7 +160,7 @@ namespace MATSys
         }
     }
 
-    public sealed class ModuleCollection : Dictionary<string,IModule>
+    public sealed class ModuleCollection : Dictionary<string, IModule>
     {
         public ModuleCollection() : base()
         {
