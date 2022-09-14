@@ -38,8 +38,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="config\**" />
 	  <Compile Remove="Modules\**" />
+	  <EmbeddedResource Remove="config\**" />
 	  <EmbeddedResource Remove="Modules\**" />
+	  <None Remove="config\**" />
 	  <None Remove="Modules\**" />
 	</ItemGroup>
 
@@ -68,12 +71,6 @@
 		</PackageReference>
 		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
 		<PackageReference Include="System.Threading.Channels" Version="6.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="config\appsettings.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
 	</ItemGroup>
 
 </Project>

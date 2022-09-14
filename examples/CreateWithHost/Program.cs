@@ -17,7 +17,8 @@ host.RunAsync().Wait(1000);;
 var dev = host.Services.GetMATSysHandle();
 
 dev.Modules["Dev1"].OnDataReady += IModule_OnDataReady;
-
+dev.OnReadyToExecute += (mod, cmd) => { Console.WriteLine($"{mod}*{cmd}"); };
+dev.OnExecuteComplete += (item, res) => { Console.WriteLine($"{res}"); };
 dev.RunTest(1);
 
 void IModule_OnDataReady(string jsonString)
@@ -59,55 +60,12 @@ public class TestDevice : ModuleBase
         public double Number { get; set; } = 0.0;
     }
 
-    [MATSysCommand]
-    public string Test(Data a)
-    {
-        var res = a.Date + "---" + a.Number.ToString();
-        Base.Recorder.Write(a);
-        Base.Notifier.Publish(a);
-        return res;
-    }
-
     [MATSysCommandAttribute ("StringMethod")]
     public string Method(string c)
     {
-        Base.Notifier.Publish(c);
 
         return c;
     }
 }
 
-public class TestCommmand : CommandBase
-{
-    public TestCommmand(string name) : base(name)
-    {
-    }
 
-    public override string? ConvertResultToString(object obj)
-    {
-        return DateTime.Now.ToString()+base.ConvertResultToString(obj);
-    }
-
-    public override object[]? GetParameters()
-    {
-        return new object[0];
-    }
-
-    public override string Serialize()
-    {
-        var sb = new StringBuilder();
-        sb.Append(MethodName);
-        sb.Append("=");
-        return sb.ToString();
-    }
-}
-
-public class CSVRecorderConfiguration
-{
-    public bool WaitForComplete { get; set; } = true;
-    public int QueueSize { get; set; } = 2000;
-    public int WaitForCompleteTimeout { get; set; } = 5000;
-    public static CSVRecorderConfiguration Default = new CSVRecorderConfiguration();
-
-    public BoundedChannelFullMode BoundedChannelFullMode { get; set; } = BoundedChannelFullMode.DropOldest;
-}

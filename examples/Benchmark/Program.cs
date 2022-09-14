@@ -15,14 +15,12 @@ IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
 host.RunAsync().Wait(1000); ;
 
 var dev = host.Services.GetMATSysHandle();
-
 var iteration = 1000000;
 Console.WriteLine($"Send same command for {iteration} times");
-dev.ExecuteCommand("Dev1", $"StringMethod=\"tt\"");
 
+dev.ExecuteCommand("Dev1", $"StringMethod=\"tt\"");
 Stopwatch stopwatch = new Stopwatch();
 stopwatch.Restart();
-
 for (int i = 0; i < iteration; i++)
 {
     dev.ExecuteCommand("Dev1", $"StringMethod=\"{i}\"");
@@ -32,7 +30,6 @@ Console.WriteLine($"Total {stopwatch.Elapsed.TotalSeconds} seconds (Average:{sto
 
 
 Console.WriteLine("PRESS ANY KEY TO EXIT");
-
 Console.ReadKey();
 host.StopAsync();
 public class TestDevice : ModuleBase
