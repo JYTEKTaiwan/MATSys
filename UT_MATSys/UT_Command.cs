@@ -21,7 +21,7 @@ public class UT_Command
     {
         var cmd = CommandBase.Create("Test", 1, 2.0);
         var str = cmd.Serialize();
-        var att=new MATSysCommandAttribute Attribute("Test",typeof(Command<int, double>));
+        var att=new MATSysCommandAttribute("Test",typeof(Command<int, double>));
         var res = att.Deserialize(str) as Command<int, double>;
         Assert.IsTrue(res!.Parameter.Item1 == 1 && res.Parameter.Item2 == 2.0);
     }
