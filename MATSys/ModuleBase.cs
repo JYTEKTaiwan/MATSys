@@ -54,7 +54,7 @@ namespace MATSys
         /// <param name="notifier">notifier instance</param>
         /// <param name="recorder">recorder instance</param>
         /// <param name="aliasName">alias name</param>
-        public ModuleBase(object configuration, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "")
+        public ModuleBase(object? configuration=null, ITransceiver? transceiver=null, INotifier? notifier=null, IRecorder? recorder=null, string aliasName = "")
         {
             Name = string.IsNullOrEmpty(aliasName) ? $"{GetType().Name}_{GetHashCode().ToString("X2")}" : aliasName;
 
@@ -289,7 +289,7 @@ namespace MATSys
         /// </summary>
         /// <param name="option">parameter object</param>
         /// <returns>configuration instance (null if <paramref name="option"/> is null</returns>
-        private void LoadAndSetup(object option)
+        private void LoadAndSetup(object? option)
         {
             if (option != null)
             {
@@ -306,7 +306,7 @@ namespace MATSys
         /// </summary>
         /// <param name="recorder">recorder instance</param>
         /// <returns>IRecorder instance (return EmptyRecorder if <paramref name="recorder"/> is null</returns>
-        private IRecorder InjectRecorder(IRecorder recorder)
+        private IRecorder InjectRecorder(IRecorder? recorder)
         {
             if (recorder == null)
             {
@@ -326,7 +326,7 @@ namespace MATSys
         /// </summary>
         /// <param name="transceiver">ITransceiver instance</param>
         /// <returns>ITransceiver instance (return EmptyTransceiver if <paramref name="transceiver"/> is null</returns>
-        private ITransceiver InjectTransceiver(ITransceiver transceiver)
+        private ITransceiver InjectTransceiver(ITransceiver? transceiver)
         {
             if (transceiver == null)
             {
@@ -349,7 +349,7 @@ namespace MATSys
         /// </summary>
         /// <param name="notifier">INotifier instance</param>
         /// <returns>INotifier instance (return EmptyNotifier if <paramref name="notifier"/> is null</returns>
-        private INotifier InjectNotifier(INotifier notifier)
+        private INotifier InjectNotifier(INotifier? notifier)
         {
             if (notifier == null)
             {
@@ -395,9 +395,8 @@ namespace MATSys
                 var answer = "";
                 _logger.Trace($"OnDataReady event fired: {commandObjectInJson}");
                 var parsedName = commandObjectInJson.Split('=')[0];
-                var cmdStr = ToJsonString(commandObjectInJson);
                 var item = cmds[parsedName];
-                var cmd = CommandBase.Deserialize(cmdStr, item.CommandType);
+                var cmd = CommandBase.Deserialize(commandObjectInJson, item.CommandType);
                 _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
                 answer = Execute(cmd);
                 return answer;
@@ -423,41 +422,7 @@ namespace MATSys
                 return ExceptionHandler.PrintMessage(cmd_execError, ex, commandObjectInJson);
             }
         }
-        /// <summary>
-        /// Convert the input string into MATSys-supported json format
-        /// </summary>
-        /// <param name="input">int string</param>
-        /// <returns>MATSys command in json format</returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        private string ToJsonString(string input)
-        {
-            var sb = new StringBuilder();
-            var matches = regex.Matches(input);
-            var cnt = matches.Count;
-            //Prepare header
-            sb.Append("{\"MethodName\":\"");
-            sb.Append(matches[0].Value);
-            sb.Append("\"");
-            //Prepare Parameter
-            if (cnt != 1)
-            {
-                //with parameter, continue
-                sb.Append(",\"Parameter\":{");
-                for (int i = 1; i < cnt; i++)
-                {
-                    if (i != 1)
-                    {
-                        sb.Append(",");
-                    }
-                    sb.Append($"\"Item{i}\":{matches[i].Value}");
-                }
-                sb.Append("}");
-            }
-            sb.Append("}");
-            return sb.ToString();
-        }
-        #endregion
+         #endregion
     }
 
 }

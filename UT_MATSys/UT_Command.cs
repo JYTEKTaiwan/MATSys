@@ -20,9 +20,9 @@ public class UT_Command
     public void SerDesTest()
     {
         var cmd = CommandBase.Create("Test", 1, 2.0);
-        var str = cmd.Serialize();
+        var str=CommandBase.ConvertToJsonFormat(cmd.Serialize()).jsonString;
         var att=new MATSysCommandAttribute("Test",typeof(Command<int, double>));
-        var res = att.Deserialize(str) as Command<int, double>;
+        var res = CommandBase.Deserialize(str,att.CommandType) as Command<int, double>;
         Assert.IsTrue(res!.Parameter.Item1 == 1 && res.Parameter.Item2 == 2.0);
     }
 
@@ -30,9 +30,9 @@ public class UT_Command
     public void SerDesTestWithCustomObject()
     {
         var cmd = CommandBase.Create("Test", 1, new Test(20));
-        var str = cmd.Serialize();
-        var att=new MATSysCommandAttribute Attribute("Test",typeof(Command<int, Test>));
-        var res = att.Deserialize(str) as Command<int, Test>;
+        var str=CommandBase.ConvertToJsonFormat(cmd.Serialize()).jsonString;
+        var att=new MATSysCommandAttribute("Test",typeof(Command<int, Test>));
+        var res = CommandBase.Deserialize(str,att.CommandType) as Command<int, Test>;
         Assert.IsTrue(res!.Parameter.Item1 == 1 && res.Parameter.Item2.A == 20);
     }
 

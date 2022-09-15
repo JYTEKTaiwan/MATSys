@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System.Data;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
 
 namespace MATSys.Commands
@@ -12,6 +13,7 @@ namespace MATSys.Commands
     /// </summary>
     public abstract class CommandBase : ICommand
     {
+        private static Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}");
         internal const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
 
         /// <summary>
@@ -44,7 +46,7 @@ namespace MATSys.Commands
         /// </summary>
         /// <returns></returns>
         public virtual string SimplifiedString()
-        {            
+        {
             return Serialize();
         }
 
@@ -64,13 +66,45 @@ namespace MATSys.Commands
         {
             try
             {
-                return JsonConvert.DeserializeObject(str, t) as ICommand;
+                var cmdInfo = ConvertToJsonFormat(str);
+                if (cmdInfo.parameterCount != t.GenericTypeArguments.Length)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                return JsonConvert.DeserializeObject(cmdInfo.jsonString, t) as ICommand;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
 
+        }
+        public static (string jsonString, int parameterCount) ConvertToJsonFormat(string input)
+        {
+            var sb = new StringBuilder();
+            var matches = regex.Matches(input);
+            var cnt = matches.Count;
+            //Prepare header
+            sb.Append("{\"MethodName\":\"");
+            sb.Append(matches[0].Value);
+            sb.Append("\"");
+            //Prepare Parameter
+            if (cnt != 1)
+            {
+                //with parameter, continue
+                sb.Append(",\"Parameter\":{");
+                for (int i = 1; i < cnt; i++)
+                {
+                    if (i != 1)
+                    {
+                        sb.Append(",");
+                    }
+                    sb.Append($"\"Item{i}\":{matches[i].Value}");
+                }
+                sb.Append("}");
+            }
+            sb.Append("}");
+            return (sb.ToString(), matches.Count - 1);
         }
 
         /// <summary>
@@ -83,7 +117,7 @@ namespace MATSys.Commands
             return new Command(methodName);
         }
         public abstract string Serialize();
-        
+
         /// <summary>
         /// Create command object with 1 parameter assigned
         /// </summary>
@@ -405,7 +439,7 @@ namespace MATSys.Commands
         }
         public override string Serialize()
         {
-                        var sb = new StringBuilder();
+            var sb = new StringBuilder();
             sb.Append(MethodName);
             sb.Append("=");
             sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
