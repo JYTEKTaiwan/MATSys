@@ -1,10 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MATSys;
 using MATSys.Factories;
+using MATSys.Plugins;
 using SystemMonitorDEMO.Modules;
 Console.WriteLine("Hello, World!");
 
-var mon = ModuleFactory.CreateNew(typeof(SystemMonitor), null);
+var rec = RecorderFactory.CreateNew<CSVRecorder>(CSVRecorderConfiguration.Default);
+var mon = ModuleFactory.CreateNew(typeof(SystemMonitor), null,recorder: rec);
 //var mon = new SystemMonitor(null, null, null, new TextRecorder()) as IModule;
 mon.StartService(new CancellationToken());
 mon.Notifier.OnNotify += (string dataInJson) => Console.WriteLine(dataInJson);

@@ -1,6 +1,7 @@
 ﻿using MATSys;
 using MATSys.Commands;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using NLog.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,9 @@ namespace SystemMonitorDEMO.Modules
             {
                 while (!cts_pf.IsCancellationRequested)
                 {
-                    await _ch.Writer.WriteAsync(new PerformanceData(pf_processor.NextValue(), 1-pf_memory.NextValue()/ _totalRAM));
+                    var data = new PerformanceData(pf_processor.NextValue(), 1 - pf_memory.NextValue() / _totalRAM);
+                    await _ch.Writer.WriteAsync(data);
+                    Base.Recorder.Write(data);
                     await Task.Delay(250);                    
                 }
             });
@@ -70,7 +73,6 @@ namespace SystemMonitorDEMO.Modules
         {
             var str = Environment.MachineName;
             Base.Notifier.Publish(str);
-            Base.Recorder.Write(str);
             return str;
         }
 
@@ -78,7 +80,6 @@ namespace SystemMonitorDEMO.Modules
         public string GetName()
         {
             Base.Notifier.Publish(Name);
-            Base.Recorder.Write(Name);
             return Name;
         }
 
@@ -86,6 +87,7 @@ namespace SystemMonitorDEMO.Modules
         public string GetLatestData()
         {
              var result=_ch.Reader.ReadAsync().AsTask().Result;
+            
             return $"{result.CPU.ToString("F6")}\t{result.Memory.ToString("F6")}";
         }
 
