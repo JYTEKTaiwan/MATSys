@@ -27,7 +27,7 @@ namespace MATSys.Hosting
 
         }
         public void RunSetup()
-        {    
+        {
             //setup
             foreach (var item in TestScript.GetTestItems(script.Setup))
             {
@@ -62,16 +62,20 @@ namespace MATSys.Hosting
     }
     internal class TestScript
     {
-        public string[] Setup { get; set; }
-        public string[] Test { get; set; }
-        public string[] Teardown { get; set; }
-        public static IEnumerable<TestItem> GetTestItems(string[] scripts)
+        public string[]? Setup { get; set; }
+        public string[]? Test { get; set; }
+        public string[]? Teardown { get; set; }
+        public static IEnumerable<TestItem> GetTestItems(string[]? scripts)
         {
-            foreach (var item in scripts)
+            if (scripts != null)
             {
-                var pat = item.Split(':');
-                yield return new TestItem(pat[0], pat[1]);
+                foreach (var item in scripts)
+                {
+                    var pat = item.Split(':');
+                    yield return new TestItem(pat[0], pat[1]);
+                }
             }
+
         }
 
     }
@@ -86,7 +90,7 @@ namespace MATSys.Hosting
             Command = cmd;
         }
         public static TestItem Empty => new TestItem("", "");
-        
+
     }
-    
+
 }

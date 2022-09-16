@@ -38,7 +38,15 @@ namespace MATSys.Commands
         /// <returns>result string</returns>
         public virtual string ConvertResultToString(object? obj)
         {
-            return obj != null ? obj.ToString() : "";
+            if  (obj==null)
+            {
+                return "";
+            }
+            else
+            {
+                var ret=obj.ToString();
+                return string.IsNullOrEmpty(ret)?"":ret;
+            }
         }
 
         /// <summary>
@@ -71,7 +79,13 @@ namespace MATSys.Commands
                 {
                     throw new ArgumentOutOfRangeException();
                 }
-                return JsonConvert.DeserializeObject(cmdInfo.jsonString, t) as ICommand;
+                var cmd = JsonConvert.DeserializeObject(cmdInfo.jsonString, t) as ICommand;
+                if(cmd ==null)
+                {
+                    throw new NullReferenceException("command is null");
+                }
+                return cmd;
+
             }
             catch (Exception ex)
             {

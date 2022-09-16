@@ -21,7 +21,7 @@ namespace MATSys.Commands
         /// </summary>
         public Type? CommandType { get; set; }
         
-        public MethodInvoker Invoker { get; set; }
+        public MethodInvoker? Invoker { get; set; }
 
         /// <summary>
         /// Constructor

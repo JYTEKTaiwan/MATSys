@@ -24,9 +24,24 @@ namespace MATSys.Commands
         /// <returns>Invoker instance</returns>
         public static MethodInvoker Create(object target, MethodInfo mi)
         {
-            
-            var t = GetInvokerType(mi);
-            return (MethodInvoker)Activator.CreateInstance(t, target, mi.Name);
+            try
+            {
+                var t = GetInvokerType(mi);
+                var obj = Activator.CreateInstance(t, target, mi.Name);
+                if (obj == null)
+                {
+                    throw new NullReferenceException();
+                }
+                else
+                {
+                    return (MethodInvoker)obj;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
 
         }
         /// <summary>
@@ -39,8 +54,7 @@ namespace MATSys.Commands
         {
             var isNullReturn = mi.ReturnType.FullName == "System.Void";
             var parameters = mi.GetParameters().Select(x => x.ParameterType).ToArray();
-            var returnType = mi.ReturnType;
-            Type t;
+            var returnType = mi.ReturnType;            
             switch (parameters.Length)
             {
                 case 0:
@@ -130,6 +144,10 @@ namespace MATSys.Commands
         }
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null)
+            {
+                throw new ArgumentOutOfRangeException("parameter is null");
+            }
             _invoker?.Invoke();
             return null;
         }
@@ -143,8 +161,13 @@ namespace MATSys.Commands
         }
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null || parameter.Length < 1)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
             _invoker?.Invoke((T1)parameter[0]);
             return null;
+
         }
     }
     internal class Invoker<T1, T2> : MethodInvoker
@@ -156,6 +179,10 @@ namespace MATSys.Commands
         }
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null || parameter.Length < 2)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
             _invoker?.Invoke((T1)parameter[0], (T2)parameter[1]);
             return null;
         }
@@ -169,6 +196,10 @@ namespace MATSys.Commands
         }
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null || parameter.Length < 3)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
             _invoker?.Invoke((T1)parameter[0], (T2)parameter[1], (T3)parameter[2]);
             return null;
         }
@@ -182,6 +213,10 @@ namespace MATSys.Commands
         }
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null || parameter.Length < 4)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
             _invoker?.Invoke((T1)parameter[0], (T2)parameter[1], (T3)parameter[2], (T4)parameter[3]);
             return null;
         }
@@ -195,6 +230,10 @@ namespace MATSys.Commands
         }
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null || parameter.Length < 5)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
             _invoker?.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
@@ -213,6 +252,10 @@ namespace MATSys.Commands
         }
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null || parameter.Length < 6)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
             _invoker?.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
@@ -232,6 +275,10 @@ namespace MATSys.Commands
         }
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null || parameter.Length < 7)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
             _invoker?.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
@@ -254,6 +301,14 @@ namespace MATSys.Commands
 
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null)
+            {
+                throw new ArgumentOutOfRangeException("parameter is null");
+            }
+            if (_invoker == null)
+            {
+                throw new NullReferenceException("invoker is null");
+            }
             return _invoker.Invoke();
         }
     }
@@ -268,7 +323,15 @@ namespace MATSys.Commands
 
         public override object? Invoke(params object[]? parameter)
         {
-            return _invoker!.Invoke((T1)parameter[0]);
+            if (parameter == null || parameter.Length < 1)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
+            if (_invoker == null)
+            {
+                throw new NullReferenceException("invoker is null");
+            }
+            return _invoker.Invoke((T1)parameter[0]);
         }
     }
     internal class InvokerWithReturn<T1, T2, Tout> : MethodInvoker
@@ -282,7 +345,15 @@ namespace MATSys.Commands
 
         public override object? Invoke(params object[]? parameter)
         {
-            return _invoker!.Invoke(
+            if (parameter == null || parameter.Length < 2)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
+            if (_invoker == null)
+            {
+                throw new NullReferenceException("invoker is null");
+            }
+            return _invoker.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1]);
         }
@@ -298,6 +369,14 @@ namespace MATSys.Commands
 
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null || parameter.Length < 3)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
+            if (_invoker == null)
+            {
+                throw new NullReferenceException("invoker is null");
+            }
             return _invoker!.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
@@ -315,6 +394,14 @@ namespace MATSys.Commands
 
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null || parameter.Length < 4)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
+            if (_invoker == null)
+            {
+                throw new NullReferenceException("invoker is null");
+            }
             return _invoker!.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
@@ -333,6 +420,14 @@ namespace MATSys.Commands
 
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null || parameter.Length < 5)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
+            if (_invoker == null)
+            {
+                throw new NullReferenceException("invoker is null");
+            }
             return _invoker!.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
@@ -352,6 +447,14 @@ namespace MATSys.Commands
 
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null || parameter.Length < 6)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
+            if (_invoker == null)
+            {
+                throw new NullReferenceException("invoker is null");
+            }
             return _invoker!.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],
@@ -372,6 +475,14 @@ namespace MATSys.Commands
 
         public override object? Invoke(params object[]? parameter)
         {
+            if (parameter == null || parameter.Length < 7)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
+            if (_invoker == null)
+            {
+                throw new NullReferenceException("invoker is null");
+            }
             return _invoker!.Invoke(
                 (T1)parameter[0],
                 (T2)parameter[1],

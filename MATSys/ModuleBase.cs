@@ -54,7 +54,7 @@ namespace MATSys
         /// <param name="notifier">notifier instance</param>
         /// <param name="recorder">recorder instance</param>
         /// <param name="aliasName">alias name</param>
-        public ModuleBase(object? configuration=null, ITransceiver? transceiver=null, INotifier? notifier=null, IRecorder? recorder=null, string aliasName = "")
+        public ModuleBase(object? configuration = null, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")
         {
             Name = string.IsNullOrEmpty(aliasName) ? $"{GetType().Name}_{GetHashCode().ToString("X2")}" : aliasName;
 
@@ -71,9 +71,9 @@ namespace MATSys
         private Dictionary<string, MATSysCommandAttribute> ListMATSysCommands()
         {
             var mis = GetSupportedMethods();
-            var atts=mis.Select(x =>
+            var atts = mis.Select(x =>
             {
-                var cmd = x.GetCustomAttribute<MATSysCommandAttribute>();
+                var cmd = x.GetCustomAttribute<MATSysCommandAttribute>()!;
                 //configure CommandType property
                 if (cmd.CommandType == null)
                 {
@@ -160,8 +160,12 @@ namespace MATSys
             try
             {
                 _logger.Trace($"Command is ready to executed {cmd.SimplifiedString()}");
-                var item = cmds[cmd.MethodName];
-                var result = item.Invoker.Invoke(cmd.GetParameters());
+                var invoker = cmds[cmd.MethodName].Invoker;
+                if  (invoker==null)
+                {
+                    throw new NullReferenceException("invoker is null");
+                }
+                var result = invoker.Invoke(cmd.GetParameters());
                 var response = cmd.ConvertResultToString(result)!;
                 _logger.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
                 _logger.Info($"Command [{cmd.MethodName}] is executed successfully");
@@ -190,27 +194,14 @@ namespace MATSys
             {
                 var result = OnRequestReceived(this, cmdInJson);
                 return result!;
-            }            
+            }
             catch (Exception ex)
             {
                 _logger.Error(ex);
                 return ExceptionHandler.PrintMessage(cmd_execError, ex, cmdInJson);
             }
         }
-        public async Task<string> ExecuteAsync(ICommand cmd)
-        {
-            Monitor.Enter(cmd);
-            var response = Execute(cmd);
-            Monitor.Exit(cmd);
-            return response;
-        }
-        public async Task<string> ExecuteAsync(string cmdInJson)
-        {
-            Monitor.Enter(cmdInJson);
-            var response = Execute(cmdInJson);
-            Monitor.Exit(cmdInJson);
-            return response;            
-        }
+
         public abstract void Load(IConfigurationSection section);
         public abstract void Load(object configuration);
         /// <summary>
@@ -267,21 +258,30 @@ namespace MATSys
         /// Generate the command string pattern
         /// </summary>
         /// <returns>command string in simplified format</returns>
-        public string GetTemplateString(Type t)
+        public string GetTemplateString(Type? t)
         {
-            var args = t.GenericTypeArguments;
-            var sb = new StringBuilder();
-            sb.Append(Name);
-            sb.Append("=");
-            for (int i = 0; i < args.Length; i++)
+            if (t != null)
             {
-                sb.Append(args[i].FullName);
-                if (i != args.Length - 1)
+                var args = t.GenericTypeArguments;
+                var sb = new StringBuilder();
+                sb.Append(Name);
+                sb.Append("=");
+                for (int i = 0; i < args.Length; i++)
                 {
-                    sb.Append(",");
+                    sb.Append(args[i].FullName);
+                    if (i != args.Length - 1)
+                    {
+                        sb.Append(",");
+                    }
                 }
+                return sb.ToString();
             }
-            return sb.ToString();
+            else    
+            {
+                throw new ArgumentNullException("null input");
+            }
+        
+
         }
         #region Private methods
         /// <summary>
@@ -396,13 +396,13 @@ namespace MATSys
                 _logger.Trace($"OnDataReady event fired: {commandObjectInJson}");
                 var parsedName = commandObjectInJson.Split('=')[0];
                 var item = cmds[parsedName];
-                var cmd = CommandBase.Deserialize(commandObjectInJson, item.CommandType);
+                var cmd = CommandBase.Deserialize(commandObjectInJson, item.CommandType!);
                 _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
                 answer = Execute(cmd);
                 return answer;
             }
             catch (KeyNotFoundException ex)
-            {                
+            {
                 _logger.Warn(ex);
                 return ExceptionHandler.PrintMessage(cmd_notFound, ex, commandObjectInJson);
             }
@@ -422,7 +422,7 @@ namespace MATSys
                 return ExceptionHandler.PrintMessage(cmd_execError, ex, commandObjectInJson);
             }
         }
-         #endregion
+        #endregion
     }
 
 }

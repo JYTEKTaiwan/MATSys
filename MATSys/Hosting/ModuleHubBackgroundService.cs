@@ -150,9 +150,9 @@ namespace MATSys
                     if (SpinWait.SpinUntil(() => _scheduler.IsAvailable, 5))
                     {
                         var testItem = await _scheduler.Dequeue(stoppingToken);
-                        OnReadyToExecute.Invoke(testItem.ModuleName, testItem.Command);
+                        OnReadyToExecute?.Invoke(testItem.ModuleName, testItem.Command);
                         var response = Modules[testItem.ModuleName].Execute(testItem.Command);
-                        OnExecuteComplete.Invoke(testItem, response);
+                        OnExecuteComplete?.Invoke(testItem, response);
                     }
                 }
                 Cleanup();
