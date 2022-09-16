@@ -54,9 +54,10 @@ namespace SystemMonitorDEMO.Modules
             {
                 while (!cts_pf.IsCancellationRequested)
                 {
-                    var data = new PerformanceData(pf_processor.NextValue(), 1 - pf_memory.NextValue() / _totalRAM);
+                    var data = new PerformanceData(pf_processor.NextValue(), (1 - pf_memory.NextValue() / _totalRAM)*100.0);
                     await _ch.Writer.WriteAsync(data);
                     Base.Recorder.Write(data);
+                    Base.Notifier.Publish(data);
                     await Task.Delay(250);                    
                 }
             });
@@ -88,15 +89,15 @@ namespace SystemMonitorDEMO.Modules
         {
              var result=_ch.Reader.ReadAsync().AsTask().Result;
             
-            return $"{result.CPU.ToString("F6")}\t{result.Memory.ToString("F6")}";
+            return JsonConvert.SerializeObject(result);
         }
 
     }
     public struct PerformanceData
     {
-        public float CPU { get; set; }
-        public float Memory { get; set; }
-        public PerformanceData(float cpu, float mem)
+        public double CPU { get; set; }
+        public double Memory { get; set; }
+        public PerformanceData(double cpu, double mem)
         {
             CPU = cpu;
             Memory = mem;
