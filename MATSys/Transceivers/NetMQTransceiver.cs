@@ -85,12 +85,13 @@ namespace MATSys.Plugins
             _logger.Info("NetMQTransceiver is initiated");
         }
 
-        internal class NetMQTransceiverConfiguration
-        {
-            public bool EnableLogging { get; set; } = false;
-            public string AliasName { get; set; } = "";
-            public string LocalIP { get; set; } = "";
-            public int Port { get; set; } = -1;
-        }
     }
+    public class NetMQTransceiverConfiguration
+    {
+        public bool EnableLogging { get; set; } = false;
+        public string AliasName { get; set; } = "";
+        public string LocalIP { get; set; } = "";
+        public int Port { get; set; } = -1;
+    }
+
 }
