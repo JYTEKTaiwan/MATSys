@@ -13,7 +13,7 @@ namespace MATSys.Commands
     /// </summary>
     public abstract class CommandBase : ICommand
     {
-        private static Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}");
+        private static Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}|[a-zA-Z]+");
         internal const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
 
         /// <summary>
@@ -59,14 +59,14 @@ namespace MATSys.Commands
         /// <summary>
         /// Deserialize the input string into ICommand object
         /// </summary>
-        /// <param name="str"></param>
+        /// <param name="rawString"></param>
         /// <param name="t"></param>
         /// <returns></returns>
-        public static ICommand Deserialize(string str, Type t)
+        public static ICommand Deserialize(string rawString, Type t)
         {
             try
             {
-                var cmdInfo = ConvertToJsonFormat(str);
+                var cmdInfo = ConvertToJsonFormat(rawString);
                 if (cmdInfo.parameterCount != t.GenericTypeArguments.Length)
                 {
                     throw new ArgumentOutOfRangeException();
