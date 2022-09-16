@@ -83,13 +83,16 @@ namespace MATSys.Plugins
         {
         }
 
-        internal class NetMQNotifierConfiguration
-        {
-            public bool EnableLogging { get; set; } = false;
-            public string Address { get; set; } = "";
-            public string Protocal { get; set; } = "";
-            public string Topic { get; set; } = "";
-            public bool DisableEvent { get; set; } = true;
-        }
     }
+    public class NetMQNotifierConfiguration
+    {
+        public bool EnableLogging { get; set; } = false;
+        public string Address { get; set; } = "127.0.0.1:5000";
+        public string Protocal { get; set; } = "tcp";
+        public string Topic { get; set; } = "";
+        public bool DisableEvent { get; set; } = true;
+
+        public static NetMQNotifierConfiguration Default => new NetMQNotifierConfiguration();
+    }
+
 }
