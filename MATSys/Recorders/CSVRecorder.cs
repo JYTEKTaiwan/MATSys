@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Threading.Channels;
 
 namespace MATSys.Plugins
@@ -109,10 +110,16 @@ namespace MATSys.Plugins
                 _logger.Info("Data is queued to filestream");
             });
         }
+        public JObject Export()
+        {
+           return JObject.FromObject(_config);
+        }
+
     }
 
-    public class CSVRecorderConfiguration
+    public class CSVRecorderConfiguration: IMATSysConfiguration
     {
+        public string Type { get; set; } = "csv";
         public bool EnableLogging { get; set; } = false;
         public bool WaitForComplete { get; set; } = true;
         public int QueueSize { get; set; } = 2000;

@@ -18,8 +18,9 @@ using MATSys;
 using MATSys.Modules;
 */
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 
-namespace MATSys
+namespace MATSys.Plugins
 {
     public sealed class EmptyRecorder : IRecorder
     {
@@ -52,5 +53,10 @@ namespace MATSys
         {
             _logger.Info($"{nameof(EmptyRecorder)} is initiated");
         }
+        public JObject Export()
+        {
+            return new JObject();
+        }
+
     }
 }

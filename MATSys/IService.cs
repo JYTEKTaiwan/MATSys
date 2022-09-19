@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 
 namespace MATSys
 {
@@ -11,6 +12,8 @@ namespace MATSys
         void Load(object configuration);
 
         void StartService(CancellationToken token);
+
+        JObject Export();
 
         void StopService();
     }

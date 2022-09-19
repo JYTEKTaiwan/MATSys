@@ -18,8 +18,9 @@ using MATSys;
 using MATSys.Modules;
 */
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json.Linq;
 
-namespace MATSys
+namespace MATSys.Plugins
 {
     public sealed class EmptyNotifier : INotifier
     {
@@ -58,5 +59,10 @@ namespace MATSys
         public void StopService()
         {
         }
+        public JObject Export()
+        {
+            return new JObject();
+        }
+
     }
 }

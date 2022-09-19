@@ -36,16 +36,6 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
 		<Deterministic>False</Deterministic>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <Compile Remove="config\**" />
-	  <Compile Remove="Modules\**" />
-	  <EmbeddedResource Remove="config\**" />
-	  <EmbeddedResource Remove="Modules\**" />
-	  <None Remove="config\**" />
-	  <None Remove="Modules\**" />
-	</ItemGroup>
-
 	<ItemGroup>
 		<None Include="..\icon\JYTek.png">
 			<Pack>True</Pack>

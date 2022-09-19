@@ -1,10 +1,13 @@
 ﻿using MATSys.Commands;
+using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 using System.Data;
 using System.Reflection;
 using System.Text;
+using System.Text.Json.Serialization.Metadata;
 using System.Text.RegularExpressions;
 
 namespace MATSys
@@ -43,6 +46,8 @@ namespace MATSys
         public string Name { get; }
         public IModule Base => this;
 
+        private object? _config;
+
         public event IModule.NewDataReady? OnDataReady;
 
 
@@ -60,6 +65,7 @@ namespace MATSys
 
             _logger = LogManager.GetLogger(Name);
 
+            _config = configuration;
             LoadAndSetup(configuration);
             _recorder = InjectRecorder(recorder);
             _notifier = InjectNotifier(notifier);
@@ -283,6 +289,22 @@ namespace MATSys
         
 
         }
+        public JObject Export()
+        {
+            JObject jObj = _config==null?new JObject():JObject.FromObject(_config);
+            jObj.Add("Name", Name);
+            jObj.Add("Type", this.GetType().Name);
+            jObj.Add("Recorder", _recorder.Export());
+            jObj.Add("Notifier", _notifier.Export());           
+            jObj.Add("Transceiver", _transceiver.Export());           
+            return jObj;
+        }
+        public string Export(Formatting format=Formatting.Indented)
+        {
+            return Export().ToString(Formatting.Indented);
+        }
+
+
         #region Private methods
         /// <summary>
         /// load the configuration object
@@ -422,6 +444,7 @@ namespace MATSys
                 return ExceptionHandler.PrintMessage(cmd_execError, ex, commandObjectInJson);
             }
         }
+
         #endregion
     }
 

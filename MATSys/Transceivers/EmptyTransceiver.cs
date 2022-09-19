@@ -1,25 +1,8 @@
 ﻿
-/* Unmerged change from project 'MATSys (netstandard2.0)'
-Before:
 using Microsoft.Extensions.Configuration;
-After:
-using MATSys;
-using MATSys;
-using MATSys.Plugins;
-using Microsoft.Extensions.Configuration;
-*/
+using Newtonsoft.Json.Linq;
 
-/* Unmerged change from project 'MATSys (netstandard2.0)'
-Before:
-using MATSys.Modules;
-After:
-using MATSys;
-using MATSys;
-using MATSys.Modules;
-*/
-using Microsoft.Extensions.Configuration;
-
-namespace MATSys
+namespace MATSys.Plugins
 {
     public sealed class EmptyTransceiver : ITransceiver
     {
@@ -45,5 +28,10 @@ namespace MATSys
         public void StopService()
         {
         }
+        public JObject Export()
+        {
+            return new JObject();
+        }
+
     }
 }

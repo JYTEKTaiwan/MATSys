@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using NetMQ;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MATSys.Plugins
 {
@@ -84,10 +86,16 @@ namespace MATSys.Plugins
 
             _logger.Info("NetMQTransceiver is initiated");
         }
+        public JObject Export()
+        {           
+            return JObject.FromObject(_config);
+            
+        }
 
     }
-    public class NetMQTransceiverConfiguration
+    public class NetMQTransceiverConfiguration: IMATSysConfiguration
     {
+        public string Type { get; set; } = "netmq";
         public bool EnableLogging { get; set; } = false;
         public string AliasName { get; set; } = "";
         public string LocalIP { get; set; } = "";

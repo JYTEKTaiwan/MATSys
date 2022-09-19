@@ -1,5 +1,6 @@
 using MATSys;
 using MATSys.Factories;
+using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 
@@ -29,38 +30,9 @@ public class UT_DataReocrderFactory
     [Category("Recorder")]
     public void CreateFromStaticMethod()
     {
-        var a = RecorderFactory.CreateNew<CSVRecorder2>(null);
-        var b = RecorderFactory.CreateNew(typeof(CSVRecorder2),null);
+        var a = RecorderFactory.CreateNew<CSVRecorder>(null);
+        var b = RecorderFactory.CreateNew(typeof(CSVRecorder),null);
 
         Assert.IsTrue(a != null&& b!=null);
-    }
-    internal class CSVRecorder2 : IRecorder
-    {
-        public string Name => "";
-
-        public void Load(IConfigurationSection section)
-        {
-        }
-
-        public void Load(object configuration)
-        {
-        }
-
-        public void StartService(CancellationToken token)
-        {
-        }
-
-        public void StopService()
-        {
-        }
-
-        public void Write(object data)
-        {
-        }
-
-        public Task WriteAsync(object data)
-        {
-            return Task.CompletedTask;
-        }
     }
 }

@@ -2,6 +2,7 @@
 using NetMQ;
 using NetMQ.Sockets;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MATSys.Plugins
 {
@@ -78,14 +79,20 @@ namespace MATSys.Plugins
         {
             return latestString;
         }
+        public JObject Export()
+        {
+            return JObject.FromObject(_config);
+
+        }
 
         ~NetMQNotifier()
         {
         }
 
     }
-    public class NetMQNotifierConfiguration
+    public class NetMQNotifierConfiguration: IMATSysConfiguration
     {
+        public string Type { get; set; } = "netmq";
         public bool EnableLogging { get; set; } = false;
         public string Address { get; set; } = "127.0.0.1:5000";
         public string Protocal { get; set; } = "tcp";

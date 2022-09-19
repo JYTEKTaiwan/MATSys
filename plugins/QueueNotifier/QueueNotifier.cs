@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Threading.Channels;
 
 namespace MATSys.Plugins
@@ -8,7 +9,7 @@ namespace MATSys.Plugins
     {
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
         private Channel<string>? _ch;
-        private QueueNotifierConfiguration? config;
+        private QueueNotifierConfiguration? _config;
 
         public string Name => nameof(QueueNotifier);
 
@@ -23,22 +24,22 @@ namespace MATSys.Plugins
 
         public void Load(IConfigurationSection section)
         {
-            config = section.Get<QueueNotifierConfiguration>();
-            _logger = config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
+            _config = section.Get<QueueNotifierConfiguration>();
+            _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
             _logger.Info("QueueNotifier is initiated");
         }
 
         public void Load(object configuration)
         {
-            config = (QueueNotifierConfiguration)configuration;
-            _logger = config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
+            _config = (QueueNotifierConfiguration)configuration;
+            _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
             _logger.Info("QueueNotifier is initiated");
         }
 
         public void Publish(object data)
         {
             _ch!.Writer.TryWrite(JsonConvert.SerializeObject(data));
-            if (!config!.DisableEvent)
+            if (!_config!.DisableEvent)
             {
                 OnNotify?.Invoke(JsonConvert.SerializeObject(data));
             }
@@ -46,17 +47,24 @@ namespace MATSys.Plugins
 
         public void StartService(CancellationToken token)
         {
-            _ch = Channel.CreateBounded<string>(new BoundedChannelOptions(config!.QueueLength) { FullMode = config.Mode });
+            _ch = Channel.CreateBounded<string>(new BoundedChannelOptions(_config!.QueueLength) { FullMode = _config.Mode });
         }
 
         public void StopService()
         {
             _ch!.Writer.Complete();
         }
+        public JObject Export()
+        {
+            return  JObject.FromObject(_config);
+
+        }
+
     }
 
-    internal sealed class QueueNotifierConfiguration
+    internal sealed class QueueNotifierConfiguration: IMATSysConfiguration
     {
+        public string Type { get; set; } = "queue";
         public bool EnableLogging { get; set; } = false;
         public bool DisableEvent { get; set; } = true;
         public int QueueLength { get; set; } = 1000;

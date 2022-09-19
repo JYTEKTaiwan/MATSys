@@ -1,5 +1,6 @@
 using MATSys;
 using MATSys.Commands;
+using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 
 namespace UT_MATSys;
@@ -47,7 +48,7 @@ public class UT_ModuleBase
         Assert.IsTrue(dev.Recorder.Name == nameof(EmptyRecorder));
     }
 
-    private class NormalDevice : ModuleBase
+    internal class NormalDevice : ModuleBase
     {
         public NormalDevice(object? configuration = null, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "") : base(configuration, transceiver, notifier, recorder, aliasName)
         {
