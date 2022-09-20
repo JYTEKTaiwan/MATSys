@@ -55,7 +55,7 @@ namespace MATSys.Factories
         {
             var _section = section;
             //get the name of the instance
-            var name = section.GetSection("Name").Get<string>();
+            var name = section.GetSection("Alias").Get<string>();
             //get the type string of the instance
             var typeString = section.GetSection("Type").Get<string>();
             

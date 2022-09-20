@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace MATSys.Commands
 {
@@ -29,10 +31,79 @@ namespace MATSys.Commands
         /// <param name="name">name</param>
         /// <param name="t"></param>
         public MATSysCommandAttribute([CallerMemberName]string Name="", Type? Type=null)
-        {
+        {           
             Alias = Name;
             CommandType = Type;
         }
+
+        public void ConfigureCommandType(MethodInfo mi)
+        {
+            if (CommandType == null)
+            {
+                var types = mi.GetParameters().Select(x => x.ParameterType).ToArray();
+                Type t = GetGenericCommandType(types.Length);
+                if (t.IsGenericType)
+                {
+                    CommandType = t.MakeGenericType(types);
+                }
+                else
+                {
+                    CommandType = t;
+                }
+            }
+        }
+        private Type GetGenericCommandType(int count)
+        {
+            switch (count)
+            {
+                case 0:
+                    return typeof(Command);
+                case 1:
+                    return typeof(Command<>);
+                case 2:
+                    return typeof(Command<,>);
+                case 3:
+                    return typeof(Command<,,>);
+                case 4:
+                    return typeof(Command<,,,>);
+                case 5:
+                    return typeof(Command<,,,,>);
+                case 6:
+                    return typeof(Command<,,,,,>);
+                case 7:
+                    return typeof(Command<,,,,,,>);
+                default:
+                    return typeof(Command);
+            }
+
+        }
+
+        public string GetTemplateString()
+        {
+            if (CommandType != null)
+            {
+                var args = CommandType.GenericTypeArguments;
+                var sb = new StringBuilder();
+                sb.Append(Alias);
+                sb.Append("=");
+                for (int i = 0; i < args.Length; i++)
+                {
+                    sb.Append(args[i].FullName);
+                    if (i != args.Length - 1)
+                    {
+                        sb.Append(",");
+                    }
+                }
+                return sb.ToString();
+            }
+            else
+            {
+                throw new ArgumentNullException("null input");
+            }
+
+
+        }
+
 
     }
 }

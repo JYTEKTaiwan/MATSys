@@ -24,7 +24,7 @@ namespace TestDevice
             public double Number { get; set; } = 0.0;
         }
 
-        [MATSysCommandAttribute ("Test", typeof(Command<Data>))]
+        [MATSysCommand("Test", typeof(Command<Data>))]
         public string Test(Data a)
         {
             Base.Recorder.Write(a);
@@ -32,7 +32,7 @@ namespace TestDevice
             return a.Date + "---" + a.Number.ToString();
         }
 
-        [MATSysCommandAttribute ("Method", typeof(Command<string>))]
+        [MATSysCommand]
         public string Method(string c)
         {
             return c;

@@ -59,7 +59,7 @@ namespace MATSys
         /// <param name="notifier">notifier instance</param>
         /// <param name="recorder">recorder instance</param>
         /// <param name="aliasName">alias name</param>
-        public ModuleBase(object? configuration = null, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")
+        public ModuleBase(object? configuration , ITransceiver? transceiver, INotifier? notifier , IRecorder? recorder , string aliasName = "")
         {
             Name = string.IsNullOrEmpty(aliasName) ? $"{GetType().Name}_{GetHashCode().ToString("X2")}" : aliasName;
 
@@ -81,20 +81,8 @@ namespace MATSys
             {
                 var cmd = x.GetCustomAttribute<MATSysCommandAttribute>()!;
                 //configure CommandType property
-                if (cmd.CommandType == null)
-                {
-                    var types = x.GetParameters().Select(x => x.ParameterType).ToArray();
-                    Type t = GetGenericCommandType(types.Length);
-                    if (t.IsGenericType)
-                    {
-                        cmd.CommandType = t.MakeGenericType(types);
-                    }
-                    else
-                    {
-                        cmd.CommandType = t;
-                    }
-                }
-
+                cmd.ConfigureCommandType(x);                
+                
                 //configure MethodInvoker property
                 cmd.Invoker = MethodInvoker.Create(this, x);
                 return cmd;
@@ -220,45 +208,6 @@ namespace MATSys
             {
                 yield return GetTemplateString(item.CommandType);
             }
-        }
-        public Type GetCommandType(MethodInfo mi)
-        {
-            var types = mi.GetParameters().Select(x => x.ParameterType).ToArray();
-            Type t = GetGenericCommandType(types.Length);
-            if (t.IsGenericType)
-            {
-                return t.MakeGenericType(types);
-            }
-            else
-            {
-                return t;
-            }
-
-        }
-        public Type GetGenericCommandType(int count)
-        {
-            switch (count)
-            {
-                case 0:
-                    return typeof(Command);
-                case 1:
-                    return typeof(Command<>);
-                case 2:
-                    return typeof(Command<,>);
-                case 3:
-                    return typeof(Command<,,>);
-                case 4:
-                    return typeof(Command<,,,>);
-                case 5:
-                    return typeof(Command<,,,,>);
-                case 6:
-                    return typeof(Command<,,,,,>);
-                case 7:
-                    return typeof(Command<,,,,,,>);
-                default:
-                    return typeof(Command);
-            }
-
         }
         /// <summary>
         /// Generate the command string pattern

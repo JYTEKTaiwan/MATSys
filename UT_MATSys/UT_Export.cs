@@ -11,7 +11,7 @@ public class UT_Export
 {
 
     [Test]
-    public void ExportNetMQTransceivert()
+    public void ExportNetMQTransceiver()
     {
         NetMQTransceiverConfiguration config = new NetMQTransceiverConfiguration();
         var tran=TransceiverFactory.CreateNew<NetMQTransceiver>(config);
