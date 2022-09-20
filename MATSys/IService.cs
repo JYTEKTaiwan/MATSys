@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace MATSys
@@ -14,6 +15,7 @@ namespace MATSys
         void StartService(CancellationToken token);
 
         JObject Export();
+        string Export(Formatting format = Formatting.Indented);
 
         void StopService();
     }

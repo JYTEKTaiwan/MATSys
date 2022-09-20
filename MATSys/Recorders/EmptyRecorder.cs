@@ -18,6 +18,7 @@ using MATSys;
 using MATSys.Modules;
 */
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace MATSys.Plugins
@@ -56,6 +57,10 @@ namespace MATSys.Plugins
         public JObject Export()
         {
             return new JObject();
+        }
+        public string Export(Formatting format = Formatting.Indented)
+        {
+            return Export().ToString(Formatting.Indented);
         }
 
     }

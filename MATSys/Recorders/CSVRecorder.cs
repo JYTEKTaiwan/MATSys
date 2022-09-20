@@ -114,6 +114,10 @@ namespace MATSys.Plugins
         {
            return JObject.FromObject(_config);
         }
+        public string Export(Formatting format = Formatting.Indented)
+        {
+            return Export().ToString(Formatting.Indented);
+        }
 
     }
 
