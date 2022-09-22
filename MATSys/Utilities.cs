@@ -13,18 +13,18 @@ public class DependencyLoader
 {
     public static void LoadPluginAssemblies(string[] plugins)
     {
+        var assemblyPaths = AppDomain.CurrentDomain.GetAssemblies().Select(x=>x.Location);
         foreach (var item in plugins)
         {
             var p = Path.GetFullPath(item);
-            if (File.Exists(p))
+            if (File.Exists(p) && !assemblyPaths.Any(x=>x==p))
             {
 #if NET6_0_OR_GREATER
                 var loader = new PluginLoader(p);
-                loader.LoadFromAssemblyPath(p);
-
+                var assem=loader.LoadFromAssemblyPath(p);               
 #endif
 #if NETSTANDARD2_0_OR_GREATER
- Assembly.LoadFile(p);
+ var assem=Assembly.LoadFile(p);
 #endif
             }
 
@@ -40,7 +40,7 @@ internal class PluginLoader : AssemblyLoadContext
 {
     private AssemblyDependencyResolver resolver;
 
-    public PluginLoader(string? name, bool isCollectible = false) : base(name, isCollectible)
+    public PluginLoader(string? name, bool isCollectible = true) : base(name, isCollectible)
     {
         resolver = new AssemblyDependencyResolver(name!);
     }
