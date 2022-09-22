@@ -80,7 +80,7 @@ namespace MATSys
             var atts = mis.Select(x =>
             {
                 var cmd = x.GetCustomAttribute<MATSysCommandAttribute>()!;
-                //configure CommandType property
+                //configure CommandType
                 cmd.ConfigureCommandType(x);                
                 
                 //configure MethodInvoker property
