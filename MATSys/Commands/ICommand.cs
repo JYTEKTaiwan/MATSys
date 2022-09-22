@@ -1,4 +1,6 @@
-﻿namespace MATSys.Commands
+﻿using Newtonsoft.Json;
+
+namespace MATSys.Commands
 {
     public interface ICommand
     {
@@ -22,15 +24,11 @@
         object[]? GetParameters();
 
         /// <summary>
-        /// Get the simplified string of the command object
-        /// </summary>
-        /// <returns></returns>
-        string SimplifiedString();
-        /// <summary>
         /// Serialize the command object. Format is MethodName=Parameter1,Parameter2,...,
         /// Each Parameter is in json format
         /// </summary>
         /// <returns></returns>
         string Serialize();
+
     }
 }

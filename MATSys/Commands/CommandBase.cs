@@ -38,24 +38,15 @@ namespace MATSys.Commands
         /// <returns>result string</returns>
         public virtual string ConvertResultToString(object? obj)
         {
-            if  (obj==null)
+            if (obj == null)
             {
                 return "";
             }
             else
             {
-                var ret=obj.ToString();
-                return string.IsNullOrEmpty(ret)?"":ret;
+                var ret = obj.ToString();
+                return string.IsNullOrEmpty(ret) ? "" : ret;
             }
-        }
-
-        /// <summary>
-        /// Get the simplified string for app to use
-        /// </summary>
-        /// <returns></returns>
-        public virtual string SimplifiedString()
-        {
-            return Serialize();
         }
 
         /// <summary>
@@ -74,22 +65,29 @@ namespace MATSys.Commands
         {
             try
             {
-                var cmdInfo = ConvertToJsonFormat(rawString);
-                if (cmdInfo.parameterCount != t.GenericTypeArguments.Length)
+                if (typeof(ICommand).IsAssignableFrom(t))
                 {
-                    throw new ArgumentOutOfRangeException();
+                    var cmdInfo = ConvertToJsonFormat(rawString);
+                    if (cmdInfo.parameterCount != t.GenericTypeArguments.Length)
+                    {
+                        throw new ArgumentOutOfRangeException();
+                    }
+                    var cmd = JsonConvert.DeserializeObject(cmdInfo.jsonString, t) as ICommand;
+                    if (cmd == null)
+                    {
+                        throw new NullReferenceException("command is null");
+                    }
+                    return cmd;
                 }
-                var cmd = JsonConvert.DeserializeObject(cmdInfo.jsonString, t) as ICommand;
-                if(cmd ==null)
+                else
                 {
-                    throw new NullReferenceException("command is null");
+                    throw new ArgumentException($"parameter t is not support. {t.Name}");
                 }
-                return cmd;
-
+                
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
 
         }
