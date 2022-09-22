@@ -88,7 +88,18 @@ namespace MATSys.Commands
                 sb.Append("=");
                 for (int i = 0; i < args.Length; i++)
                 {
-                    sb.Append(args[i].FullName);
+                    if (args[i]==typeof(string))
+                    {
+                        sb.Append($"\"{args[i].FullName}\"");
+                    }
+                    else if (args[i].IsClass)
+                    {
+                        sb.Append($"{{{args[i].FullName}}}");
+                    }
+                    else
+                    {
+                        sb.Append($"{args[i].FullName}");
+                    }
                     if (i != args.Length - 1)
                     {
                         sb.Append(",");

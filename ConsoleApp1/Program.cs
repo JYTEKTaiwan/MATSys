@@ -6,31 +6,21 @@ using MATSys.Plugins;
 using System.Reflection;
 using System.Security.Policy;
 
+string subFolder = @".\modules";
+if (Directory.Exists(subFolder))
+{
+    DependencyLoader.LoadPluginAssemblies(Directory.GetFiles(subFolder));
+}
+
+
 foreach (var item in MATSysContext.SearchPlugins())
 {
-    Console.WriteLine($"{item.ModuleAlias}\t{item.Type}\t{item.Category}\t{item.IsExternalAssembly}\t{item.AssemblyPath}");
+    Console.WriteLine($"{item.Category}\t{item.Type}\t{item.AssemblyPath}");
 }
 foreach (var item in MATSysContext.SearchModules())
 {
-    Console.WriteLine($"{item.ModuleAlias}\t{item.Type}\t{item.Category}\t{item.IsExternalAssembly}\t{item.AssemblyPath}");
+    Console.WriteLine($"{item.Category}\t{item.Type}\t{item.AssemblyPath}");
 }
-
-
-foreach (var mod in MATSysContext.SearchModules().Where(x => x.IsExternalAssembly))
-{
-    var assem = Assembly.LoadFrom(Path.GetFullPath(mod.AssemblyPath));
-    var t=assem.GetType(assem.GetName().Name+@"."+mod.Type).GetMethods().Where(x=>x.GetCustomAttribute<MATSysCommandAttribute>()!=null);
-    foreach (var item in t)
-    {
-        var cmd=item.GetCustomAttribute<MATSysCommandAttribute>();
-        cmd.ConfigureCommandType(item);
-        Console.WriteLine(cmd.GetTemplateString());
-    }
-
-    
-}
-
-
 Console.ReadKey();
 
 
@@ -61,7 +51,6 @@ public class Test : ModuleBase
 public class MATSysContext
 {
     public string ModuleAlias { get; set; }
-
     public string Category { get; set; }
     public bool IsExternalAssembly { get; set; }
     public string AssemblyPath { get; set; }
@@ -71,6 +60,7 @@ public class MATSysContext
     {
         List<MATSysContext> list = new List<MATSysContext>();
         Type t = typeof(IPlugin);
+
         //search executing assembly
         foreach (var assem in AppDomain.CurrentDomain.GetAssemblies())
         {
@@ -89,27 +79,6 @@ public class MATSysContext
                 }
             }
         }
-
-        //search modules folder
-        foreach (var p in Directory.GetFiles(@".\modules", "*.dll"))
-        {
-            var assem = Assembly.LoadFrom(p);
-            foreach (var item in assem.GetTypes())
-            {
-                if (t.IsAssignableFrom(item) && !item.IsAbstract && !item.IsInterface)
-                {
-                    list.Add(new MATSysContext()
-                    {
-                        Type = Parse(item.Name).name,
-                        Category = Parse(item.Name).type,
-                        ModuleAlias = item.Name,
-                        IsExternalAssembly = true,
-                        AssemblyPath = p
-                    }); ;
-                }
-            }
-            
-        }
         return list;
 
     }
@@ -117,7 +86,9 @@ public class MATSysContext
     public static IEnumerable<MATSysContext> SearchModules()
     {
         List<MATSysContext> list = new List<MATSysContext>();
-        Type t = typeof(IModule);
+        Type t = typeof(IModule); 
+        
+
         //search executing assembly
         foreach (var assem in AppDomain.CurrentDomain.GetAssemblies())
         {
@@ -132,31 +103,13 @@ public class MATSysContext
                         Category = "Modules",
                         IsExternalAssembly = false,
                         AssemblyPath = assem.Location
-                    }); ; ; ;
-                }
-            }
-        }
+                    });
 
-        //search modules folder
-        foreach (var p in Directory.GetFiles(@".\modules", "*.dll"))
-        {
-            var assem = Assembly.LoadFrom(p);
-            foreach (var item in assem.GetTypes())
-            {
-                if (t.IsAssignableFrom(item) && !item.IsAbstract && !item.IsInterface)
-                {
-                    list.Add(new MATSysContext()
-                    {
-                        ModuleAlias = item.Name,
-                        Type = item.Name,
-                        Category = "Modules",
-                        IsExternalAssembly = true,
-                        AssemblyPath = p
-                    }); ;
                 }
 
             }
         }
+
         return list;
     }
 

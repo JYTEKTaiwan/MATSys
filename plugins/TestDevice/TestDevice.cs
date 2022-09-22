@@ -37,5 +37,11 @@ namespace TestDevice
         {
             return c;
         }
+
+        [MATSysCommand]
+        public string Number(string c,int i,double x, Data j,bool b)
+        {
+            return c;
+        }
     }
 }
