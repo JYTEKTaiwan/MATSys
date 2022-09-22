@@ -36,6 +36,8 @@ namespace MATSys
         private volatile bool _isRunning = false;
         private static Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}");
         private readonly Dictionary<string, MATSysCommandAttribute> cmds;
+        private object? _config;
+
         #endregion
 
         public bool IsRunning => _isRunning;
@@ -46,10 +48,7 @@ namespace MATSys
         public string Name { get; }
         public IModule Base => this;
 
-        private object? _config;
-
         public event IModule.NewDataReady? OnDataReady;
-
 
         /// <summary>
         /// ctor of ModuleBase class. 
@@ -59,7 +58,7 @@ namespace MATSys
         /// <param name="notifier">notifier instance</param>
         /// <param name="recorder">recorder instance</param>
         /// <param name="aliasName">alias name</param>
-        public ModuleBase(object? configuration , ITransceiver? transceiver, INotifier? notifier , IRecorder? recorder , string aliasName = "")
+        public ModuleBase(object? configuration, ITransceiver? transceiver, INotifier? notifier, IRecorder? recorder, string aliasName = "")
         {
             Name = string.IsNullOrEmpty(aliasName) ? $"{GetType().Name}_{GetHashCode().ToString("X2")}" : aliasName;
 
@@ -72,22 +71,6 @@ namespace MATSys
             _transceiver = InjectTransceiver(transceiver);
             cmds = ListMATSysCommands();
             _logger.Info($"{Name} base class initialization is completed");
-        }
-
-        private Dictionary<string, MATSysCommandAttribute> ListMATSysCommands()
-        {
-            var mis = GetSupportedMethods();
-            var atts = mis.Select(x =>
-            {
-                var cmd = x.GetCustomAttribute<MATSysCommandAttribute>()!;
-                //configure CommandType
-                cmd.ConfigureCommandType(x);                
-                
-                //configure MethodInvoker property
-                cmd.Invoker = MethodInvoker.Create(this, x);
-                return cmd;
-            });
-            return atts.ToDictionary(x => x.Alias);
         }
 
         /// <summary>
@@ -153,9 +136,9 @@ namespace MATSys
         {
             try
             {
-                _logger.Trace($"Command is ready to executed {cmd.SimplifiedString()}");
+                _logger.Trace($"Command is ready to executed {cmd.Serialize()}");
                 var invoker = cmds[cmd.MethodName].Invoker;
-                if  (invoker==null)
+                if (invoker == null)
                 {
                     throw new NullReferenceException("invoker is null");
                 }
@@ -177,6 +160,7 @@ namespace MATSys
                 return ExceptionHandler.PrintMessage(cmd_execError, ex, cmd);
             }
         }
+
         /// <summary>
         /// Execute the incoming command object in string format
         /// </summary>
@@ -231,30 +215,47 @@ namespace MATSys
                 }
                 return sb.ToString();
             }
-            else    
+            else
             {
                 throw new ArgumentNullException("null input");
             }
-        
+
 
         }
         public JObject Export()
         {
-            JObject jObj = _config==null?new JObject():JObject.FromObject(_config);
+            JObject jObj = _config == null ? new JObject() : JObject.FromObject(_config);
             jObj.Add("Name", Name);
             jObj.Add("Type", this.GetType().Name);
             jObj.Add("Recorder", _recorder.Export());
-            jObj.Add("Notifier", _notifier.Export());           
-            jObj.Add("Transceiver", _transceiver.Export());           
+            jObj.Add("Notifier", _notifier.Export());
+            jObj.Add("Transceiver", _transceiver.Export());
             return jObj;
         }
-        public string Export(Formatting format=Formatting.Indented)
+        public string Export(Formatting format = Formatting.Indented)
         {
             return Export().ToString(Formatting.Indented);
         }
 
-
         #region Private methods
+
+        private Dictionary<string, MATSysCommandAttribute> ListMATSysCommands()
+        {          
+            return GetType().GetMethods()
+                .Where(x => x.GetCustomAttributes<MATSysCommandAttribute>(false).Count() > 0)
+                .Select(x =>
+                {
+                    var cmd = x.GetCustomAttribute<MATSysCommandAttribute>()!;
+
+                    //configure CommandType
+                    cmd.ConfigureCommandType(x);
+
+                    //configure MethodInvoker property
+                    cmd.Invoker = MethodInvoker.Create(this, x);
+                    return cmd;
+                }).ToDictionary(x => x.Alias);
+        }
+
         /// <summary>
         /// load the configuration object
         /// </summary>
@@ -351,14 +352,6 @@ namespace MATSys
         /// <param name="sender"></param>
         /// <param name="commandObjectInJson"></param>
         /// <returns></returns>
-        private MethodInfo[] GetSupportedMethods()
-        {
-            var methodlist = GetType().GetMethods().Where(x =>
-            {
-                return x.GetCustomAttributes<MATSysCommandAttribute>(false).Count() > 0;
-            }).ToArray();
-            return methodlist;
-        }
         private string OnRequestReceived(object sender, string commandObjectInJson)
         {
             try

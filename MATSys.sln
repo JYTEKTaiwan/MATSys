@@ -36,7 +36,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configurat
 		appsettings.json = appsettings.json
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{2233A937-6228-4172-B834-A6B46F8B5136}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{2233A937-6228-4172-B834-A6B46F8B5136}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -246,7 +246,7 @@ Global
 		{11AE0A50-412B-483C-937D-F260096E0DC7} = {3787A6AD-AE85-4828-8476-2DE0E4E7F6CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
 	EndGlobalSection
 EndGlobal

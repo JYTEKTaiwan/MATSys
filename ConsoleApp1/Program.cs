@@ -1,5 +1,4 @@
-﻿
-using MATSys;
+﻿using MATSys;
 using MATSys.Commands;
 using MATSys.Factories;
 using MATSys.Plugins;
@@ -19,7 +18,6 @@ foreach (var item in MATSysHelper.ListAllModules())
     foreach (var cmds in ModuleHelper.ShowSupportedCommands(item.Type))
     {
         Console.WriteLine(cmds);
-
     }
 
 }

@@ -35,7 +35,6 @@ public class DependencyLoader
 
 public class MATSysHelper
 {
-
     public static IEnumerable<MATSysIServiceContext> ListAllPlugins()
     {
         string subFolder = @".\modules";
@@ -64,7 +63,6 @@ public class MATSysHelper
             }
         }
     }
-
     public static IEnumerable<MATSysIServiceContext> ListAllModules()
     {
         string subFolder = @".\modules";
@@ -97,7 +95,6 @@ public class MATSysHelper
         }
 
     }
-
     private static (string name, string type) Parse(string input)
     {
 
@@ -131,7 +128,6 @@ public class MATSysHelper
 
 
     }
-
 }
 
 public class ModuleHelper
@@ -144,7 +140,15 @@ public class ModuleHelper
     public static IEnumerable<string> ShowSupportedCommands(string typeName)
     {
         var t = GetModuleType(typeName);
-        return ShowSupportedCommands(t);
+        if (t!=null)
+        {
+            return ShowSupportedCommands(t);
+        }
+        else
+        {
+            return new string[0];
+        }
+        
     }
     public static IEnumerable<string> ShowSupportedCommands<T>() where T : IModule
     {
@@ -158,8 +162,15 @@ public class ModuleHelper
             foreach (var mi in methods)
             {
                 var cmd = mi.GetCustomAttribute<MATSysCommandAttribute>();
-                cmd.ConfigureCommandType(mi);
-                yield return cmd.GetTemplateString();
+                if (cmd != null)
+                {
+                    cmd.ConfigureCommandType(mi);
+                }
+                else
+                {                    
+                    yield return cmd!.GetTemplateString();
+                }
+                
             }
         }
         
@@ -169,11 +180,10 @@ public class ModuleHelper
 
 public class MATSysIServiceContext
 {
-    public string Alias { get; set; }
-    public string Category { get; set; }
-    public string AssemblyPath { get; set; }
-    public string Type { get; set; }
-
+    public string? Alias { get; set; }
+    public string? Category { get; set; }
+    public string? AssemblyPath { get; set; }
+    public string? Type { get; set; }
 }
 
 #if NET6_0_OR_GREATER
