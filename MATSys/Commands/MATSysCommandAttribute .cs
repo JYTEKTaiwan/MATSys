@@ -92,7 +92,7 @@ namespace MATSys.Commands
                     {
                         sb.Append($"\"{args[i].FullName}\"");
                     }
-                    else if (args[i].IsClass)
+                    else if (args[i].IsClass/*class*/|| /*struct*/(args[i].IsValueType && !args[i].IsPrimitive))
                     {
                         sb.Append($"{{{args[i].FullName}}}");
                     }
@@ -100,6 +100,7 @@ namespace MATSys.Commands
                     {
                         sb.Append($"{args[i].FullName}");
                     }
+
                     if (i != args.Length - 1)
                     {
                         sb.Append(",");
