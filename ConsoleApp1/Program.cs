@@ -26,8 +26,6 @@ foreach (var item in MATSysHelper.ListAllModules())
 
 Console.ReadKey();
 
-
-
 public class Test : ModuleBase
 {
     public Test(object? configuration, ITransceiver? transceiver, INotifier? notifier, IRecorder? recorder, string aliasName = "") : base(configuration, transceiver, notifier, recorder, aliasName)
