@@ -12,7 +12,7 @@ using System.Text;
 Console.WriteLine("Hello, World!");
 
 IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
-host.RunAsync().Wait(1000);;
+host.RunAsync().Wait(1000); ;
 
 var dev = host.Services.GetMATSysHandle();
 
@@ -60,7 +60,7 @@ public class TestDevice : ModuleBase
         public double Number { get; set; } = 0.0;
     }
 
-    [MATSysCommandAttribute ("StringMethod")]
+    [MATSysCommandAttribute("StringMethod")]
     public string Method(string c)
     {
 
