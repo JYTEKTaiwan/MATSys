@@ -3,11 +3,7 @@ using MATSys;
 using MATSys.Commands;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using System.Threading.Channels;
 using MATSys.Hosting;
-using NLog.Extensions.Logging;
-using System.Diagnostics;
-using System.Text;
 
 Console.WriteLine("Hello, World!");
 

@@ -1,16 +1,7 @@
-﻿using Accessibility;
-using MATSys.Configurator.Core;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using MATSys.Configurator.Core;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace MATSys.Configurator.Winform
 {
@@ -99,6 +90,12 @@ namespace MATSys.Configurator.Winform
 
             }
 
+        }
+
+        private void ExportDialog_Shown(object sender, EventArgs e)
+        {
+            this.MaximumSize = this.Size;
+            this.MinimumSize = this.Size;
         }
     }
 }
