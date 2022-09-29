@@ -5,8 +5,7 @@ using MATSys.Plugins;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Security.Policy;
-
-
+using System.Windows.Forms;
 
 foreach (var item in MATSysHelper.ListAllPlugins())
 {
@@ -21,7 +20,9 @@ foreach (var item in MATSysHelper.ListAllModules())
     }
 
 }
-
+//Form f = new MATSys.Configurator.Winform.Form1();
+//f.Show();
+     
 Console.ReadKey();
 
 public class Test : ModuleBase
