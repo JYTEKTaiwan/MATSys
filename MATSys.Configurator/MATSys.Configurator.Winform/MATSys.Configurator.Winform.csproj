@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MATSys.Configurator.Core\MATSys.Configurator.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="icon\" />
   </ItemGroup>
 
