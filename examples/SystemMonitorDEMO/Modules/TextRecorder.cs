@@ -1,5 +1,7 @@
 ﻿using MATSys;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,16 @@ namespace SystemMonitorDEMO.Modules
         private string fileName = "";
         private StreamWriter textWriter;
         public string Name => nameof(TextRecorder);
+
+        public JObject Export()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Export(Formatting format = Formatting.Indented)
+        {
+            return "";
+        }
 
         public void Load(IConfigurationSection section)
         {
