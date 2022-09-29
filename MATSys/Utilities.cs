@@ -165,10 +165,11 @@ public class ModuleHelper
                 if (cmd != null)
                 {
                     cmd.ConfigureCommandType(mi);
+                    yield return cmd!.GetTemplateString();
                 }
                 else
-                {                    
-                    yield return cmd!.GetTemplateString();
+                {
+                    continue;
                 }
                 
             }
