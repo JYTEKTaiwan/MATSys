@@ -101,7 +101,6 @@ namespace MATSys.Plugins
     {
         public string Type { get; set; } = "netmq";
         public bool EnableLogging { get; set; } = false;
-        public string AliasName { get; set; } = "";
         public string LocalIP { get; set; } = "";
         public int Port { get; set; } = -1;
     }
