@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Web;
 
 namespace MATSys.Configurator.Core
 {
@@ -10,8 +11,15 @@ namespace MATSys.Configurator.Core
         public AssemblyLoader(string binFolderPath)
         {
             _binFolder = binFolderPath;
-            var paths = Directory.GetFiles(binFolderPath, "*.dll").Concat(
+
+            IEnumerable<string> paths = Directory.GetFiles(binFolderPath, "*.dll");
+
+            if (Directory.Exists(binFolderPath+@"\modules"))
+            {
+                paths = paths.Concat(
                 Directory.GetFiles(binFolderPath + @"\modules", "*.dll"));
+            }
+                
             foreach (var item in paths)
             {
                 try
