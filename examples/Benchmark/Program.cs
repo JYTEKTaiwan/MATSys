@@ -1,15 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MATSys;
 using MATSys.Commands;
+using MATSys.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using System.Threading.Channels;
-using MATSys.Hosting;
-using NLog.Extensions.Logging;
 using System.Diagnostics;
-using System.Text;
-using System.Reflection;
-using Microsoft.Extensions.Options;
 
 IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
 host.RunAsync().Wait(1000); ;
@@ -26,7 +21,7 @@ for (int i = 0; i < iteration; i++)
     dev.ExecuteCommand("Dev1", $"StringMethod=\"{i}\"");
 }
 stopwatch.Stop();
-Console.WriteLine($"Total {stopwatch.Elapsed.TotalSeconds} seconds (Average:{stopwatch.Elapsed.TotalMilliseconds/ iteration} ms)");
+Console.WriteLine($"Total {stopwatch.Elapsed.TotalSeconds} seconds (Average:{stopwatch.Elapsed.TotalMilliseconds / iteration} ms)");
 
 
 Console.WriteLine("PRESS ANY KEY TO EXIT");

@@ -58,7 +58,7 @@ namespace MATSys.Factories
             var name = section.GetSection("Alias").Get<string>();
             //get the type string of the instance
             var typeString = section.GetSection("Type").Get<string>();
-            
+
             //Derive the correct Type from AppDomain.CurrentDomain
             Type t = ParseType(typeString);
 
@@ -126,8 +126,8 @@ namespace MATSys.Factories
             try
             {
 
-                assems = AppDomain.CurrentDomain.GetAssemblies();                
-                
+                assems = AppDomain.CurrentDomain.GetAssemblies();
+
                 if (!string.IsNullOrEmpty(typeString))
                 {
                     foreach (var assem in assems)
@@ -138,10 +138,10 @@ namespace MATSys.Factories
                             var obj = (IModule)Activator.CreateInstance(t, new object[] { configuration, transceiver, notifier, recorder, aliasName })!;
                             return obj;
                         }
-                    }                    
-                }   
-                 return null!;                             
-                
+                    }
+                }
+                return null!;
+
             }
             catch (Exception ex)
             {
@@ -158,7 +158,7 @@ namespace MATSys.Factories
         /// <param name="aliasName">Alias name</param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T CreateNew<T>(object parameter, ITransceiver? transceiver=null, INotifier? notifier=null, IRecorder? recorder=null, string aliasName = "") where T : IModule
+        public static T CreateNew<T>(object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "") where T : IModule
         {
             return (T)Activator.CreateInstance(typeof(T), new object[] { parameter, transceiver!, notifier!, recorder!, aliasName })!;
         }
@@ -172,7 +172,7 @@ namespace MATSys.Factories
         /// <param name="recorder">recorder instance</param>
         /// <param name="aliasName">Alias name</param>
         /// <returns>IModule instance</returns>
-        public static IModule CreateNew(Type moduleType, object parameter, ITransceiver? transceiver=null, INotifier? notifier=null, IRecorder? recorder=null, string aliasName = "")
+        public static IModule CreateNew(Type moduleType, object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")
         {
             if (typeof(IModule).IsAssignableFrom(moduleType))
             {

@@ -1,10 +1,7 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Data;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 
 namespace MATSys.Commands
 {
@@ -83,7 +80,7 @@ namespace MATSys.Commands
                 {
                     throw new ArgumentException($"parameter t is not support. {t.Name}");
                 }
-                
+
             }
             catch (Exception)
             {

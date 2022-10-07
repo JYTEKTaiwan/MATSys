@@ -56,7 +56,7 @@ namespace MATSys.Plugins
         }
         public JObject Export()
         {
-            return  JObject.FromObject(_config);
+            return JObject.FromObject(_config);
 
         }
         public string Export(Formatting format = Formatting.Indented)
@@ -67,7 +67,7 @@ namespace MATSys.Plugins
 
     }
 
-    internal sealed class QueueNotifierConfiguration: IMATSysConfiguration
+    internal sealed class QueueNotifierConfiguration : IMATSysConfiguration
     {
         public string Type { get; set; } = "queue";
         public bool EnableLogging { get; set; } = false;

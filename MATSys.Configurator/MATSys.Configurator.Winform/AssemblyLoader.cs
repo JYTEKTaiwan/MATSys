@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Web;
 
 namespace MATSys.Configurator.Core
 {
@@ -14,12 +13,12 @@ namespace MATSys.Configurator.Core
 
             IEnumerable<string> paths = Directory.GetFiles(binFolderPath, "*.dll");
 
-            if (Directory.Exists(binFolderPath+@"\modules"))
+            if (Directory.Exists(binFolderPath + @"\modules"))
             {
                 paths = paths.Concat(
                 Directory.GetFiles(binFolderPath + @"\modules", "*.dll"));
             }
-                
+
             foreach (var item in paths)
             {
                 try
@@ -180,7 +179,7 @@ namespace MATSys.Configurator.Core
 
     public class ExportUtility
     {
-        public static void SaveToFile( JsonNode node, string folderPath="")
+        public static void SaveToFile(JsonNode node, string folderPath = "")
         {
             var jsonOpt = new JsonSerializerOptions() { WriteIndented = true };
 
@@ -213,7 +212,7 @@ namespace MATSys.Configurator.Core
 
             JsonObject jRef = new JsonObject();
             var refs = list.Select(x => x.Module).Where(x => x.IsExternal).Select(x => x.AssemblyPath).Distinct().ToArray();
-            jRef.Add("Modules", JsonSerializer.SerializeToNode(refs,jsonOpt));
+            jRef.Add("Modules", JsonSerializer.SerializeToNode(refs, jsonOpt));
             refs = list.Select(x => x.Transceiver).Where(x => x.IsExternal).Select(x => x.AssemblyPath).Distinct().ToArray();
             jRef.Add("Transceivers", JsonSerializer.SerializeToNode(refs, jsonOpt));
             refs = list.Select(x => x.Notifier).Where(x => x.IsExternal).Select(x => x.AssemblyPath).Distinct().ToArray();

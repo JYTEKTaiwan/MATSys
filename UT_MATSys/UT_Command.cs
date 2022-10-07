@@ -54,7 +54,7 @@ public class UT_Command
             var str = cmd.Serialize();
             var att = new MATSysCommandAttribute("Test", typeof(Command<int>));
             var res = CommandBase.Deserialize(str, att.CommandType) as Command<int>;
-            
+
         });
     }
     private class Test

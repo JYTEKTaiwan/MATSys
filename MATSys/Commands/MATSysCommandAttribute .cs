@@ -1,9 +1,6 @@
-﻿using Newtonsoft.Json;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
 
 namespace MATSys.Commands
 {
@@ -11,7 +8,7 @@ namespace MATSys.Commands
     /// Attribute that represent the method information for MATSys to use
     /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
-    public sealed class MATSysCommandAttribute: Attribute
+    public sealed class MATSysCommandAttribute : Attribute
     {
         /// <summary>
         /// Name of the ICommand instance
@@ -22,7 +19,7 @@ namespace MATSys.Commands
         /// Type of the ICommand instance
         /// </summary>
         public Type? CommandType { get; set; }
-        
+
         public MethodInvoker? Invoker { get; set; }
 
         /// <summary>
@@ -30,8 +27,8 @@ namespace MATSys.Commands
         /// </summary>
         /// <param name="name">name</param>
         /// <param name="t"></param>
-        public MATSysCommandAttribute([CallerMemberName]string Name="", Type? Type=null)
-        {           
+        public MATSysCommandAttribute([CallerMemberName] string Name = "", Type? Type = null)
+        {
             Alias = Name;
             CommandType = Type;
         }
@@ -88,7 +85,7 @@ namespace MATSys.Commands
                 sb.Append("=");
                 for (int i = 0; i < args.Length; i++)
                 {
-                    if (args[i]==typeof(string))
+                    if (args[i] == typeof(string))
                     {
                         sb.Append($"\"{args[i].FullName}\"");
                     }

@@ -1,5 +1,4 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using MATSys;
 using MATSys.Factories;
 using MATSys.Plugins;
 using SystemMonitorDEMO.Modules;
@@ -10,22 +9,22 @@ var notConfig = new NetMQNotifierConfiguration() { Address = "127.0.0.1:5000", T
 var not = NotifierFactory.CreateNew<NetMQNotifier>(notConfig);
 
 
-var mon = ModuleFactory.CreateNew(typeof(SystemMonitor), null,recorder: rec,notifier: not);
+var mon = ModuleFactory.CreateNew(typeof(SystemMonitor), null, recorder: rec, notifier: not);
 //var mon = new SystemMonitor(null, null, null, new TextRecorder()) as IModule;
 mon.StartService(new CancellationToken());
 mon.Notifier.OnNotify += (string dataInJson) => Console.WriteLine(dataInJson);
-var id =  mon.Execute("ID=");
-var response =  mon.Execute("Machine=");
+var id = mon.Execute("ID=");
+var response = mon.Execute("Machine=");
 
 mon.Execute("StartMonitor=");
 
 var cts = new CancellationTokenSource();
-Task.Run(() => 
+Task.Run(() =>
 {
     while (!cts.IsCancellationRequested)
     {
         var data = mon.Execute("GetLatestData=");
-        Console.Write("\r"+data);
+        Console.Write("\r" + data);
     }
 });
 

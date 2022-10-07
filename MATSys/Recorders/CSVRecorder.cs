@@ -112,7 +112,7 @@ namespace MATSys.Plugins
         }
         public JObject Export()
         {
-           return JObject.FromObject(_config);
+            return JObject.FromObject(_config);
         }
         public string Export(Formatting format = Formatting.Indented)
         {
@@ -121,7 +121,7 @@ namespace MATSys.Plugins
 
     }
 
-    public class CSVRecorderConfiguration: IMATSysConfiguration
+    public class CSVRecorderConfiguration : IMATSysConfiguration
     {
         public string Type { get; set; } = "csv";
         public bool EnableLogging { get; set; } = false;

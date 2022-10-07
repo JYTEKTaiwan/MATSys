@@ -7,7 +7,7 @@ namespace MATSys.Configurator.Winform
 {
     public partial class ExportDialog : Form
     {
-        private readonly IEnumerable<MATSysInformation>  _info;
+        private readonly IEnumerable<MATSysInformation> _info;
 
         public bool EnableNLog { get; set; }
         public JsonNode Node_Nlog { get; set; }
@@ -40,7 +40,7 @@ namespace MATSys.Configurator.Winform
 
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
-            richTextBox_scripts.Visible=checkBox3.Checked;
+            richTextBox_scripts.Visible = checkBox3.Checked;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -66,7 +66,7 @@ namespace MATSys.Configurator.Winform
         {
             if (string.IsNullOrEmpty(richTextBox_nlog.Text))
             {
-                EnableNLog = false; 
+                EnableNLog = false;
             }
             else
             {

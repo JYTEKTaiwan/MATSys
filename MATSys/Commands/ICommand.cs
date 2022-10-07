@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace MATSys.Commands
+﻿namespace MATSys.Commands
 {
     public interface ICommand
     {

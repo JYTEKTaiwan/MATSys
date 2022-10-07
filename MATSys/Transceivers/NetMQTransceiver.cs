@@ -82,14 +82,14 @@ namespace MATSys.Plugins
         public void Load(object configuration)
         {
             _config = (NetMQTransceiverConfiguration)configuration;
-            _logger =_config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
+            _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
 
             _logger.Info("NetMQTransceiver is initiated");
         }
         public JObject Export()
-        {           
+        {
             return JObject.FromObject(_config);
-            
+
         }
         public string Export(Formatting format = Formatting.Indented)
         {
@@ -97,7 +97,7 @@ namespace MATSys.Plugins
         }
 
     }
-    public class NetMQTransceiverConfiguration: IMATSysConfiguration
+    public class NetMQTransceiverConfiguration : IMATSysConfiguration
     {
         public string Type { get; set; } = "netmq";
         public bool EnableLogging { get; set; } = false;

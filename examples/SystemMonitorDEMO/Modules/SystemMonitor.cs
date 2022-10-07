@@ -2,15 +2,9 @@
 using MATSys.Commands;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using NLog.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Management;
-using System.Text;
 using System.Threading.Channels;
-using System.Threading.Tasks;
 
 namespace SystemMonitorDEMO.Modules
 {
@@ -21,8 +15,8 @@ namespace SystemMonitorDEMO.Modules
         private PerformanceCounter pf_processor = new PerformanceCounter("Processor", "% Processor Time", "_Total");
         private PerformanceCounter pf_memory = new PerformanceCounter("Memory", "Available Bytes");
         private float _totalRAM = 0;
-        
-        
+
+
         public SystemMonitor(object configuration, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "") : base(configuration, transceiver, notifier, recorder, aliasName)
         {
             ManagementObjectSearcher Search = new ManagementObjectSearcher();
@@ -50,15 +44,15 @@ namespace SystemMonitorDEMO.Modules
         public void StartMonitor()
         {
             cts_pf = new CancellationTokenSource();
-            Task.Run(async () => 
+            Task.Run(async () =>
             {
                 while (!cts_pf.IsCancellationRequested)
                 {
-                    var data = new PerformanceData(pf_processor.NextValue(), (1 - pf_memory.NextValue() / _totalRAM)*100.0);
+                    var data = new PerformanceData(pf_processor.NextValue(), (1 - pf_memory.NextValue() / _totalRAM) * 100.0);
                     await _ch.Writer.WriteAsync(data);
                     Base.Recorder.Write(data);
                     Base.Notifier.Publish(data);
-                    await Task.Delay(250);                    
+                    await Task.Delay(250);
                 }
             });
         }
@@ -87,8 +81,8 @@ namespace SystemMonitorDEMO.Modules
         [MATSysCommand]
         public string GetLatestData()
         {
-             var result=_ch.Reader.ReadAsync().AsTask().Result;
-            
+            var result = _ch.Reader.ReadAsync().AsTask().Result;
+
             return JsonConvert.SerializeObject(result);
         }
 

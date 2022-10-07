@@ -1,4 +1,3 @@
-using MATSys;
 using MATSys.Factories;
 using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
@@ -31,8 +30,8 @@ public class UT_DataReocrderFactory
     public void CreateFromStaticMethod()
     {
         var a = RecorderFactory.CreateNew<CSVRecorder>(null);
-        var b = RecorderFactory.CreateNew(typeof(CSVRecorder),null);
+        var b = RecorderFactory.CreateNew(typeof(CSVRecorder), null);
 
-        Assert.IsTrue(a != null&& b!=null);
+        Assert.IsTrue(a != null && b != null);
     }
 }

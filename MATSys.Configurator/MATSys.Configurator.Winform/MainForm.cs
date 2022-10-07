@@ -158,7 +158,7 @@ namespace MATSys.Configurator.Winform
                         var item1 = _allLibs.FirstOrDefault(x => x.Type == "EmptyTransceiver");
                         var item2 = _allLibs.FirstOrDefault(x => x.Type == "EmptyNotifier");
                         var item3 = _allLibs.FirstOrDefault(x => x.Type == "EmptyRecorder");
-                        dgv.Rows.Add(null, data,item1,item2,item3);
+                        dgv.Rows.Add(null, data, item1, item2, item3);
                     }
                 }
                 else
@@ -170,7 +170,7 @@ namespace MATSys.Configurator.Winform
             dgv.DragOver += (sender, e) =>
             {
 
-                
+
                 var data = e.Data.GetData(typeof(MATSysInformation)) as MATSysInformation;
 
                 var newP = dgv.PointToClient(new Point(e.X, e.Y));
@@ -193,7 +193,7 @@ namespace MATSys.Configurator.Winform
                 }
                 else
                 {
-                    if (data.Category=="Module")
+                    if (data.Category == "Module")
                     {
                         e.Effect = DragDropEffects.Move;
                     }
@@ -201,7 +201,7 @@ namespace MATSys.Configurator.Winform
                     {
                         e.Effect = DragDropEffects.None;
                     }
-                    
+
                 }
 
 
@@ -212,7 +212,7 @@ namespace MATSys.Configurator.Winform
             #region Configure Cell Click Event
             dgv.CellClick += (sender, e) =>
             {
-                if (e.RowIndex>=0 && e.ColumnIndex>=1)
+                if (e.RowIndex >= 0 && e.ColumnIndex >= 1)
                 {
                     var value = (dgv.Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
                     if (value != null)
@@ -224,7 +224,7 @@ namespace MATSys.Configurator.Winform
                         propertyGrid1.SelectedObject = new object();
                     }
                 }
-                
+
 
             };
 
@@ -243,9 +243,9 @@ namespace MATSys.Configurator.Winform
 
         private void removeCurrentItemToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var pos=dgv.PointToClient(MousePosition);
+            var pos = dgv.PointToClient(MousePosition);
             DataGridView.HitTestInfo hit = dgv.HitTest(pos.X, pos.Y);
-            if (hit.RowIndex>=0)
+            if (hit.RowIndex >= 0)
             {
                 dgv.Rows.RemoveAt(hit.RowIndex);
             }
@@ -254,7 +254,7 @@ namespace MATSys.Configurator.Winform
         private void exportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var f = new ExportDialog(_allLibs);
-            if (f.ShowDialog()== DialogResult.OK)
+            if (f.ShowDialog() == DialogResult.OK)
             {
                 List<ExportingDataType> list = new List<ExportingDataType>();
                 foreach (DataGridViewRow item in dgv.Rows)
@@ -267,22 +267,22 @@ namespace MATSys.Configurator.Winform
                         item.Cells[4].Value as MATSysInformation
                         ));
                 }
-                var nodes=ExportUtility.ExportToJsonNode(list);
-                
+                var nodes = ExportUtility.ExportToJsonNode(list);
+
                 if (f.EnableNLog)
                 {
                     (nodes["MATSys"] as JsonObject).Add("EnableNLogInJsonFile", f.EnableNLog);
                     (nodes.Root as JsonObject).Add("NLog", f.Node_Nlog);
                 }
-                if (f.EnableTransceiver&& f.Node_Transceiver!=null)
+                if (f.EnableTransceiver && f.Node_Transceiver != null)
                 {
-                    (nodes["MATSys"] as JsonObject).Add("Transceiver", f.Node_Transceiver); 
+                    (nodes["MATSys"] as JsonObject).Add("Transceiver", f.Node_Transceiver);
                 }
                 if (f.EnableScript)
                 {
                     (nodes["MATSys"] as JsonObject).Add("Scripts", f.Node_Script);
                 }
-                ExportUtility.SaveToFile(nodes,binDirectory);
+                ExportUtility.SaveToFile(nodes, binDirectory);
 
 
 

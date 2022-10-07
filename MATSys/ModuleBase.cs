@@ -7,7 +7,6 @@ using NLog;
 using System.Data;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace MATSys
 {
@@ -226,8 +225,30 @@ namespace MATSys
             {
                 yield return GetTemplateString(item.CommandType);
             }
+
+            /* Unmerged change from project 'MATSys (net472)'
+            Before:
+                    }
+
+                    /// <summary>
+            After:
+                    }
+
+                    /// <summary>
+            */
+
+            /* Unmerged change from project 'MATSys (netstandard2.0)'
+            Before:
+                    }
+
+                    /// <summary>
+            After:
+                    }
+
+                    /// <summary>
+            */
         }
-        
+
         /// <summary>
         /// Export the ModuleBase instance to json context
         /// </summary>
@@ -256,7 +277,7 @@ namespace MATSys
         #region Private methods
 
         private Dictionary<string, MATSysCommandAttribute> ListMATSysCommands()
-        {          
+        {
             return GetType().GetMethods()
                 .Where(x => x.GetCustomAttributes<MATSysCommandAttribute>(false).Count() > 0)
                 .Select(x =>

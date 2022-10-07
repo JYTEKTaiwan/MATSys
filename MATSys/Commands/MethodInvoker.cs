@@ -1,11 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
 namespace MATSys.Commands
 {
@@ -54,7 +47,7 @@ namespace MATSys.Commands
         {
             var isNullReturn = mi.ReturnType.FullName == "System.Void";
             var parameters = mi.GetParameters().Select(x => x.ParameterType).ToArray();
-            var returnType = mi.ReturnType;            
+            var returnType = mi.ReturnType;
             switch (parameters.Length)
             {
                 case 0:

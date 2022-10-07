@@ -39,7 +39,7 @@ namespace TestDevice
         }
 
         [MATSysCommand]
-        public string Number(string c,int i,double x, Data j,bool b)
+        public string Number(string c, int i, double x, Data j, bool b)
         {
             return c;
         }

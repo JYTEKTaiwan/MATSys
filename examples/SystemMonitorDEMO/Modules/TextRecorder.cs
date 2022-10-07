@@ -2,11 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SystemMonitorDEMO.Modules
 {
@@ -36,8 +31,8 @@ namespace SystemMonitorDEMO.Modules
 
         public void StartService(CancellationToken token)
         {
-            fileName = DateTime.Now.ToString("yyyyMMddHHmmss")+".txt";
-            textWriter =File.CreateText(fileName);
+            fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + ".txt";
+            textWriter = File.CreateText(fileName);
 
         }
 

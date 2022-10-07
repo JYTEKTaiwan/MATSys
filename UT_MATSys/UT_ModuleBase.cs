@@ -68,14 +68,14 @@ public class UT_ModuleBase
         public void Exception()
         {
             throw new Exception();
-            }
+        }
 
         [MATSysCommand("WrongArgs")]
         public void WrongArgs()
         {
 
         }
-        
+
         [MATSysCommand("WrongSerDes")]
         public void WrongSerDes(int i)
         {
@@ -189,15 +189,15 @@ public class UT_ModuleBase
         dev.StopService();
         Assert.IsTrue(res.Contains(ModuleBase.cmd_execError));
     }
-      [Test]
+    [Test]
     [Category("Execute")]
     public void ExecuteSerDesError()
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
         dev.StartService(cts.Token);
-        
-        var res = dev.Execute(CommandBase.Create("WrongSerDes",8.8).Serialize());
+
+        var res = dev.Execute(CommandBase.Create("WrongSerDes", 8.8).Serialize());
         dev.StopService();
         Assert.IsTrue(res.Contains(ModuleBase.cmd_serDesError));
     }

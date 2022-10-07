@@ -1,9 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MATSys;
 using MATSys.Commands;
+using MATSys.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using MATSys.Hosting;
 using System;
 
 namespace InteractionWithHost_net472

@@ -168,7 +168,7 @@ namespace MATSys.Factories
                 return obj!;
             }
             else
-           
+
                 return DefaultInstance;
         }
 

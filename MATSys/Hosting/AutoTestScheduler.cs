@@ -1,11 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Extensions.Configuration;
 using System.Threading.Channels;
-using System.Threading.Tasks;
 
 namespace MATSys.Hosting
 {
@@ -22,7 +16,7 @@ namespace MATSys.Hosting
                 script = config.GetSection("MATSys:Scripts").Get<TestScript>();
                 testItems.AddRange(TestScript.GetTestItems(script.Setup));
                 testItems.AddRange(TestScript.GetTestItems(script.Test));
-                testItems.AddRange(TestScript.GetTestItems(script.Teardown)); 
+                testItems.AddRange(TestScript.GetTestItems(script.Teardown));
             }
 
         }

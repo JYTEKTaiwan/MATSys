@@ -3,10 +3,7 @@ using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
 using NLog;
-using System;
-using System.Xml.Linq;
 
 namespace MATSys.Hosting
 {
