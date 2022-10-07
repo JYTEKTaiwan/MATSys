@@ -56,7 +56,7 @@ public class TestDevice : ModuleBase
         public double Number { get; set; } = 0.0;
     }
 
-    [MATSysCommandAttribute("StringMethod")]
+    [MATSysCommand]
     public string Method(string c)
     {
 

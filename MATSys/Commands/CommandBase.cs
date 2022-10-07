@@ -344,7 +344,6 @@ namespace MATSys.Commands
             sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
             sb.Append(",");
             sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-
             return sb.ToString();
 
         }

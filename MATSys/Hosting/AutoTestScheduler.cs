@@ -22,11 +22,11 @@ namespace MATSys.Hosting
                 script = config.GetSection("MATSys:Scripts").Get<TestScript>();
                 testItems.AddRange(TestScript.GetTestItems(script.Setup));
                 testItems.AddRange(TestScript.GetTestItems(script.Test));
-                testItems.AddRange(TestScript.GetTestItems(script.Teardown));
+                testItems.AddRange(TestScript.GetTestItems(script.Teardown)); 
             }
 
         }
-        public void RunSetup()
+        public void AddSetupItem()
         {
             //setup
             foreach (var item in TestScript.GetTestItems(script.Setup))
@@ -35,7 +35,7 @@ namespace MATSys.Hosting
             }
 
         }
-        public void RunTeardown()
+        public void AddTearDownItem()
         {
             //teardown
             foreach (var item in TestScript.GetTestItems(script.Teardown))
@@ -44,7 +44,7 @@ namespace MATSys.Hosting
             }
         }
 
-        public void RunTestItem()
+        public void AddTestItem()
         {
             //test
             foreach (var item in TestScript.GetTestItems(script.Test))

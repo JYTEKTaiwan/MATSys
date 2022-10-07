@@ -101,8 +101,8 @@ namespace MATSys
         }
         private void AutoTesting(int iteration, CancellationToken token)
         {
-            _scheduler.RunSetup();
-            _scheduler.RunTestItem();
+            _scheduler.AddSetupItem();
+            _scheduler.AddTestItem();
             int cnt = 1;
             while (!cts.IsCancellationRequested)
             {
@@ -112,7 +112,7 @@ namespace MATSys
                 }
                 else if (!_scheduler.IsAvailable)
                 {
-                    _scheduler.RunTestItem();
+                    _scheduler.AddTestItem();
                     Interlocked.Increment(ref cnt);
                 }
                 else
@@ -121,7 +121,7 @@ namespace MATSys
                 }
 
             }
-            _scheduler.RunTeardown();
+            _scheduler.AddTearDownItem();
 
         }
         private void Setup(CancellationToken stoppingToken)
