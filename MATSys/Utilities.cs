@@ -10,8 +10,15 @@ using System.Runtime.Loader;
 
 namespace MATSys;
 
+/// <summary>
+/// Utility that dynamically load the assemblies into current appdomain
+/// </summary>
 public class DependencyLoader
 {
+    /// <summary>
+    /// Load assemblies into current appdomain
+    /// </summary>
+    /// <param name="plugins">assembly paths</param>
     public static void LoadPluginAssemblies(string[] plugins)
     {
         var assemblyPaths = AppDomain.CurrentDomain.GetAssemblies().Select(x=>x.Location);
@@ -31,8 +38,73 @@ public class DependencyLoader
 
         }
     }
+#if NET6_0_OR_GREATER
+    /// <summary>
+    /// Plugin class for .net6
+    /// </summary>
+    internal class PluginLoader : AssemblyLoadContext
+    {
+        private AssemblyDependencyResolver resolver;
+
+        public PluginLoader(string? name, bool isCollectible = true) : base(name, isCollectible)
+        {
+            resolver = new AssemblyDependencyResolver(name!);
+        }
+
+        protected override Assembly? Load(AssemblyName assemblyName)
+        {
+            string assemblyPath = resolver.ResolveAssemblyToPath(assemblyName)!;
+            if (assemblyPath != null)
+            {
+                return LoadFromAssemblyPath(assemblyPath);
+            }
+            return null;
+        }
+
+        protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
+        {
+            string libraryPath = resolver.ResolveUnmanagedDllToPath(unmanagedDllName)!;
+            if (libraryPath != null)
+            {
+                return LoadUnmanagedDllFromPath(libraryPath);
+            }
+
+            return IntPtr.Zero;
+        }
+    }
+#endif
+
+}
+public class ExceptionHandler
+{
+    public const string cmd_notFound = "ERR_NOTFOUND";
+    public const string cmd_execError = "ERR_EXEC";
+    public const string cmd_serDesError = "ERR_SerDes";
+
+    public static string PrintMessage(string prefix, Exception ex, string commandString)
+    {
+        return $"[{prefix}] {ex.Message} - {commandString}";
+    }
+    public static string PrintMessage(string prefix, Exception ex, ICommand command)
+    {
+        return $"[{prefix}] {ex.Message} - {command.Serialize()}";
+    }
+
 }
 
+#region test function
+
+/* MATSysIServiceContext class
+public class MATSysIServiceContext
+{
+    public string? Alias { get; set; }
+    public string? Category { get; set; }
+    public string? AssemblyPath { get; set; }
+    public string? Type { get; set; }
+}
+*/
+
+/* MATSysHelper class
 public class MATSysHelper
 {
     public static IEnumerable<MATSysIServiceContext> ListAllPlugins()
@@ -103,7 +175,7 @@ public class MATSysHelper
         var option = StringSplitOptions.None;
         if (input.Contains("Transceiver"))
         {
-            name = input.Split(new string[] { "Transceiver"}, option)[0];
+            name = input.Split(new string[] { "Transceiver" }, option)[0];
             type = "Transceiver";
         }
         else if (input.Contains("Notifier"))
@@ -129,8 +201,10 @@ public class MATSysHelper
 
     }
 }
+*/
 
-public class ModuleHelper
+/* ModuleHelper class
+ public class ModuleHelper
 {
     public static Type? GetModuleType(string typeName)
     {
@@ -140,7 +214,7 @@ public class ModuleHelper
     public static IEnumerable<string> ShowSupportedCommands(string typeName)
     {
         var t = GetModuleType(typeName);
-        if (t!=null)
+        if (t != null)
         {
             return ShowSupportedCommands(t);
         }
@@ -148,13 +222,13 @@ public class ModuleHelper
         {
             return new string[0];
         }
-        
+
     }
     public static IEnumerable<string> ShowSupportedCommands<T>() where T : IModule
     {
         return ShowSupportedCommands(typeof(T));
     }
-    public static IEnumerable<string> ShowSupportedCommands(Type t) 
+    public static IEnumerable<string> ShowSupportedCommands(Type t)
     {
         if (typeof(IModule).IsAssignableFrom(t))
         {
@@ -171,68 +245,15 @@ public class ModuleHelper
                 {
                     continue;
                 }
-                
+
             }
         }
-        
+
 
     }
 }
+*/
+#endregion
 
-public class MATSysIServiceContext
-{
-    public string? Alias { get; set; }
-    public string? Category { get; set; }
-    public string? AssemblyPath { get; set; }
-    public string? Type { get; set; }
-}
 
-#if NET6_0_OR_GREATER
-/// <summary>
-/// Plugin class for .net6
-/// </summary>
-internal class PluginLoader : AssemblyLoadContext
-{
-    private AssemblyDependencyResolver resolver;
-
-    public PluginLoader(string? name, bool isCollectible = true) : base(name, isCollectible)
-    {
-        resolver = new AssemblyDependencyResolver(name!);
-    }
-
-    protected override Assembly? Load(AssemblyName assemblyName)
-    {
-        string assemblyPath = resolver.ResolveAssemblyToPath(assemblyName)!;
-        if (assemblyPath != null)
-        {
-            return LoadFromAssemblyPath(assemblyPath);
-        }
-        return null;
-    }
-
-    protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
-    {
-        string libraryPath = resolver.ResolveUnmanagedDllToPath(unmanagedDllName)!;
-        if (libraryPath != null)
-        {
-            return LoadUnmanagedDllFromPath(libraryPath);
-        }
-
-        return IntPtr.Zero;
-    }
-}
-#endif
-
-internal class ExceptionHandler
-{
-    public static string PrintMessage(string prefix, Exception ex, string commandString)
-    {
-        return $"[{prefix}] {ex.Message} - {commandString}";
-    }
-    public static string PrintMessage(string prefix, Exception ex, ICommand command)
-    {
-        return $"[{prefix}] {ex.Message} - {command.Serialize()}";
-    }
-
-}
 

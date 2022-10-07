@@ -7,21 +7,16 @@ using NLog;
 using System.Data;
 using System.Reflection;
 using System.Text;
-using System.Text.Json.Serialization.Metadata;
 using System.Text.RegularExpressions;
 
 namespace MATSys
 {
+    /// <summary>
+    /// Abstract class equipped with ITransceiver, IRecorder, INotifier plugins
+    /// </summary>
     public abstract class ModuleBase : IModule
     {
         #region Private Fields
-        /// <summary>
-        /// Command string prefix
-        /// </summary>
-        public const string cmd_notFound = "ERR_NOTFOUND";
-        public const string cmd_execError = "ERR_EXEC";
-        public const string cmd_serDesError = "ERR_SerDes";
-
         /// <summary>
         /// Internal features injected
         /// </summary>
@@ -34,20 +29,48 @@ namespace MATSys
         /// private field to use
         /// </summary>
         private volatile bool _isRunning = false;
-        private static Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}");
         private readonly Dictionary<string, MATSysCommandAttribute> cmds;
         private object? _config;
 
         #endregion
 
+        /// <summary>
+        /// Running status of ModuleBase instance
+        /// </summary>
         public bool IsRunning => _isRunning;
-        ILogger IModule.Logger => _logger;
-        IRecorder IModule.Recorder => _recorder;
-        ITransceiver IModule.Transceiver => _transceiver;
-        INotifier IModule.Notifier => _notifier;
+        /// <summary>
+        /// Name of the ModuleBase instance
+        /// </summary>
         public string Name { get; }
+        /// <summary>
+        /// Instance of current ModuleBase instance
+        /// </summary>
         public IModule Base => this;
 
+        /// <summary>
+        /// ILogger instance
+        /// </summary>
+        ILogger IModule.Logger => _logger;
+
+        /// <summary>
+        /// IRecorder instance
+        /// </summary>
+        IRecorder IModule.Recorder => _recorder;
+
+        /// <summary>
+        /// ITransceiver instance
+        /// </summary>
+        ITransceiver IModule.Transceiver => _transceiver;
+
+        /// <summary>
+        /// INotifier instance
+        /// </summary>
+        INotifier IModule.Notifier => _notifier;
+
+
+        /// <summary>
+        /// Event when new data is generated inside ModuleBase instance
+        /// </summary>
         public event IModule.NewDataReady? OnDataReady;
 
         /// <summary>
@@ -72,6 +95,19 @@ namespace MATSys
             cmds = ListMATSysCommands();
             _logger.Info($"{Name} base class initialization is completed");
         }
+
+        /// <summary>
+        /// Load condfiguration from IConfigurationSection instance
+        /// </summary>
+        /// <param name="section"></param>
+        public abstract void Load(IConfigurationSection section);
+
+        /// <summary>
+        /// Load condfiguration from custom instance
+        /// </summary>
+        /// <param name="configuration"></param>
+        public abstract void Load(object configuration);
+
 
         /// <summary>
         /// Start the service
@@ -151,21 +187,21 @@ namespace MATSys
             catch (KeyNotFoundException ex)
             {
                 _logger.Warn(ex);
-                return ExceptionHandler.PrintMessage(cmd_notFound, ex, cmd);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, cmd);
 
             }
             catch (Exception ex)
             {
                 _logger.Error(ex);
-                return ExceptionHandler.PrintMessage(cmd_execError, ex, cmd);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
             }
         }
 
         /// <summary>
         /// Execute the incoming command object in string format
         /// </summary>
-        /// <param name="cmdInJson"></param>
-        /// <returns></returns>
+        /// <param name="cmdInJson">command in string format</param>
+        /// <returns>reponse after executing the commnad</returns>
         public string Execute(string cmdInJson)
         {
             try
@@ -176,16 +212,14 @@ namespace MATSys
             catch (Exception ex)
             {
                 _logger.Error(ex);
-                return ExceptionHandler.PrintMessage(cmd_execError, ex, cmdInJson);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmdInJson);
             }
         }
 
-        public abstract void Load(IConfigurationSection section);
-        public abstract void Load(object configuration);
         /// <summary>
-        /// List all methods 
+        /// List all methods in simplied string format 
         /// </summary>
-        /// <returns></returns>
+        /// <returns>collection of string</returns>
         public virtual IEnumerable<string> PrintCommands()
         {
             foreach (var item in cmds.Values)
@@ -193,11 +227,52 @@ namespace MATSys
                 yield return GetTemplateString(item.CommandType);
             }
         }
+        
         /// <summary>
-        /// Generate the command string pattern
+        /// Export the ModuleBase instance to json context
         /// </summary>
-        /// <returns>command string in simplified format</returns>
-        public string GetTemplateString(Type? t)
+        /// <returns></returns>
+        public JObject Export()
+        {
+            JObject jObj = _config == null ? new JObject() : JObject.FromObject(_config);
+            jObj.Add("Name", Name);
+            jObj.Add("Type", this.GetType().Name);
+            jObj.Add("Recorder", _recorder.Export());
+            jObj.Add("Notifier", _notifier.Export());
+            jObj.Add("Transceiver", _transceiver.Export());
+            return jObj;
+        }
+
+        /// <summary>
+        /// Export ModuleBase instance to json string format
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public string Export(Formatting format = Formatting.Indented)
+        {
+            return Export().ToString(Formatting.Indented);
+        }
+
+        #region Private methods
+
+        private Dictionary<string, MATSysCommandAttribute> ListMATSysCommands()
+        {          
+            return GetType().GetMethods()
+                .Where(x => x.GetCustomAttributes<MATSysCommandAttribute>(false).Count() > 0)
+                .Select(x =>
+                {
+                    var cmd = x.GetCustomAttribute<MATSysCommandAttribute>()!;
+
+                    //configure CommandType
+                    cmd.ConfigureCommandType(x);
+
+                    //configure MethodInvoker property
+                    cmd.Invoker = MethodInvoker.Create(this, x);
+                    return cmd;
+                }).ToDictionary(x => x.Alias);
+        }
+
+        private string GetTemplateString(Type? t)
         {
             if (t != null)
             {
@@ -222,39 +297,7 @@ namespace MATSys
 
 
         }
-        public JObject Export()
-        {
-            JObject jObj = _config == null ? new JObject() : JObject.FromObject(_config);
-            jObj.Add("Name", Name);
-            jObj.Add("Type", this.GetType().Name);
-            jObj.Add("Recorder", _recorder.Export());
-            jObj.Add("Notifier", _notifier.Export());
-            jObj.Add("Transceiver", _transceiver.Export());
-            return jObj;
-        }
-        public string Export(Formatting format = Formatting.Indented)
-        {
-            return Export().ToString(Formatting.Indented);
-        }
 
-        #region Private methods
-
-        private Dictionary<string, MATSysCommandAttribute> ListMATSysCommands()
-        {          
-            return GetType().GetMethods()
-                .Where(x => x.GetCustomAttributes<MATSysCommandAttribute>(false).Count() > 0)
-                .Select(x =>
-                {
-                    var cmd = x.GetCustomAttribute<MATSysCommandAttribute>()!;
-
-                    //configure CommandType
-                    cmd.ConfigureCommandType(x);
-
-                    //configure MethodInvoker property
-                    cmd.Invoker = MethodInvoker.Create(this, x);
-                    return cmd;
-                }).ToDictionary(x => x.Alias);
-        }
 
         /// <summary>
         /// load the configuration object
@@ -368,22 +411,22 @@ namespace MATSys
             catch (KeyNotFoundException ex)
             {
                 _logger.Warn(ex);
-                return ExceptionHandler.PrintMessage(cmd_notFound, ex, commandObjectInJson);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, commandObjectInJson);
             }
             catch (JsonReaderException ex)
             {
                 _logger.Warn(ex);
-                return ExceptionHandler.PrintMessage(cmd_serDesError, ex, commandObjectInJson);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_serDesError, ex, commandObjectInJson);
             }
             catch (JsonSerializationException ex)
             {
                 _logger.Warn(ex);
-                return ExceptionHandler.PrintMessage(cmd_serDesError, ex, commandObjectInJson);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_serDesError, ex, commandObjectInJson);
             }
             catch (Exception ex)
             {
                 _logger.Error(ex);
-                return ExceptionHandler.PrintMessage(cmd_execError, ex, commandObjectInJson);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, commandObjectInJson);
             }
         }
 

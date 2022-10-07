@@ -32,8 +32,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configurat
 		appsettings.json = appsettings.json
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{2233A937-6228-4172-B834-A6B46F8B5136}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractionWithHost", "examples\InteractionWithHost\InteractionWithHost.csproj", "{4C9D1302-D22A-447D-BA56-E92489AE5503}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractionManually", "examples\InteractionManually\InteractionManually.csproj", "{395A57B6-408C-4EB5-A030-53621AB3CFBF}"
@@ -178,26 +176,6 @@ Global
 		{11AE0A50-412B-483C-937D-F260096E0DC7}.Release|x64.Build.0 = Release|Any CPU
 		{11AE0A50-412B-483C-937D-F260096E0DC7}.Release|x86.ActiveCfg = Release|Any CPU
 		{11AE0A50-412B-483C-937D-F260096E0DC7}.Release|x86.Build.0 = Release|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Debug|ARM.Build.0 = Debug|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Debug|ARM64.ActiveCfg = Debug|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Debug|ARM64.Build.0 = Debug|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Debug|x64.Build.0 = Debug|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Debug|x86.Build.0 = Debug|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Release|ARM.ActiveCfg = Release|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Release|ARM.Build.0 = Release|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Release|ARM64.ActiveCfg = Release|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Release|ARM64.Build.0 = Release|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Release|x64.ActiveCfg = Release|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Release|x64.Build.0 = Release|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Release|x86.ActiveCfg = Release|Any CPU
-		{2233A937-6228-4172-B834-A6B46F8B5136}.Release|x86.Build.0 = Release|Any CPU
 		{4C9D1302-D22A-447D-BA56-E92489AE5503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C9D1302-D22A-447D-BA56-E92489AE5503}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C9D1302-D22A-447D-BA56-E92489AE5503}.Debug|ARM.ActiveCfg = Debug|Any CPU
@@ -305,7 +283,7 @@ Global
 		{A627F3FC-8592-4C6B-8333-0293DBE451C4} = {3787A6AD-AE85-4828-8476-2DE0E4E7F6CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
 	EndGlobalSection
 EndGlobal

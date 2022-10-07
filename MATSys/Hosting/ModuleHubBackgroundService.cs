@@ -1,6 +1,5 @@
 ﻿using MATSys.Commands;
 using MATSys.Factories;
-using MATSys.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -9,7 +8,7 @@ using NLog;
 using System;
 using System.Xml.Linq;
 
-namespace MATSys
+namespace MATSys.Hosting
 {
     public sealed class ModuleHubBackgroundService : BackgroundService
     {
@@ -28,7 +27,7 @@ namespace MATSys
         public delegate void ExecuteCompleteEvent(TestItem item, string result);
         public event ExecuteCompleteEvent? OnExecuteComplete;
 
-        public ModuleCollection Modules { get; } = new ModuleCollection();
+        public Dictionary<string, IModule> Modules { get; } = new Dictionary<string, IModule>();
         public ModuleHubBackgroundService(IServiceProvider services)
         {
             try
@@ -158,14 +157,6 @@ namespace MATSys
                 Cleanup();
             });
         }
-    }
-
-    public sealed class ModuleCollection : Dictionary<string, IModule>
-    {
-        public ModuleCollection() : base()
-        {
-        }
-
     }
 
 }

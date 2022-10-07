@@ -23,11 +23,4 @@ namespace MATSys
         /// <param name="data">Data to be written</param>
         Task WriteAsync(object data);
     }
-
-    public interface IRecorder<in T> : IRecorder
-    {
-        void Write(T data);
-
-        Task WriteAsync(T data);
-    }
 }
