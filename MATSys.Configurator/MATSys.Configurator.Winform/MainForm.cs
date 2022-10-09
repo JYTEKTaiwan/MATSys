@@ -12,9 +12,15 @@ namespace MATSys.Configurator.Winform
         private IEnumerable<MATSysInformation>? _plugins;
         private IEnumerable<MATSysInformation>? _allLibs;
 
-        public MainForm()
+        public MainForm(string rootPath)
         {
             InitializeComponent();
+
+            if (!string.IsNullOrEmpty(rootPath))
+            {
+                LoadBinDirectory(rootPath);
+            }
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -47,22 +53,28 @@ namespace MATSys.Configurator.Winform
         {
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
-                listView1.Items.Clear();
-                listView1.Groups.Clear();
-                _modules = null;
-                _plugins = null;
-                _allLibs = null;
-
-                binDirectory = folderBrowserDialog1.SelectedPath;
-                tsStatLabel.Text = $"Folder is assigned: {binDirectory}";
-                _loader = new AssemblyLoader(binDirectory);
-                _modules = _loader.ListAllModules();
-                _plugins = _loader.ListAllPlugins();
-                _allLibs = _modules.Concat(_plugins);
-
-                InitializeListView();
-                InitializeDataGridView();
+                LoadBinDirectory(folderBrowserDialog1.SelectedPath);
             }
+
+        }
+
+        private void LoadBinDirectory(string rootDirectory)
+        {
+            listView1.Items.Clear();
+            listView1.Groups.Clear();
+            _modules = null;
+            _plugins = null;
+            _allLibs = null;
+
+            binDirectory = rootDirectory;
+            tsStatLabel.Text = $"Folder is assigned: {binDirectory}";
+            _loader = new AssemblyLoader(binDirectory);
+            _modules = _loader.ListAllModules();
+            _plugins = _loader.ListAllPlugins();
+            _allLibs = _modules.Concat(_plugins);
+
+            InitializeListView();
+            InitializeDataGridView();
 
         }
         private void InitializeListView()
