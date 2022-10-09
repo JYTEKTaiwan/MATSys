@@ -23,10 +23,6 @@ namespace MATSys.Configurator.Winform
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
         private void MainForm_Shown(object sender, EventArgs e)
         {
             tsStatLabel.Text = $"Path is not assigned yet";
@@ -56,6 +52,64 @@ namespace MATSys.Configurator.Winform
                 LoadBinDirectory(folderBrowserDialog1.SelectedPath);
             }
 
+        }
+        private void listView1_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            var item = _allLibs.FirstOrDefault(x => x.Type == (e.Item as ListViewItem).SubItems[0].Text);
+            listView1.DoDragDrop(item, DragDropEffects.Move);
+
+        }
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AboutBox().ShowDialog();
+        }
+
+        private void removeCurrentItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var pos = dgv.PointToClient(MousePosition);
+            DataGridView.HitTestInfo hit = dgv.HitTest(pos.X, pos.Y);
+            if (hit.RowIndex >= 0)
+            {
+                dgv.Rows.RemoveAt(hit.RowIndex);
+            }
+        }
+
+        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var f = new ExportDialog(_allLibs);
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                List<ExportingDataType> list = new List<ExportingDataType>();
+                foreach (DataGridViewRow item in dgv.Rows)
+                {
+                    list.Add(new ExportingDataType(
+                        item.Cells[0].Value as string,
+                        item.Cells[1].Value as MATSysInformation,
+                        item.Cells[2].Value as MATSysInformation,
+                        item.Cells[3].Value as MATSysInformation,
+                        item.Cells[4].Value as MATSysInformation
+                        ));
+                }
+                var nodes = ExportUtility.ExportToJsonNode(list);
+
+                if (f.EnableNLog)
+                {
+                    (nodes["MATSys"] as JsonObject).Add("EnableNLogInJsonFile", f.EnableNLog);
+                    (nodes.Root as JsonObject).Add("NLog", f.Node_Nlog);
+                }
+                if (f.EnableTransceiver && f.Node_Transceiver != null)
+                {
+                    (nodes["MATSys"] as JsonObject).Add("Transceiver", f.Node_Transceiver);
+                }
+                if (f.EnableScript)
+                {
+                    (nodes["MATSys"] as JsonObject).Add("Scripts", f.Node_Script);
+                }
+                ExportUtility.SaveToFile(nodes, binDirectory);
+
+
+
+            }
         }
 
         private void LoadBinDirectory(string rootDirectory)
@@ -242,63 +296,7 @@ namespace MATSys.Configurator.Winform
 
             #endregion
         }
-        private void listView1_ItemDrag(object sender, ItemDragEventArgs e)
-        {
-            var item = _allLibs.FirstOrDefault(x => x.Type == (e.Item as ListViewItem).SubItems[0].Text);
-            listView1.DoDragDrop(item, DragDropEffects.Move);
-
-        }
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            new AboutBox().ShowDialog();
-        }
-
-        private void removeCurrentItemToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var pos = dgv.PointToClient(MousePosition);
-            DataGridView.HitTestInfo hit = dgv.HitTest(pos.X, pos.Y);
-            if (hit.RowIndex >= 0)
-            {
-                dgv.Rows.RemoveAt(hit.RowIndex);
-            }
-        }
-
-        private void exportToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var f = new ExportDialog(_allLibs);
-            if (f.ShowDialog() == DialogResult.OK)
-            {
-                List<ExportingDataType> list = new List<ExportingDataType>();
-                foreach (DataGridViewRow item in dgv.Rows)
-                {
-                    list.Add(new ExportingDataType(
-                        item.Cells[0].Value as string,
-                        item.Cells[1].Value as MATSysInformation,
-                        item.Cells[2].Value as MATSysInformation,
-                        item.Cells[3].Value as MATSysInformation,
-                        item.Cells[4].Value as MATSysInformation
-                        ));
-                }
-                var nodes = ExportUtility.ExportToJsonNode(list);
-
-                if (f.EnableNLog)
-                {
-                    (nodes["MATSys"] as JsonObject).Add("EnableNLogInJsonFile", f.EnableNLog);
-                    (nodes.Root as JsonObject).Add("NLog", f.Node_Nlog);
-                }
-                if (f.EnableTransceiver && f.Node_Transceiver != null)
-                {
-                    (nodes["MATSys"] as JsonObject).Add("Transceiver", f.Node_Transceiver);
-                }
-                if (f.EnableScript)
-                {
-                    (nodes["MATSys"] as JsonObject).Add("Scripts", f.Node_Script);
-                }
-                ExportUtility.SaveToFile(nodes, binDirectory);
 
 
-
-            }
-        }
     }
 }
