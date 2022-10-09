@@ -16,7 +16,7 @@ namespace MATSys.Configurator.Winform
         {
             InitializeComponent();
 
-            if (!string.IsNullOrEmpty(rootPath))
+            if (!string.IsNullOrEmpty(rootPath) && Directory.Exists(rootPath))
             {
                 LoadBinDirectory(rootPath);
             }
