@@ -20,19 +20,26 @@ namespace MATSys.Commands
         /// </summary>
         public Type? CommandType { get; set; }
 
+        /// <summary>
+        /// MethodInvoker instance
+        /// </summary>
         public MethodInvoker? Invoker { get; set; }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="name">name</param>
-        /// <param name="t"></param>
+        /// <param name="Name">Method name (if not assigned, use original method name instead)</param>
+        /// <param name="Type">Type for the Command (if not assigned, user should call ConfigureCommandType to assign manually)</param>
         public MATSysCommandAttribute([CallerMemberName] string Name = "", Type? Type = null)
         {
             Alias = Name;
             CommandType = Type;
         }
 
+        /// <summary>
+        /// Configure the command type (bypassed if command type is assigned in the constructor)
+        /// </summary>
+        /// <param name="mi">MethodInfor instance</param>
         public void ConfigureCommandType(MethodInfo mi)
         {
             if (CommandType == null)
@@ -49,32 +56,13 @@ namespace MATSys.Commands
                 }
             }
         }
-        private Type GetGenericCommandType(int count)
-        {
-            switch (count)
-            {
-                case 0:
-                    return typeof(Command);
-                case 1:
-                    return typeof(Command<>);
-                case 2:
-                    return typeof(Command<,>);
-                case 3:
-                    return typeof(Command<,,>);
-                case 4:
-                    return typeof(Command<,,,>);
-                case 5:
-                    return typeof(Command<,,,,>);
-                case 6:
-                    return typeof(Command<,,,,,>);
-                case 7:
-                    return typeof(Command<,,,,,,>);
-                default:
-                    return typeof(Command);
-            }
 
-        }
 
+        /// <summary>
+        /// Get the simplified command string 
+        /// </summary>
+        /// <returns>command string</returns>
+        /// <exception cref="ArgumentNullException">Throw when property CommandType is null</exception>
         public string GetTemplateString()
         {
             if (CommandType != null)
@@ -113,6 +101,31 @@ namespace MATSys.Commands
 
         }
 
+        private Type GetGenericCommandType(int count)
+        {
+            switch (count)
+            {
+                case 0:
+                    return typeof(Command);
+                case 1:
+                    return typeof(Command<>);
+                case 2:
+                    return typeof(Command<,>);
+                case 3:
+                    return typeof(Command<,,>);
+                case 4:
+                    return typeof(Command<,,,>);
+                case 5:
+                    return typeof(Command<,,,,>);
+                case 6:
+                    return typeof(Command<,,,,,>);
+                case 7:
+                    return typeof(Command<,,,,,,>);
+                default:
+                    return typeof(Command);
+            }
+
+        }
 
     }
 }

@@ -88,6 +88,11 @@ namespace MATSys.Commands
             }
 
         }
+        /// <summary>
+        /// Convert the input string into json format before deserialization
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static (string jsonString, int parameterCount) ConvertToJsonFormat(string input)
         {
             var sb = new StringBuilder();
@@ -125,6 +130,11 @@ namespace MATSys.Commands
         {
             return new Command(methodName);
         }
+
+        /// <summary>
+        /// Serialize the command instance into simplified string format
+        /// </summary>
+        /// <returns>simplified string</returns>
         public abstract string Serialize();
 
         /// <summary>
@@ -259,6 +269,10 @@ namespace MATSys.Commands
     /// </summary>
     public sealed class Command : CommandBase
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name"> Command name</param>
         public Command(string name) : base(name)
         {
         }
@@ -290,6 +304,11 @@ namespace MATSys.Commands
         [JsonProperty(Order = 1)]
         public ValueTuple<T1> Parameter { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name"> Command name</param>
+        /// <param name="param1"></param>
         public Command(string name, T1 param1) : base(name)
         {
             Parameter = ValueTuple.Create(param1);
@@ -324,6 +343,12 @@ namespace MATSys.Commands
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2> Parameter { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name"> Command name</param>
+        /// <param name="param1"></param>
+        /// <param name="param2"></param>
         public Command(string name, T1 param1, T2 param2) : base(name)
         {
             Parameter = ValueTuple.Create<T1, T2>(param1, param2);
@@ -358,6 +383,13 @@ namespace MATSys.Commands
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3> Parameter { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name"> Command name</param>
+        /// <param name="param1"></param>
+        /// <param name="param2"></param>
+        /// <param name="param3"></param>
         public Command(string name, T1 param1, T2 param2, T3 param3) : base(name)
         {
             Parameter = ValueTuple.Create(param1, param2, param3);
@@ -396,6 +428,14 @@ namespace MATSys.Commands
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4> Parameter { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name"> Command name</param>
+        /// <param name="param1"></param>
+        /// <param name="param2"></param>
+        /// <param name="param3"></param>
+        /// <param name="param4"></param>
         public Command(string name, T1 param1, T2 param2, T3 param3, T4 param4) : base(name)
         {
             Parameter = ValueTuple.Create<T1, T2, T3, T4>(param1, param2, param3, param4);
@@ -435,7 +475,15 @@ namespace MATSys.Commands
     {
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4, T5> Parameter { get; set; }
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name"> Command name</param>
+        /// <param name="param1"></param>
+        /// <param name="param2"></param>
+        /// <param name="param3"></param>
+        /// <param name="param4"></param>
+        /// <param name="param5"></param>
         public Command(string name, T1 param1, T2 param2, T3 param3, T4 param4, T5 param5) : base(name)
         {
             Parameter = ValueTuple.Create<T1, T2, T3, T4, T5>(param1, param2, param3, param4, param5);
@@ -479,6 +527,16 @@ namespace MATSys.Commands
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4, T5, T6> Parameter { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name"> Command name</param>
+        /// <param name="param1"></param>
+        /// <param name="param2"></param>
+        /// <param name="param3"></param>
+        /// <param name="param4"></param>
+        /// <param name="param5"></param>
+        /// <param name="param6"></param>
         public Command(string name, T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6) : base(name)
         {
             Parameter = ValueTuple.Create<T1, T2, T3, T4, T5, T6>(param1, param2, param3, param4, param5, param6);
@@ -525,6 +583,17 @@ namespace MATSys.Commands
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4, T5, T6, T7> Parameter { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="name"> Command name</param>
+        /// <param name="param1"></param>
+        /// <param name="param2"></param>
+        /// <param name="param3"></param>
+        /// <param name="param4"></param>
+        /// <param name="param5"></param>
+        /// <param name="param6"></param>
+        /// <param name="param7"></param>
         public Command(string name, T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6, T7 param7) : base(name)
         {
             Parameter = ValueTuple.Create<T1, T2, T3, T4, T5, T6, T7>(param1, param2, param3, param4, param5, param6, param7);

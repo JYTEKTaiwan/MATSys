@@ -7,7 +7,13 @@ namespace MATSys.Commands
     /// </summary>
     public abstract class MethodInvoker
     {
+        /// <summary>
+        /// Invoke the delegated method with parameters
+        /// </summary>
+        /// <param name="parameter">parameters</param>
+        /// <returns>return from delegation</returns>
         public abstract object? Invoke(params object[]? parameter);
+
 
         /// <summary>
         /// Create new Invoker instance 
@@ -15,6 +21,7 @@ namespace MATSys.Commands
         /// <param name="target">taget object</param>
         /// <param name="mi">method information</param>
         /// <returns>Invoker instance</returns>
+        /// <exception cref="NullReferenceException">Every exception</exception>
         public static MethodInvoker Create(object target, MethodInfo mi)
         {
             try
@@ -38,11 +45,11 @@ namespace MATSys.Commands
 
         }
         /// <summary>
-        /// Derive the correct Invoker instance
+        /// Derive the correct MethodInvoker type based on the input MethodInfo
         /// </summary>
         /// <param name="mi">MethodInfo</param>
-        /// <returns>Invoker Type</returns>
-        /// <exception cref="ArgumentException"></exception>        
+        /// <returns>MethodInvoker Type</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Throw if length of parameters is not between 0-7</exception>        
         private static Type GetInvokerType(MethodInfo mi)
         {
             var isNullReturn = mi.ReturnType.FullName == "System.Void";
@@ -124,7 +131,7 @@ namespace MATSys.Commands
                     }
 
                 default:
-                    throw new ArgumentException("Parameter length is incompatible");
+                    throw new ArgumentOutOfRangeException("Parameter length is incompatible");
             }
         }
     }

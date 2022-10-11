@@ -1,5 +1,8 @@
 ﻿namespace MATSys.Commands
 {
+    /// <summary>
+    /// Interface for Command
+    /// </summary>
     public interface ICommand
     {
         /// <summary>
