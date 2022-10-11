@@ -1,8 +1,19 @@
 ﻿namespace MATSys
 {
+    /// <summary>
+    /// Interface of Notifier
+    /// </summary>
     public interface INotifier : IPlugin
     {
+        /// <summary>
+        /// Indicate that new data is ready to notify 
+        /// </summary>
+        /// <param name="dataInJson"></param>
         delegate void NotifyEvent(string dataInJson);
+
+        /// <summary>
+        /// Event when new data is ready to notify
+        /// </summary>
         event NotifyEvent? OnNotify;
         /// <summary>
         /// Publish the data
