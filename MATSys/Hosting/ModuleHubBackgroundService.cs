@@ -26,6 +26,10 @@ namespace MATSys.Hosting
         /// </summary>
         /// <param name="item">TestItem instance</param>
         public delegate void ReadyToExecuteEvent(TestItem item);
+
+        /// <summary>
+        /// Event when TestItem is ready to execute
+        /// </summary>
         public event ReadyToExecuteEvent? OnReadyToExecute;
         /// <summary>
         /// Event when TestItem is executed completely
@@ -33,6 +37,9 @@ namespace MATSys.Hosting
         /// <param name="item">TestItem instsance</param>
         /// <param name="result">Executed result</param>
         public delegate void ExecuteCompleteEvent(TestItem item, string result);
+        /// <summary>
+        /// Event when TestItem is executed completely
+        /// </summary>
         public event ExecuteCompleteEvent? OnExecuteComplete;
 
         /// <summary>
@@ -40,7 +47,7 @@ namespace MATSys.Hosting
         /// </summary>
         public Dictionary<string, IModule> Modules { get; } = new Dictionary<string, IModule>();
         /// <summary>
-        /// Consructor for the background service
+        /// Constructor for the background service
         /// </summary>
         /// <param name="services">IServiceProvider instance</param>
         /// <exception cref="Exception">Every exception is included</exception>
@@ -89,7 +96,7 @@ namespace MATSys.Hosting
         /// Executes command
         /// </summary>
         /// <param name="name">Module name</param>
-        /// <param name="cmd">command string</param>
+        /// <param name="cmd">Command string</param>
         /// <returns>Response from module</returns>
         public string ExecuteCommand(string name, string cmd)
         {
@@ -128,6 +135,11 @@ namespace MATSys.Hosting
             }
         }
 
+        /// <summary>
+        /// This method will be called immediately once the host is started
+        /// </summary>
+        /// <param name="stoppingToken">Stop token</param>
+        /// <returns>Task of the execution logic</returns>
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             return Task.Run(async () =>
