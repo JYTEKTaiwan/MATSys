@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace MATSys.Factories
 {
+    /// <summary>
+    /// Factory used to create recorder
+    /// </summary>
     public sealed class RecorderFactory : IRecorderFactory
     {
 

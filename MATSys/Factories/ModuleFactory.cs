@@ -3,6 +3,9 @@ using System.Reflection;
 
 namespace MATSys.Factories
 {
+    /// <summary>
+    /// Factory used to create module 
+    /// </summary>
     public sealed class ModuleFactory : IModuleFactory
     {
 
@@ -30,7 +33,7 @@ namespace MATSys.Factories
         private readonly INotifierFactory _notifierFactory;
         private readonly IRecorderFactory _recorderFactory;
         /// <summary>
-        /// Ctor for Module factory (dynamically load the assemblies and dependencies from the specified path)
+        /// Constructor for Module factory (dynamically load the assemblies and dependencies from the specified path)
         /// </summary>
         /// <param name="config">Configuration</param>
         /// <param name="tran_factory">Factory for Transceiver</param>
@@ -156,8 +159,8 @@ namespace MATSys.Factories
         /// <param name="notifier">transceiver instance</param>
         /// <param name="recorder">recorder instance</param>
         /// <param name="aliasName">Alias name</param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="T">Type of the module, must be inherited from IModule</typeparam>
+        /// <returns><typeparamref name="T"/> instance</returns>
         public static T CreateNew<T>(object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "") where T : IModule
         {
             return (T)Activator.CreateInstance(typeof(T), new object[] { parameter, transceiver!, notifier!, recorder!, aliasName })!;

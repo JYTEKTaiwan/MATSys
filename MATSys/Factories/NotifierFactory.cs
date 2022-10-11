@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace MATSys.Factories
 {
+    /// <summary>
+    /// Factory used to create Notifier
+    /// </summary>
     public sealed class NotifierFactory : INotifierFactory
     {
         /// <summary>

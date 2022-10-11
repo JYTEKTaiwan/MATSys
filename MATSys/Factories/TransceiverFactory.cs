@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace MATSys.Factories
 {
+    /// <summary>
+    /// Factory used to create Transceiver
+    /// </summary>
     public sealed class TransceiverFactory : ITransceiverFactory
     {
         /// <summary>
