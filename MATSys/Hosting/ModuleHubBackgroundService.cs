@@ -7,6 +7,9 @@ using NLog;
 
 namespace MATSys.Hosting
 {
+    /// <summary>
+    /// A service class that handles all modules in the background, including the ability to run in script mode.
+    /// </summary>
     public sealed class ModuleHubBackgroundService : BackgroundService
     {
         private readonly IModuleFactory _moduleFactory;
@@ -18,13 +21,29 @@ namespace MATSys.Hosting
 
         private CancellationTokenSource cts = new CancellationTokenSource();
 
-
-        public delegate void ReadyToExecuteEvent(string module, string command);
+        /// <summary>
+        /// Event when TestItem is ready to execute
+        /// </summary>
+        /// <param name="item">TestItem instance</param>
+        public delegate void ReadyToExecuteEvent(TestItem item);
         public event ReadyToExecuteEvent? OnReadyToExecute;
+        /// <summary>
+        /// Event when TestItem is executed completely
+        /// </summary>
+        /// <param name="item">TestItem instsance</param>
+        /// <param name="result">Executed result</param>
         public delegate void ExecuteCompleteEvent(TestItem item, string result);
         public event ExecuteCompleteEvent? OnExecuteComplete;
 
+        /// <summary>
+        /// Dictionary for all modules in the background servie
+        /// </summary>
         public Dictionary<string, IModule> Modules { get; } = new Dictionary<string, IModule>();
+        /// <summary>
+        /// Consructor for the background service
+        /// </summary>
+        /// <param name="services">IServiceProvider instance</param>
+        /// <exception cref="Exception">Every exception is included</exception>
         public ModuleHubBackgroundService(IServiceProvider services)
         {
             try
@@ -46,14 +65,13 @@ namespace MATSys.Hosting
                 throw new Exception($"ModuleHub Initialzation failed", ex);
             }
         }
-        private string _transceiver_OnNewRequest(object sender, string commandObjectInJson)
-        {
-            //format is {Name}:{command in json formt}
-            var name = commandObjectInJson.Split(':')[0];
-            var cmd = commandObjectInJson.Split(':')[1];
-            return ExecuteCommand(name, cmd);
-        }
 
+        /// <summary>
+        /// Executes sommand 
+        /// </summary>
+        /// <param name="name">Module name</param>
+        /// <param name="cmd">ICommand instance</param>
+        /// <returns>Response from module</returns>
         public string ExecuteCommand(string name, ICommand cmd)
         {
             if (_scriptMode)
@@ -66,6 +84,13 @@ namespace MATSys.Hosting
             }
 
         }
+
+        /// <summary>
+        /// Executes command
+        /// </summary>
+        /// <param name="name">Module name</param>
+        /// <param name="cmd">command string</param>
+        /// <returns>Response from module</returns>
         public string ExecuteCommand(string name, string cmd)
         {
             if (_scriptMode)
@@ -78,6 +103,10 @@ namespace MATSys.Hosting
             }
         }
 
+        /// <summary>
+        /// Run the test in script mode (ScripMode property must be set to true in advance)
+        /// </summary>
+        /// <param name="iteration">iteration count (infinitely if value<=0)</param>
         public void RunTest(int iteration)
         {
             if (_scriptMode)
@@ -87,6 +116,9 @@ namespace MATSys.Hosting
             }
 
         }
+        /// <summary>
+        /// Stop the test in script mode
+        /// </summary>
         public void StopTest()
         {
             if (_scriptMode)
@@ -95,12 +127,40 @@ namespace MATSys.Hosting
 
             }
         }
+
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            return Task.Run(async () =>
+            {
+                Setup(stoppingToken);
+                while (!stoppingToken.IsCancellationRequested)
+                {
+                    if (SpinWait.SpinUntil(() => _scheduler.IsAvailable, 5))
+                    {
+                        var testItem = await _scheduler.Dequeue(stoppingToken);
+                        OnReadyToExecute?.Invoke(testItem);
+                        var response = Modules[testItem.ModuleName].Execute(testItem.Command);
+                        OnExecuteComplete?.Invoke(testItem, response);
+                    }
+                }
+                Cleanup();
+            });
+        }
+
+        private string _transceiver_OnNewRequest(object sender, string commandObjectInJson)
+        {
+            //format is {Name}:{command in json formt}
+            var name = commandObjectInJson.Split(':')[0];
+            var cmd = commandObjectInJson.Split(':')[1];
+            return ExecuteCommand(name, cmd);
+        }
+
         private void AutoTesting(int iteration, CancellationToken token)
         {
             _scheduler.AddSetupItem();
             _scheduler.AddTestItem();
             int cnt = 1;
-            while (!cts.IsCancellationRequested)
+            while (!token.IsCancellationRequested)
             {
                 if (cnt == iteration)
                 {
@@ -135,24 +195,6 @@ namespace MATSys.Hosting
                 item.StopService();
             }
 
-        }
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            return Task.Run(async () =>
-            {
-                Setup(stoppingToken);
-                while (!stoppingToken.IsCancellationRequested)
-                {
-                    if (SpinWait.SpinUntil(() => _scheduler.IsAvailable, 5))
-                    {
-                        var testItem = await _scheduler.Dequeue(stoppingToken);
-                        OnReadyToExecute?.Invoke(testItem.ModuleName, testItem.Command);
-                        var response = Modules[testItem.ModuleName].Execute(testItem.Command);
-                        OnExecuteComplete?.Invoke(testItem, response);
-                    }
-                }
-                Cleanup();
-            });
         }
     }
 

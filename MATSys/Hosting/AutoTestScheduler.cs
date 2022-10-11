@@ -74,10 +74,26 @@ namespace MATSys.Hosting
 
     }
 
+    /// <summary>
+    /// Represent the single test item in the script mode
+    /// </summary>
     public struct TestItem
     {
+        /// <summary>
+        /// Name of the module
+        /// </summary>
         public string ModuleName { get; set; }
+
+        /// <summary>
+        /// Command string 
+        /// </summary>
         public string Command { get; set; }
+
+        /// <summary>
+        /// Constructor for TestItem
+        /// </summary>
+        /// <param name="name">Module name</param>
+        /// <param name="cmd">Command string</param>
         public TestItem(string name, string cmd)
         {
             ModuleName = name;
