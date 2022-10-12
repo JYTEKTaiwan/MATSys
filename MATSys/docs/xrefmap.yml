@@ -1,0 +1,3036 @@
+### YamlMime:XRefMap
+sorted: true
+references:
+- uid: MATSys
+  name: MATSys
+  href: api/MATSys.html
+  commentId: N:MATSys
+  fullName: MATSys
+  nameWithType: MATSys
+- uid: MATSys.Commands
+  name: MATSys.Commands
+  href: api/MATSys.Commands.html
+  commentId: N:MATSys.Commands
+  fullName: MATSys.Commands
+  nameWithType: MATSys.Commands
+- uid: MATSys.Commands.Command
+  name: Command
+  href: api/MATSys.Commands.Command.html
+  commentId: T:MATSys.Commands.Command
+  fullName: MATSys.Commands.Command
+  nameWithType: Command
+- uid: MATSys.Commands.Command.#ctor(System.String)
+  name: Command(String)
+  href: api/MATSys.Commands.Command.html#MATSys_Commands_Command__ctor_System_String_
+  commentId: M:MATSys.Commands.Command.#ctor(System.String)
+  fullName: MATSys.Commands.Command.Command(System.String)
+  nameWithType: Command.Command(String)
+- uid: MATSys.Commands.Command.#ctor*
+  name: Command
+  href: api/MATSys.Commands.Command.html#MATSys_Commands_Command__ctor_
+  commentId: Overload:MATSys.Commands.Command.#ctor
+  isSpec: "True"
+  fullName: MATSys.Commands.Command.Command
+  nameWithType: Command.Command
+- uid: MATSys.Commands.Command.GetParameters
+  name: GetParameters()
+  href: api/MATSys.Commands.Command.html#MATSys_Commands_Command_GetParameters
+  commentId: M:MATSys.Commands.Command.GetParameters
+  fullName: MATSys.Commands.Command.GetParameters()
+  nameWithType: Command.GetParameters()
+- uid: MATSys.Commands.Command.GetParameters*
+  name: GetParameters
+  href: api/MATSys.Commands.Command.html#MATSys_Commands_Command_GetParameters_
+  commentId: Overload:MATSys.Commands.Command.GetParameters
+  isSpec: "True"
+  fullName: MATSys.Commands.Command.GetParameters
+  nameWithType: Command.GetParameters
+- uid: MATSys.Commands.Command.Serialize
+  name: Serialize()
+  href: api/MATSys.Commands.Command.html#MATSys_Commands_Command_Serialize
+  commentId: M:MATSys.Commands.Command.Serialize
+  fullName: MATSys.Commands.Command.Serialize()
+  nameWithType: Command.Serialize()
+- uid: MATSys.Commands.Command.Serialize*
+  name: Serialize
+  href: api/MATSys.Commands.Command.html#MATSys_Commands_Command_Serialize_
+  commentId: Overload:MATSys.Commands.Command.Serialize
+  isSpec: "True"
+  fullName: MATSys.Commands.Command.Serialize
+  nameWithType: Command.Serialize
+- uid: MATSys.Commands.Command`1
+  name: Command<T1>
+  href: api/MATSys.Commands.Command-1.html
+  commentId: T:MATSys.Commands.Command`1
+  name.vb: Command(Of T1)
+  fullName: MATSys.Commands.Command<T1>
+  fullName.vb: MATSys.Commands.Command(Of T1)
+  nameWithType: Command<T1>
+  nameWithType.vb: Command(Of T1)
+- uid: MATSys.Commands.Command`1.#ctor(System.String,`0)
+  name: Command(String, T1)
+  href: api/MATSys.Commands.Command-1.html#MATSys_Commands_Command_1__ctor_System_String__0_
+  commentId: M:MATSys.Commands.Command`1.#ctor(System.String,`0)
+  fullName: MATSys.Commands.Command<T1>.Command(System.String, T1)
+  fullName.vb: MATSys.Commands.Command(Of T1).Command(System.String, T1)
+  nameWithType: Command<T1>.Command(String, T1)
+  nameWithType.vb: Command(Of T1).Command(String, T1)
+- uid: MATSys.Commands.Command`1.#ctor*
+  name: Command
+  href: api/MATSys.Commands.Command-1.html#MATSys_Commands_Command_1__ctor_
+  commentId: Overload:MATSys.Commands.Command`1.#ctor
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1>.Command
+  fullName.vb: MATSys.Commands.Command(Of T1).Command
+  nameWithType: Command<T1>.Command
+  nameWithType.vb: Command(Of T1).Command
+- uid: MATSys.Commands.Command`1.GetParameters
+  name: GetParameters()
+  href: api/MATSys.Commands.Command-1.html#MATSys_Commands_Command_1_GetParameters
+  commentId: M:MATSys.Commands.Command`1.GetParameters
+  fullName: MATSys.Commands.Command<T1>.GetParameters()
+  fullName.vb: MATSys.Commands.Command(Of T1).GetParameters()
+  nameWithType: Command<T1>.GetParameters()
+  nameWithType.vb: Command(Of T1).GetParameters()
+- uid: MATSys.Commands.Command`1.GetParameters*
+  name: GetParameters
+  href: api/MATSys.Commands.Command-1.html#MATSys_Commands_Command_1_GetParameters_
+  commentId: Overload:MATSys.Commands.Command`1.GetParameters
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1>.GetParameters
+  fullName.vb: MATSys.Commands.Command(Of T1).GetParameters
+  nameWithType: Command<T1>.GetParameters
+  nameWithType.vb: Command(Of T1).GetParameters
+- uid: MATSys.Commands.Command`1.Parameter
+  name: Parameter
+  href: api/MATSys.Commands.Command-1.html#MATSys_Commands_Command_1_Parameter
+  commentId: P:MATSys.Commands.Command`1.Parameter
+  fullName: MATSys.Commands.Command<T1>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1).Parameter
+  nameWithType: Command<T1>.Parameter
+  nameWithType.vb: Command(Of T1).Parameter
+- uid: MATSys.Commands.Command`1.Parameter*
+  name: Parameter
+  href: api/MATSys.Commands.Command-1.html#MATSys_Commands_Command_1_Parameter_
+  commentId: Overload:MATSys.Commands.Command`1.Parameter
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1).Parameter
+  nameWithType: Command<T1>.Parameter
+  nameWithType.vb: Command(Of T1).Parameter
+- uid: MATSys.Commands.Command`1.Serialize
+  name: Serialize()
+  href: api/MATSys.Commands.Command-1.html#MATSys_Commands_Command_1_Serialize
+  commentId: M:MATSys.Commands.Command`1.Serialize
+  fullName: MATSys.Commands.Command<T1>.Serialize()
+  fullName.vb: MATSys.Commands.Command(Of T1).Serialize()
+  nameWithType: Command<T1>.Serialize()
+  nameWithType.vb: Command(Of T1).Serialize()
+- uid: MATSys.Commands.Command`1.Serialize*
+  name: Serialize
+  href: api/MATSys.Commands.Command-1.html#MATSys_Commands_Command_1_Serialize_
+  commentId: Overload:MATSys.Commands.Command`1.Serialize
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1>.Serialize
+  fullName.vb: MATSys.Commands.Command(Of T1).Serialize
+  nameWithType: Command<T1>.Serialize
+  nameWithType.vb: Command(Of T1).Serialize
+- uid: MATSys.Commands.Command`2
+  name: Command<T1, T2>
+  href: api/MATSys.Commands.Command-2.html
+  commentId: T:MATSys.Commands.Command`2
+  name.vb: Command(Of T1, T2)
+  fullName: MATSys.Commands.Command<T1, T2>
+  fullName.vb: MATSys.Commands.Command(Of T1, T2)
+  nameWithType: Command<T1, T2>
+  nameWithType.vb: Command(Of T1, T2)
+- uid: MATSys.Commands.Command`2.#ctor(System.String,`0,`1)
+  name: Command(String, T1, T2)
+  href: api/MATSys.Commands.Command-2.html#MATSys_Commands_Command_2__ctor_System_String__0__1_
+  commentId: M:MATSys.Commands.Command`2.#ctor(System.String,`0,`1)
+  fullName: MATSys.Commands.Command<T1, T2>.Command(System.String, T1, T2)
+  fullName.vb: MATSys.Commands.Command(Of T1, T2).Command(System.String, T1, T2)
+  nameWithType: Command<T1, T2>.Command(String, T1, T2)
+  nameWithType.vb: Command(Of T1, T2).Command(String, T1, T2)
+- uid: MATSys.Commands.Command`2.#ctor*
+  name: Command
+  href: api/MATSys.Commands.Command-2.html#MATSys_Commands_Command_2__ctor_
+  commentId: Overload:MATSys.Commands.Command`2.#ctor
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2>.Command
+  fullName.vb: MATSys.Commands.Command(Of T1, T2).Command
+  nameWithType: Command<T1, T2>.Command
+  nameWithType.vb: Command(Of T1, T2).Command
+- uid: MATSys.Commands.Command`2.GetParameters
+  name: GetParameters()
+  href: api/MATSys.Commands.Command-2.html#MATSys_Commands_Command_2_GetParameters
+  commentId: M:MATSys.Commands.Command`2.GetParameters
+  fullName: MATSys.Commands.Command<T1, T2>.GetParameters()
+  fullName.vb: MATSys.Commands.Command(Of T1, T2).GetParameters()
+  nameWithType: Command<T1, T2>.GetParameters()
+  nameWithType.vb: Command(Of T1, T2).GetParameters()
+- uid: MATSys.Commands.Command`2.GetParameters*
+  name: GetParameters
+  href: api/MATSys.Commands.Command-2.html#MATSys_Commands_Command_2_GetParameters_
+  commentId: Overload:MATSys.Commands.Command`2.GetParameters
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2>.GetParameters
+  fullName.vb: MATSys.Commands.Command(Of T1, T2).GetParameters
+  nameWithType: Command<T1, T2>.GetParameters
+  nameWithType.vb: Command(Of T1, T2).GetParameters
+- uid: MATSys.Commands.Command`2.Parameter
+  name: Parameter
+  href: api/MATSys.Commands.Command-2.html#MATSys_Commands_Command_2_Parameter
+  commentId: P:MATSys.Commands.Command`2.Parameter
+  fullName: MATSys.Commands.Command<T1, T2>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1, T2).Parameter
+  nameWithType: Command<T1, T2>.Parameter
+  nameWithType.vb: Command(Of T1, T2).Parameter
+- uid: MATSys.Commands.Command`2.Parameter*
+  name: Parameter
+  href: api/MATSys.Commands.Command-2.html#MATSys_Commands_Command_2_Parameter_
+  commentId: Overload:MATSys.Commands.Command`2.Parameter
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1, T2).Parameter
+  nameWithType: Command<T1, T2>.Parameter
+  nameWithType.vb: Command(Of T1, T2).Parameter
+- uid: MATSys.Commands.Command`2.Serialize
+  name: Serialize()
+  href: api/MATSys.Commands.Command-2.html#MATSys_Commands_Command_2_Serialize
+  commentId: M:MATSys.Commands.Command`2.Serialize
+  fullName: MATSys.Commands.Command<T1, T2>.Serialize()
+  fullName.vb: MATSys.Commands.Command(Of T1, T2).Serialize()
+  nameWithType: Command<T1, T2>.Serialize()
+  nameWithType.vb: Command(Of T1, T2).Serialize()
+- uid: MATSys.Commands.Command`2.Serialize*
+  name: Serialize
+  href: api/MATSys.Commands.Command-2.html#MATSys_Commands_Command_2_Serialize_
+  commentId: Overload:MATSys.Commands.Command`2.Serialize
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2>.Serialize
+  fullName.vb: MATSys.Commands.Command(Of T1, T2).Serialize
+  nameWithType: Command<T1, T2>.Serialize
+  nameWithType.vb: Command(Of T1, T2).Serialize
+- uid: MATSys.Commands.Command`3
+  name: Command<T1, T2, T3>
+  href: api/MATSys.Commands.Command-3.html
+  commentId: T:MATSys.Commands.Command`3
+  name.vb: Command(Of T1, T2, T3)
+  fullName: MATSys.Commands.Command<T1, T2, T3>
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3)
+  nameWithType: Command<T1, T2, T3>
+  nameWithType.vb: Command(Of T1, T2, T3)
+- uid: MATSys.Commands.Command`3.#ctor(System.String,`0,`1,`2)
+  name: Command(String, T1, T2, T3)
+  href: api/MATSys.Commands.Command-3.html#MATSys_Commands_Command_3__ctor_System_String__0__1__2_
+  commentId: M:MATSys.Commands.Command`3.#ctor(System.String,`0,`1,`2)
+  fullName: MATSys.Commands.Command<T1, T2, T3>.Command(System.String, T1, T2, T3)
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3).Command(System.String, T1, T2, T3)
+  nameWithType: Command<T1, T2, T3>.Command(String, T1, T2, T3)
+  nameWithType.vb: Command(Of T1, T2, T3).Command(String, T1, T2, T3)
+- uid: MATSys.Commands.Command`3.#ctor*
+  name: Command
+  href: api/MATSys.Commands.Command-3.html#MATSys_Commands_Command_3__ctor_
+  commentId: Overload:MATSys.Commands.Command`3.#ctor
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3>.Command
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3).Command
+  nameWithType: Command<T1, T2, T3>.Command
+  nameWithType.vb: Command(Of T1, T2, T3).Command
+- uid: MATSys.Commands.Command`3.GetParameters
+  name: GetParameters()
+  href: api/MATSys.Commands.Command-3.html#MATSys_Commands_Command_3_GetParameters
+  commentId: M:MATSys.Commands.Command`3.GetParameters
+  fullName: MATSys.Commands.Command<T1, T2, T3>.GetParameters()
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3).GetParameters()
+  nameWithType: Command<T1, T2, T3>.GetParameters()
+  nameWithType.vb: Command(Of T1, T2, T3).GetParameters()
+- uid: MATSys.Commands.Command`3.GetParameters*
+  name: GetParameters
+  href: api/MATSys.Commands.Command-3.html#MATSys_Commands_Command_3_GetParameters_
+  commentId: Overload:MATSys.Commands.Command`3.GetParameters
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3>.GetParameters
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3).GetParameters
+  nameWithType: Command<T1, T2, T3>.GetParameters
+  nameWithType.vb: Command(Of T1, T2, T3).GetParameters
+- uid: MATSys.Commands.Command`3.Parameter
+  name: Parameter
+  href: api/MATSys.Commands.Command-3.html#MATSys_Commands_Command_3_Parameter
+  commentId: P:MATSys.Commands.Command`3.Parameter
+  fullName: MATSys.Commands.Command<T1, T2, T3>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3).Parameter
+  nameWithType: Command<T1, T2, T3>.Parameter
+  nameWithType.vb: Command(Of T1, T2, T3).Parameter
+- uid: MATSys.Commands.Command`3.Parameter*
+  name: Parameter
+  href: api/MATSys.Commands.Command-3.html#MATSys_Commands_Command_3_Parameter_
+  commentId: Overload:MATSys.Commands.Command`3.Parameter
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3).Parameter
+  nameWithType: Command<T1, T2, T3>.Parameter
+  nameWithType.vb: Command(Of T1, T2, T3).Parameter
+- uid: MATSys.Commands.Command`3.Serialize
+  name: Serialize()
+  href: api/MATSys.Commands.Command-3.html#MATSys_Commands_Command_3_Serialize
+  commentId: M:MATSys.Commands.Command`3.Serialize
+  fullName: MATSys.Commands.Command<T1, T2, T3>.Serialize()
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3).Serialize()
+  nameWithType: Command<T1, T2, T3>.Serialize()
+  nameWithType.vb: Command(Of T1, T2, T3).Serialize()
+- uid: MATSys.Commands.Command`3.Serialize*
+  name: Serialize
+  href: api/MATSys.Commands.Command-3.html#MATSys_Commands_Command_3_Serialize_
+  commentId: Overload:MATSys.Commands.Command`3.Serialize
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3>.Serialize
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3).Serialize
+  nameWithType: Command<T1, T2, T3>.Serialize
+  nameWithType.vb: Command(Of T1, T2, T3).Serialize
+- uid: MATSys.Commands.Command`4
+  name: Command<T1, T2, T3, T4>
+  href: api/MATSys.Commands.Command-4.html
+  commentId: T:MATSys.Commands.Command`4
+  name.vb: Command(Of T1, T2, T3, T4)
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4>
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4)
+  nameWithType: Command<T1, T2, T3, T4>
+  nameWithType.vb: Command(Of T1, T2, T3, T4)
+- uid: MATSys.Commands.Command`4.#ctor(System.String,`0,`1,`2,`3)
+  name: Command(String, T1, T2, T3, T4)
+  href: api/MATSys.Commands.Command-4.html#MATSys_Commands_Command_4__ctor_System_String__0__1__2__3_
+  commentId: M:MATSys.Commands.Command`4.#ctor(System.String,`0,`1,`2,`3)
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4>.Command(System.String, T1, T2, T3, T4)
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4).Command(System.String, T1, T2, T3, T4)
+  nameWithType: Command<T1, T2, T3, T4>.Command(String, T1, T2, T3, T4)
+  nameWithType.vb: Command(Of T1, T2, T3, T4).Command(String, T1, T2, T3, T4)
+- uid: MATSys.Commands.Command`4.#ctor*
+  name: Command
+  href: api/MATSys.Commands.Command-4.html#MATSys_Commands_Command_4__ctor_
+  commentId: Overload:MATSys.Commands.Command`4.#ctor
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4>.Command
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4).Command
+  nameWithType: Command<T1, T2, T3, T4>.Command
+  nameWithType.vb: Command(Of T1, T2, T3, T4).Command
+- uid: MATSys.Commands.Command`4.GetParameters
+  name: GetParameters()
+  href: api/MATSys.Commands.Command-4.html#MATSys_Commands_Command_4_GetParameters
+  commentId: M:MATSys.Commands.Command`4.GetParameters
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4>.GetParameters()
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4).GetParameters()
+  nameWithType: Command<T1, T2, T3, T4>.GetParameters()
+  nameWithType.vb: Command(Of T1, T2, T3, T4).GetParameters()
+- uid: MATSys.Commands.Command`4.GetParameters*
+  name: GetParameters
+  href: api/MATSys.Commands.Command-4.html#MATSys_Commands_Command_4_GetParameters_
+  commentId: Overload:MATSys.Commands.Command`4.GetParameters
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4>.GetParameters
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4).GetParameters
+  nameWithType: Command<T1, T2, T3, T4>.GetParameters
+  nameWithType.vb: Command(Of T1, T2, T3, T4).GetParameters
+- uid: MATSys.Commands.Command`4.Parameter
+  name: Parameter
+  href: api/MATSys.Commands.Command-4.html#MATSys_Commands_Command_4_Parameter
+  commentId: P:MATSys.Commands.Command`4.Parameter
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4).Parameter
+  nameWithType: Command<T1, T2, T3, T4>.Parameter
+  nameWithType.vb: Command(Of T1, T2, T3, T4).Parameter
+- uid: MATSys.Commands.Command`4.Parameter*
+  name: Parameter
+  href: api/MATSys.Commands.Command-4.html#MATSys_Commands_Command_4_Parameter_
+  commentId: Overload:MATSys.Commands.Command`4.Parameter
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4).Parameter
+  nameWithType: Command<T1, T2, T3, T4>.Parameter
+  nameWithType.vb: Command(Of T1, T2, T3, T4).Parameter
+- uid: MATSys.Commands.Command`4.Serialize
+  name: Serialize()
+  href: api/MATSys.Commands.Command-4.html#MATSys_Commands_Command_4_Serialize
+  commentId: M:MATSys.Commands.Command`4.Serialize
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4>.Serialize()
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4).Serialize()
+  nameWithType: Command<T1, T2, T3, T4>.Serialize()
+  nameWithType.vb: Command(Of T1, T2, T3, T4).Serialize()
+- uid: MATSys.Commands.Command`4.Serialize*
+  name: Serialize
+  href: api/MATSys.Commands.Command-4.html#MATSys_Commands_Command_4_Serialize_
+  commentId: Overload:MATSys.Commands.Command`4.Serialize
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4>.Serialize
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4).Serialize
+  nameWithType: Command<T1, T2, T3, T4>.Serialize
+  nameWithType.vb: Command(Of T1, T2, T3, T4).Serialize
+- uid: MATSys.Commands.Command`5
+  name: Command<T1, T2, T3, T4, T5>
+  href: api/MATSys.Commands.Command-5.html
+  commentId: T:MATSys.Commands.Command`5
+  name.vb: Command(Of T1, T2, T3, T4, T5)
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5>
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5)
+  nameWithType: Command<T1, T2, T3, T4, T5>
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5)
+- uid: MATSys.Commands.Command`5.#ctor(System.String,`0,`1,`2,`3,`4)
+  name: Command(String, T1, T2, T3, T4, T5)
+  href: api/MATSys.Commands.Command-5.html#MATSys_Commands_Command_5__ctor_System_String__0__1__2__3__4_
+  commentId: M:MATSys.Commands.Command`5.#ctor(System.String,`0,`1,`2,`3,`4)
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5>.Command(System.String, T1, T2, T3, T4, T5)
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5).Command(System.String, T1, T2, T3, T4, T5)
+  nameWithType: Command<T1, T2, T3, T4, T5>.Command(String, T1, T2, T3, T4, T5)
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5).Command(String, T1, T2, T3, T4, T5)
+- uid: MATSys.Commands.Command`5.#ctor*
+  name: Command
+  href: api/MATSys.Commands.Command-5.html#MATSys_Commands_Command_5__ctor_
+  commentId: Overload:MATSys.Commands.Command`5.#ctor
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5>.Command
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5).Command
+  nameWithType: Command<T1, T2, T3, T4, T5>.Command
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5).Command
+- uid: MATSys.Commands.Command`5.GetParameters
+  name: GetParameters()
+  href: api/MATSys.Commands.Command-5.html#MATSys_Commands_Command_5_GetParameters
+  commentId: M:MATSys.Commands.Command`5.GetParameters
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5>.GetParameters()
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5).GetParameters()
+  nameWithType: Command<T1, T2, T3, T4, T5>.GetParameters()
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5).GetParameters()
+- uid: MATSys.Commands.Command`5.GetParameters*
+  name: GetParameters
+  href: api/MATSys.Commands.Command-5.html#MATSys_Commands_Command_5_GetParameters_
+  commentId: Overload:MATSys.Commands.Command`5.GetParameters
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5>.GetParameters
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5).GetParameters
+  nameWithType: Command<T1, T2, T3, T4, T5>.GetParameters
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5).GetParameters
+- uid: MATSys.Commands.Command`5.Parameter
+  name: Parameter
+  href: api/MATSys.Commands.Command-5.html#MATSys_Commands_Command_5_Parameter
+  commentId: P:MATSys.Commands.Command`5.Parameter
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5).Parameter
+  nameWithType: Command<T1, T2, T3, T4, T5>.Parameter
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5).Parameter
+- uid: MATSys.Commands.Command`5.Parameter*
+  name: Parameter
+  href: api/MATSys.Commands.Command-5.html#MATSys_Commands_Command_5_Parameter_
+  commentId: Overload:MATSys.Commands.Command`5.Parameter
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5).Parameter
+  nameWithType: Command<T1, T2, T3, T4, T5>.Parameter
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5).Parameter
+- uid: MATSys.Commands.Command`5.Serialize
+  name: Serialize()
+  href: api/MATSys.Commands.Command-5.html#MATSys_Commands_Command_5_Serialize
+  commentId: M:MATSys.Commands.Command`5.Serialize
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5>.Serialize()
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5).Serialize()
+  nameWithType: Command<T1, T2, T3, T4, T5>.Serialize()
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5).Serialize()
+- uid: MATSys.Commands.Command`5.Serialize*
+  name: Serialize
+  href: api/MATSys.Commands.Command-5.html#MATSys_Commands_Command_5_Serialize_
+  commentId: Overload:MATSys.Commands.Command`5.Serialize
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5>.Serialize
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5).Serialize
+  nameWithType: Command<T1, T2, T3, T4, T5>.Serialize
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5).Serialize
+- uid: MATSys.Commands.Command`6
+  name: Command<T1, T2, T3, T4, T5, T6>
+  href: api/MATSys.Commands.Command-6.html
+  commentId: T:MATSys.Commands.Command`6
+  name.vb: Command(Of T1, T2, T3, T4, T5, T6)
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6>
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6)
+  nameWithType: Command<T1, T2, T3, T4, T5, T6>
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6)
+- uid: MATSys.Commands.Command`6.#ctor(System.String,`0,`1,`2,`3,`4,`5)
+  name: Command(String, T1, T2, T3, T4, T5, T6)
+  href: api/MATSys.Commands.Command-6.html#MATSys_Commands_Command_6__ctor_System_String__0__1__2__3__4__5_
+  commentId: M:MATSys.Commands.Command`6.#ctor(System.String,`0,`1,`2,`3,`4,`5)
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6>.Command(System.String, T1, T2, T3, T4, T5, T6)
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6).Command(System.String, T1, T2, T3, T4, T5, T6)
+  nameWithType: Command<T1, T2, T3, T4, T5, T6>.Command(String, T1, T2, T3, T4, T5, T6)
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6).Command(String, T1, T2, T3, T4, T5, T6)
+- uid: MATSys.Commands.Command`6.#ctor*
+  name: Command
+  href: api/MATSys.Commands.Command-6.html#MATSys_Commands_Command_6__ctor_
+  commentId: Overload:MATSys.Commands.Command`6.#ctor
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6>.Command
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6).Command
+  nameWithType: Command<T1, T2, T3, T4, T5, T6>.Command
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6).Command
+- uid: MATSys.Commands.Command`6.GetParameters
+  name: GetParameters()
+  href: api/MATSys.Commands.Command-6.html#MATSys_Commands_Command_6_GetParameters
+  commentId: M:MATSys.Commands.Command`6.GetParameters
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6>.GetParameters()
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6).GetParameters()
+  nameWithType: Command<T1, T2, T3, T4, T5, T6>.GetParameters()
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6).GetParameters()
+- uid: MATSys.Commands.Command`6.GetParameters*
+  name: GetParameters
+  href: api/MATSys.Commands.Command-6.html#MATSys_Commands_Command_6_GetParameters_
+  commentId: Overload:MATSys.Commands.Command`6.GetParameters
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6>.GetParameters
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6).GetParameters
+  nameWithType: Command<T1, T2, T3, T4, T5, T6>.GetParameters
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6).GetParameters
+- uid: MATSys.Commands.Command`6.Parameter
+  name: Parameter
+  href: api/MATSys.Commands.Command-6.html#MATSys_Commands_Command_6_Parameter
+  commentId: P:MATSys.Commands.Command`6.Parameter
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6).Parameter
+  nameWithType: Command<T1, T2, T3, T4, T5, T6>.Parameter
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6).Parameter
+- uid: MATSys.Commands.Command`6.Parameter*
+  name: Parameter
+  href: api/MATSys.Commands.Command-6.html#MATSys_Commands_Command_6_Parameter_
+  commentId: Overload:MATSys.Commands.Command`6.Parameter
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6).Parameter
+  nameWithType: Command<T1, T2, T3, T4, T5, T6>.Parameter
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6).Parameter
+- uid: MATSys.Commands.Command`6.Serialize
+  name: Serialize()
+  href: api/MATSys.Commands.Command-6.html#MATSys_Commands_Command_6_Serialize
+  commentId: M:MATSys.Commands.Command`6.Serialize
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6>.Serialize()
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6).Serialize()
+  nameWithType: Command<T1, T2, T3, T4, T5, T6>.Serialize()
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6).Serialize()
+- uid: MATSys.Commands.Command`6.Serialize*
+  name: Serialize
+  href: api/MATSys.Commands.Command-6.html#MATSys_Commands_Command_6_Serialize_
+  commentId: Overload:MATSys.Commands.Command`6.Serialize
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6>.Serialize
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6).Serialize
+  nameWithType: Command<T1, T2, T3, T4, T5, T6>.Serialize
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6).Serialize
+- uid: MATSys.Commands.Command`7
+  name: Command<T1, T2, T3, T4, T5, T6, T7>
+  href: api/MATSys.Commands.Command-7.html
+  commentId: T:MATSys.Commands.Command`7
+  name.vb: Command(Of T1, T2, T3, T4, T5, T6, T7)
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6, T7>
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6, T7)
+  nameWithType: Command<T1, T2, T3, T4, T5, T6, T7>
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6, T7)
+- uid: MATSys.Commands.Command`7.#ctor(System.String,`0,`1,`2,`3,`4,`5,`6)
+  name: Command(String, T1, T2, T3, T4, T5, T6, T7)
+  href: api/MATSys.Commands.Command-7.html#MATSys_Commands_Command_7__ctor_System_String__0__1__2__3__4__5__6_
+  commentId: M:MATSys.Commands.Command`7.#ctor(System.String,`0,`1,`2,`3,`4,`5,`6)
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6, T7>.Command(System.String, T1, T2, T3, T4, T5, T6, T7)
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6, T7).Command(System.String, T1, T2, T3, T4, T5, T6, T7)
+  nameWithType: Command<T1, T2, T3, T4, T5, T6, T7>.Command(String, T1, T2, T3, T4, T5, T6, T7)
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6, T7).Command(String, T1, T2, T3, T4, T5, T6, T7)
+- uid: MATSys.Commands.Command`7.#ctor*
+  name: Command
+  href: api/MATSys.Commands.Command-7.html#MATSys_Commands_Command_7__ctor_
+  commentId: Overload:MATSys.Commands.Command`7.#ctor
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6, T7>.Command
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6, T7).Command
+  nameWithType: Command<T1, T2, T3, T4, T5, T6, T7>.Command
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6, T7).Command
+- uid: MATSys.Commands.Command`7.GetParameters
+  name: GetParameters()
+  href: api/MATSys.Commands.Command-7.html#MATSys_Commands_Command_7_GetParameters
+  commentId: M:MATSys.Commands.Command`7.GetParameters
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6, T7>.GetParameters()
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6, T7).GetParameters()
+  nameWithType: Command<T1, T2, T3, T4, T5, T6, T7>.GetParameters()
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6, T7).GetParameters()
+- uid: MATSys.Commands.Command`7.GetParameters*
+  name: GetParameters
+  href: api/MATSys.Commands.Command-7.html#MATSys_Commands_Command_7_GetParameters_
+  commentId: Overload:MATSys.Commands.Command`7.GetParameters
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6, T7>.GetParameters
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6, T7).GetParameters
+  nameWithType: Command<T1, T2, T3, T4, T5, T6, T7>.GetParameters
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6, T7).GetParameters
+- uid: MATSys.Commands.Command`7.Parameter
+  name: Parameter
+  href: api/MATSys.Commands.Command-7.html#MATSys_Commands_Command_7_Parameter
+  commentId: P:MATSys.Commands.Command`7.Parameter
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6, T7>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6, T7).Parameter
+  nameWithType: Command<T1, T2, T3, T4, T5, T6, T7>.Parameter
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6, T7).Parameter
+- uid: MATSys.Commands.Command`7.Parameter*
+  name: Parameter
+  href: api/MATSys.Commands.Command-7.html#MATSys_Commands_Command_7_Parameter_
+  commentId: Overload:MATSys.Commands.Command`7.Parameter
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6, T7>.Parameter
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6, T7).Parameter
+  nameWithType: Command<T1, T2, T3, T4, T5, T6, T7>.Parameter
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6, T7).Parameter
+- uid: MATSys.Commands.Command`7.Serialize
+  name: Serialize()
+  href: api/MATSys.Commands.Command-7.html#MATSys_Commands_Command_7_Serialize
+  commentId: M:MATSys.Commands.Command`7.Serialize
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6, T7>.Serialize()
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6, T7).Serialize()
+  nameWithType: Command<T1, T2, T3, T4, T5, T6, T7>.Serialize()
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6, T7).Serialize()
+- uid: MATSys.Commands.Command`7.Serialize*
+  name: Serialize
+  href: api/MATSys.Commands.Command-7.html#MATSys_Commands_Command_7_Serialize_
+  commentId: Overload:MATSys.Commands.Command`7.Serialize
+  isSpec: "True"
+  fullName: MATSys.Commands.Command<T1, T2, T3, T4, T5, T6, T7>.Serialize
+  fullName.vb: MATSys.Commands.Command(Of T1, T2, T3, T4, T5, T6, T7).Serialize
+  nameWithType: Command<T1, T2, T3, T4, T5, T6, T7>.Serialize
+  nameWithType.vb: Command(Of T1, T2, T3, T4, T5, T6, T7).Serialize
+- uid: MATSys.Commands.CommandBase
+  name: CommandBase
+  href: api/MATSys.Commands.CommandBase.html
+  commentId: T:MATSys.Commands.CommandBase
+  fullName: MATSys.Commands.CommandBase
+  nameWithType: CommandBase
+- uid: MATSys.Commands.CommandBase.#ctor(System.String)
+  name: CommandBase(String)
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase__ctor_System_String_
+  commentId: M:MATSys.Commands.CommandBase.#ctor(System.String)
+  fullName: MATSys.Commands.CommandBase.CommandBase(System.String)
+  nameWithType: CommandBase.CommandBase(String)
+- uid: MATSys.Commands.CommandBase.#ctor*
+  name: CommandBase
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase__ctor_
+  commentId: Overload:MATSys.Commands.CommandBase.#ctor
+  isSpec: "True"
+  fullName: MATSys.Commands.CommandBase.CommandBase
+  nameWithType: CommandBase.CommandBase
+- uid: MATSys.Commands.CommandBase.ConvertResultToString(System.Object)
+  name: ConvertResultToString(Object)
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_ConvertResultToString_System_Object_
+  commentId: M:MATSys.Commands.CommandBase.ConvertResultToString(System.Object)
+  fullName: MATSys.Commands.CommandBase.ConvertResultToString(System.Object)
+  nameWithType: CommandBase.ConvertResultToString(Object)
+- uid: MATSys.Commands.CommandBase.ConvertResultToString*
+  name: ConvertResultToString
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_ConvertResultToString_
+  commentId: Overload:MATSys.Commands.CommandBase.ConvertResultToString
+  isSpec: "True"
+  fullName: MATSys.Commands.CommandBase.ConvertResultToString
+  nameWithType: CommandBase.ConvertResultToString
+- uid: MATSys.Commands.CommandBase.ConvertToJsonFormat(System.String)
+  name: ConvertToJsonFormat(String)
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_ConvertToJsonFormat_System_String_
+  commentId: M:MATSys.Commands.CommandBase.ConvertToJsonFormat(System.String)
+  fullName: MATSys.Commands.CommandBase.ConvertToJsonFormat(System.String)
+  nameWithType: CommandBase.ConvertToJsonFormat(String)
+- uid: MATSys.Commands.CommandBase.ConvertToJsonFormat*
+  name: ConvertToJsonFormat
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_ConvertToJsonFormat_
+  commentId: Overload:MATSys.Commands.CommandBase.ConvertToJsonFormat
+  isSpec: "True"
+  fullName: MATSys.Commands.CommandBase.ConvertToJsonFormat
+  nameWithType: CommandBase.ConvertToJsonFormat
+- uid: MATSys.Commands.CommandBase.Create(System.String)
+  name: Create(String)
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Create_System_String_
+  commentId: M:MATSys.Commands.CommandBase.Create(System.String)
+  fullName: MATSys.Commands.CommandBase.Create(System.String)
+  nameWithType: CommandBase.Create(String)
+- uid: MATSys.Commands.CommandBase.Create*
+  name: Create
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Create_
+  commentId: Overload:MATSys.Commands.CommandBase.Create
+  isSpec: "True"
+  fullName: MATSys.Commands.CommandBase.Create
+  nameWithType: CommandBase.Create
+- uid: MATSys.Commands.CommandBase.Create``1(System.String,``0)
+  name: Create<T1>(String, T1)
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Create__1_System_String___0_
+  commentId: M:MATSys.Commands.CommandBase.Create``1(System.String,``0)
+  name.vb: Create(Of T1)(String, T1)
+  fullName: MATSys.Commands.CommandBase.Create<T1>(System.String, T1)
+  fullName.vb: MATSys.Commands.CommandBase.Create(Of T1)(System.String, T1)
+  nameWithType: CommandBase.Create<T1>(String, T1)
+  nameWithType.vb: CommandBase.Create(Of T1)(String, T1)
+- uid: MATSys.Commands.CommandBase.Create``2(System.String,``0,``1)
+  name: Create<T1, T2>(String, T1, T2)
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Create__2_System_String___0___1_
+  commentId: M:MATSys.Commands.CommandBase.Create``2(System.String,``0,``1)
+  name.vb: Create(Of T1, T2)(String, T1, T2)
+  fullName: MATSys.Commands.CommandBase.Create<T1, T2>(System.String, T1, T2)
+  fullName.vb: MATSys.Commands.CommandBase.Create(Of T1, T2)(System.String, T1, T2)
+  nameWithType: CommandBase.Create<T1, T2>(String, T1, T2)
+  nameWithType.vb: CommandBase.Create(Of T1, T2)(String, T1, T2)
+- uid: MATSys.Commands.CommandBase.Create``3(System.String,``0,``1,``2)
+  name: Create<T1, T2, T3>(String, T1, T2, T3)
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Create__3_System_String___0___1___2_
+  commentId: M:MATSys.Commands.CommandBase.Create``3(System.String,``0,``1,``2)
+  name.vb: Create(Of T1, T2, T3)(String, T1, T2, T3)
+  fullName: MATSys.Commands.CommandBase.Create<T1, T2, T3>(System.String, T1, T2, T3)
+  fullName.vb: MATSys.Commands.CommandBase.Create(Of T1, T2, T3)(System.String, T1, T2, T3)
+  nameWithType: CommandBase.Create<T1, T2, T3>(String, T1, T2, T3)
+  nameWithType.vb: CommandBase.Create(Of T1, T2, T3)(String, T1, T2, T3)
+- uid: MATSys.Commands.CommandBase.Create``4(System.String,``0,``1,``2,``3)
+  name: Create<T1, T2, T3, T4>(String, T1, T2, T3, T4)
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Create__4_System_String___0___1___2___3_
+  commentId: M:MATSys.Commands.CommandBase.Create``4(System.String,``0,``1,``2,``3)
+  name.vb: Create(Of T1, T2, T3, T4)(String, T1, T2, T3, T4)
+  fullName: MATSys.Commands.CommandBase.Create<T1, T2, T3, T4>(System.String, T1, T2, T3, T4)
+  fullName.vb: MATSys.Commands.CommandBase.Create(Of T1, T2, T3, T4)(System.String, T1, T2, T3, T4)
+  nameWithType: CommandBase.Create<T1, T2, T3, T4>(String, T1, T2, T3, T4)
+  nameWithType.vb: CommandBase.Create(Of T1, T2, T3, T4)(String, T1, T2, T3, T4)
+- uid: MATSys.Commands.CommandBase.Create``5(System.String,``0,``1,``2,``3,``4)
+  name: Create<T1, T2, T3, T4, T5>(String, T1, T2, T3, T4, T5)
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Create__5_System_String___0___1___2___3___4_
+  commentId: M:MATSys.Commands.CommandBase.Create``5(System.String,``0,``1,``2,``3,``4)
+  name.vb: Create(Of T1, T2, T3, T4, T5)(String, T1, T2, T3, T4, T5)
+  fullName: MATSys.Commands.CommandBase.Create<T1, T2, T3, T4, T5>(System.String, T1, T2, T3, T4, T5)
+  fullName.vb: MATSys.Commands.CommandBase.Create(Of T1, T2, T3, T4, T5)(System.String, T1, T2, T3, T4, T5)
+  nameWithType: CommandBase.Create<T1, T2, T3, T4, T5>(String, T1, T2, T3, T4, T5)
+  nameWithType.vb: CommandBase.Create(Of T1, T2, T3, T4, T5)(String, T1, T2, T3, T4, T5)
+- uid: MATSys.Commands.CommandBase.Create``6(System.String,``0,``1,``2,``3,``4,``5)
+  name: Create<T1, T2, T3, T4, T5, T6>(String, T1, T2, T3, T4, T5, T6)
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Create__6_System_String___0___1___2___3___4___5_
+  commentId: M:MATSys.Commands.CommandBase.Create``6(System.String,``0,``1,``2,``3,``4,``5)
+  name.vb: Create(Of T1, T2, T3, T4, T5, T6)(String, T1, T2, T3, T4, T5, T6)
+  fullName: MATSys.Commands.CommandBase.Create<T1, T2, T3, T4, T5, T6>(System.String, T1, T2, T3, T4, T5, T6)
+  fullName.vb: MATSys.Commands.CommandBase.Create(Of T1, T2, T3, T4, T5, T6)(System.String, T1, T2, T3, T4, T5, T6)
+  nameWithType: CommandBase.Create<T1, T2, T3, T4, T5, T6>(String, T1, T2, T3, T4, T5, T6)
+  nameWithType.vb: CommandBase.Create(Of T1, T2, T3, T4, T5, T6)(String, T1, T2, T3, T4, T5, T6)
+- uid: MATSys.Commands.CommandBase.Create``7(System.String,``0,``1,``2,``3,``4,``5,``6)
+  name: Create<T1, T2, T3, T4, T5, T6, T7>(String, T1, T2, T3, T4, T5, T6, T7)
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Create__7_System_String___0___1___2___3___4___5___6_
+  commentId: M:MATSys.Commands.CommandBase.Create``7(System.String,``0,``1,``2,``3,``4,``5,``6)
+  name.vb: Create(Of T1, T2, T3, T4, T5, T6, T7)(String, T1, T2, T3, T4, T5, T6, T7)
+  fullName: MATSys.Commands.CommandBase.Create<T1, T2, T3, T4, T5, T6, T7>(System.String, T1, T2, T3, T4, T5, T6, T7)
+  fullName.vb: MATSys.Commands.CommandBase.Create(Of T1, T2, T3, T4, T5, T6, T7)(System.String, T1, T2, T3, T4, T5, T6, T7)
+  nameWithType: CommandBase.Create<T1, T2, T3, T4, T5, T6, T7>(String, T1, T2, T3, T4, T5, T6, T7)
+  nameWithType.vb: CommandBase.Create(Of T1, T2, T3, T4, T5, T6, T7)(String, T1, T2, T3, T4, T5, T6, T7)
+- uid: MATSys.Commands.CommandBase.Deserialize(System.String,Type)
+  name: Deserialize(String, Type)
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Deserialize_System_String_Type_
+  commentId: M:MATSys.Commands.CommandBase.Deserialize(System.String,Type)
+  fullName: MATSys.Commands.CommandBase.Deserialize(System.String, Type)
+  nameWithType: CommandBase.Deserialize(String, Type)
+- uid: MATSys.Commands.CommandBase.Deserialize*
+  name: Deserialize
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Deserialize_
+  commentId: Overload:MATSys.Commands.CommandBase.Deserialize
+  isSpec: "True"
+  fullName: MATSys.Commands.CommandBase.Deserialize
+  nameWithType: CommandBase.Deserialize
+- uid: MATSys.Commands.CommandBase.GetParameters
+  name: GetParameters()
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_GetParameters
+  commentId: M:MATSys.Commands.CommandBase.GetParameters
+  fullName: MATSys.Commands.CommandBase.GetParameters()
+  nameWithType: CommandBase.GetParameters()
+- uid: MATSys.Commands.CommandBase.GetParameters*
+  name: GetParameters
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_GetParameters_
+  commentId: Overload:MATSys.Commands.CommandBase.GetParameters
+  isSpec: "True"
+  fullName: MATSys.Commands.CommandBase.GetParameters
+  nameWithType: CommandBase.GetParameters
+- uid: MATSys.Commands.CommandBase.MethodName
+  name: MethodName
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_MethodName
+  commentId: P:MATSys.Commands.CommandBase.MethodName
+  fullName: MATSys.Commands.CommandBase.MethodName
+  nameWithType: CommandBase.MethodName
+- uid: MATSys.Commands.CommandBase.MethodName*
+  name: MethodName
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_MethodName_
+  commentId: Overload:MATSys.Commands.CommandBase.MethodName
+  isSpec: "True"
+  fullName: MATSys.Commands.CommandBase.MethodName
+  nameWithType: CommandBase.MethodName
+- uid: MATSys.Commands.CommandBase.Serialize
+  name: Serialize()
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Serialize
+  commentId: M:MATSys.Commands.CommandBase.Serialize
+  fullName: MATSys.Commands.CommandBase.Serialize()
+  nameWithType: CommandBase.Serialize()
+- uid: MATSys.Commands.CommandBase.Serialize*
+  name: Serialize
+  href: api/MATSys.Commands.CommandBase.html#MATSys_Commands_CommandBase_Serialize_
+  commentId: Overload:MATSys.Commands.CommandBase.Serialize
+  isSpec: "True"
+  fullName: MATSys.Commands.CommandBase.Serialize
+  nameWithType: CommandBase.Serialize
+- uid: MATSys.Commands.ICommand
+  name: ICommand
+  href: api/MATSys.Commands.ICommand.html
+  commentId: T:MATSys.Commands.ICommand
+  fullName: MATSys.Commands.ICommand
+  nameWithType: ICommand
+- uid: MATSys.Commands.ICommand.ConvertResultToString(System.Object)
+  name: ConvertResultToString(Object)
+  href: api/MATSys.Commands.ICommand.html#MATSys_Commands_ICommand_ConvertResultToString_System_Object_
+  commentId: M:MATSys.Commands.ICommand.ConvertResultToString(System.Object)
+  fullName: MATSys.Commands.ICommand.ConvertResultToString(System.Object)
+  nameWithType: ICommand.ConvertResultToString(Object)
+- uid: MATSys.Commands.ICommand.ConvertResultToString*
+  name: ConvertResultToString
+  href: api/MATSys.Commands.ICommand.html#MATSys_Commands_ICommand_ConvertResultToString_
+  commentId: Overload:MATSys.Commands.ICommand.ConvertResultToString
+  isSpec: "True"
+  fullName: MATSys.Commands.ICommand.ConvertResultToString
+  nameWithType: ICommand.ConvertResultToString
+- uid: MATSys.Commands.ICommand.GetParameters
+  name: GetParameters()
+  href: api/MATSys.Commands.ICommand.html#MATSys_Commands_ICommand_GetParameters
+  commentId: M:MATSys.Commands.ICommand.GetParameters
+  fullName: MATSys.Commands.ICommand.GetParameters()
+  nameWithType: ICommand.GetParameters()
+- uid: MATSys.Commands.ICommand.GetParameters*
+  name: GetParameters
+  href: api/MATSys.Commands.ICommand.html#MATSys_Commands_ICommand_GetParameters_
+  commentId: Overload:MATSys.Commands.ICommand.GetParameters
+  isSpec: "True"
+  fullName: MATSys.Commands.ICommand.GetParameters
+  nameWithType: ICommand.GetParameters
+- uid: MATSys.Commands.ICommand.MethodName
+  name: MethodName
+  href: api/MATSys.Commands.ICommand.html#MATSys_Commands_ICommand_MethodName
+  commentId: P:MATSys.Commands.ICommand.MethodName
+  fullName: MATSys.Commands.ICommand.MethodName
+  nameWithType: ICommand.MethodName
+- uid: MATSys.Commands.ICommand.MethodName*
+  name: MethodName
+  href: api/MATSys.Commands.ICommand.html#MATSys_Commands_ICommand_MethodName_
+  commentId: Overload:MATSys.Commands.ICommand.MethodName
+  isSpec: "True"
+  fullName: MATSys.Commands.ICommand.MethodName
+  nameWithType: ICommand.MethodName
+- uid: MATSys.Commands.ICommand.Serialize
+  name: Serialize()
+  href: api/MATSys.Commands.ICommand.html#MATSys_Commands_ICommand_Serialize
+  commentId: M:MATSys.Commands.ICommand.Serialize
+  fullName: MATSys.Commands.ICommand.Serialize()
+  nameWithType: ICommand.Serialize()
+- uid: MATSys.Commands.ICommand.Serialize*
+  name: Serialize
+  href: api/MATSys.Commands.ICommand.html#MATSys_Commands_ICommand_Serialize_
+  commentId: Overload:MATSys.Commands.ICommand.Serialize
+  isSpec: "True"
+  fullName: MATSys.Commands.ICommand.Serialize
+  nameWithType: ICommand.Serialize
+- uid: MATSys.Commands.MATSysCommandAttribute
+  name: MATSysCommandAttribute
+  href: api/MATSys.Commands.MATSysCommandAttribute.html
+  commentId: T:MATSys.Commands.MATSysCommandAttribute
+  fullName: MATSys.Commands.MATSysCommandAttribute
+  nameWithType: MATSysCommandAttribute
+- uid: MATSys.Commands.MATSysCommandAttribute.#ctor(System.String,System.Nullable{Type})
+  name: MATSysCommandAttribute(String, Nullable<Type>)
+  href: api/MATSys.Commands.MATSysCommandAttribute.html#MATSys_Commands_MATSysCommandAttribute__ctor_System_String_System_Nullable_Type__
+  commentId: M:MATSys.Commands.MATSysCommandAttribute.#ctor(System.String,System.Nullable{Type})
+  name.vb: MATSysCommandAttribute(String, Nullable(Of Type))
+  fullName: MATSys.Commands.MATSysCommandAttribute.MATSysCommandAttribute(System.String, System.Nullable<Type>)
+  fullName.vb: MATSys.Commands.MATSysCommandAttribute.MATSysCommandAttribute(System.String, System.Nullable(Of Type))
+  nameWithType: MATSysCommandAttribute.MATSysCommandAttribute(String, Nullable<Type>)
+  nameWithType.vb: MATSysCommandAttribute.MATSysCommandAttribute(String, Nullable(Of Type))
+- uid: MATSys.Commands.MATSysCommandAttribute.#ctor*
+  name: MATSysCommandAttribute
+  href: api/MATSys.Commands.MATSysCommandAttribute.html#MATSys_Commands_MATSysCommandAttribute__ctor_
+  commentId: Overload:MATSys.Commands.MATSysCommandAttribute.#ctor
+  isSpec: "True"
+  fullName: MATSys.Commands.MATSysCommandAttribute.MATSysCommandAttribute
+  nameWithType: MATSysCommandAttribute.MATSysCommandAttribute
+- uid: MATSys.Commands.MATSysCommandAttribute.Alias
+  name: Alias
+  href: api/MATSys.Commands.MATSysCommandAttribute.html#MATSys_Commands_MATSysCommandAttribute_Alias
+  commentId: P:MATSys.Commands.MATSysCommandAttribute.Alias
+  fullName: MATSys.Commands.MATSysCommandAttribute.Alias
+  nameWithType: MATSysCommandAttribute.Alias
+- uid: MATSys.Commands.MATSysCommandAttribute.Alias*
+  name: Alias
+  href: api/MATSys.Commands.MATSysCommandAttribute.html#MATSys_Commands_MATSysCommandAttribute_Alias_
+  commentId: Overload:MATSys.Commands.MATSysCommandAttribute.Alias
+  isSpec: "True"
+  fullName: MATSys.Commands.MATSysCommandAttribute.Alias
+  nameWithType: MATSysCommandAttribute.Alias
+- uid: MATSys.Commands.MATSysCommandAttribute.CommandType
+  name: CommandType
+  href: api/MATSys.Commands.MATSysCommandAttribute.html#MATSys_Commands_MATSysCommandAttribute_CommandType
+  commentId: P:MATSys.Commands.MATSysCommandAttribute.CommandType
+  fullName: MATSys.Commands.MATSysCommandAttribute.CommandType
+  nameWithType: MATSysCommandAttribute.CommandType
+- uid: MATSys.Commands.MATSysCommandAttribute.CommandType*
+  name: CommandType
+  href: api/MATSys.Commands.MATSysCommandAttribute.html#MATSys_Commands_MATSysCommandAttribute_CommandType_
+  commentId: Overload:MATSys.Commands.MATSysCommandAttribute.CommandType
+  isSpec: "True"
+  fullName: MATSys.Commands.MATSysCommandAttribute.CommandType
+  nameWithType: MATSysCommandAttribute.CommandType
+- uid: MATSys.Commands.MATSysCommandAttribute.ConfigureCommandType(System.Reflection.MethodInfo)
+  name: ConfigureCommandType(MethodInfo)
+  href: api/MATSys.Commands.MATSysCommandAttribute.html#MATSys_Commands_MATSysCommandAttribute_ConfigureCommandType_System_Reflection_MethodInfo_
+  commentId: M:MATSys.Commands.MATSysCommandAttribute.ConfigureCommandType(System.Reflection.MethodInfo)
+  fullName: MATSys.Commands.MATSysCommandAttribute.ConfigureCommandType(System.Reflection.MethodInfo)
+  nameWithType: MATSysCommandAttribute.ConfigureCommandType(MethodInfo)
+- uid: MATSys.Commands.MATSysCommandAttribute.ConfigureCommandType*
+  name: ConfigureCommandType
+  href: api/MATSys.Commands.MATSysCommandAttribute.html#MATSys_Commands_MATSysCommandAttribute_ConfigureCommandType_
+  commentId: Overload:MATSys.Commands.MATSysCommandAttribute.ConfigureCommandType
+  isSpec: "True"
+  fullName: MATSys.Commands.MATSysCommandAttribute.ConfigureCommandType
+  nameWithType: MATSysCommandAttribute.ConfigureCommandType
+- uid: MATSys.Commands.MATSysCommandAttribute.GetTemplateString
+  name: GetTemplateString()
+  href: api/MATSys.Commands.MATSysCommandAttribute.html#MATSys_Commands_MATSysCommandAttribute_GetTemplateString
+  commentId: M:MATSys.Commands.MATSysCommandAttribute.GetTemplateString
+  fullName: MATSys.Commands.MATSysCommandAttribute.GetTemplateString()
+  nameWithType: MATSysCommandAttribute.GetTemplateString()
+- uid: MATSys.Commands.MATSysCommandAttribute.GetTemplateString*
+  name: GetTemplateString
+  href: api/MATSys.Commands.MATSysCommandAttribute.html#MATSys_Commands_MATSysCommandAttribute_GetTemplateString_
+  commentId: Overload:MATSys.Commands.MATSysCommandAttribute.GetTemplateString
+  isSpec: "True"
+  fullName: MATSys.Commands.MATSysCommandAttribute.GetTemplateString
+  nameWithType: MATSysCommandAttribute.GetTemplateString
+- uid: MATSys.Commands.MATSysCommandAttribute.Invoker
+  name: Invoker
+  href: api/MATSys.Commands.MATSysCommandAttribute.html#MATSys_Commands_MATSysCommandAttribute_Invoker
+  commentId: P:MATSys.Commands.MATSysCommandAttribute.Invoker
+  fullName: MATSys.Commands.MATSysCommandAttribute.Invoker
+  nameWithType: MATSysCommandAttribute.Invoker
+- uid: MATSys.Commands.MATSysCommandAttribute.Invoker*
+  name: Invoker
+  href: api/MATSys.Commands.MATSysCommandAttribute.html#MATSys_Commands_MATSysCommandAttribute_Invoker_
+  commentId: Overload:MATSys.Commands.MATSysCommandAttribute.Invoker
+  isSpec: "True"
+  fullName: MATSys.Commands.MATSysCommandAttribute.Invoker
+  nameWithType: MATSysCommandAttribute.Invoker
+- uid: MATSys.Commands.MethodInvoker
+  name: MethodInvoker
+  href: api/MATSys.Commands.MethodInvoker.html
+  commentId: T:MATSys.Commands.MethodInvoker
+  fullName: MATSys.Commands.MethodInvoker
+  nameWithType: MethodInvoker
+- uid: MATSys.Commands.MethodInvoker.Create(System.Object,System.Reflection.MethodInfo)
+  name: Create(Object, MethodInfo)
+  href: api/MATSys.Commands.MethodInvoker.html#MATSys_Commands_MethodInvoker_Create_System_Object_System_Reflection_MethodInfo_
+  commentId: M:MATSys.Commands.MethodInvoker.Create(System.Object,System.Reflection.MethodInfo)
+  fullName: MATSys.Commands.MethodInvoker.Create(System.Object, System.Reflection.MethodInfo)
+  nameWithType: MethodInvoker.Create(Object, MethodInfo)
+- uid: MATSys.Commands.MethodInvoker.Create*
+  name: Create
+  href: api/MATSys.Commands.MethodInvoker.html#MATSys_Commands_MethodInvoker_Create_
+  commentId: Overload:MATSys.Commands.MethodInvoker.Create
+  isSpec: "True"
+  fullName: MATSys.Commands.MethodInvoker.Create
+  nameWithType: MethodInvoker.Create
+- uid: MATSys.Commands.MethodInvoker.Invoke(System.Object[])
+  name: Invoke(Object[])
+  href: api/MATSys.Commands.MethodInvoker.html#MATSys_Commands_MethodInvoker_Invoke_System_Object___
+  commentId: M:MATSys.Commands.MethodInvoker.Invoke(System.Object[])
+  name.vb: Invoke(Object())
+  fullName: MATSys.Commands.MethodInvoker.Invoke(System.Object[])
+  fullName.vb: MATSys.Commands.MethodInvoker.Invoke(System.Object())
+  nameWithType: MethodInvoker.Invoke(Object[])
+  nameWithType.vb: MethodInvoker.Invoke(Object())
+- uid: MATSys.Commands.MethodInvoker.Invoke*
+  name: Invoke
+  href: api/MATSys.Commands.MethodInvoker.html#MATSys_Commands_MethodInvoker_Invoke_
+  commentId: Overload:MATSys.Commands.MethodInvoker.Invoke
+  isSpec: "True"
+  fullName: MATSys.Commands.MethodInvoker.Invoke
+  nameWithType: MethodInvoker.Invoke
+- uid: MATSys.DependencyLoader
+  name: DependencyLoader
+  href: api/MATSys.DependencyLoader.html
+  commentId: T:MATSys.DependencyLoader
+  fullName: MATSys.DependencyLoader
+  nameWithType: DependencyLoader
+- uid: MATSys.DependencyLoader.LoadPluginAssemblies(System.String[])
+  name: LoadPluginAssemblies(String[])
+  href: api/MATSys.DependencyLoader.html#MATSys_DependencyLoader_LoadPluginAssemblies_System_String___
+  commentId: M:MATSys.DependencyLoader.LoadPluginAssemblies(System.String[])
+  name.vb: LoadPluginAssemblies(String())
+  fullName: MATSys.DependencyLoader.LoadPluginAssemblies(System.String[])
+  fullName.vb: MATSys.DependencyLoader.LoadPluginAssemblies(System.String())
+  nameWithType: DependencyLoader.LoadPluginAssemblies(String[])
+  nameWithType.vb: DependencyLoader.LoadPluginAssemblies(String())
+- uid: MATSys.DependencyLoader.LoadPluginAssemblies*
+  name: LoadPluginAssemblies
+  href: api/MATSys.DependencyLoader.html#MATSys_DependencyLoader_LoadPluginAssemblies_
+  commentId: Overload:MATSys.DependencyLoader.LoadPluginAssemblies
+  isSpec: "True"
+  fullName: MATSys.DependencyLoader.LoadPluginAssemblies
+  nameWithType: DependencyLoader.LoadPluginAssemblies
+- uid: MATSys.ExceptionHandler
+  name: ExceptionHandler
+  href: api/MATSys.ExceptionHandler.html
+  commentId: T:MATSys.ExceptionHandler
+  fullName: MATSys.ExceptionHandler
+  nameWithType: ExceptionHandler
+- uid: MATSys.ExceptionHandler.cmd_execError
+  name: cmd_execError
+  href: api/MATSys.ExceptionHandler.html#MATSys_ExceptionHandler_cmd_execError
+  commentId: F:MATSys.ExceptionHandler.cmd_execError
+  fullName: MATSys.ExceptionHandler.cmd_execError
+  nameWithType: ExceptionHandler.cmd_execError
+- uid: MATSys.ExceptionHandler.cmd_notFound
+  name: cmd_notFound
+  href: api/MATSys.ExceptionHandler.html#MATSys_ExceptionHandler_cmd_notFound
+  commentId: F:MATSys.ExceptionHandler.cmd_notFound
+  fullName: MATSys.ExceptionHandler.cmd_notFound
+  nameWithType: ExceptionHandler.cmd_notFound
+- uid: MATSys.ExceptionHandler.cmd_serDesError
+  name: cmd_serDesError
+  href: api/MATSys.ExceptionHandler.html#MATSys_ExceptionHandler_cmd_serDesError
+  commentId: F:MATSys.ExceptionHandler.cmd_serDesError
+  fullName: MATSys.ExceptionHandler.cmd_serDesError
+  nameWithType: ExceptionHandler.cmd_serDesError
+- uid: MATSys.ExceptionHandler.PrintMessage(System.String,Exception,MATSys.Commands.ICommand)
+  name: PrintMessage(String, Exception, ICommand)
+  href: api/MATSys.ExceptionHandler.html#MATSys_ExceptionHandler_PrintMessage_System_String_Exception_MATSys_Commands_ICommand_
+  commentId: M:MATSys.ExceptionHandler.PrintMessage(System.String,Exception,MATSys.Commands.ICommand)
+  fullName: MATSys.ExceptionHandler.PrintMessage(System.String, Exception, MATSys.Commands.ICommand)
+  nameWithType: ExceptionHandler.PrintMessage(String, Exception, ICommand)
+- uid: MATSys.ExceptionHandler.PrintMessage(System.String,Exception,System.String)
+  name: PrintMessage(String, Exception, String)
+  href: api/MATSys.ExceptionHandler.html#MATSys_ExceptionHandler_PrintMessage_System_String_Exception_System_String_
+  commentId: M:MATSys.ExceptionHandler.PrintMessage(System.String,Exception,System.String)
+  fullName: MATSys.ExceptionHandler.PrintMessage(System.String, Exception, System.String)
+  nameWithType: ExceptionHandler.PrintMessage(String, Exception, String)
+- uid: MATSys.ExceptionHandler.PrintMessage*
+  name: PrintMessage
+  href: api/MATSys.ExceptionHandler.html#MATSys_ExceptionHandler_PrintMessage_
+  commentId: Overload:MATSys.ExceptionHandler.PrintMessage
+  isSpec: "True"
+  fullName: MATSys.ExceptionHandler.PrintMessage
+  nameWithType: ExceptionHandler.PrintMessage
+- uid: MATSys.Factories
+  name: MATSys.Factories
+  href: api/MATSys.Factories.html
+  commentId: N:MATSys.Factories
+  fullName: MATSys.Factories
+  nameWithType: MATSys.Factories
+- uid: MATSys.Factories.IModuleFactory
+  name: IModuleFactory
+  href: api/MATSys.Factories.IModuleFactory.html
+  commentId: T:MATSys.Factories.IModuleFactory
+  fullName: MATSys.Factories.IModuleFactory
+  nameWithType: IModuleFactory
+- uid: MATSys.Factories.IModuleFactory.CreateModule(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: CreateModule(IConfigurationSection)
+  href: api/MATSys.Factories.IModuleFactory.html#MATSys_Factories_IModuleFactory_CreateModule_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Factories.IModuleFactory.CreateModule(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Factories.IModuleFactory.CreateModule(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: IModuleFactory.CreateModule(IConfigurationSection)
+- uid: MATSys.Factories.IModuleFactory.CreateModule*
+  name: CreateModule
+  href: api/MATSys.Factories.IModuleFactory.html#MATSys_Factories_IModuleFactory_CreateModule_
+  commentId: Overload:MATSys.Factories.IModuleFactory.CreateModule
+  isSpec: "True"
+  fullName: MATSys.Factories.IModuleFactory.CreateModule
+  nameWithType: IModuleFactory.CreateModule
+- uid: MATSys.Factories.INotifierFactory
+  name: INotifierFactory
+  href: api/MATSys.Factories.INotifierFactory.html
+  commentId: T:MATSys.Factories.INotifierFactory
+  fullName: MATSys.Factories.INotifierFactory
+  nameWithType: INotifierFactory
+- uid: MATSys.Factories.INotifierFactory.CreateNotifier(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: CreateNotifier(IConfigurationSection)
+  href: api/MATSys.Factories.INotifierFactory.html#MATSys_Factories_INotifierFactory_CreateNotifier_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Factories.INotifierFactory.CreateNotifier(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Factories.INotifierFactory.CreateNotifier(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: INotifierFactory.CreateNotifier(IConfigurationSection)
+- uid: MATSys.Factories.INotifierFactory.CreateNotifier*
+  name: CreateNotifier
+  href: api/MATSys.Factories.INotifierFactory.html#MATSys_Factories_INotifierFactory_CreateNotifier_
+  commentId: Overload:MATSys.Factories.INotifierFactory.CreateNotifier
+  isSpec: "True"
+  fullName: MATSys.Factories.INotifierFactory.CreateNotifier
+  nameWithType: INotifierFactory.CreateNotifier
+- uid: MATSys.Factories.IRecorderFactory
+  name: IRecorderFactory
+  href: api/MATSys.Factories.IRecorderFactory.html
+  commentId: T:MATSys.Factories.IRecorderFactory
+  fullName: MATSys.Factories.IRecorderFactory
+  nameWithType: IRecorderFactory
+- uid: MATSys.Factories.IRecorderFactory.CreateRecorder(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: CreateRecorder(IConfigurationSection)
+  href: api/MATSys.Factories.IRecorderFactory.html#MATSys_Factories_IRecorderFactory_CreateRecorder_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Factories.IRecorderFactory.CreateRecorder(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Factories.IRecorderFactory.CreateRecorder(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: IRecorderFactory.CreateRecorder(IConfigurationSection)
+- uid: MATSys.Factories.IRecorderFactory.CreateRecorder*
+  name: CreateRecorder
+  href: api/MATSys.Factories.IRecorderFactory.html#MATSys_Factories_IRecorderFactory_CreateRecorder_
+  commentId: Overload:MATSys.Factories.IRecorderFactory.CreateRecorder
+  isSpec: "True"
+  fullName: MATSys.Factories.IRecorderFactory.CreateRecorder
+  nameWithType: IRecorderFactory.CreateRecorder
+- uid: MATSys.Factories.ITransceiverFactory
+  name: ITransceiverFactory
+  href: api/MATSys.Factories.ITransceiverFactory.html
+  commentId: T:MATSys.Factories.ITransceiverFactory
+  fullName: MATSys.Factories.ITransceiverFactory
+  nameWithType: ITransceiverFactory
+- uid: MATSys.Factories.ITransceiverFactory.CreateTransceiver(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: CreateTransceiver(IConfigurationSection)
+  href: api/MATSys.Factories.ITransceiverFactory.html#MATSys_Factories_ITransceiverFactory_CreateTransceiver_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Factories.ITransceiverFactory.CreateTransceiver(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Factories.ITransceiverFactory.CreateTransceiver(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: ITransceiverFactory.CreateTransceiver(IConfigurationSection)
+- uid: MATSys.Factories.ITransceiverFactory.CreateTransceiver*
+  name: CreateTransceiver
+  href: api/MATSys.Factories.ITransceiverFactory.html#MATSys_Factories_ITransceiverFactory_CreateTransceiver_
+  commentId: Overload:MATSys.Factories.ITransceiverFactory.CreateTransceiver
+  isSpec: "True"
+  fullName: MATSys.Factories.ITransceiverFactory.CreateTransceiver
+  nameWithType: ITransceiverFactory.CreateTransceiver
+- uid: MATSys.Factories.ModuleFactory
+  name: ModuleFactory
+  href: api/MATSys.Factories.ModuleFactory.html
+  commentId: T:MATSys.Factories.ModuleFactory
+  fullName: MATSys.Factories.ModuleFactory
+  nameWithType: ModuleFactory
+- uid: MATSys.Factories.ModuleFactory.#ctor(Microsoft.Extensions.Configuration.IConfiguration,MATSys.Factories.ITransceiverFactory,MATSys.Factories.INotifierFactory,MATSys.Factories.IRecorderFactory)
+  name: ModuleFactory(IConfiguration, ITransceiverFactory, INotifierFactory, IRecorderFactory)
+  href: api/MATSys.Factories.ModuleFactory.html#MATSys_Factories_ModuleFactory__ctor_Microsoft_Extensions_Configuration_IConfiguration_MATSys_Factories_ITransceiverFactory_MATSys_Factories_INotifierFactory_MATSys_Factories_IRecorderFactory_
+  commentId: M:MATSys.Factories.ModuleFactory.#ctor(Microsoft.Extensions.Configuration.IConfiguration,MATSys.Factories.ITransceiverFactory,MATSys.Factories.INotifierFactory,MATSys.Factories.IRecorderFactory)
+  fullName: MATSys.Factories.ModuleFactory.ModuleFactory(Microsoft.Extensions.Configuration.IConfiguration, MATSys.Factories.ITransceiverFactory, MATSys.Factories.INotifierFactory, MATSys.Factories.IRecorderFactory)
+  nameWithType: ModuleFactory.ModuleFactory(IConfiguration, ITransceiverFactory, INotifierFactory, IRecorderFactory)
+- uid: MATSys.Factories.ModuleFactory.#ctor*
+  name: ModuleFactory
+  href: api/MATSys.Factories.ModuleFactory.html#MATSys_Factories_ModuleFactory__ctor_
+  commentId: Overload:MATSys.Factories.ModuleFactory.#ctor
+  isSpec: "True"
+  fullName: MATSys.Factories.ModuleFactory.ModuleFactory
+  nameWithType: ModuleFactory.ModuleFactory
+- uid: MATSys.Factories.ModuleFactory.CreateModule(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: CreateModule(IConfigurationSection)
+  href: api/MATSys.Factories.ModuleFactory.html#MATSys_Factories_ModuleFactory_CreateModule_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Factories.ModuleFactory.CreateModule(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Factories.ModuleFactory.CreateModule(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: ModuleFactory.CreateModule(IConfigurationSection)
+- uid: MATSys.Factories.ModuleFactory.CreateModule*
+  name: CreateModule
+  href: api/MATSys.Factories.ModuleFactory.html#MATSys_Factories_ModuleFactory_CreateModule_
+  commentId: Overload:MATSys.Factories.ModuleFactory.CreateModule
+  isSpec: "True"
+  fullName: MATSys.Factories.ModuleFactory.CreateModule
+  nameWithType: ModuleFactory.CreateModule
+- uid: MATSys.Factories.ModuleFactory.CreateNew(System.String,System.String,System.Object,MATSys.ITransceiver,MATSys.INotifier,MATSys.IRecorder,System.String)
+  name: CreateNew(String, String, Object, ITransceiver, INotifier, IRecorder, String)
+  href: api/MATSys.Factories.ModuleFactory.html#MATSys_Factories_ModuleFactory_CreateNew_System_String_System_String_System_Object_MATSys_ITransceiver_MATSys_INotifier_MATSys_IRecorder_System_String_
+  commentId: M:MATSys.Factories.ModuleFactory.CreateNew(System.String,System.String,System.Object,MATSys.ITransceiver,MATSys.INotifier,MATSys.IRecorder,System.String)
+  fullName: MATSys.Factories.ModuleFactory.CreateNew(System.String, System.String, System.Object, MATSys.ITransceiver, MATSys.INotifier, MATSys.IRecorder, System.String)
+  nameWithType: ModuleFactory.CreateNew(String, String, Object, ITransceiver, INotifier, IRecorder, String)
+- uid: MATSys.Factories.ModuleFactory.CreateNew(Type,System.Object,MATSys.ITransceiver,MATSys.INotifier,MATSys.IRecorder,System.String)
+  name: CreateNew(Type, Object, ITransceiver, INotifier, IRecorder, String)
+  href: api/MATSys.Factories.ModuleFactory.html#MATSys_Factories_ModuleFactory_CreateNew_Type_System_Object_MATSys_ITransceiver_MATSys_INotifier_MATSys_IRecorder_System_String_
+  commentId: M:MATSys.Factories.ModuleFactory.CreateNew(Type,System.Object,MATSys.ITransceiver,MATSys.INotifier,MATSys.IRecorder,System.String)
+  fullName: MATSys.Factories.ModuleFactory.CreateNew(Type, System.Object, MATSys.ITransceiver, MATSys.INotifier, MATSys.IRecorder, System.String)
+  nameWithType: ModuleFactory.CreateNew(Type, Object, ITransceiver, INotifier, IRecorder, String)
+- uid: MATSys.Factories.ModuleFactory.CreateNew*
+  name: CreateNew
+  href: api/MATSys.Factories.ModuleFactory.html#MATSys_Factories_ModuleFactory_CreateNew_
+  commentId: Overload:MATSys.Factories.ModuleFactory.CreateNew
+  isSpec: "True"
+  fullName: MATSys.Factories.ModuleFactory.CreateNew
+  nameWithType: ModuleFactory.CreateNew
+- uid: MATSys.Factories.ModuleFactory.CreateNew``1(System.Object,MATSys.ITransceiver,MATSys.INotifier,MATSys.IRecorder,System.String)
+  name: CreateNew<T>(Object, ITransceiver, INotifier, IRecorder, String)
+  href: api/MATSys.Factories.ModuleFactory.html#MATSys_Factories_ModuleFactory_CreateNew__1_System_Object_MATSys_ITransceiver_MATSys_INotifier_MATSys_IRecorder_System_String_
+  commentId: M:MATSys.Factories.ModuleFactory.CreateNew``1(System.Object,MATSys.ITransceiver,MATSys.INotifier,MATSys.IRecorder,System.String)
+  name.vb: CreateNew(Of T)(Object, ITransceiver, INotifier, IRecorder, String)
+  fullName: MATSys.Factories.ModuleFactory.CreateNew<T>(System.Object, MATSys.ITransceiver, MATSys.INotifier, MATSys.IRecorder, System.String)
+  fullName.vb: MATSys.Factories.ModuleFactory.CreateNew(Of T)(System.Object, MATSys.ITransceiver, MATSys.INotifier, MATSys.IRecorder, System.String)
+  nameWithType: ModuleFactory.CreateNew<T>(Object, ITransceiver, INotifier, IRecorder, String)
+  nameWithType.vb: ModuleFactory.CreateNew(Of T)(Object, ITransceiver, INotifier, IRecorder, String)
+- uid: MATSys.Factories.ModuleFactory.ParseType(System.String)
+  name: ParseType(String)
+  href: api/MATSys.Factories.ModuleFactory.html#MATSys_Factories_ModuleFactory_ParseType_System_String_
+  commentId: M:MATSys.Factories.ModuleFactory.ParseType(System.String)
+  fullName: MATSys.Factories.ModuleFactory.ParseType(System.String)
+  nameWithType: ModuleFactory.ParseType(String)
+- uid: MATSys.Factories.ModuleFactory.ParseType*
+  name: ParseType
+  href: api/MATSys.Factories.ModuleFactory.html#MATSys_Factories_ModuleFactory_ParseType_
+  commentId: Overload:MATSys.Factories.ModuleFactory.ParseType
+  isSpec: "True"
+  fullName: MATSys.Factories.ModuleFactory.ParseType
+  nameWithType: ModuleFactory.ParseType
+- uid: MATSys.Factories.NotifierFactory
+  name: NotifierFactory
+  href: api/MATSys.Factories.NotifierFactory.html
+  commentId: T:MATSys.Factories.NotifierFactory
+  fullName: MATSys.Factories.NotifierFactory
+  nameWithType: NotifierFactory
+- uid: MATSys.Factories.NotifierFactory.#ctor(Microsoft.Extensions.Configuration.IConfiguration)
+  name: NotifierFactory(IConfiguration)
+  href: api/MATSys.Factories.NotifierFactory.html#MATSys_Factories_NotifierFactory__ctor_Microsoft_Extensions_Configuration_IConfiguration_
+  commentId: M:MATSys.Factories.NotifierFactory.#ctor(Microsoft.Extensions.Configuration.IConfiguration)
+  fullName: MATSys.Factories.NotifierFactory.NotifierFactory(Microsoft.Extensions.Configuration.IConfiguration)
+  nameWithType: NotifierFactory.NotifierFactory(IConfiguration)
+- uid: MATSys.Factories.NotifierFactory.#ctor*
+  name: NotifierFactory
+  href: api/MATSys.Factories.NotifierFactory.html#MATSys_Factories_NotifierFactory__ctor_
+  commentId: Overload:MATSys.Factories.NotifierFactory.#ctor
+  isSpec: "True"
+  fullName: MATSys.Factories.NotifierFactory.NotifierFactory
+  nameWithType: NotifierFactory.NotifierFactory
+- uid: MATSys.Factories.NotifierFactory.CreateNew(System.String,System.String,System.Object)
+  name: CreateNew(String, String, Object)
+  href: api/MATSys.Factories.NotifierFactory.html#MATSys_Factories_NotifierFactory_CreateNew_System_String_System_String_System_Object_
+  commentId: M:MATSys.Factories.NotifierFactory.CreateNew(System.String,System.String,System.Object)
+  fullName: MATSys.Factories.NotifierFactory.CreateNew(System.String, System.String, System.Object)
+  nameWithType: NotifierFactory.CreateNew(String, String, Object)
+- uid: MATSys.Factories.NotifierFactory.CreateNew(Type,System.Object)
+  name: CreateNew(Type, Object)
+  href: api/MATSys.Factories.NotifierFactory.html#MATSys_Factories_NotifierFactory_CreateNew_Type_System_Object_
+  commentId: M:MATSys.Factories.NotifierFactory.CreateNew(Type,System.Object)
+  fullName: MATSys.Factories.NotifierFactory.CreateNew(Type, System.Object)
+  nameWithType: NotifierFactory.CreateNew(Type, Object)
+- uid: MATSys.Factories.NotifierFactory.CreateNew*
+  name: CreateNew
+  href: api/MATSys.Factories.NotifierFactory.html#MATSys_Factories_NotifierFactory_CreateNew_
+  commentId: Overload:MATSys.Factories.NotifierFactory.CreateNew
+  isSpec: "True"
+  fullName: MATSys.Factories.NotifierFactory.CreateNew
+  nameWithType: NotifierFactory.CreateNew
+- uid: MATSys.Factories.NotifierFactory.CreateNew``1(System.Object)
+  name: CreateNew<T>(Object)
+  href: api/MATSys.Factories.NotifierFactory.html#MATSys_Factories_NotifierFactory_CreateNew__1_System_Object_
+  commentId: M:MATSys.Factories.NotifierFactory.CreateNew``1(System.Object)
+  name.vb: CreateNew(Of T)(Object)
+  fullName: MATSys.Factories.NotifierFactory.CreateNew<T>(System.Object)
+  fullName.vb: MATSys.Factories.NotifierFactory.CreateNew(Of T)(System.Object)
+  nameWithType: NotifierFactory.CreateNew<T>(Object)
+  nameWithType.vb: NotifierFactory.CreateNew(Of T)(Object)
+- uid: MATSys.Factories.NotifierFactory.CreateNotifier(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: CreateNotifier(IConfigurationSection)
+  href: api/MATSys.Factories.NotifierFactory.html#MATSys_Factories_NotifierFactory_CreateNotifier_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Factories.NotifierFactory.CreateNotifier(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Factories.NotifierFactory.CreateNotifier(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: NotifierFactory.CreateNotifier(IConfigurationSection)
+- uid: MATSys.Factories.NotifierFactory.CreateNotifier*
+  name: CreateNotifier
+  href: api/MATSys.Factories.NotifierFactory.html#MATSys_Factories_NotifierFactory_CreateNotifier_
+  commentId: Overload:MATSys.Factories.NotifierFactory.CreateNotifier
+  isSpec: "True"
+  fullName: MATSys.Factories.NotifierFactory.CreateNotifier
+  nameWithType: NotifierFactory.CreateNotifier
+- uid: MATSys.Factories.RecorderFactory
+  name: RecorderFactory
+  href: api/MATSys.Factories.RecorderFactory.html
+  commentId: T:MATSys.Factories.RecorderFactory
+  fullName: MATSys.Factories.RecorderFactory
+  nameWithType: RecorderFactory
+- uid: MATSys.Factories.RecorderFactory.#ctor(Microsoft.Extensions.Configuration.IConfiguration)
+  name: RecorderFactory(IConfiguration)
+  href: api/MATSys.Factories.RecorderFactory.html#MATSys_Factories_RecorderFactory__ctor_Microsoft_Extensions_Configuration_IConfiguration_
+  commentId: M:MATSys.Factories.RecorderFactory.#ctor(Microsoft.Extensions.Configuration.IConfiguration)
+  fullName: MATSys.Factories.RecorderFactory.RecorderFactory(Microsoft.Extensions.Configuration.IConfiguration)
+  nameWithType: RecorderFactory.RecorderFactory(IConfiguration)
+- uid: MATSys.Factories.RecorderFactory.#ctor*
+  name: RecorderFactory
+  href: api/MATSys.Factories.RecorderFactory.html#MATSys_Factories_RecorderFactory__ctor_
+  commentId: Overload:MATSys.Factories.RecorderFactory.#ctor
+  isSpec: "True"
+  fullName: MATSys.Factories.RecorderFactory.RecorderFactory
+  nameWithType: RecorderFactory.RecorderFactory
+- uid: MATSys.Factories.RecorderFactory.CreateNew(System.String,System.String,System.Object)
+  name: CreateNew(String, String, Object)
+  href: api/MATSys.Factories.RecorderFactory.html#MATSys_Factories_RecorderFactory_CreateNew_System_String_System_String_System_Object_
+  commentId: M:MATSys.Factories.RecorderFactory.CreateNew(System.String,System.String,System.Object)
+  fullName: MATSys.Factories.RecorderFactory.CreateNew(System.String, System.String, System.Object)
+  nameWithType: RecorderFactory.CreateNew(String, String, Object)
+- uid: MATSys.Factories.RecorderFactory.CreateNew(Type,System.Object)
+  name: CreateNew(Type, Object)
+  href: api/MATSys.Factories.RecorderFactory.html#MATSys_Factories_RecorderFactory_CreateNew_Type_System_Object_
+  commentId: M:MATSys.Factories.RecorderFactory.CreateNew(Type,System.Object)
+  fullName: MATSys.Factories.RecorderFactory.CreateNew(Type, System.Object)
+  nameWithType: RecorderFactory.CreateNew(Type, Object)
+- uid: MATSys.Factories.RecorderFactory.CreateNew*
+  name: CreateNew
+  href: api/MATSys.Factories.RecorderFactory.html#MATSys_Factories_RecorderFactory_CreateNew_
+  commentId: Overload:MATSys.Factories.RecorderFactory.CreateNew
+  isSpec: "True"
+  fullName: MATSys.Factories.RecorderFactory.CreateNew
+  nameWithType: RecorderFactory.CreateNew
+- uid: MATSys.Factories.RecorderFactory.CreateNew``1(System.Object)
+  name: CreateNew<T>(Object)
+  href: api/MATSys.Factories.RecorderFactory.html#MATSys_Factories_RecorderFactory_CreateNew__1_System_Object_
+  commentId: M:MATSys.Factories.RecorderFactory.CreateNew``1(System.Object)
+  name.vb: CreateNew(Of T)(Object)
+  fullName: MATSys.Factories.RecorderFactory.CreateNew<T>(System.Object)
+  fullName.vb: MATSys.Factories.RecorderFactory.CreateNew(Of T)(System.Object)
+  nameWithType: RecorderFactory.CreateNew<T>(Object)
+  nameWithType.vb: RecorderFactory.CreateNew(Of T)(Object)
+- uid: MATSys.Factories.RecorderFactory.CreateRecorder(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: CreateRecorder(IConfigurationSection)
+  href: api/MATSys.Factories.RecorderFactory.html#MATSys_Factories_RecorderFactory_CreateRecorder_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Factories.RecorderFactory.CreateRecorder(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Factories.RecorderFactory.CreateRecorder(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: RecorderFactory.CreateRecorder(IConfigurationSection)
+- uid: MATSys.Factories.RecorderFactory.CreateRecorder*
+  name: CreateRecorder
+  href: api/MATSys.Factories.RecorderFactory.html#MATSys_Factories_RecorderFactory_CreateRecorder_
+  commentId: Overload:MATSys.Factories.RecorderFactory.CreateRecorder
+  isSpec: "True"
+  fullName: MATSys.Factories.RecorderFactory.CreateRecorder
+  nameWithType: RecorderFactory.CreateRecorder
+- uid: MATSys.Factories.TransceiverFactory
+  name: TransceiverFactory
+  href: api/MATSys.Factories.TransceiverFactory.html
+  commentId: T:MATSys.Factories.TransceiverFactory
+  fullName: MATSys.Factories.TransceiverFactory
+  nameWithType: TransceiverFactory
+- uid: MATSys.Factories.TransceiverFactory.#ctor(Microsoft.Extensions.Configuration.IConfiguration)
+  name: TransceiverFactory(IConfiguration)
+  href: api/MATSys.Factories.TransceiverFactory.html#MATSys_Factories_TransceiverFactory__ctor_Microsoft_Extensions_Configuration_IConfiguration_
+  commentId: M:MATSys.Factories.TransceiverFactory.#ctor(Microsoft.Extensions.Configuration.IConfiguration)
+  fullName: MATSys.Factories.TransceiverFactory.TransceiverFactory(Microsoft.Extensions.Configuration.IConfiguration)
+  nameWithType: TransceiverFactory.TransceiverFactory(IConfiguration)
+- uid: MATSys.Factories.TransceiverFactory.#ctor*
+  name: TransceiverFactory
+  href: api/MATSys.Factories.TransceiverFactory.html#MATSys_Factories_TransceiverFactory__ctor_
+  commentId: Overload:MATSys.Factories.TransceiverFactory.#ctor
+  isSpec: "True"
+  fullName: MATSys.Factories.TransceiverFactory.TransceiverFactory
+  nameWithType: TransceiverFactory.TransceiverFactory
+- uid: MATSys.Factories.TransceiverFactory.CreateNew(System.String,System.String,System.Object)
+  name: CreateNew(String, String, Object)
+  href: api/MATSys.Factories.TransceiverFactory.html#MATSys_Factories_TransceiverFactory_CreateNew_System_String_System_String_System_Object_
+  commentId: M:MATSys.Factories.TransceiverFactory.CreateNew(System.String,System.String,System.Object)
+  fullName: MATSys.Factories.TransceiverFactory.CreateNew(System.String, System.String, System.Object)
+  nameWithType: TransceiverFactory.CreateNew(String, String, Object)
+- uid: MATSys.Factories.TransceiverFactory.CreateNew(Type,System.Object)
+  name: CreateNew(Type, Object)
+  href: api/MATSys.Factories.TransceiverFactory.html#MATSys_Factories_TransceiverFactory_CreateNew_Type_System_Object_
+  commentId: M:MATSys.Factories.TransceiverFactory.CreateNew(Type,System.Object)
+  fullName: MATSys.Factories.TransceiverFactory.CreateNew(Type, System.Object)
+  nameWithType: TransceiverFactory.CreateNew(Type, Object)
+- uid: MATSys.Factories.TransceiverFactory.CreateNew*
+  name: CreateNew
+  href: api/MATSys.Factories.TransceiverFactory.html#MATSys_Factories_TransceiverFactory_CreateNew_
+  commentId: Overload:MATSys.Factories.TransceiverFactory.CreateNew
+  isSpec: "True"
+  fullName: MATSys.Factories.TransceiverFactory.CreateNew
+  nameWithType: TransceiverFactory.CreateNew
+- uid: MATSys.Factories.TransceiverFactory.CreateNew``1(System.Object)
+  name: CreateNew<T>(Object)
+  href: api/MATSys.Factories.TransceiverFactory.html#MATSys_Factories_TransceiverFactory_CreateNew__1_System_Object_
+  commentId: M:MATSys.Factories.TransceiverFactory.CreateNew``1(System.Object)
+  name.vb: CreateNew(Of T)(Object)
+  fullName: MATSys.Factories.TransceiverFactory.CreateNew<T>(System.Object)
+  fullName.vb: MATSys.Factories.TransceiverFactory.CreateNew(Of T)(System.Object)
+  nameWithType: TransceiverFactory.CreateNew<T>(Object)
+  nameWithType.vb: TransceiverFactory.CreateNew(Of T)(Object)
+- uid: MATSys.Factories.TransceiverFactory.CreateTransceiver(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: CreateTransceiver(IConfigurationSection)
+  href: api/MATSys.Factories.TransceiverFactory.html#MATSys_Factories_TransceiverFactory_CreateTransceiver_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Factories.TransceiverFactory.CreateTransceiver(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Factories.TransceiverFactory.CreateTransceiver(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: TransceiverFactory.CreateTransceiver(IConfigurationSection)
+- uid: MATSys.Factories.TransceiverFactory.CreateTransceiver*
+  name: CreateTransceiver
+  href: api/MATSys.Factories.TransceiverFactory.html#MATSys_Factories_TransceiverFactory_CreateTransceiver_
+  commentId: Overload:MATSys.Factories.TransceiverFactory.CreateTransceiver
+  isSpec: "True"
+  fullName: MATSys.Factories.TransceiverFactory.CreateTransceiver
+  nameWithType: TransceiverFactory.CreateTransceiver
+- uid: MATSys.Hosting
+  name: MATSys.Hosting
+  href: api/MATSys.Hosting.html
+  commentId: N:MATSys.Hosting
+  fullName: MATSys.Hosting
+  nameWithType: MATSys.Hosting
+- uid: MATSys.Hosting.MATSysExtension
+  name: MATSysExtension
+  href: api/MATSys.Hosting.MATSysExtension.html
+  commentId: T:MATSys.Hosting.MATSysExtension
+  fullName: MATSys.Hosting.MATSysExtension
+  nameWithType: MATSysExtension
+- uid: MATSys.Hosting.MATSysExtension.GetMATSysHandle(IServiceProvider)
+  name: GetMATSysHandle(IServiceProvider)
+  href: api/MATSys.Hosting.MATSysExtension.html#MATSys_Hosting_MATSysExtension_GetMATSysHandle_IServiceProvider_
+  commentId: M:MATSys.Hosting.MATSysExtension.GetMATSysHandle(IServiceProvider)
+  fullName: MATSys.Hosting.MATSysExtension.GetMATSysHandle(IServiceProvider)
+  nameWithType: MATSysExtension.GetMATSysHandle(IServiceProvider)
+- uid: MATSys.Hosting.MATSysExtension.GetMATSysHandle*
+  name: GetMATSysHandle
+  href: api/MATSys.Hosting.MATSysExtension.html#MATSys_Hosting_MATSysExtension_GetMATSysHandle_
+  commentId: Overload:MATSys.Hosting.MATSysExtension.GetMATSysHandle
+  isSpec: "True"
+  fullName: MATSys.Hosting.MATSysExtension.GetMATSysHandle
+  nameWithType: MATSysExtension.GetMATSysHandle
+- uid: MATSys.Hosting.MATSysExtension.UseMATSys(Microsoft.Extensions.Hosting.IHostBuilder)
+  name: UseMATSys(IHostBuilder)
+  href: api/MATSys.Hosting.MATSysExtension.html#MATSys_Hosting_MATSysExtension_UseMATSys_Microsoft_Extensions_Hosting_IHostBuilder_
+  commentId: M:MATSys.Hosting.MATSysExtension.UseMATSys(Microsoft.Extensions.Hosting.IHostBuilder)
+  fullName: MATSys.Hosting.MATSysExtension.UseMATSys(Microsoft.Extensions.Hosting.IHostBuilder)
+  nameWithType: MATSysExtension.UseMATSys(IHostBuilder)
+- uid: MATSys.Hosting.MATSysExtension.UseMATSys*
+  name: UseMATSys
+  href: api/MATSys.Hosting.MATSysExtension.html#MATSys_Hosting_MATSysExtension_UseMATSys_
+  commentId: Overload:MATSys.Hosting.MATSysExtension.UseMATSys
+  isSpec: "True"
+  fullName: MATSys.Hosting.MATSysExtension.UseMATSys
+  nameWithType: MATSysExtension.UseMATSys
+- uid: MATSys.Hosting.ModuleHubBackgroundService
+  name: ModuleHubBackgroundService
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html
+  commentId: T:MATSys.Hosting.ModuleHubBackgroundService
+  fullName: MATSys.Hosting.ModuleHubBackgroundService
+  nameWithType: ModuleHubBackgroundService
+- uid: MATSys.Hosting.ModuleHubBackgroundService.#ctor(IServiceProvider)
+  name: ModuleHubBackgroundService(IServiceProvider)
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService__ctor_IServiceProvider_
+  commentId: M:MATSys.Hosting.ModuleHubBackgroundService.#ctor(IServiceProvider)
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.ModuleHubBackgroundService(IServiceProvider)
+  nameWithType: ModuleHubBackgroundService.ModuleHubBackgroundService(IServiceProvider)
+- uid: MATSys.Hosting.ModuleHubBackgroundService.#ctor*
+  name: ModuleHubBackgroundService
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService__ctor_
+  commentId: Overload:MATSys.Hosting.ModuleHubBackgroundService.#ctor
+  isSpec: "True"
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.ModuleHubBackgroundService
+  nameWithType: ModuleHubBackgroundService.ModuleHubBackgroundService
+- uid: MATSys.Hosting.ModuleHubBackgroundService.ExecuteAsync(CancellationToken)
+  name: ExecuteAsync(CancellationToken)
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_ExecuteAsync_CancellationToken_
+  commentId: M:MATSys.Hosting.ModuleHubBackgroundService.ExecuteAsync(CancellationToken)
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.ExecuteAsync(CancellationToken)
+  nameWithType: ModuleHubBackgroundService.ExecuteAsync(CancellationToken)
+- uid: MATSys.Hosting.ModuleHubBackgroundService.ExecuteAsync*
+  name: ExecuteAsync
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_ExecuteAsync_
+  commentId: Overload:MATSys.Hosting.ModuleHubBackgroundService.ExecuteAsync
+  isSpec: "True"
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.ExecuteAsync
+  nameWithType: ModuleHubBackgroundService.ExecuteAsync
+- uid: MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand(System.String,MATSys.Commands.ICommand)
+  name: ExecuteCommand(String, ICommand)
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_ExecuteCommand_System_String_MATSys_Commands_ICommand_
+  commentId: M:MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand(System.String,MATSys.Commands.ICommand)
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand(System.String, MATSys.Commands.ICommand)
+  nameWithType: ModuleHubBackgroundService.ExecuteCommand(String, ICommand)
+- uid: MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand(System.String,System.String)
+  name: ExecuteCommand(String, String)
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_ExecuteCommand_System_String_System_String_
+  commentId: M:MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand(System.String,System.String)
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand(System.String, System.String)
+  nameWithType: ModuleHubBackgroundService.ExecuteCommand(String, String)
+- uid: MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand*
+  name: ExecuteCommand
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_ExecuteCommand_
+  commentId: Overload:MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand
+  isSpec: "True"
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand
+  nameWithType: ModuleHubBackgroundService.ExecuteCommand
+- uid: MATSys.Hosting.ModuleHubBackgroundService.ExecuteCompleteEvent
+  name: ModuleHubBackgroundService.ExecuteCompleteEvent
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.ExecuteCompleteEvent.html
+  commentId: T:MATSys.Hosting.ModuleHubBackgroundService.ExecuteCompleteEvent
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.ExecuteCompleteEvent
+  nameWithType: ModuleHubBackgroundService.ExecuteCompleteEvent
+- uid: MATSys.Hosting.ModuleHubBackgroundService.Modules
+  name: Modules
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_Modules
+  commentId: P:MATSys.Hosting.ModuleHubBackgroundService.Modules
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.Modules
+  nameWithType: ModuleHubBackgroundService.Modules
+- uid: MATSys.Hosting.ModuleHubBackgroundService.Modules*
+  name: Modules
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_Modules_
+  commentId: Overload:MATSys.Hosting.ModuleHubBackgroundService.Modules
+  isSpec: "True"
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.Modules
+  nameWithType: ModuleHubBackgroundService.Modules
+- uid: MATSys.Hosting.ModuleHubBackgroundService.OnExecuteComplete
+  name: OnExecuteComplete
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_OnExecuteComplete
+  commentId: E:MATSys.Hosting.ModuleHubBackgroundService.OnExecuteComplete
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.OnExecuteComplete
+  nameWithType: ModuleHubBackgroundService.OnExecuteComplete
+- uid: MATSys.Hosting.ModuleHubBackgroundService.OnReadyToExecute
+  name: OnReadyToExecute
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_OnReadyToExecute
+  commentId: E:MATSys.Hosting.ModuleHubBackgroundService.OnReadyToExecute
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.OnReadyToExecute
+  nameWithType: ModuleHubBackgroundService.OnReadyToExecute
+- uid: MATSys.Hosting.ModuleHubBackgroundService.ReadyToExecuteEvent
+  name: ModuleHubBackgroundService.ReadyToExecuteEvent
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.ReadyToExecuteEvent.html
+  commentId: T:MATSys.Hosting.ModuleHubBackgroundService.ReadyToExecuteEvent
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.ReadyToExecuteEvent
+  nameWithType: ModuleHubBackgroundService.ReadyToExecuteEvent
+- uid: MATSys.Hosting.ModuleHubBackgroundService.RunTest(System.Int32)
+  name: RunTest(Int32)
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_RunTest_System_Int32_
+  commentId: M:MATSys.Hosting.ModuleHubBackgroundService.RunTest(System.Int32)
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.RunTest(System.Int32)
+  nameWithType: ModuleHubBackgroundService.RunTest(Int32)
+- uid: MATSys.Hosting.ModuleHubBackgroundService.RunTest*
+  name: RunTest
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_RunTest_
+  commentId: Overload:MATSys.Hosting.ModuleHubBackgroundService.RunTest
+  isSpec: "True"
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.RunTest
+  nameWithType: ModuleHubBackgroundService.RunTest
+- uid: MATSys.Hosting.ModuleHubBackgroundService.StopTest
+  name: StopTest()
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_StopTest
+  commentId: M:MATSys.Hosting.ModuleHubBackgroundService.StopTest
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.StopTest()
+  nameWithType: ModuleHubBackgroundService.StopTest()
+- uid: MATSys.Hosting.ModuleHubBackgroundService.StopTest*
+  name: StopTest
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_StopTest_
+  commentId: Overload:MATSys.Hosting.ModuleHubBackgroundService.StopTest
+  isSpec: "True"
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.StopTest
+  nameWithType: ModuleHubBackgroundService.StopTest
+- uid: MATSys.Hosting.TestItem
+  name: TestItem
+  href: api/MATSys.Hosting.TestItem.html
+  commentId: T:MATSys.Hosting.TestItem
+  fullName: MATSys.Hosting.TestItem
+  nameWithType: TestItem
+- uid: MATSys.Hosting.TestItem.#ctor(System.String,System.String)
+  name: TestItem(String, String)
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem__ctor_System_String_System_String_
+  commentId: M:MATSys.Hosting.TestItem.#ctor(System.String,System.String)
+  fullName: MATSys.Hosting.TestItem.TestItem(System.String, System.String)
+  nameWithType: TestItem.TestItem(String, String)
+- uid: MATSys.Hosting.TestItem.#ctor*
+  name: TestItem
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem__ctor_
+  commentId: Overload:MATSys.Hosting.TestItem.#ctor
+  isSpec: "True"
+  fullName: MATSys.Hosting.TestItem.TestItem
+  nameWithType: TestItem.TestItem
+- uid: MATSys.Hosting.TestItem.Command
+  name: Command
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_Command
+  commentId: P:MATSys.Hosting.TestItem.Command
+  fullName: MATSys.Hosting.TestItem.Command
+  nameWithType: TestItem.Command
+- uid: MATSys.Hosting.TestItem.Command*
+  name: Command
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_Command_
+  commentId: Overload:MATSys.Hosting.TestItem.Command
+  isSpec: "True"
+  fullName: MATSys.Hosting.TestItem.Command
+  nameWithType: TestItem.Command
+- uid: MATSys.Hosting.TestItem.Empty
+  name: Empty
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_Empty
+  commentId: P:MATSys.Hosting.TestItem.Empty
+  fullName: MATSys.Hosting.TestItem.Empty
+  nameWithType: TestItem.Empty
+- uid: MATSys.Hosting.TestItem.Empty*
+  name: Empty
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_Empty_
+  commentId: Overload:MATSys.Hosting.TestItem.Empty
+  isSpec: "True"
+  fullName: MATSys.Hosting.TestItem.Empty
+  nameWithType: TestItem.Empty
+- uid: MATSys.Hosting.TestItem.ModuleName
+  name: ModuleName
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_ModuleName
+  commentId: P:MATSys.Hosting.TestItem.ModuleName
+  fullName: MATSys.Hosting.TestItem.ModuleName
+  nameWithType: TestItem.ModuleName
+- uid: MATSys.Hosting.TestItem.ModuleName*
+  name: ModuleName
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_ModuleName_
+  commentId: Overload:MATSys.Hosting.TestItem.ModuleName
+  isSpec: "True"
+  fullName: MATSys.Hosting.TestItem.ModuleName
+  nameWithType: TestItem.ModuleName
+- uid: MATSys.IMATSysConfiguration
+  name: IMATSysConfiguration
+  href: api/MATSys.IMATSysConfiguration.html
+  commentId: T:MATSys.IMATSysConfiguration
+  fullName: MATSys.IMATSysConfiguration
+  nameWithType: IMATSysConfiguration
+- uid: MATSys.IMATSysConfiguration.EnableLogging
+  name: EnableLogging
+  href: api/MATSys.IMATSysConfiguration.html#MATSys_IMATSysConfiguration_EnableLogging
+  commentId: P:MATSys.IMATSysConfiguration.EnableLogging
+  fullName: MATSys.IMATSysConfiguration.EnableLogging
+  nameWithType: IMATSysConfiguration.EnableLogging
+- uid: MATSys.IMATSysConfiguration.EnableLogging*
+  name: EnableLogging
+  href: api/MATSys.IMATSysConfiguration.html#MATSys_IMATSysConfiguration_EnableLogging_
+  commentId: Overload:MATSys.IMATSysConfiguration.EnableLogging
+  isSpec: "True"
+  fullName: MATSys.IMATSysConfiguration.EnableLogging
+  nameWithType: IMATSysConfiguration.EnableLogging
+- uid: MATSys.IMATSysConfiguration.Type
+  name: Type
+  href: api/MATSys.IMATSysConfiguration.html#MATSys_IMATSysConfiguration_Type
+  commentId: P:MATSys.IMATSysConfiguration.Type
+  fullName: MATSys.IMATSysConfiguration.Type
+  nameWithType: IMATSysConfiguration.Type
+- uid: MATSys.IMATSysConfiguration.Type*
+  name: Type
+  href: api/MATSys.IMATSysConfiguration.html#MATSys_IMATSysConfiguration_Type_
+  commentId: Overload:MATSys.IMATSysConfiguration.Type
+  isSpec: "True"
+  fullName: MATSys.IMATSysConfiguration.Type
+  nameWithType: IMATSysConfiguration.Type
+- uid: MATSys.IModule
+  name: IModule
+  href: api/MATSys.IModule.html
+  commentId: T:MATSys.IModule
+  fullName: MATSys.IModule
+  nameWithType: IModule
+- uid: MATSys.IModule.Base
+  name: Base
+  href: api/MATSys.IModule.html#MATSys_IModule_Base
+  commentId: P:MATSys.IModule.Base
+  fullName: MATSys.IModule.Base
+  nameWithType: IModule.Base
+- uid: MATSys.IModule.Base*
+  name: Base
+  href: api/MATSys.IModule.html#MATSys_IModule_Base_
+  commentId: Overload:MATSys.IModule.Base
+  isSpec: "True"
+  fullName: MATSys.IModule.Base
+  nameWithType: IModule.Base
+- uid: MATSys.IModule.Execute(MATSys.Commands.ICommand)
+  name: Execute(ICommand)
+  href: api/MATSys.IModule.html#MATSys_IModule_Execute_MATSys_Commands_ICommand_
+  commentId: M:MATSys.IModule.Execute(MATSys.Commands.ICommand)
+  fullName: MATSys.IModule.Execute(MATSys.Commands.ICommand)
+  nameWithType: IModule.Execute(ICommand)
+- uid: MATSys.IModule.Execute(System.String)
+  name: Execute(String)
+  href: api/MATSys.IModule.html#MATSys_IModule_Execute_System_String_
+  commentId: M:MATSys.IModule.Execute(System.String)
+  fullName: MATSys.IModule.Execute(System.String)
+  nameWithType: IModule.Execute(String)
+- uid: MATSys.IModule.Execute*
+  name: Execute
+  href: api/MATSys.IModule.html#MATSys_IModule_Execute_
+  commentId: Overload:MATSys.IModule.Execute
+  isSpec: "True"
+  fullName: MATSys.IModule.Execute
+  nameWithType: IModule.Execute
+- uid: MATSys.IModule.IsRunning
+  name: IsRunning
+  href: api/MATSys.IModule.html#MATSys_IModule_IsRunning
+  commentId: P:MATSys.IModule.IsRunning
+  fullName: MATSys.IModule.IsRunning
+  nameWithType: IModule.IsRunning
+- uid: MATSys.IModule.IsRunning*
+  name: IsRunning
+  href: api/MATSys.IModule.html#MATSys_IModule_IsRunning_
+  commentId: Overload:MATSys.IModule.IsRunning
+  isSpec: "True"
+  fullName: MATSys.IModule.IsRunning
+  nameWithType: IModule.IsRunning
+- uid: MATSys.IModule.Logger
+  name: Logger
+  href: api/MATSys.IModule.html#MATSys_IModule_Logger
+  commentId: P:MATSys.IModule.Logger
+  fullName: MATSys.IModule.Logger
+  nameWithType: IModule.Logger
+- uid: MATSys.IModule.Logger*
+  name: Logger
+  href: api/MATSys.IModule.html#MATSys_IModule_Logger_
+  commentId: Overload:MATSys.IModule.Logger
+  isSpec: "True"
+  fullName: MATSys.IModule.Logger
+  nameWithType: IModule.Logger
+- uid: MATSys.IModule.NewDataReady
+  name: IModule.NewDataReady
+  href: api/MATSys.IModule.NewDataReady.html
+  commentId: T:MATSys.IModule.NewDataReady
+  fullName: MATSys.IModule.NewDataReady
+  nameWithType: IModule.NewDataReady
+- uid: MATSys.IModule.Notifier
+  name: Notifier
+  href: api/MATSys.IModule.html#MATSys_IModule_Notifier
+  commentId: P:MATSys.IModule.Notifier
+  fullName: MATSys.IModule.Notifier
+  nameWithType: IModule.Notifier
+- uid: MATSys.IModule.Notifier*
+  name: Notifier
+  href: api/MATSys.IModule.html#MATSys_IModule_Notifier_
+  commentId: Overload:MATSys.IModule.Notifier
+  isSpec: "True"
+  fullName: MATSys.IModule.Notifier
+  nameWithType: IModule.Notifier
+- uid: MATSys.IModule.OnDataReady
+  name: OnDataReady
+  href: api/MATSys.IModule.html#MATSys_IModule_OnDataReady
+  commentId: E:MATSys.IModule.OnDataReady
+  fullName: MATSys.IModule.OnDataReady
+  nameWithType: IModule.OnDataReady
+- uid: MATSys.IModule.PrintCommands
+  name: PrintCommands()
+  href: api/MATSys.IModule.html#MATSys_IModule_PrintCommands
+  commentId: M:MATSys.IModule.PrintCommands
+  fullName: MATSys.IModule.PrintCommands()
+  nameWithType: IModule.PrintCommands()
+- uid: MATSys.IModule.PrintCommands*
+  name: PrintCommands
+  href: api/MATSys.IModule.html#MATSys_IModule_PrintCommands_
+  commentId: Overload:MATSys.IModule.PrintCommands
+  isSpec: "True"
+  fullName: MATSys.IModule.PrintCommands
+  nameWithType: IModule.PrintCommands
+- uid: MATSys.IModule.Recorder
+  name: Recorder
+  href: api/MATSys.IModule.html#MATSys_IModule_Recorder
+  commentId: P:MATSys.IModule.Recorder
+  fullName: MATSys.IModule.Recorder
+  nameWithType: IModule.Recorder
+- uid: MATSys.IModule.Recorder*
+  name: Recorder
+  href: api/MATSys.IModule.html#MATSys_IModule_Recorder_
+  commentId: Overload:MATSys.IModule.Recorder
+  isSpec: "True"
+  fullName: MATSys.IModule.Recorder
+  nameWithType: IModule.Recorder
+- uid: MATSys.IModule.Transceiver
+  name: Transceiver
+  href: api/MATSys.IModule.html#MATSys_IModule_Transceiver
+  commentId: P:MATSys.IModule.Transceiver
+  fullName: MATSys.IModule.Transceiver
+  nameWithType: IModule.Transceiver
+- uid: MATSys.IModule.Transceiver*
+  name: Transceiver
+  href: api/MATSys.IModule.html#MATSys_IModule_Transceiver_
+  commentId: Overload:MATSys.IModule.Transceiver
+  isSpec: "True"
+  fullName: MATSys.IModule.Transceiver
+  nameWithType: IModule.Transceiver
+- uid: MATSys.INotifier
+  name: INotifier
+  href: api/MATSys.INotifier.html
+  commentId: T:MATSys.INotifier
+  fullName: MATSys.INotifier
+  nameWithType: INotifier
+- uid: MATSys.INotifier.GetData(System.Int32)
+  name: GetData(Int32)
+  href: api/MATSys.INotifier.html#MATSys_INotifier_GetData_System_Int32_
+  commentId: M:MATSys.INotifier.GetData(System.Int32)
+  fullName: MATSys.INotifier.GetData(System.Int32)
+  nameWithType: INotifier.GetData(Int32)
+- uid: MATSys.INotifier.GetData*
+  name: GetData
+  href: api/MATSys.INotifier.html#MATSys_INotifier_GetData_
+  commentId: Overload:MATSys.INotifier.GetData
+  isSpec: "True"
+  fullName: MATSys.INotifier.GetData
+  nameWithType: INotifier.GetData
+- uid: MATSys.INotifier.NotifyEvent
+  name: INotifier.NotifyEvent
+  href: api/MATSys.INotifier.NotifyEvent.html
+  commentId: T:MATSys.INotifier.NotifyEvent
+  fullName: MATSys.INotifier.NotifyEvent
+  nameWithType: INotifier.NotifyEvent
+- uid: MATSys.INotifier.OnNotify
+  name: OnNotify
+  href: api/MATSys.INotifier.html#MATSys_INotifier_OnNotify
+  commentId: E:MATSys.INotifier.OnNotify
+  fullName: MATSys.INotifier.OnNotify
+  nameWithType: INotifier.OnNotify
+- uid: MATSys.INotifier.Publish(System.Object)
+  name: Publish(Object)
+  href: api/MATSys.INotifier.html#MATSys_INotifier_Publish_System_Object_
+  commentId: M:MATSys.INotifier.Publish(System.Object)
+  fullName: MATSys.INotifier.Publish(System.Object)
+  nameWithType: INotifier.Publish(Object)
+- uid: MATSys.INotifier.Publish*
+  name: Publish
+  href: api/MATSys.INotifier.html#MATSys_INotifier_Publish_
+  commentId: Overload:MATSys.INotifier.Publish
+  isSpec: "True"
+  fullName: MATSys.INotifier.Publish
+  nameWithType: INotifier.Publish
+- uid: MATSys.IPlugin
+  name: IPlugin
+  href: api/MATSys.IPlugin.html
+  commentId: T:MATSys.IPlugin
+  fullName: MATSys.IPlugin
+  nameWithType: IPlugin
+- uid: MATSys.IRecorder
+  name: IRecorder
+  href: api/MATSys.IRecorder.html
+  commentId: T:MATSys.IRecorder
+  fullName: MATSys.IRecorder
+  nameWithType: IRecorder
+- uid: MATSys.IRecorder.Write(System.Object)
+  name: Write(Object)
+  href: api/MATSys.IRecorder.html#MATSys_IRecorder_Write_System_Object_
+  commentId: M:MATSys.IRecorder.Write(System.Object)
+  fullName: MATSys.IRecorder.Write(System.Object)
+  nameWithType: IRecorder.Write(Object)
+- uid: MATSys.IRecorder.Write*
+  name: Write
+  href: api/MATSys.IRecorder.html#MATSys_IRecorder_Write_
+  commentId: Overload:MATSys.IRecorder.Write
+  isSpec: "True"
+  fullName: MATSys.IRecorder.Write
+  nameWithType: IRecorder.Write
+- uid: MATSys.IRecorder.WriteAsync(System.Object)
+  name: WriteAsync(Object)
+  href: api/MATSys.IRecorder.html#MATSys_IRecorder_WriteAsync_System_Object_
+  commentId: M:MATSys.IRecorder.WriteAsync(System.Object)
+  fullName: MATSys.IRecorder.WriteAsync(System.Object)
+  nameWithType: IRecorder.WriteAsync(Object)
+- uid: MATSys.IRecorder.WriteAsync*
+  name: WriteAsync
+  href: api/MATSys.IRecorder.html#MATSys_IRecorder_WriteAsync_
+  commentId: Overload:MATSys.IRecorder.WriteAsync
+  isSpec: "True"
+  fullName: MATSys.IRecorder.WriteAsync
+  nameWithType: IRecorder.WriteAsync
+- uid: MATSys.IService
+  name: IService
+  href: api/MATSys.IService.html
+  commentId: T:MATSys.IService
+  fullName: MATSys.IService
+  nameWithType: IService
+- uid: MATSys.IService.Export
+  name: Export()
+  href: api/MATSys.IService.html#MATSys_IService_Export
+  commentId: M:MATSys.IService.Export
+  fullName: MATSys.IService.Export()
+  nameWithType: IService.Export()
+- uid: MATSys.IService.Export(Newtonsoft.Json.Formatting)
+  name: Export(Formatting)
+  href: api/MATSys.IService.html#MATSys_IService_Export_Newtonsoft_Json_Formatting_
+  commentId: M:MATSys.IService.Export(Newtonsoft.Json.Formatting)
+  fullName: MATSys.IService.Export(Newtonsoft.Json.Formatting)
+  nameWithType: IService.Export(Formatting)
+- uid: MATSys.IService.Export*
+  name: Export
+  href: api/MATSys.IService.html#MATSys_IService_Export_
+  commentId: Overload:MATSys.IService.Export
+  isSpec: "True"
+  fullName: MATSys.IService.Export
+  nameWithType: IService.Export
+- uid: MATSys.IService.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: Load(IConfigurationSection)
+  href: api/MATSys.IService.html#MATSys_IService_Load_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.IService.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.IService.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: IService.Load(IConfigurationSection)
+- uid: MATSys.IService.Load(System.Object)
+  name: Load(Object)
+  href: api/MATSys.IService.html#MATSys_IService_Load_System_Object_
+  commentId: M:MATSys.IService.Load(System.Object)
+  fullName: MATSys.IService.Load(System.Object)
+  nameWithType: IService.Load(Object)
+- uid: MATSys.IService.Load*
+  name: Load
+  href: api/MATSys.IService.html#MATSys_IService_Load_
+  commentId: Overload:MATSys.IService.Load
+  isSpec: "True"
+  fullName: MATSys.IService.Load
+  nameWithType: IService.Load
+- uid: MATSys.IService.Name
+  name: Name
+  href: api/MATSys.IService.html#MATSys_IService_Name
+  commentId: P:MATSys.IService.Name
+  fullName: MATSys.IService.Name
+  nameWithType: IService.Name
+- uid: MATSys.IService.Name*
+  name: Name
+  href: api/MATSys.IService.html#MATSys_IService_Name_
+  commentId: Overload:MATSys.IService.Name
+  isSpec: "True"
+  fullName: MATSys.IService.Name
+  nameWithType: IService.Name
+- uid: MATSys.IService.StartService(CancellationToken)
+  name: StartService(CancellationToken)
+  href: api/MATSys.IService.html#MATSys_IService_StartService_CancellationToken_
+  commentId: M:MATSys.IService.StartService(CancellationToken)
+  fullName: MATSys.IService.StartService(CancellationToken)
+  nameWithType: IService.StartService(CancellationToken)
+- uid: MATSys.IService.StartService*
+  name: StartService
+  href: api/MATSys.IService.html#MATSys_IService_StartService_
+  commentId: Overload:MATSys.IService.StartService
+  isSpec: "True"
+  fullName: MATSys.IService.StartService
+  nameWithType: IService.StartService
+- uid: MATSys.IService.StopService
+  name: StopService()
+  href: api/MATSys.IService.html#MATSys_IService_StopService
+  commentId: M:MATSys.IService.StopService
+  fullName: MATSys.IService.StopService()
+  nameWithType: IService.StopService()
+- uid: MATSys.IService.StopService*
+  name: StopService
+  href: api/MATSys.IService.html#MATSys_IService_StopService_
+  commentId: Overload:MATSys.IService.StopService
+  isSpec: "True"
+  fullName: MATSys.IService.StopService
+  nameWithType: IService.StopService
+- uid: MATSys.ITransceiver
+  name: ITransceiver
+  href: api/MATSys.ITransceiver.html
+  commentId: T:MATSys.ITransceiver
+  fullName: MATSys.ITransceiver
+  nameWithType: ITransceiver
+- uid: MATSys.ITransceiver.OnNewRequest
+  name: OnNewRequest
+  href: api/MATSys.ITransceiver.html#MATSys_ITransceiver_OnNewRequest
+  commentId: E:MATSys.ITransceiver.OnNewRequest
+  fullName: MATSys.ITransceiver.OnNewRequest
+  nameWithType: ITransceiver.OnNewRequest
+- uid: MATSys.ITransceiver.RequestFiredEvent
+  name: ITransceiver.RequestFiredEvent
+  href: api/MATSys.ITransceiver.RequestFiredEvent.html
+  commentId: T:MATSys.ITransceiver.RequestFiredEvent
+  fullName: MATSys.ITransceiver.RequestFiredEvent
+  nameWithType: ITransceiver.RequestFiredEvent
+- uid: MATSys.ModuleBase
+  name: ModuleBase
+  href: api/MATSys.ModuleBase.html
+  commentId: T:MATSys.ModuleBase
+  fullName: MATSys.ModuleBase
+  nameWithType: ModuleBase
+- uid: MATSys.ModuleBase.#ctor(System.Object,MATSys.ITransceiver,MATSys.INotifier,MATSys.IRecorder,System.String)
+  name: ModuleBase(Object, ITransceiver, INotifier, IRecorder, String)
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase__ctor_System_Object_MATSys_ITransceiver_MATSys_INotifier_MATSys_IRecorder_System_String_
+  commentId: M:MATSys.ModuleBase.#ctor(System.Object,MATSys.ITransceiver,MATSys.INotifier,MATSys.IRecorder,System.String)
+  fullName: MATSys.ModuleBase.ModuleBase(System.Object, MATSys.ITransceiver, MATSys.INotifier, MATSys.IRecorder, System.String)
+  nameWithType: ModuleBase.ModuleBase(Object, ITransceiver, INotifier, IRecorder, String)
+- uid: MATSys.ModuleBase.#ctor*
+  name: ModuleBase
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase__ctor_
+  commentId: Overload:MATSys.ModuleBase.#ctor
+  isSpec: "True"
+  fullName: MATSys.ModuleBase.ModuleBase
+  nameWithType: ModuleBase.ModuleBase
+- uid: MATSys.ModuleBase.Base
+  name: Base
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Base
+  commentId: P:MATSys.ModuleBase.Base
+  fullName: MATSys.ModuleBase.Base
+  nameWithType: ModuleBase.Base
+- uid: MATSys.ModuleBase.Base*
+  name: Base
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Base_
+  commentId: Overload:MATSys.ModuleBase.Base
+  isSpec: "True"
+  fullName: MATSys.ModuleBase.Base
+  nameWithType: ModuleBase.Base
+- uid: MATSys.ModuleBase.Execute(MATSys.Commands.ICommand)
+  name: Execute(ICommand)
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Execute_MATSys_Commands_ICommand_
+  commentId: M:MATSys.ModuleBase.Execute(MATSys.Commands.ICommand)
+  fullName: MATSys.ModuleBase.Execute(MATSys.Commands.ICommand)
+  nameWithType: ModuleBase.Execute(ICommand)
+- uid: MATSys.ModuleBase.Execute(System.String)
+  name: Execute(String)
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Execute_System_String_
+  commentId: M:MATSys.ModuleBase.Execute(System.String)
+  fullName: MATSys.ModuleBase.Execute(System.String)
+  nameWithType: ModuleBase.Execute(String)
+- uid: MATSys.ModuleBase.Execute*
+  name: Execute
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Execute_
+  commentId: Overload:MATSys.ModuleBase.Execute
+  isSpec: "True"
+  fullName: MATSys.ModuleBase.Execute
+  nameWithType: ModuleBase.Execute
+- uid: MATSys.ModuleBase.Export
+  name: Export()
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Export
+  commentId: M:MATSys.ModuleBase.Export
+  fullName: MATSys.ModuleBase.Export()
+  nameWithType: ModuleBase.Export()
+- uid: MATSys.ModuleBase.Export(Newtonsoft.Json.Formatting)
+  name: Export(Formatting)
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Export_Newtonsoft_Json_Formatting_
+  commentId: M:MATSys.ModuleBase.Export(Newtonsoft.Json.Formatting)
+  fullName: MATSys.ModuleBase.Export(Newtonsoft.Json.Formatting)
+  nameWithType: ModuleBase.Export(Formatting)
+- uid: MATSys.ModuleBase.Export*
+  name: Export
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Export_
+  commentId: Overload:MATSys.ModuleBase.Export
+  isSpec: "True"
+  fullName: MATSys.ModuleBase.Export
+  nameWithType: ModuleBase.Export
+- uid: MATSys.ModuleBase.IsRunning
+  name: IsRunning
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_IsRunning
+  commentId: P:MATSys.ModuleBase.IsRunning
+  fullName: MATSys.ModuleBase.IsRunning
+  nameWithType: ModuleBase.IsRunning
+- uid: MATSys.ModuleBase.IsRunning*
+  name: IsRunning
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_IsRunning_
+  commentId: Overload:MATSys.ModuleBase.IsRunning
+  isSpec: "True"
+  fullName: MATSys.ModuleBase.IsRunning
+  nameWithType: ModuleBase.IsRunning
+- uid: MATSys.ModuleBase.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: Load(IConfigurationSection)
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Load_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.ModuleBase.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.ModuleBase.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: ModuleBase.Load(IConfigurationSection)
+- uid: MATSys.ModuleBase.Load(System.Object)
+  name: Load(Object)
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Load_System_Object_
+  commentId: M:MATSys.ModuleBase.Load(System.Object)
+  fullName: MATSys.ModuleBase.Load(System.Object)
+  nameWithType: ModuleBase.Load(Object)
+- uid: MATSys.ModuleBase.Load*
+  name: Load
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Load_
+  commentId: Overload:MATSys.ModuleBase.Load
+  isSpec: "True"
+  fullName: MATSys.ModuleBase.Load
+  nameWithType: ModuleBase.Load
+- uid: MATSys.ModuleBase.MATSys#IModule#Logger
+  name: IModule.Logger
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_MATSys_IModule_Logger
+  commentId: P:MATSys.ModuleBase.MATSys#IModule#Logger
+  name.vb: MATSys.IModule.Logger
+  fullName: MATSys.ModuleBase.MATSys.IModule.Logger
+  nameWithType: ModuleBase.IModule.Logger
+  nameWithType.vb: ModuleBase.MATSys.IModule.Logger
+- uid: MATSys.ModuleBase.MATSys#IModule#Logger*
+  name: IModule.Logger
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_MATSys_IModule_Logger_
+  commentId: Overload:MATSys.ModuleBase.MATSys#IModule#Logger
+  isSpec: "True"
+  name.vb: MATSys.IModule.Logger
+  fullName: MATSys.ModuleBase.MATSys.IModule.Logger
+  nameWithType: ModuleBase.IModule.Logger
+  nameWithType.vb: ModuleBase.MATSys.IModule.Logger
+- uid: MATSys.ModuleBase.MATSys#IModule#Notifier
+  name: IModule.Notifier
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_MATSys_IModule_Notifier
+  commentId: P:MATSys.ModuleBase.MATSys#IModule#Notifier
+  name.vb: MATSys.IModule.Notifier
+  fullName: MATSys.ModuleBase.MATSys.IModule.Notifier
+  nameWithType: ModuleBase.IModule.Notifier
+  nameWithType.vb: ModuleBase.MATSys.IModule.Notifier
+- uid: MATSys.ModuleBase.MATSys#IModule#Notifier*
+  name: IModule.Notifier
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_MATSys_IModule_Notifier_
+  commentId: Overload:MATSys.ModuleBase.MATSys#IModule#Notifier
+  isSpec: "True"
+  name.vb: MATSys.IModule.Notifier
+  fullName: MATSys.ModuleBase.MATSys.IModule.Notifier
+  nameWithType: ModuleBase.IModule.Notifier
+  nameWithType.vb: ModuleBase.MATSys.IModule.Notifier
+- uid: MATSys.ModuleBase.MATSys#IModule#Recorder
+  name: IModule.Recorder
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_MATSys_IModule_Recorder
+  commentId: P:MATSys.ModuleBase.MATSys#IModule#Recorder
+  name.vb: MATSys.IModule.Recorder
+  fullName: MATSys.ModuleBase.MATSys.IModule.Recorder
+  nameWithType: ModuleBase.IModule.Recorder
+  nameWithType.vb: ModuleBase.MATSys.IModule.Recorder
+- uid: MATSys.ModuleBase.MATSys#IModule#Recorder*
+  name: IModule.Recorder
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_MATSys_IModule_Recorder_
+  commentId: Overload:MATSys.ModuleBase.MATSys#IModule#Recorder
+  isSpec: "True"
+  name.vb: MATSys.IModule.Recorder
+  fullName: MATSys.ModuleBase.MATSys.IModule.Recorder
+  nameWithType: ModuleBase.IModule.Recorder
+  nameWithType.vb: ModuleBase.MATSys.IModule.Recorder
+- uid: MATSys.ModuleBase.MATSys#IModule#Transceiver
+  name: IModule.Transceiver
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_MATSys_IModule_Transceiver
+  commentId: P:MATSys.ModuleBase.MATSys#IModule#Transceiver
+  name.vb: MATSys.IModule.Transceiver
+  fullName: MATSys.ModuleBase.MATSys.IModule.Transceiver
+  nameWithType: ModuleBase.IModule.Transceiver
+  nameWithType.vb: ModuleBase.MATSys.IModule.Transceiver
+- uid: MATSys.ModuleBase.MATSys#IModule#Transceiver*
+  name: IModule.Transceiver
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_MATSys_IModule_Transceiver_
+  commentId: Overload:MATSys.ModuleBase.MATSys#IModule#Transceiver
+  isSpec: "True"
+  name.vb: MATSys.IModule.Transceiver
+  fullName: MATSys.ModuleBase.MATSys.IModule.Transceiver
+  nameWithType: ModuleBase.IModule.Transceiver
+  nameWithType.vb: ModuleBase.MATSys.IModule.Transceiver
+- uid: MATSys.ModuleBase.Name
+  name: Name
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Name
+  commentId: P:MATSys.ModuleBase.Name
+  fullName: MATSys.ModuleBase.Name
+  nameWithType: ModuleBase.Name
+- uid: MATSys.ModuleBase.Name*
+  name: Name
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_Name_
+  commentId: Overload:MATSys.ModuleBase.Name
+  isSpec: "True"
+  fullName: MATSys.ModuleBase.Name
+  nameWithType: ModuleBase.Name
+- uid: MATSys.ModuleBase.OnDataReady
+  name: OnDataReady
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_OnDataReady
+  commentId: E:MATSys.ModuleBase.OnDataReady
+  fullName: MATSys.ModuleBase.OnDataReady
+  nameWithType: ModuleBase.OnDataReady
+- uid: MATSys.ModuleBase.PrintCommands
+  name: PrintCommands()
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_PrintCommands
+  commentId: M:MATSys.ModuleBase.PrintCommands
+  fullName: MATSys.ModuleBase.PrintCommands()
+  nameWithType: ModuleBase.PrintCommands()
+- uid: MATSys.ModuleBase.PrintCommands*
+  name: PrintCommands
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_PrintCommands_
+  commentId: Overload:MATSys.ModuleBase.PrintCommands
+  isSpec: "True"
+  fullName: MATSys.ModuleBase.PrintCommands
+  nameWithType: ModuleBase.PrintCommands
+- uid: MATSys.ModuleBase.StartService(CancellationToken)
+  name: StartService(CancellationToken)
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_StartService_CancellationToken_
+  commentId: M:MATSys.ModuleBase.StartService(CancellationToken)
+  fullName: MATSys.ModuleBase.StartService(CancellationToken)
+  nameWithType: ModuleBase.StartService(CancellationToken)
+- uid: MATSys.ModuleBase.StartService*
+  name: StartService
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_StartService_
+  commentId: Overload:MATSys.ModuleBase.StartService
+  isSpec: "True"
+  fullName: MATSys.ModuleBase.StartService
+  nameWithType: ModuleBase.StartService
+- uid: MATSys.ModuleBase.StopService
+  name: StopService()
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_StopService
+  commentId: M:MATSys.ModuleBase.StopService
+  fullName: MATSys.ModuleBase.StopService()
+  nameWithType: ModuleBase.StopService()
+- uid: MATSys.ModuleBase.StopService*
+  name: StopService
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_StopService_
+  commentId: Overload:MATSys.ModuleBase.StopService
+  isSpec: "True"
+  fullName: MATSys.ModuleBase.StopService
+  nameWithType: ModuleBase.StopService
+- uid: MATSys.Plugins
+  name: MATSys.Plugins
+  href: api/MATSys.Plugins.html
+  commentId: N:MATSys.Plugins
+  fullName: MATSys.Plugins
+  nameWithType: MATSys.Plugins
+- uid: MATSys.Plugins.CSVRecorder
+  name: CSVRecorder
+  href: api/MATSys.Plugins.CSVRecorder.html
+  commentId: T:MATSys.Plugins.CSVRecorder
+  fullName: MATSys.Plugins.CSVRecorder
+  nameWithType: CSVRecorder
+- uid: MATSys.Plugins.CSVRecorder.Create(MATSys.Plugins.CSVRecorderConfiguration)
+  name: Create(CSVRecorderConfiguration)
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_Create_MATSys_Plugins_CSVRecorderConfiguration_
+  commentId: M:MATSys.Plugins.CSVRecorder.Create(MATSys.Plugins.CSVRecorderConfiguration)
+  fullName: MATSys.Plugins.CSVRecorder.Create(MATSys.Plugins.CSVRecorderConfiguration)
+  nameWithType: CSVRecorder.Create(CSVRecorderConfiguration)
+- uid: MATSys.Plugins.CSVRecorder.Create*
+  name: Create
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_Create_
+  commentId: Overload:MATSys.Plugins.CSVRecorder.Create
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorder.Create
+  nameWithType: CSVRecorder.Create
+- uid: MATSys.Plugins.CSVRecorder.Export
+  name: Export()
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_Export
+  commentId: M:MATSys.Plugins.CSVRecorder.Export
+  fullName: MATSys.Plugins.CSVRecorder.Export()
+  nameWithType: CSVRecorder.Export()
+- uid: MATSys.Plugins.CSVRecorder.Export(Newtonsoft.Json.Formatting)
+  name: Export(Formatting)
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_Export_Newtonsoft_Json_Formatting_
+  commentId: M:MATSys.Plugins.CSVRecorder.Export(Newtonsoft.Json.Formatting)
+  fullName: MATSys.Plugins.CSVRecorder.Export(Newtonsoft.Json.Formatting)
+  nameWithType: CSVRecorder.Export(Formatting)
+- uid: MATSys.Plugins.CSVRecorder.Export*
+  name: Export
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_Export_
+  commentId: Overload:MATSys.Plugins.CSVRecorder.Export
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorder.Export
+  nameWithType: CSVRecorder.Export
+- uid: MATSys.Plugins.CSVRecorder.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: Load(IConfigurationSection)
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_Load_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Plugins.CSVRecorder.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Plugins.CSVRecorder.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: CSVRecorder.Load(IConfigurationSection)
+- uid: MATSys.Plugins.CSVRecorder.Load(System.Object)
+  name: Load(Object)
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_Load_System_Object_
+  commentId: M:MATSys.Plugins.CSVRecorder.Load(System.Object)
+  fullName: MATSys.Plugins.CSVRecorder.Load(System.Object)
+  nameWithType: CSVRecorder.Load(Object)
+- uid: MATSys.Plugins.CSVRecorder.Load*
+  name: Load
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_Load_
+  commentId: Overload:MATSys.Plugins.CSVRecorder.Load
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorder.Load
+  nameWithType: CSVRecorder.Load
+- uid: MATSys.Plugins.CSVRecorder.Name
+  name: Name
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_Name
+  commentId: P:MATSys.Plugins.CSVRecorder.Name
+  fullName: MATSys.Plugins.CSVRecorder.Name
+  nameWithType: CSVRecorder.Name
+- uid: MATSys.Plugins.CSVRecorder.Name*
+  name: Name
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_Name_
+  commentId: Overload:MATSys.Plugins.CSVRecorder.Name
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorder.Name
+  nameWithType: CSVRecorder.Name
+- uid: MATSys.Plugins.CSVRecorder.StartService(CancellationToken)
+  name: StartService(CancellationToken)
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_StartService_CancellationToken_
+  commentId: M:MATSys.Plugins.CSVRecorder.StartService(CancellationToken)
+  fullName: MATSys.Plugins.CSVRecorder.StartService(CancellationToken)
+  nameWithType: CSVRecorder.StartService(CancellationToken)
+- uid: MATSys.Plugins.CSVRecorder.StartService*
+  name: StartService
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_StartService_
+  commentId: Overload:MATSys.Plugins.CSVRecorder.StartService
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorder.StartService
+  nameWithType: CSVRecorder.StartService
+- uid: MATSys.Plugins.CSVRecorder.StopService
+  name: StopService()
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_StopService
+  commentId: M:MATSys.Plugins.CSVRecorder.StopService
+  fullName: MATSys.Plugins.CSVRecorder.StopService()
+  nameWithType: CSVRecorder.StopService()
+- uid: MATSys.Plugins.CSVRecorder.StopService*
+  name: StopService
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_StopService_
+  commentId: Overload:MATSys.Plugins.CSVRecorder.StopService
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorder.StopService
+  nameWithType: CSVRecorder.StopService
+- uid: MATSys.Plugins.CSVRecorder.Write(System.Object)
+  name: Write(Object)
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_Write_System_Object_
+  commentId: M:MATSys.Plugins.CSVRecorder.Write(System.Object)
+  fullName: MATSys.Plugins.CSVRecorder.Write(System.Object)
+  nameWithType: CSVRecorder.Write(Object)
+- uid: MATSys.Plugins.CSVRecorder.Write*
+  name: Write
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_Write_
+  commentId: Overload:MATSys.Plugins.CSVRecorder.Write
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorder.Write
+  nameWithType: CSVRecorder.Write
+- uid: MATSys.Plugins.CSVRecorder.WriteAsync(System.Object)
+  name: WriteAsync(Object)
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_WriteAsync_System_Object_
+  commentId: M:MATSys.Plugins.CSVRecorder.WriteAsync(System.Object)
+  fullName: MATSys.Plugins.CSVRecorder.WriteAsync(System.Object)
+  nameWithType: CSVRecorder.WriteAsync(Object)
+- uid: MATSys.Plugins.CSVRecorder.WriteAsync*
+  name: WriteAsync
+  href: api/MATSys.Plugins.CSVRecorder.html#MATSys_Plugins_CSVRecorder_WriteAsync_
+  commentId: Overload:MATSys.Plugins.CSVRecorder.WriteAsync
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorder.WriteAsync
+  nameWithType: CSVRecorder.WriteAsync
+- uid: MATSys.Plugins.CSVRecorderConfiguration
+  name: CSVRecorderConfiguration
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html
+  commentId: T:MATSys.Plugins.CSVRecorderConfiguration
+  fullName: MATSys.Plugins.CSVRecorderConfiguration
+  nameWithType: CSVRecorderConfiguration
+- uid: MATSys.Plugins.CSVRecorderConfiguration.BoundedChannelFullMode
+  name: BoundedChannelFullMode
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_BoundedChannelFullMode
+  commentId: P:MATSys.Plugins.CSVRecorderConfiguration.BoundedChannelFullMode
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.BoundedChannelFullMode
+  nameWithType: CSVRecorderConfiguration.BoundedChannelFullMode
+- uid: MATSys.Plugins.CSVRecorderConfiguration.BoundedChannelFullMode*
+  name: BoundedChannelFullMode
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_BoundedChannelFullMode_
+  commentId: Overload:MATSys.Plugins.CSVRecorderConfiguration.BoundedChannelFullMode
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.BoundedChannelFullMode
+  nameWithType: CSVRecorderConfiguration.BoundedChannelFullMode
+- uid: MATSys.Plugins.CSVRecorderConfiguration.Default
+  name: Default
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_Default
+  commentId: F:MATSys.Plugins.CSVRecorderConfiguration.Default
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.Default
+  nameWithType: CSVRecorderConfiguration.Default
+- uid: MATSys.Plugins.CSVRecorderConfiguration.EnableLogging
+  name: EnableLogging
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_EnableLogging
+  commentId: P:MATSys.Plugins.CSVRecorderConfiguration.EnableLogging
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.EnableLogging
+  nameWithType: CSVRecorderConfiguration.EnableLogging
+- uid: MATSys.Plugins.CSVRecorderConfiguration.EnableLogging*
+  name: EnableLogging
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_EnableLogging_
+  commentId: Overload:MATSys.Plugins.CSVRecorderConfiguration.EnableLogging
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.EnableLogging
+  nameWithType: CSVRecorderConfiguration.EnableLogging
+- uid: MATSys.Plugins.CSVRecorderConfiguration.QueueSize
+  name: QueueSize
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_QueueSize
+  commentId: P:MATSys.Plugins.CSVRecorderConfiguration.QueueSize
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.QueueSize
+  nameWithType: CSVRecorderConfiguration.QueueSize
+- uid: MATSys.Plugins.CSVRecorderConfiguration.QueueSize*
+  name: QueueSize
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_QueueSize_
+  commentId: Overload:MATSys.Plugins.CSVRecorderConfiguration.QueueSize
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.QueueSize
+  nameWithType: CSVRecorderConfiguration.QueueSize
+- uid: MATSys.Plugins.CSVRecorderConfiguration.Type
+  name: Type
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_Type
+  commentId: P:MATSys.Plugins.CSVRecorderConfiguration.Type
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.Type
+  nameWithType: CSVRecorderConfiguration.Type
+- uid: MATSys.Plugins.CSVRecorderConfiguration.Type*
+  name: Type
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_Type_
+  commentId: Overload:MATSys.Plugins.CSVRecorderConfiguration.Type
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.Type
+  nameWithType: CSVRecorderConfiguration.Type
+- uid: MATSys.Plugins.CSVRecorderConfiguration.WaitForComplete
+  name: WaitForComplete
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_WaitForComplete
+  commentId: P:MATSys.Plugins.CSVRecorderConfiguration.WaitForComplete
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.WaitForComplete
+  nameWithType: CSVRecorderConfiguration.WaitForComplete
+- uid: MATSys.Plugins.CSVRecorderConfiguration.WaitForComplete*
+  name: WaitForComplete
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_WaitForComplete_
+  commentId: Overload:MATSys.Plugins.CSVRecorderConfiguration.WaitForComplete
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.WaitForComplete
+  nameWithType: CSVRecorderConfiguration.WaitForComplete
+- uid: MATSys.Plugins.CSVRecorderConfiguration.WaitForCompleteTimeout
+  name: WaitForCompleteTimeout
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_WaitForCompleteTimeout
+  commentId: P:MATSys.Plugins.CSVRecorderConfiguration.WaitForCompleteTimeout
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.WaitForCompleteTimeout
+  nameWithType: CSVRecorderConfiguration.WaitForCompleteTimeout
+- uid: MATSys.Plugins.CSVRecorderConfiguration.WaitForCompleteTimeout*
+  name: WaitForCompleteTimeout
+  href: api/MATSys.Plugins.CSVRecorderConfiguration.html#MATSys_Plugins_CSVRecorderConfiguration_WaitForCompleteTimeout_
+  commentId: Overload:MATSys.Plugins.CSVRecorderConfiguration.WaitForCompleteTimeout
+  isSpec: "True"
+  fullName: MATSys.Plugins.CSVRecorderConfiguration.WaitForCompleteTimeout
+  nameWithType: CSVRecorderConfiguration.WaitForCompleteTimeout
+- uid: MATSys.Plugins.EmptyNotifier
+  name: EmptyNotifier
+  href: api/MATSys.Plugins.EmptyNotifier.html
+  commentId: T:MATSys.Plugins.EmptyNotifier
+  fullName: MATSys.Plugins.EmptyNotifier
+  nameWithType: EmptyNotifier
+- uid: MATSys.Plugins.EmptyNotifier.Export
+  name: Export()
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_Export
+  commentId: M:MATSys.Plugins.EmptyNotifier.Export
+  fullName: MATSys.Plugins.EmptyNotifier.Export()
+  nameWithType: EmptyNotifier.Export()
+- uid: MATSys.Plugins.EmptyNotifier.Export(Newtonsoft.Json.Formatting)
+  name: Export(Formatting)
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_Export_Newtonsoft_Json_Formatting_
+  commentId: M:MATSys.Plugins.EmptyNotifier.Export(Newtonsoft.Json.Formatting)
+  fullName: MATSys.Plugins.EmptyNotifier.Export(Newtonsoft.Json.Formatting)
+  nameWithType: EmptyNotifier.Export(Formatting)
+- uid: MATSys.Plugins.EmptyNotifier.Export*
+  name: Export
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_Export_
+  commentId: Overload:MATSys.Plugins.EmptyNotifier.Export
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyNotifier.Export
+  nameWithType: EmptyNotifier.Export
+- uid: MATSys.Plugins.EmptyNotifier.GetData(System.Int32)
+  name: GetData(Int32)
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_GetData_System_Int32_
+  commentId: M:MATSys.Plugins.EmptyNotifier.GetData(System.Int32)
+  fullName: MATSys.Plugins.EmptyNotifier.GetData(System.Int32)
+  nameWithType: EmptyNotifier.GetData(Int32)
+- uid: MATSys.Plugins.EmptyNotifier.GetData*
+  name: GetData
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_GetData_
+  commentId: Overload:MATSys.Plugins.EmptyNotifier.GetData
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyNotifier.GetData
+  nameWithType: EmptyNotifier.GetData
+- uid: MATSys.Plugins.EmptyNotifier.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: Load(IConfigurationSection)
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_Load_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Plugins.EmptyNotifier.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Plugins.EmptyNotifier.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: EmptyNotifier.Load(IConfigurationSection)
+- uid: MATSys.Plugins.EmptyNotifier.Load(System.Object)
+  name: Load(Object)
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_Load_System_Object_
+  commentId: M:MATSys.Plugins.EmptyNotifier.Load(System.Object)
+  fullName: MATSys.Plugins.EmptyNotifier.Load(System.Object)
+  nameWithType: EmptyNotifier.Load(Object)
+- uid: MATSys.Plugins.EmptyNotifier.Load*
+  name: Load
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_Load_
+  commentId: Overload:MATSys.Plugins.EmptyNotifier.Load
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyNotifier.Load
+  nameWithType: EmptyNotifier.Load
+- uid: MATSys.Plugins.EmptyNotifier.Name
+  name: Name
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_Name
+  commentId: P:MATSys.Plugins.EmptyNotifier.Name
+  fullName: MATSys.Plugins.EmptyNotifier.Name
+  nameWithType: EmptyNotifier.Name
+- uid: MATSys.Plugins.EmptyNotifier.Name*
+  name: Name
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_Name_
+  commentId: Overload:MATSys.Plugins.EmptyNotifier.Name
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyNotifier.Name
+  nameWithType: EmptyNotifier.Name
+- uid: MATSys.Plugins.EmptyNotifier.OnNotify
+  name: OnNotify
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_OnNotify
+  commentId: E:MATSys.Plugins.EmptyNotifier.OnNotify
+  fullName: MATSys.Plugins.EmptyNotifier.OnNotify
+  nameWithType: EmptyNotifier.OnNotify
+- uid: MATSys.Plugins.EmptyNotifier.Publish(System.Object)
+  name: Publish(Object)
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_Publish_System_Object_
+  commentId: M:MATSys.Plugins.EmptyNotifier.Publish(System.Object)
+  fullName: MATSys.Plugins.EmptyNotifier.Publish(System.Object)
+  nameWithType: EmptyNotifier.Publish(Object)
+- uid: MATSys.Plugins.EmptyNotifier.Publish*
+  name: Publish
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_Publish_
+  commentId: Overload:MATSys.Plugins.EmptyNotifier.Publish
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyNotifier.Publish
+  nameWithType: EmptyNotifier.Publish
+- uid: MATSys.Plugins.EmptyNotifier.StartService(CancellationToken)
+  name: StartService(CancellationToken)
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_StartService_CancellationToken_
+  commentId: M:MATSys.Plugins.EmptyNotifier.StartService(CancellationToken)
+  fullName: MATSys.Plugins.EmptyNotifier.StartService(CancellationToken)
+  nameWithType: EmptyNotifier.StartService(CancellationToken)
+- uid: MATSys.Plugins.EmptyNotifier.StartService*
+  name: StartService
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_StartService_
+  commentId: Overload:MATSys.Plugins.EmptyNotifier.StartService
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyNotifier.StartService
+  nameWithType: EmptyNotifier.StartService
+- uid: MATSys.Plugins.EmptyNotifier.StopService
+  name: StopService()
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_StopService
+  commentId: M:MATSys.Plugins.EmptyNotifier.StopService
+  fullName: MATSys.Plugins.EmptyNotifier.StopService()
+  nameWithType: EmptyNotifier.StopService()
+- uid: MATSys.Plugins.EmptyNotifier.StopService*
+  name: StopService
+  href: api/MATSys.Plugins.EmptyNotifier.html#MATSys_Plugins_EmptyNotifier_StopService_
+  commentId: Overload:MATSys.Plugins.EmptyNotifier.StopService
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyNotifier.StopService
+  nameWithType: EmptyNotifier.StopService
+- uid: MATSys.Plugins.EmptyRecorder
+  name: EmptyRecorder
+  href: api/MATSys.Plugins.EmptyRecorder.html
+  commentId: T:MATSys.Plugins.EmptyRecorder
+  fullName: MATSys.Plugins.EmptyRecorder
+  nameWithType: EmptyRecorder
+- uid: MATSys.Plugins.EmptyRecorder.Export
+  name: Export()
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_Export
+  commentId: M:MATSys.Plugins.EmptyRecorder.Export
+  fullName: MATSys.Plugins.EmptyRecorder.Export()
+  nameWithType: EmptyRecorder.Export()
+- uid: MATSys.Plugins.EmptyRecorder.Export(Newtonsoft.Json.Formatting)
+  name: Export(Formatting)
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_Export_Newtonsoft_Json_Formatting_
+  commentId: M:MATSys.Plugins.EmptyRecorder.Export(Newtonsoft.Json.Formatting)
+  fullName: MATSys.Plugins.EmptyRecorder.Export(Newtonsoft.Json.Formatting)
+  nameWithType: EmptyRecorder.Export(Formatting)
+- uid: MATSys.Plugins.EmptyRecorder.Export*
+  name: Export
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_Export_
+  commentId: Overload:MATSys.Plugins.EmptyRecorder.Export
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyRecorder.Export
+  nameWithType: EmptyRecorder.Export
+- uid: MATSys.Plugins.EmptyRecorder.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: Load(IConfigurationSection)
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_Load_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Plugins.EmptyRecorder.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Plugins.EmptyRecorder.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: EmptyRecorder.Load(IConfigurationSection)
+- uid: MATSys.Plugins.EmptyRecorder.Load(System.Object)
+  name: Load(Object)
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_Load_System_Object_
+  commentId: M:MATSys.Plugins.EmptyRecorder.Load(System.Object)
+  fullName: MATSys.Plugins.EmptyRecorder.Load(System.Object)
+  nameWithType: EmptyRecorder.Load(Object)
+- uid: MATSys.Plugins.EmptyRecorder.Load*
+  name: Load
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_Load_
+  commentId: Overload:MATSys.Plugins.EmptyRecorder.Load
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyRecorder.Load
+  nameWithType: EmptyRecorder.Load
+- uid: MATSys.Plugins.EmptyRecorder.Name
+  name: Name
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_Name
+  commentId: P:MATSys.Plugins.EmptyRecorder.Name
+  fullName: MATSys.Plugins.EmptyRecorder.Name
+  nameWithType: EmptyRecorder.Name
+- uid: MATSys.Plugins.EmptyRecorder.Name*
+  name: Name
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_Name_
+  commentId: Overload:MATSys.Plugins.EmptyRecorder.Name
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyRecorder.Name
+  nameWithType: EmptyRecorder.Name
+- uid: MATSys.Plugins.EmptyRecorder.StartService(CancellationToken)
+  name: StartService(CancellationToken)
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_StartService_CancellationToken_
+  commentId: M:MATSys.Plugins.EmptyRecorder.StartService(CancellationToken)
+  fullName: MATSys.Plugins.EmptyRecorder.StartService(CancellationToken)
+  nameWithType: EmptyRecorder.StartService(CancellationToken)
+- uid: MATSys.Plugins.EmptyRecorder.StartService*
+  name: StartService
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_StartService_
+  commentId: Overload:MATSys.Plugins.EmptyRecorder.StartService
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyRecorder.StartService
+  nameWithType: EmptyRecorder.StartService
+- uid: MATSys.Plugins.EmptyRecorder.StopService
+  name: StopService()
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_StopService
+  commentId: M:MATSys.Plugins.EmptyRecorder.StopService
+  fullName: MATSys.Plugins.EmptyRecorder.StopService()
+  nameWithType: EmptyRecorder.StopService()
+- uid: MATSys.Plugins.EmptyRecorder.StopService*
+  name: StopService
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_StopService_
+  commentId: Overload:MATSys.Plugins.EmptyRecorder.StopService
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyRecorder.StopService
+  nameWithType: EmptyRecorder.StopService
+- uid: MATSys.Plugins.EmptyRecorder.Write(System.Object)
+  name: Write(Object)
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_Write_System_Object_
+  commentId: M:MATSys.Plugins.EmptyRecorder.Write(System.Object)
+  fullName: MATSys.Plugins.EmptyRecorder.Write(System.Object)
+  nameWithType: EmptyRecorder.Write(Object)
+- uid: MATSys.Plugins.EmptyRecorder.Write*
+  name: Write
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_Write_
+  commentId: Overload:MATSys.Plugins.EmptyRecorder.Write
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyRecorder.Write
+  nameWithType: EmptyRecorder.Write
+- uid: MATSys.Plugins.EmptyRecorder.WriteAsync(System.Object)
+  name: WriteAsync(Object)
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_WriteAsync_System_Object_
+  commentId: M:MATSys.Plugins.EmptyRecorder.WriteAsync(System.Object)
+  fullName: MATSys.Plugins.EmptyRecorder.WriteAsync(System.Object)
+  nameWithType: EmptyRecorder.WriteAsync(Object)
+- uid: MATSys.Plugins.EmptyRecorder.WriteAsync*
+  name: WriteAsync
+  href: api/MATSys.Plugins.EmptyRecorder.html#MATSys_Plugins_EmptyRecorder_WriteAsync_
+  commentId: Overload:MATSys.Plugins.EmptyRecorder.WriteAsync
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyRecorder.WriteAsync
+  nameWithType: EmptyRecorder.WriteAsync
+- uid: MATSys.Plugins.EmptyTransceiver
+  name: EmptyTransceiver
+  href: api/MATSys.Plugins.EmptyTransceiver.html
+  commentId: T:MATSys.Plugins.EmptyTransceiver
+  fullName: MATSys.Plugins.EmptyTransceiver
+  nameWithType: EmptyTransceiver
+- uid: MATSys.Plugins.EmptyTransceiver.Export
+  name: Export()
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_Export
+  commentId: M:MATSys.Plugins.EmptyTransceiver.Export
+  fullName: MATSys.Plugins.EmptyTransceiver.Export()
+  nameWithType: EmptyTransceiver.Export()
+- uid: MATSys.Plugins.EmptyTransceiver.Export(Newtonsoft.Json.Formatting)
+  name: Export(Formatting)
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_Export_Newtonsoft_Json_Formatting_
+  commentId: M:MATSys.Plugins.EmptyTransceiver.Export(Newtonsoft.Json.Formatting)
+  fullName: MATSys.Plugins.EmptyTransceiver.Export(Newtonsoft.Json.Formatting)
+  nameWithType: EmptyTransceiver.Export(Formatting)
+- uid: MATSys.Plugins.EmptyTransceiver.Export*
+  name: Export
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_Export_
+  commentId: Overload:MATSys.Plugins.EmptyTransceiver.Export
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyTransceiver.Export
+  nameWithType: EmptyTransceiver.Export
+- uid: MATSys.Plugins.EmptyTransceiver.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: Load(IConfigurationSection)
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_Load_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Plugins.EmptyTransceiver.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Plugins.EmptyTransceiver.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: EmptyTransceiver.Load(IConfigurationSection)
+- uid: MATSys.Plugins.EmptyTransceiver.Load(System.Object)
+  name: Load(Object)
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_Load_System_Object_
+  commentId: M:MATSys.Plugins.EmptyTransceiver.Load(System.Object)
+  fullName: MATSys.Plugins.EmptyTransceiver.Load(System.Object)
+  nameWithType: EmptyTransceiver.Load(Object)
+- uid: MATSys.Plugins.EmptyTransceiver.Load*
+  name: Load
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_Load_
+  commentId: Overload:MATSys.Plugins.EmptyTransceiver.Load
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyTransceiver.Load
+  nameWithType: EmptyTransceiver.Load
+- uid: MATSys.Plugins.EmptyTransceiver.Name
+  name: Name
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_Name
+  commentId: P:MATSys.Plugins.EmptyTransceiver.Name
+  fullName: MATSys.Plugins.EmptyTransceiver.Name
+  nameWithType: EmptyTransceiver.Name
+- uid: MATSys.Plugins.EmptyTransceiver.Name*
+  name: Name
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_Name_
+  commentId: Overload:MATSys.Plugins.EmptyTransceiver.Name
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyTransceiver.Name
+  nameWithType: EmptyTransceiver.Name
+- uid: MATSys.Plugins.EmptyTransceiver.OnNewRequest
+  name: OnNewRequest
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_OnNewRequest
+  commentId: E:MATSys.Plugins.EmptyTransceiver.OnNewRequest
+  fullName: MATSys.Plugins.EmptyTransceiver.OnNewRequest
+  nameWithType: EmptyTransceiver.OnNewRequest
+- uid: MATSys.Plugins.EmptyTransceiver.StartService(CancellationToken)
+  name: StartService(CancellationToken)
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_StartService_CancellationToken_
+  commentId: M:MATSys.Plugins.EmptyTransceiver.StartService(CancellationToken)
+  fullName: MATSys.Plugins.EmptyTransceiver.StartService(CancellationToken)
+  nameWithType: EmptyTransceiver.StartService(CancellationToken)
+- uid: MATSys.Plugins.EmptyTransceiver.StartService*
+  name: StartService
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_StartService_
+  commentId: Overload:MATSys.Plugins.EmptyTransceiver.StartService
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyTransceiver.StartService
+  nameWithType: EmptyTransceiver.StartService
+- uid: MATSys.Plugins.EmptyTransceiver.StopService
+  name: StopService()
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_StopService
+  commentId: M:MATSys.Plugins.EmptyTransceiver.StopService
+  fullName: MATSys.Plugins.EmptyTransceiver.StopService()
+  nameWithType: EmptyTransceiver.StopService()
+- uid: MATSys.Plugins.EmptyTransceiver.StopService*
+  name: StopService
+  href: api/MATSys.Plugins.EmptyTransceiver.html#MATSys_Plugins_EmptyTransceiver_StopService_
+  commentId: Overload:MATSys.Plugins.EmptyTransceiver.StopService
+  isSpec: "True"
+  fullName: MATSys.Plugins.EmptyTransceiver.StopService
+  nameWithType: EmptyTransceiver.StopService
+- uid: MATSys.Plugins.NetMQNotifier
+  name: NetMQNotifier
+  href: api/MATSys.Plugins.NetMQNotifier.html
+  commentId: T:MATSys.Plugins.NetMQNotifier
+  fullName: MATSys.Plugins.NetMQNotifier
+  nameWithType: NetMQNotifier
+- uid: MATSys.Plugins.NetMQNotifier.Export
+  name: Export()
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_Export
+  commentId: M:MATSys.Plugins.NetMQNotifier.Export
+  fullName: MATSys.Plugins.NetMQNotifier.Export()
+  nameWithType: NetMQNotifier.Export()
+- uid: MATSys.Plugins.NetMQNotifier.Export(Newtonsoft.Json.Formatting)
+  name: Export(Formatting)
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_Export_Newtonsoft_Json_Formatting_
+  commentId: M:MATSys.Plugins.NetMQNotifier.Export(Newtonsoft.Json.Formatting)
+  fullName: MATSys.Plugins.NetMQNotifier.Export(Newtonsoft.Json.Formatting)
+  nameWithType: NetMQNotifier.Export(Formatting)
+- uid: MATSys.Plugins.NetMQNotifier.Export*
+  name: Export
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_Export_
+  commentId: Overload:MATSys.Plugins.NetMQNotifier.Export
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifier.Export
+  nameWithType: NetMQNotifier.Export
+- uid: MATSys.Plugins.NetMQNotifier.Finalize
+  name: Finalize()
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_Finalize
+  commentId: M:MATSys.Plugins.NetMQNotifier.Finalize
+  fullName: MATSys.Plugins.NetMQNotifier.Finalize()
+  nameWithType: NetMQNotifier.Finalize()
+- uid: MATSys.Plugins.NetMQNotifier.Finalize*
+  name: Finalize
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_Finalize_
+  commentId: Overload:MATSys.Plugins.NetMQNotifier.Finalize
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifier.Finalize
+  nameWithType: NetMQNotifier.Finalize
+- uid: MATSys.Plugins.NetMQNotifier.GetData(System.Int32)
+  name: GetData(Int32)
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_GetData_System_Int32_
+  commentId: M:MATSys.Plugins.NetMQNotifier.GetData(System.Int32)
+  fullName: MATSys.Plugins.NetMQNotifier.GetData(System.Int32)
+  nameWithType: NetMQNotifier.GetData(Int32)
+- uid: MATSys.Plugins.NetMQNotifier.GetData*
+  name: GetData
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_GetData_
+  commentId: Overload:MATSys.Plugins.NetMQNotifier.GetData
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifier.GetData
+  nameWithType: NetMQNotifier.GetData
+- uid: MATSys.Plugins.NetMQNotifier.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: Load(IConfigurationSection)
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_Load_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Plugins.NetMQNotifier.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Plugins.NetMQNotifier.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: NetMQNotifier.Load(IConfigurationSection)
+- uid: MATSys.Plugins.NetMQNotifier.Load(System.Object)
+  name: Load(Object)
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_Load_System_Object_
+  commentId: M:MATSys.Plugins.NetMQNotifier.Load(System.Object)
+  fullName: MATSys.Plugins.NetMQNotifier.Load(System.Object)
+  nameWithType: NetMQNotifier.Load(Object)
+- uid: MATSys.Plugins.NetMQNotifier.Load*
+  name: Load
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_Load_
+  commentId: Overload:MATSys.Plugins.NetMQNotifier.Load
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifier.Load
+  nameWithType: NetMQNotifier.Load
+- uid: MATSys.Plugins.NetMQNotifier.Name
+  name: Name
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_Name
+  commentId: P:MATSys.Plugins.NetMQNotifier.Name
+  fullName: MATSys.Plugins.NetMQNotifier.Name
+  nameWithType: NetMQNotifier.Name
+- uid: MATSys.Plugins.NetMQNotifier.Name*
+  name: Name
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_Name_
+  commentId: Overload:MATSys.Plugins.NetMQNotifier.Name
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifier.Name
+  nameWithType: NetMQNotifier.Name
+- uid: MATSys.Plugins.NetMQNotifier.OnNotify
+  name: OnNotify
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_OnNotify
+  commentId: E:MATSys.Plugins.NetMQNotifier.OnNotify
+  fullName: MATSys.Plugins.NetMQNotifier.OnNotify
+  nameWithType: NetMQNotifier.OnNotify
+- uid: MATSys.Plugins.NetMQNotifier.Publish(System.Object)
+  name: Publish(Object)
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_Publish_System_Object_
+  commentId: M:MATSys.Plugins.NetMQNotifier.Publish(System.Object)
+  fullName: MATSys.Plugins.NetMQNotifier.Publish(System.Object)
+  nameWithType: NetMQNotifier.Publish(Object)
+- uid: MATSys.Plugins.NetMQNotifier.Publish*
+  name: Publish
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_Publish_
+  commentId: Overload:MATSys.Plugins.NetMQNotifier.Publish
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifier.Publish
+  nameWithType: NetMQNotifier.Publish
+- uid: MATSys.Plugins.NetMQNotifier.StartService(CancellationToken)
+  name: StartService(CancellationToken)
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_StartService_CancellationToken_
+  commentId: M:MATSys.Plugins.NetMQNotifier.StartService(CancellationToken)
+  fullName: MATSys.Plugins.NetMQNotifier.StartService(CancellationToken)
+  nameWithType: NetMQNotifier.StartService(CancellationToken)
+- uid: MATSys.Plugins.NetMQNotifier.StartService*
+  name: StartService
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_StartService_
+  commentId: Overload:MATSys.Plugins.NetMQNotifier.StartService
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifier.StartService
+  nameWithType: NetMQNotifier.StartService
+- uid: MATSys.Plugins.NetMQNotifier.StopService
+  name: StopService()
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_StopService
+  commentId: M:MATSys.Plugins.NetMQNotifier.StopService
+  fullName: MATSys.Plugins.NetMQNotifier.StopService()
+  nameWithType: NetMQNotifier.StopService()
+- uid: MATSys.Plugins.NetMQNotifier.StopService*
+  name: StopService
+  href: api/MATSys.Plugins.NetMQNotifier.html#MATSys_Plugins_NetMQNotifier_StopService_
+  commentId: Overload:MATSys.Plugins.NetMQNotifier.StopService
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifier.StopService
+  nameWithType: NetMQNotifier.StopService
+- uid: MATSys.Plugins.NetMQNotifierConfiguration
+  name: NetMQNotifierConfiguration
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html
+  commentId: T:MATSys.Plugins.NetMQNotifierConfiguration
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration
+  nameWithType: NetMQNotifierConfiguration
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.Address
+  name: Address
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_Address
+  commentId: P:MATSys.Plugins.NetMQNotifierConfiguration.Address
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.Address
+  nameWithType: NetMQNotifierConfiguration.Address
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.Address*
+  name: Address
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_Address_
+  commentId: Overload:MATSys.Plugins.NetMQNotifierConfiguration.Address
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.Address
+  nameWithType: NetMQNotifierConfiguration.Address
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.Default
+  name: Default
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_Default
+  commentId: P:MATSys.Plugins.NetMQNotifierConfiguration.Default
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.Default
+  nameWithType: NetMQNotifierConfiguration.Default
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.Default*
+  name: Default
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_Default_
+  commentId: Overload:MATSys.Plugins.NetMQNotifierConfiguration.Default
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.Default
+  nameWithType: NetMQNotifierConfiguration.Default
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.DisableEvent
+  name: DisableEvent
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_DisableEvent
+  commentId: P:MATSys.Plugins.NetMQNotifierConfiguration.DisableEvent
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.DisableEvent
+  nameWithType: NetMQNotifierConfiguration.DisableEvent
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.DisableEvent*
+  name: DisableEvent
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_DisableEvent_
+  commentId: Overload:MATSys.Plugins.NetMQNotifierConfiguration.DisableEvent
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.DisableEvent
+  nameWithType: NetMQNotifierConfiguration.DisableEvent
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.EnableLogging
+  name: EnableLogging
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_EnableLogging
+  commentId: P:MATSys.Plugins.NetMQNotifierConfiguration.EnableLogging
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.EnableLogging
+  nameWithType: NetMQNotifierConfiguration.EnableLogging
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.EnableLogging*
+  name: EnableLogging
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_EnableLogging_
+  commentId: Overload:MATSys.Plugins.NetMQNotifierConfiguration.EnableLogging
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.EnableLogging
+  nameWithType: NetMQNotifierConfiguration.EnableLogging
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.Protocal
+  name: Protocal
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_Protocal
+  commentId: P:MATSys.Plugins.NetMQNotifierConfiguration.Protocal
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.Protocal
+  nameWithType: NetMQNotifierConfiguration.Protocal
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.Protocal*
+  name: Protocal
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_Protocal_
+  commentId: Overload:MATSys.Plugins.NetMQNotifierConfiguration.Protocal
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.Protocal
+  nameWithType: NetMQNotifierConfiguration.Protocal
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.Topic
+  name: Topic
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_Topic
+  commentId: P:MATSys.Plugins.NetMQNotifierConfiguration.Topic
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.Topic
+  nameWithType: NetMQNotifierConfiguration.Topic
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.Topic*
+  name: Topic
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_Topic_
+  commentId: Overload:MATSys.Plugins.NetMQNotifierConfiguration.Topic
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.Topic
+  nameWithType: NetMQNotifierConfiguration.Topic
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.Type
+  name: Type
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_Type
+  commentId: P:MATSys.Plugins.NetMQNotifierConfiguration.Type
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.Type
+  nameWithType: NetMQNotifierConfiguration.Type
+- uid: MATSys.Plugins.NetMQNotifierConfiguration.Type*
+  name: Type
+  href: api/MATSys.Plugins.NetMQNotifierConfiguration.html#MATSys_Plugins_NetMQNotifierConfiguration_Type_
+  commentId: Overload:MATSys.Plugins.NetMQNotifierConfiguration.Type
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQNotifierConfiguration.Type
+  nameWithType: NetMQNotifierConfiguration.Type
+- uid: MATSys.Plugins.NetMQTransceiver
+  name: NetMQTransceiver
+  href: api/MATSys.Plugins.NetMQTransceiver.html
+  commentId: T:MATSys.Plugins.NetMQTransceiver
+  fullName: MATSys.Plugins.NetMQTransceiver
+  nameWithType: NetMQTransceiver
+- uid: MATSys.Plugins.NetMQTransceiver.Export
+  name: Export()
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_Export
+  commentId: M:MATSys.Plugins.NetMQTransceiver.Export
+  fullName: MATSys.Plugins.NetMQTransceiver.Export()
+  nameWithType: NetMQTransceiver.Export()
+- uid: MATSys.Plugins.NetMQTransceiver.Export(Newtonsoft.Json.Formatting)
+  name: Export(Formatting)
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_Export_Newtonsoft_Json_Formatting_
+  commentId: M:MATSys.Plugins.NetMQTransceiver.Export(Newtonsoft.Json.Formatting)
+  fullName: MATSys.Plugins.NetMQTransceiver.Export(Newtonsoft.Json.Formatting)
+  nameWithType: NetMQTransceiver.Export(Formatting)
+- uid: MATSys.Plugins.NetMQTransceiver.Export*
+  name: Export
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_Export_
+  commentId: Overload:MATSys.Plugins.NetMQTransceiver.Export
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQTransceiver.Export
+  nameWithType: NetMQTransceiver.Export
+- uid: MATSys.Plugins.NetMQTransceiver.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  name: Load(IConfigurationSection)
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_Load_Microsoft_Extensions_Configuration_IConfigurationSection_
+  commentId: M:MATSys.Plugins.NetMQTransceiver.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  fullName: MATSys.Plugins.NetMQTransceiver.Load(Microsoft.Extensions.Configuration.IConfigurationSection)
+  nameWithType: NetMQTransceiver.Load(IConfigurationSection)
+- uid: MATSys.Plugins.NetMQTransceiver.Load(System.Object)
+  name: Load(Object)
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_Load_System_Object_
+  commentId: M:MATSys.Plugins.NetMQTransceiver.Load(System.Object)
+  fullName: MATSys.Plugins.NetMQTransceiver.Load(System.Object)
+  nameWithType: NetMQTransceiver.Load(Object)
+- uid: MATSys.Plugins.NetMQTransceiver.Load*
+  name: Load
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_Load_
+  commentId: Overload:MATSys.Plugins.NetMQTransceiver.Load
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQTransceiver.Load
+  nameWithType: NetMQTransceiver.Load
+- uid: MATSys.Plugins.NetMQTransceiver.Name
+  name: Name
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_Name
+  commentId: P:MATSys.Plugins.NetMQTransceiver.Name
+  fullName: MATSys.Plugins.NetMQTransceiver.Name
+  nameWithType: NetMQTransceiver.Name
+- uid: MATSys.Plugins.NetMQTransceiver.Name*
+  name: Name
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_Name_
+  commentId: Overload:MATSys.Plugins.NetMQTransceiver.Name
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQTransceiver.Name
+  nameWithType: NetMQTransceiver.Name
+- uid: MATSys.Plugins.NetMQTransceiver.OnNewRequest
+  name: OnNewRequest
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_OnNewRequest
+  commentId: E:MATSys.Plugins.NetMQTransceiver.OnNewRequest
+  fullName: MATSys.Plugins.NetMQTransceiver.OnNewRequest
+  nameWithType: NetMQTransceiver.OnNewRequest
+- uid: MATSys.Plugins.NetMQTransceiver.StartService(CancellationToken)
+  name: StartService(CancellationToken)
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_StartService_CancellationToken_
+  commentId: M:MATSys.Plugins.NetMQTransceiver.StartService(CancellationToken)
+  fullName: MATSys.Plugins.NetMQTransceiver.StartService(CancellationToken)
+  nameWithType: NetMQTransceiver.StartService(CancellationToken)
+- uid: MATSys.Plugins.NetMQTransceiver.StartService*
+  name: StartService
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_StartService_
+  commentId: Overload:MATSys.Plugins.NetMQTransceiver.StartService
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQTransceiver.StartService
+  nameWithType: NetMQTransceiver.StartService
+- uid: MATSys.Plugins.NetMQTransceiver.StopService
+  name: StopService()
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_StopService
+  commentId: M:MATSys.Plugins.NetMQTransceiver.StopService
+  fullName: MATSys.Plugins.NetMQTransceiver.StopService()
+  nameWithType: NetMQTransceiver.StopService()
+- uid: MATSys.Plugins.NetMQTransceiver.StopService*
+  name: StopService
+  href: api/MATSys.Plugins.NetMQTransceiver.html#MATSys_Plugins_NetMQTransceiver_StopService_
+  commentId: Overload:MATSys.Plugins.NetMQTransceiver.StopService
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQTransceiver.StopService
+  nameWithType: NetMQTransceiver.StopService
+- uid: MATSys.Plugins.NetMQTransceiverConfiguration
+  name: NetMQTransceiverConfiguration
+  href: api/MATSys.Plugins.NetMQTransceiverConfiguration.html
+  commentId: T:MATSys.Plugins.NetMQTransceiverConfiguration
+  fullName: MATSys.Plugins.NetMQTransceiverConfiguration
+  nameWithType: NetMQTransceiverConfiguration
+- uid: MATSys.Plugins.NetMQTransceiverConfiguration.EnableLogging
+  name: EnableLogging
+  href: api/MATSys.Plugins.NetMQTransceiverConfiguration.html#MATSys_Plugins_NetMQTransceiverConfiguration_EnableLogging
+  commentId: P:MATSys.Plugins.NetMQTransceiverConfiguration.EnableLogging
+  fullName: MATSys.Plugins.NetMQTransceiverConfiguration.EnableLogging
+  nameWithType: NetMQTransceiverConfiguration.EnableLogging
+- uid: MATSys.Plugins.NetMQTransceiverConfiguration.EnableLogging*
+  name: EnableLogging
+  href: api/MATSys.Plugins.NetMQTransceiverConfiguration.html#MATSys_Plugins_NetMQTransceiverConfiguration_EnableLogging_
+  commentId: Overload:MATSys.Plugins.NetMQTransceiverConfiguration.EnableLogging
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQTransceiverConfiguration.EnableLogging
+  nameWithType: NetMQTransceiverConfiguration.EnableLogging
+- uid: MATSys.Plugins.NetMQTransceiverConfiguration.LocalIP
+  name: LocalIP
+  href: api/MATSys.Plugins.NetMQTransceiverConfiguration.html#MATSys_Plugins_NetMQTransceiverConfiguration_LocalIP
+  commentId: P:MATSys.Plugins.NetMQTransceiverConfiguration.LocalIP
+  fullName: MATSys.Plugins.NetMQTransceiverConfiguration.LocalIP
+  nameWithType: NetMQTransceiverConfiguration.LocalIP
+- uid: MATSys.Plugins.NetMQTransceiverConfiguration.LocalIP*
+  name: LocalIP
+  href: api/MATSys.Plugins.NetMQTransceiverConfiguration.html#MATSys_Plugins_NetMQTransceiverConfiguration_LocalIP_
+  commentId: Overload:MATSys.Plugins.NetMQTransceiverConfiguration.LocalIP
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQTransceiverConfiguration.LocalIP
+  nameWithType: NetMQTransceiverConfiguration.LocalIP
+- uid: MATSys.Plugins.NetMQTransceiverConfiguration.Port
+  name: Port
+  href: api/MATSys.Plugins.NetMQTransceiverConfiguration.html#MATSys_Plugins_NetMQTransceiverConfiguration_Port
+  commentId: P:MATSys.Plugins.NetMQTransceiverConfiguration.Port
+  fullName: MATSys.Plugins.NetMQTransceiverConfiguration.Port
+  nameWithType: NetMQTransceiverConfiguration.Port
+- uid: MATSys.Plugins.NetMQTransceiverConfiguration.Port*
+  name: Port
+  href: api/MATSys.Plugins.NetMQTransceiverConfiguration.html#MATSys_Plugins_NetMQTransceiverConfiguration_Port_
+  commentId: Overload:MATSys.Plugins.NetMQTransceiverConfiguration.Port
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQTransceiverConfiguration.Port
+  nameWithType: NetMQTransceiverConfiguration.Port
+- uid: MATSys.Plugins.NetMQTransceiverConfiguration.Type
+  name: Type
+  href: api/MATSys.Plugins.NetMQTransceiverConfiguration.html#MATSys_Plugins_NetMQTransceiverConfiguration_Type
+  commentId: P:MATSys.Plugins.NetMQTransceiverConfiguration.Type
+  fullName: MATSys.Plugins.NetMQTransceiverConfiguration.Type
+  nameWithType: NetMQTransceiverConfiguration.Type
+- uid: MATSys.Plugins.NetMQTransceiverConfiguration.Type*
+  name: Type
+  href: api/MATSys.Plugins.NetMQTransceiverConfiguration.html#MATSys_Plugins_NetMQTransceiverConfiguration_Type_
+  commentId: Overload:MATSys.Plugins.NetMQTransceiverConfiguration.Type
+  isSpec: "True"
+  fullName: MATSys.Plugins.NetMQTransceiverConfiguration.Type
+  nameWithType: NetMQTransceiverConfiguration.Type

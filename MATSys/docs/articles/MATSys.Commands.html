@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Command Pattern Design </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Command Pattern Design ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="command-pattern-design">Command Pattern Design</h1>
+
+<p>namespace: <ins><b>MATSys.Commands</b></ins></p>
+<p>MATSys.Commands packages several features that helps developer to invoke method in Module using string format.</p>
+<ul>
+<li>Command class - information of the method access</li>
+<li>MethodInvoker class - delegation of the Module instance</li>
+<li>MATSysCommandAttribute class - used to tag the method user wants to aceess</li>
+</ul>
+<p><b>Module</b>, <b>Command</b> and <b>MethodInvoker</b> are 3 independent instances that handle and remote access behavior.</p>
+<p>Command is created and sent to the Module, and MethodInvoker then uses this information to access(delegate) the method in the Module.To be noted that only methods with <b>MATSysCommandAttribute</b> can be accessed through MethodInvoker.</p>
+<p>Let's start with the Command first</p>
+<h2 id="command">Command</h2>
+<p>MATSys provides 8 different Command classes that keep the information</p>
+<pre><code>
+    Command
+    Command&lt;T1>
+    Command&lt;T1,T2>
+    Command&lt;T1,T2,T3>
+    Command&lt;T1,T2,T3,T4>
+    Command&lt;T1,T2,T3,T4,T5>
+    Command&lt;T1,T2,T3,T4,T5,T6>
+    Command&lt;T1,T2,T3,T4,T5,T6,T7>
+
+    // T1~T7 represnet the parameter in the method
+</code></pre>
+<p>Command instance contains the method name and all the parameters information for later usage. Every command instance can be created and kept using abstract <b>CommanbdBase</b>.</p>
+<p>To be noted that operators like ref, out are not supported.</p>
+<h2 id="methodinvoker">MethodInvoker</h2>
+<p>MATSys.Commands use MethodInvoker instance internally to access the method using delegation. In most case user don't need to use or modify it.
+Because MethodInvoker use delegate to access methods, it provides a high performance access compared to reflection.</p>
+<h2 id="matsyscommandattribute">MATSysCommandAttribute</h2>
+<p>In the following example, this is a normal method without <b>MATSysCommandAttribute</b> assigned. This means user cannot access the method by MethodInvoker but only use direct method call.</p>
+<pre><code>
+    public string Hello(string input)
+    {
+        //return something;
+    }
+</code></pre>
+<p>Once the <b>MATSysCommandAttribute</b> is assigned, this method can now be access through MethodInvoker using Command instance.</p>
+<pre><code>
+    [MATSysCommand("Test",typeof(Command&lt;string>)]
+    public string Hello(string input)
+    {
+        //return something;
+    }
+    //this method will be access with name "Test" and type Command&lt;string>
+</code></pre>
+<p><b>MATSysCommandAttribute</b> has two parameters, first is the alias name of the method(use default if empty). The second is the type of the Command.
+User can leave the parameters empty, system will automatically choose the default value.</p>
+<pre><code>
+    [MATSysCommand]
+    public string Hello(string input)
+    {
+        //return something;
+    }
+    //this method will be access with name "Hello" and type Command&lt;string>
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

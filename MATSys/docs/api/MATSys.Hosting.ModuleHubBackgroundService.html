@@ -1,0 +1,527 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ModuleHubBackgroundService
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ModuleHubBackgroundService
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="MATSys.Hosting.ModuleHubBackgroundService">
+  
+  
+  <h1 id="MATSys_Hosting_ModuleHubBackgroundService" data-uid="MATSys.Hosting.ModuleHubBackgroundService" class="text-break">Class ModuleHubBackgroundService
+  </h1>
+  <div class="markdown level0 summary"><p>A service class that handles all modules in the background, including the ability to run in script mode.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">Microsoft.Extensions.Hosting.BackgroundService</span></div>
+    <div class="level2"><span class="xref">ModuleHubBackgroundService</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><span class="xref">Microsoft.Extensions.Hosting.IHostedService</span></div>
+    <div><span class="xref">System.IDisposable</span></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">Microsoft.Extensions.Hosting.BackgroundService.ExecuteAsync(System.Threading.CancellationToken)</span>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Extensions.Hosting.BackgroundService.StartAsync(System.Threading.CancellationToken)</span>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Extensions.Hosting.BackgroundService.StopAsync(System.Threading.CancellationToken)</span>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Extensions.Hosting.BackgroundService.Dispose()</span>
+    </div>
+    <div>
+      <span class="xref">Microsoft.Extensions.Hosting.BackgroundService.ExecuteTask</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="MATSys.Hosting.html">MATSys.Hosting</a></h6>
+  <h6><strong>Assembly</strong>: MATSys.dll</h6>
+  <h5 id="MATSys_Hosting_ModuleHubBackgroundService_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class ModuleHubBackgroundService : BackgroundService, IHostedService, IDisposable</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Hosting_ModuleHubBackgroundService__ctor_IServiceProvider_.md&amp;value=---%0Auid%3A%20MATSys.Hosting.ModuleHubBackgroundService.%23ctor(IServiceProvider)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Hosting/ModuleHubBackgroundService.cs/#L54">View Source</a>
+  </span>
+  <a id="MATSys_Hosting_ModuleHubBackgroundService__ctor_" data-uid="MATSys.Hosting.ModuleHubBackgroundService.#ctor*"></a>
+  <h4 id="MATSys_Hosting_ModuleHubBackgroundService__ctor_IServiceProvider_" data-uid="MATSys.Hosting.ModuleHubBackgroundService.#ctor(IServiceProvider)">ModuleHubBackgroundService(IServiceProvider)</h4>
+  <div class="markdown level1 summary"><p>Constructor for the background service</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ModuleHubBackgroundService(IServiceProvider services)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IServiceProvider</span></td>
+        <td><span class="parametername">services</span></td>
+        <td><p>IServiceProvider instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Hosting_ModuleHubBackgroundService_Modules.md&amp;value=---%0Auid%3A%20MATSys.Hosting.ModuleHubBackgroundService.Modules%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Hosting/ModuleHubBackgroundService.cs/#L48">View Source</a>
+  </span>
+  <a id="MATSys_Hosting_ModuleHubBackgroundService_Modules_" data-uid="MATSys.Hosting.ModuleHubBackgroundService.Modules*"></a>
+  <h4 id="MATSys_Hosting_ModuleHubBackgroundService_Modules" data-uid="MATSys.Hosting.ModuleHubBackgroundService.Modules">Modules</h4>
+  <div class="markdown level1 summary"><p>Dictionary for all modules in the background servie</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Dictionary&lt;string, IModule&gt; Modules { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Dictionary</span>&lt;<span class="xref">System.String</span>, <a class="xref" href="MATSys.IModule.html">IModule</a>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Hosting_ModuleHubBackgroundService_ExecuteAsync_CancellationToken_.md&amp;value=---%0Auid%3A%20MATSys.Hosting.ModuleHubBackgroundService.ExecuteAsync(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Hosting/ModuleHubBackgroundService.cs/#L143">View Source</a>
+  </span>
+  <a id="MATSys_Hosting_ModuleHubBackgroundService_ExecuteAsync_" data-uid="MATSys.Hosting.ModuleHubBackgroundService.ExecuteAsync*"></a>
+  <h4 id="MATSys_Hosting_ModuleHubBackgroundService_ExecuteAsync_CancellationToken_" data-uid="MATSys.Hosting.ModuleHubBackgroundService.ExecuteAsync(CancellationToken)">ExecuteAsync(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>This method will be called immediately once the host is started</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected override Task ExecuteAsync(CancellationToken stoppingToken)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">stoppingToken</span></td>
+        <td><p>Stop token</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Task</span></td>
+        <td><p>Task of the execution logic</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Hosting_ModuleHubBackgroundService_ExecuteCommand_System_String_MATSys_Commands_ICommand_.md&amp;value=---%0Auid%3A%20MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand(System.String%2CMATSys.Commands.ICommand)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Hosting/ModuleHubBackgroundService.cs/#L82">View Source</a>
+  </span>
+  <a id="MATSys_Hosting_ModuleHubBackgroundService_ExecuteCommand_" data-uid="MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand*"></a>
+  <h4 id="MATSys_Hosting_ModuleHubBackgroundService_ExecuteCommand_System_String_MATSys_Commands_ICommand_" data-uid="MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand(System.String,MATSys.Commands.ICommand)">ExecuteCommand(String, ICommand)</h4>
+  <div class="markdown level1 summary"><p>Executes sommand</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ExecuteCommand(string name, ICommand cmd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Module name</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="MATSys.Commands.ICommand.html">ICommand</a></td>
+        <td><span class="parametername">cmd</span></td>
+        <td><p>ICommand instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Response from module</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Hosting_ModuleHubBackgroundService_ExecuteCommand_System_String_System_String_.md&amp;value=---%0Auid%3A%20MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand(System.String%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Hosting/ModuleHubBackgroundService.cs/#L101">View Source</a>
+  </span>
+  <a id="MATSys_Hosting_ModuleHubBackgroundService_ExecuteCommand_" data-uid="MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand*"></a>
+  <h4 id="MATSys_Hosting_ModuleHubBackgroundService_ExecuteCommand_System_String_System_String_" data-uid="MATSys.Hosting.ModuleHubBackgroundService.ExecuteCommand(System.String,System.String)">ExecuteCommand(String, String)</h4>
+  <div class="markdown level1 summary"><p>Executes command</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string ExecuteCommand(string name, string cmd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>Module name</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">cmd</span></td>
+        <td><p>Command string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>Response from module</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Hosting_ModuleHubBackgroundService_RunTest_System_Int32_.md&amp;value=---%0Auid%3A%20MATSys.Hosting.ModuleHubBackgroundService.RunTest(System.Int32)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Hosting/ModuleHubBackgroundService.cs/#L117">View Source</a>
+  </span>
+  <a id="MATSys_Hosting_ModuleHubBackgroundService_RunTest_" data-uid="MATSys.Hosting.ModuleHubBackgroundService.RunTest*"></a>
+  <h4 id="MATSys_Hosting_ModuleHubBackgroundService_RunTest_System_Int32_" data-uid="MATSys.Hosting.ModuleHubBackgroundService.RunTest(System.Int32)">RunTest(Int32)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void RunTest(int iteration)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Int32</span></td>
+        <td><span class="parametername">iteration</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Hosting_ModuleHubBackgroundService_StopTest.md&amp;value=---%0Auid%3A%20MATSys.Hosting.ModuleHubBackgroundService.StopTest%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Hosting/ModuleHubBackgroundService.cs/#L129">View Source</a>
+  </span>
+  <a id="MATSys_Hosting_ModuleHubBackgroundService_StopTest_" data-uid="MATSys.Hosting.ModuleHubBackgroundService.StopTest*"></a>
+  <h4 id="MATSys_Hosting_ModuleHubBackgroundService_StopTest" data-uid="MATSys.Hosting.ModuleHubBackgroundService.StopTest">StopTest()</h4>
+  <div class="markdown level1 summary"><p>Stop the test in script mode</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StopTest()</code></pre>
+  </div>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Hosting_ModuleHubBackgroundService_OnExecuteComplete.md&amp;value=---%0Auid%3A%20MATSys.Hosting.ModuleHubBackgroundService.OnExecuteComplete%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Hosting/ModuleHubBackgroundService.cs/#L43">View Source</a>
+  </span>
+  <h4 id="MATSys_Hosting_ModuleHubBackgroundService_OnExecuteComplete" data-uid="MATSys.Hosting.ModuleHubBackgroundService.OnExecuteComplete">OnExecuteComplete</h4>
+  <div class="markdown level1 summary"><p>Event when TestItem is executed completely</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event ModuleHubBackgroundService.ExecuteCompleteEvent OnExecuteComplete</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.Hosting.ModuleHubBackgroundService.ExecuteCompleteEvent.html">ModuleHubBackgroundService.ExecuteCompleteEvent</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Hosting_ModuleHubBackgroundService_OnReadyToExecute.md&amp;value=---%0Auid%3A%20MATSys.Hosting.ModuleHubBackgroundService.OnReadyToExecute%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Hosting/ModuleHubBackgroundService.cs/#L33">View Source</a>
+  </span>
+  <h4 id="MATSys_Hosting_ModuleHubBackgroundService_OnReadyToExecute" data-uid="MATSys.Hosting.ModuleHubBackgroundService.OnReadyToExecute">OnReadyToExecute</h4>
+  <div class="markdown level1 summary"><p>Event when TestItem is ready to execute</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event ModuleHubBackgroundService.ReadyToExecuteEvent OnReadyToExecute</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.Hosting.ModuleHubBackgroundService.ReadyToExecuteEvent.html">ModuleHubBackgroundService.ReadyToExecuteEvent</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <span class="xref">Microsoft.Extensions.Hosting.IHostedService</span>
+  </div>
+  <div>
+      <span class="xref">System.IDisposable</span>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Hosting_ModuleHubBackgroundService.md&amp;value=---%0Auid%3A%20MATSys.Hosting.ModuleHubBackgroundService%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Hosting/ModuleHubBackgroundService.cs/#L13" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
