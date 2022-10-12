@@ -36,6 +36,12 @@
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
 		<Deterministic>False</Deterministic>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Compile Remove="docs\**" />
+	  <EmbeddedResource Remove="docs\**" />
+	  <None Remove="docs\**" />
+	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\icon\JYTek.png">
 			<Pack>True</Pack>
@@ -63,10 +69,6 @@
 		</PackageReference>
 		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
 		<PackageReference Include="System.Threading.Channels" Version="6.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="docs\" />
 	</ItemGroup>
 
 </Project>
