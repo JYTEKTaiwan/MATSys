@@ -8,14 +8,17 @@
   href: MATSys.Hosting.md
 - name: Application setting
   href: appsettings.md
-- name: Add-on Plugins
-  href:
+- name: ModuleBase class
+  href: ModuleBase.md
+- name: Plugins
   items:
-    - name: Transceiver
-    - href:
-    - name: Notifier
-    - href:
-    - name: Recorder
-    - href:
+    - name: Built-in plugins
+    - href: Plugins.md
+    - name: ITransceiver
+    - href: ITransceiver.md
+    - name: INotifier
+    - href: INotifier.md
+    - name: IRecorder
+    - href: IRecorder.md
 - name: Examples
-  href: 
+  href: Examples.md

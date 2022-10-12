@@ -653,6 +653,54 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/Examples.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/Examples.html",
+          "hash": "FhcchWsk/VBPC5zWFtlgHMi07p2+nTlso788bgC1dIk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/INotifier.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/INotifier.html",
+          "hash": "cyzcvXTHCqqcdTHvJzHzTeSiqmnTRrloFS+S54vez3g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/IRecorder.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/IRecorder.html",
+          "hash": "Uj3P0QDxURcLr9PqSYE1iisCD44ZJlySJM9LwbJmtdY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/ITransceiver.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/ITransceiver.html",
+          "hash": "Fa7cjCZbNMTLViKm2bahDtE/94K/S9WlpiidFLI+l3E="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/MATSys.Commands.md",
       "output": {
         ".html": {
@@ -701,11 +749,35 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/ModuleBase.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/ModuleBase.html",
+          "hash": "cj7/jLcShoU+q2NjmlXhEDDpGu28tRxzGG6JqYCZrsA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/Overview.md",
       "output": {
         ".html": {
           "relative_path": "articles/Overview.html",
           "hash": "UJMB1qansuAvnNF0YUfm/YPwCG++c/EZW/bSiIlQw1A="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/Plugins.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/Plugins.html",
+          "hash": "HeT/6g0jXjXlOTLpnNy6Tu92BjBg8AB54rXPo1aTvD0="
         }
       },
       "is_incremental": false,
@@ -732,7 +804,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "rjqVBMkNn7yy+rCvU2cOqwluednNt5T45wUn6lTWHGA="
+          "hash": "dex7O79VXed8MCJDJSLv8/CL5ytFjhdx/9BSqmAwmeA="
         }
       },
       "is_incremental": false,
@@ -797,8 +869,8 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 8,
-          "skipped_file_count": 7
+          "total_file_count": 14,
+          "skipped_file_count": 8
         },
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
