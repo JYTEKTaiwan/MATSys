@@ -90,11 +90,11 @@
 <p>User can also use the static method to create instance. Noted that MATSys allow user to dynamically load the assembly from other directory</p>
 <pre>
 // static method 
-<code>public static ITransceiver CreateNew(string assemblyPath, string typeString, object args)</code>
+<code>public static ITransceiver CreateNew(string assemblyPath, string typeString, object args)
 
-<code>public static T CreateNew<t>(object args)</t></code>
+public static T CreateNew&lt;T>(object args)
 
-<code>public static ITransceiver CreateNew(Type t, object args)</code>
+public static ITransceiver CreateNew(Type t, object args)</code>
 </pre>
 <p>Transceiver, Notifier and Recorder instances can be created using these way above.</p>
 <h2 id="factory-for-module">Factory for Module</h2>
@@ -109,11 +109,11 @@
 <p>ModuleFactory also support static creation</p>
 <pre>
 //static method, inject plugin instance as parameters
-<code>public static IModule CreateNew(string assemblyPath, string typeString, object configuration, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "")</code>
+<code>public static IModule CreateNew(string assemblyPath, string typeString, object configuration, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "")
 
-<code>public static T CreateNew<t>(object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")</t></code>
+public static T CreateNew&lt;T>(object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")
 
-<code>public static IModule CreateNew(Type moduleType, object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")</code>
+public static IModule CreateNew(Type moduleType, object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")</code>
 </pre>
 </article>
           </div>

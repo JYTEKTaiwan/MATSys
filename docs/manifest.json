@@ -669,7 +669,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/MATSys.Factories.html",
-          "hash": "wNxXQAviXQOC34JuYcwIXxUL0Tzek1U2t/SzJegNhqk="
+          "hash": "fR1K/A2cskbBI6uZFUULnXwGI1pa6oTQ0zmXKPbPZ+0="
         }
       },
       "is_incremental": true,
@@ -737,17 +737,6 @@
     },
     {
       "type": "Resource",
-      "source_relative_path": "images/JYTEK Taiwan-LOGO.svg",
-      "output": {
-        "resource": {
-          "relative_path": "images/JYTEK Taiwan-LOGO.svg"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
       "source_relative_path": "images/JYTEK Taiwan-LOGO_white.svg",
       "output": {
         "resource": {
@@ -763,17 +752,6 @@
       "output": {
         "resource": {
           "relative_path": "images/JYTek.ico"
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Resource",
-      "source_relative_path": "images/JYTek.png",
-      "output": {
-        "resource": {
-          "relative_path": "images/JYTek.png"
         }
       },
       "is_incremental": false,

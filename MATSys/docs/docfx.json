@@ -43,6 +43,7 @@
       {
         "files": [
           "apidoc/**.md",
+          "../../docs"
         ],
         "exclude": [
           "obj/**",
@@ -50,7 +51,7 @@
         ]
       }
     ],
-    "dest": "_site",
+    "dest": "../../docs",
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
