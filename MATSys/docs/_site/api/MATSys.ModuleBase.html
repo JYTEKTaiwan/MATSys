@@ -1,0 +1,809 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class ModuleBase
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class ModuleBase
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="MATSys.ModuleBase">
+  
+  
+  <h1 id="MATSys_ModuleBase" data-uid="MATSys.ModuleBase" class="text-break">Class ModuleBase
+  </h1>
+  <div class="markdown level0 summary"><p>Abstract class equipped with ITransceiver, IRecorder, INotifier plugins</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">ModuleBase</span></div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="MATSys.IModule.html">IModule</a></div>
+    <div><a class="xref" href="MATSys.IService.html">IService</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="MATSys.html">MATSys</a></h6>
+  <h6><strong>Assembly</strong>: MATSys.dll</h6>
+  <h5 id="MATSys_ModuleBase_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class ModuleBase : IModule, IService</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase__ctor_System_Object_MATSys_ITransceiver_MATSys_INotifier_MATSys_IRecorder_System_String_.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.%23ctor(System.Object%2CMATSys.ITransceiver%2CMATSys.INotifier%2CMATSys.IRecorder%2CSystem.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L83">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase__ctor_" data-uid="MATSys.ModuleBase.#ctor*"></a>
+  <h4 id="MATSys_ModuleBase__ctor_System_Object_MATSys_ITransceiver_MATSys_INotifier_MATSys_IRecorder_System_String_" data-uid="MATSys.ModuleBase.#ctor(System.Object,MATSys.ITransceiver,MATSys.INotifier,MATSys.IRecorder,System.String)">ModuleBase(Object, ITransceiver, INotifier, IRecorder, String)</h4>
+  <div class="markdown level1 summary"><p>ctor of ModuleBase class.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ModuleBase(object configuration, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = &quot;&quot;)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">configuration</span></td>
+        <td><p>configuration object</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="MATSys.ITransceiver.html">ITransceiver</a></td>
+        <td><span class="parametername">transceiver</span></td>
+        <td><p>transceiver instance</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="MATSys.INotifier.html">INotifier</a></td>
+        <td><span class="parametername">notifier</span></td>
+        <td><p>notifier instance</p>
+</td>
+      </tr>
+      <tr>
+        <td><a class="xref" href="MATSys.IRecorder.html">IRecorder</a></td>
+        <td><span class="parametername">recorder</span></td>
+        <td><p>recorder instance</p>
+</td>
+      </tr>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">aliasName</span></td>
+        <td><p>alias name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_Base.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.Base%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L47">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_Base_" data-uid="MATSys.ModuleBase.Base*"></a>
+  <h4 id="MATSys_ModuleBase_Base" data-uid="MATSys.ModuleBase.Base">Base</h4>
+  <div class="markdown level1 summary"><p>Instance of current ModuleBase instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IModule Base { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.IModule.html">IModule</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_IsRunning.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.IsRunning%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L39">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_IsRunning_" data-uid="MATSys.ModuleBase.IsRunning*"></a>
+  <h4 id="MATSys_ModuleBase_IsRunning" data-uid="MATSys.ModuleBase.IsRunning">IsRunning</h4>
+  <div class="markdown level1 summary"><p>Running status of ModuleBase instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool IsRunning { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_Name.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.Name%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L43">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_Name_" data-uid="MATSys.ModuleBase.Name*"></a>
+  <h4 id="MATSys_ModuleBase_Name" data-uid="MATSys.ModuleBase.Name">Name</h4>
+  <div class="markdown level1 summary"><p>Name of the ModuleBase instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Name { get; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_Execute_MATSys_Commands_ICommand_.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.Execute(MATSys.Commands.ICommand)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L170">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_Execute_" data-uid="MATSys.ModuleBase.Execute*"></a>
+  <h4 id="MATSys_ModuleBase_Execute_MATSys_Commands_ICommand_" data-uid="MATSys.ModuleBase.Execute(MATSys.Commands.ICommand)">Execute(ICommand)</h4>
+  <div class="markdown level1 summary"><p>Execute the incoming command object</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Execute(ICommand cmd)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.Commands.ICommand.html">ICommand</a></td>
+        <td><span class="parametername">cmd</span></td>
+        <td><p>ICommand instance</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>reponse after executing the commnad</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_Execute_System_String_.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.Execute(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L204">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_Execute_" data-uid="MATSys.ModuleBase.Execute*"></a>
+  <h4 id="MATSys_ModuleBase_Execute_System_String_" data-uid="MATSys.ModuleBase.Execute(System.String)">Execute(String)</h4>
+  <div class="markdown level1 summary"><p>Execute the incoming command object in string format</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Execute(string cmdInJson)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">cmdInJson</span></td>
+        <td><p>command in string format</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>reponse after executing the commnad</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_Export.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.Export%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L256">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_Export_" data-uid="MATSys.ModuleBase.Export*"></a>
+  <h4 id="MATSys_ModuleBase_Export" data-uid="MATSys.ModuleBase.Export">Export()</h4>
+  <div class="markdown level1 summary"><p>Export the ModuleBase instance to json context</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public JObject Export()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Newtonsoft.Json.Linq.JObject</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_Export_Newtonsoft_Json_Formatting_.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.Export(Newtonsoft.Json.Formatting)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L272">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_Export_" data-uid="MATSys.ModuleBase.Export*"></a>
+  <h4 id="MATSys_ModuleBase_Export_Newtonsoft_Json_Formatting_" data-uid="MATSys.ModuleBase.Export(Newtonsoft.Json.Formatting)">Export(Formatting)</h4>
+  <div class="markdown level1 summary"><p>Export ModuleBase instance to json string format</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string Export(Formatting format = Formatting.Indented)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Newtonsoft.Json.Formatting</span></td>
+        <td><span class="parametername">format</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_Load_Microsoft_Extensions_Configuration_IConfigurationSection_.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.Load(Microsoft.Extensions.Configuration.IConfigurationSection)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L102">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_Load_" data-uid="MATSys.ModuleBase.Load*"></a>
+  <h4 id="MATSys_ModuleBase_Load_Microsoft_Extensions_Configuration_IConfigurationSection_" data-uid="MATSys.ModuleBase.Load(Microsoft.Extensions.Configuration.IConfigurationSection)">Load(IConfigurationSection)</h4>
+  <div class="markdown level1 summary"><p>Load condfiguration from IConfigurationSection instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void Load(IConfigurationSection section)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Microsoft.Extensions.Configuration.IConfigurationSection</span></td>
+        <td><span class="parametername">section</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_Load_System_Object_.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.Load(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L108">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_Load_" data-uid="MATSys.ModuleBase.Load*"></a>
+  <h4 id="MATSys_ModuleBase_Load_System_Object_" data-uid="MATSys.ModuleBase.Load(System.Object)">Load(Object)</h4>
+  <div class="markdown level1 summary"><p>Load condfiguration from custom instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract void Load(object configuration)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">configuration</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_PrintCommands.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.PrintCommands%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L222">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_PrintCommands_" data-uid="MATSys.ModuleBase.PrintCommands*"></a>
+  <h4 id="MATSys_ModuleBase_PrintCommands" data-uid="MATSys.ModuleBase.PrintCommands">PrintCommands()</h4>
+  <div class="markdown level1 summary"><p>List all methods in simplied string format</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual IEnumerable&lt;string&gt; PrintCommands()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IEnumerable</span>&lt;<span class="xref">System.String</span>&gt;</td>
+        <td><p>collection of string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_StartService_CancellationToken_.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.StartService(CancellationToken)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L115">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_StartService_" data-uid="MATSys.ModuleBase.StartService*"></a>
+  <h4 id="MATSys_ModuleBase_StartService_CancellationToken_" data-uid="MATSys.ModuleBase.StartService(CancellationToken)">StartService(CancellationToken)</h4>
+  <div class="markdown level1 summary"><p>Start the service</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void StartService(CancellationToken token)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">CancellationToken</span></td>
+        <td><span class="parametername">token</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_StopService.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.StopService%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L140">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_StopService_" data-uid="MATSys.ModuleBase.StopService*"></a>
+  <h4 id="MATSys_ModuleBase_StopService" data-uid="MATSys.ModuleBase.StopService">StopService()</h4>
+  <div class="markdown level1 summary"><p>Stop the service</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual void StopService()</code></pre>
+  </div>
+  <h3 id="events">Events
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_OnDataReady.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.OnDataReady%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L73">View Source</a>
+  </span>
+  <h4 id="MATSys_ModuleBase_OnDataReady" data-uid="MATSys.ModuleBase.OnDataReady">OnDataReady</h4>
+  <div class="markdown level1 summary"><p>Event when new data is generated inside ModuleBase instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event IModule.NewDataReady OnDataReady</code></pre>
+  </div>
+  <h5 class="eventType">Event Type</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.IModule.NewDataReady.html">IModule.NewDataReady</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="eii">Explicit Interface Implementations
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_MATSys_IModule_Logger.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.MATSys%23IModule%23Logger%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L52">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_MATSys_IModule_Logger_" data-uid="MATSys.ModuleBase.MATSys#IModule#Logger*"></a>
+  <h4 id="MATSys_ModuleBase_MATSys_IModule_Logger" data-uid="MATSys.ModuleBase.MATSys#IModule#Logger">IModule.Logger</h4>
+  <div class="markdown level1 summary"><p>ILogger instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ILogger IModule.Logger { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">NLog.ILogger</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_MATSys_IModule_Notifier.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.MATSys%23IModule%23Notifier%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L67">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_MATSys_IModule_Notifier_" data-uid="MATSys.ModuleBase.MATSys#IModule#Notifier*"></a>
+  <h4 id="MATSys_ModuleBase_MATSys_IModule_Notifier" data-uid="MATSys.ModuleBase.MATSys#IModule#Notifier">IModule.Notifier</h4>
+  <div class="markdown level1 summary"><p>INotifier instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">INotifier IModule.Notifier { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.INotifier.html">INotifier</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_MATSys_IModule_Recorder.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.MATSys%23IModule%23Recorder%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L57">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_MATSys_IModule_Recorder_" data-uid="MATSys.ModuleBase.MATSys#IModule#Recorder*"></a>
+  <h4 id="MATSys_ModuleBase_MATSys_IModule_Recorder" data-uid="MATSys.ModuleBase.MATSys#IModule#Recorder">IModule.Recorder</h4>
+  <div class="markdown level1 summary"><p>IRecorder instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IRecorder IModule.Recorder { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.IRecorder.html">IRecorder</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase_MATSys_IModule_Transceiver.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase.MATSys%23IModule%23Transceiver%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L62">View Source</a>
+  </span>
+  <a id="MATSys_ModuleBase_MATSys_IModule_Transceiver_" data-uid="MATSys.ModuleBase.MATSys#IModule#Transceiver*"></a>
+  <h4 id="MATSys_ModuleBase_MATSys_IModule_Transceiver" data-uid="MATSys.ModuleBase.MATSys#IModule#Transceiver">IModule.Transceiver</h4>
+  <div class="markdown level1 summary"><p>ITransceiver instance</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ITransceiver IModule.Transceiver { get; }</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.ITransceiver.html">ITransceiver</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="MATSys.IModule.html">IModule</a>
+  </div>
+  <div>
+      <a class="xref" href="MATSys.IService.html">IService</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_ModuleBase.md&amp;value=---%0Auid%3A%20MATSys.ModuleBase%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/ModuleBase.cs/#L16" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

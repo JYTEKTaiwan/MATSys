@@ -1,0 +1,1167 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Class CommandBase
+   </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Class CommandBase
+   ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="MATSys.Commands.CommandBase">
+  
+  
+  <h1 id="MATSys_Commands_CommandBase" data-uid="MATSys.Commands.CommandBase" class="text-break">Class CommandBase
+  </h1>
+  <div class="markdown level0 summary"><p>base class to generate command and convert the result.</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <div class="inheritance">
+    <h5>Inheritance</h5>
+    <div class="level0"><span class="xref">System.Object</span></div>
+    <div class="level1"><span class="xref">CommandBase</span></div>
+      <div class="level2"><a class="xref" href="MATSys.Commands.Command.html">Command</a></div>
+      <div class="level2"><a class="xref" href="MATSys.Commands.Command-1.html">Command</a>&lt;T1&gt;</div>
+      <div class="level2"><a class="xref" href="MATSys.Commands.Command-2.html">Command</a>&lt;T1, T2&gt;</div>
+      <div class="level2"><a class="xref" href="MATSys.Commands.Command-3.html">Command</a>&lt;T1, T2, T3&gt;</div>
+      <div class="level2"><a class="xref" href="MATSys.Commands.Command-4.html">Command</a>&lt;T1, T2, T3, T4&gt;</div>
+      <div class="level2"><a class="xref" href="MATSys.Commands.Command-5.html">Command</a>&lt;T1, T2, T3, T4, T5&gt;</div>
+      <div class="level2"><a class="xref" href="MATSys.Commands.Command-6.html">Command</a>&lt;T1, T2, T3, T4, T5, T6&gt;</div>
+      <div class="level2"><a class="xref" href="MATSys.Commands.Command-7.html">Command</a>&lt;T1, T2, T3, T4, T5, T6, T7&gt;</div>
+  </div>
+  <div class="implements">
+    <h5>Implements</h5>
+    <div><a class="xref" href="MATSys.Commands.ICommand.html">ICommand</a></div>
+  </div>
+  <div class="inheritedMembers">
+    <h5>Inherited Members</h5>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.Equals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetHashCode()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.GetType()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.MemberwiseClone()</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ReferenceEquals(System.Object, System.Object)</span>
+    </div>
+    <div>
+      <span class="xref">System.Object.ToString()</span>
+    </div>
+  </div>
+  <h6><strong>Namespace</strong>: <a class="xref" href="MATSys.Commands.html">MATSys.Commands</a></h6>
+  <h6><strong>Assembly</strong>: MATSys.dll</h6>
+  <h5 id="MATSys_Commands_CommandBase_syntax">Syntax</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract class CommandBase : ICommand</code></pre>
+  </div>
+  <h3 id="constructors">Constructors
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase__ctor_System_String_.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.%23ctor(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L26">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase__ctor_" data-uid="MATSys.Commands.CommandBase.#ctor*"></a>
+  <h4 id="MATSys_Commands_CommandBase__ctor_System_String_" data-uid="MATSys.Commands.CommandBase.#ctor(System.String)">CommandBase(String)</h4>
+  <div class="markdown level1 summary"><p>Constructor</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public CommandBase(string name)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">name</span></td>
+        <td><p>name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="properties">Properties
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_MethodName.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.MethodName%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L19">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_MethodName_" data-uid="MATSys.Commands.CommandBase.MethodName*"></a>
+  <h4 id="MATSys_Commands_CommandBase_MethodName" data-uid="MATSys.Commands.CommandBase.MethodName">MethodName</h4>
+  <div class="markdown level1 summary"><p>Name of the current command</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">[JsonProperty(Order = 0)]
+public string MethodName { get; set; }</code></pre>
+  </div>
+  <h5 class="propertyValue">Property Value</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="methods">Methods
+  </h3>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_ConvertResultToString_System_Object_.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.ConvertResultToString(System.Object)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L36">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_ConvertResultToString_" data-uid="MATSys.Commands.CommandBase.ConvertResultToString*"></a>
+  <h4 id="MATSys_Commands_CommandBase_ConvertResultToString_System_Object_" data-uid="MATSys.Commands.CommandBase.ConvertResultToString(System.Object)">ConvertResultToString(Object)</h4>
+  <div class="markdown level1 summary"><p>Convert the response object to string. This method is optional. Command object will use ToString() is this method is not implemented. Return empty string if <code data-dev-comment-type="paramref" class="paramref">obj</code> is null</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public virtual string ConvertResultToString(object obj)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span></td>
+        <td><span class="parametername">obj</span></td>
+        <td><p>response from the device object</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>result string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_ConvertToJsonFormat_System_String_.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.ConvertToJsonFormat(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L96">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_ConvertToJsonFormat_" data-uid="MATSys.Commands.CommandBase.ConvertToJsonFormat*"></a>
+  <h4 id="MATSys_Commands_CommandBase_ConvertToJsonFormat_System_String_" data-uid="MATSys.Commands.CommandBase.ConvertToJsonFormat(System.String)">ConvertToJsonFormat(String)</h4>
+  <div class="markdown level1 summary"><p>Convert the input string into json format before deserialization</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static (string jsonString, int parameterCount) ConvertToJsonFormat(string input)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">input</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.ValueTuple</span>&lt;<span class="xref">System.String</span>, <span class="xref">System.Int32</span>&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_Create_System_String_.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.Create(System.String)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L129">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_Create_" data-uid="MATSys.Commands.CommandBase.Create*"></a>
+  <h4 id="MATSys_Commands_CommandBase_Create_System_String_" data-uid="MATSys.Commands.CommandBase.Create(System.String)">Create(String)</h4>
+  <div class="markdown level1 summary"><p>Create command object without any parameters</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Command Create(string methodName)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">methodName</span></td>
+        <td><p>name</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.Commands.Command.html">Command</a></td>
+        <td><p>Command object</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_Create__1_System_String___0_.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.Create%60%601(System.String%2C%60%600)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L147">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_Create_" data-uid="MATSys.Commands.CommandBase.Create*"></a>
+  <h4 id="MATSys_Commands_CommandBase_Create__1_System_String___0_" data-uid="MATSys.Commands.CommandBase.Create``1(System.String,``0)">Create&lt;T1&gt;(String, T1)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Command&lt;T1&gt; Create&lt;T1&gt;(string methodName, T1 param1)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">methodName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">param1</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.Commands.Command-1.html">Command</a>&lt;T1&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_Create__2_System_String___0___1_.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.Create%60%602(System.String%2C%60%600%2C%60%601)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L161">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_Create_" data-uid="MATSys.Commands.CommandBase.Create*"></a>
+  <h4 id="MATSys_Commands_CommandBase_Create__2_System_String___0___1_" data-uid="MATSys.Commands.CommandBase.Create``2(System.String,``0,``1)">Create&lt;T1, T2&gt;(String, T1, T2)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Command&lt;T1, T2&gt; Create&lt;T1, T2&gt;(string methodName, T1 param1, T2 param2)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">methodName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">param1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">param2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.Commands.Command-2.html">Command</a>&lt;T1, T2&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_Create__3_System_String___0___1___2_.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.Create%60%603(System.String%2C%60%600%2C%60%601%2C%60%602)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L177">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_Create_" data-uid="MATSys.Commands.CommandBase.Create*"></a>
+  <h4 id="MATSys_Commands_CommandBase_Create__3_System_String___0___1___2_" data-uid="MATSys.Commands.CommandBase.Create``3(System.String,``0,``1,``2)">Create&lt;T1, T2, T3&gt;(String, T1, T2, T3)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Command&lt;T1, T2, T3&gt; Create&lt;T1, T2, T3&gt;(string methodName, T1 param1, T2 param2, T3 param3)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">methodName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">param1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">param2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">param3</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.Commands.Command-3.html">Command</a>&lt;T1, T2, T3&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_Create__4_System_String___0___1___2___3_.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.Create%60%604(System.String%2C%60%600%2C%60%601%2C%60%602%2C%60%603)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L195">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_Create_" data-uid="MATSys.Commands.CommandBase.Create*"></a>
+  <h4 id="MATSys_Commands_CommandBase_Create__4_System_String___0___1___2___3_" data-uid="MATSys.Commands.CommandBase.Create``4(System.String,``0,``1,``2,``3)">Create&lt;T1, T2, T3, T4&gt;(String, T1, T2, T3, T4)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Command&lt;T1, T2, T3, T4&gt; Create&lt;T1, T2, T3, T4&gt;(string methodName, T1 param1, T2 param2, T3 param3, T4 param4)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">methodName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">param1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">param2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">param3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T4</span></td>
+        <td><span class="parametername">param4</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.Commands.Command-4.html">Command</a>&lt;T1, T2, T3, T4&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_Create__5_System_String___0___1___2___3___4_.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.Create%60%605(System.String%2C%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L215">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_Create_" data-uid="MATSys.Commands.CommandBase.Create*"></a>
+  <h4 id="MATSys_Commands_CommandBase_Create__5_System_String___0___1___2___3___4_" data-uid="MATSys.Commands.CommandBase.Create``5(System.String,``0,``1,``2,``3,``4)">Create&lt;T1, T2, T3, T4, T5&gt;(String, T1, T2, T3, T4, T5)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Command&lt;T1, T2, T3, T4, T5&gt; Create&lt;T1, T2, T3, T4, T5&gt;(string methodName, T1 param1, T2 param2, T3 param3, T4 param4, T5 param5)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">methodName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">param1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">param2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">param3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T4</span></td>
+        <td><span class="parametername">param4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T5</span></td>
+        <td><span class="parametername">param5</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.Commands.Command-5.html">Command</a>&lt;T1, T2, T3, T4, T5&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_Create__6_System_String___0___1___2___3___4___5_.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.Create%60%606(System.String%2C%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L237">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_Create_" data-uid="MATSys.Commands.CommandBase.Create*"></a>
+  <h4 id="MATSys_Commands_CommandBase_Create__6_System_String___0___1___2___3___4___5_" data-uid="MATSys.Commands.CommandBase.Create``6(System.String,``0,``1,``2,``3,``4,``5)">Create&lt;T1, T2, T3, T4, T5, T6&gt;(String, T1, T2, T3, T4, T5, T6)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Command&lt;T1, T2, T3, T4, T5, T6&gt; Create&lt;T1, T2, T3, T4, T5, T6&gt;(string methodName, T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">methodName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">param1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">param2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">param3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T4</span></td>
+        <td><span class="parametername">param4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T5</span></td>
+        <td><span class="parametername">param5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T6</span></td>
+        <td><span class="parametername">param6</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.Commands.Command-6.html">Command</a>&lt;T1, T2, T3, T4, T5, T6&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T6</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_Create__7_System_String___0___1___2___3___4___5___6_.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.Create%60%607(System.String%2C%60%600%2C%60%601%2C%60%602%2C%60%603%2C%60%604%2C%60%605%2C%60%606)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L261">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_Create_" data-uid="MATSys.Commands.CommandBase.Create*"></a>
+  <h4 id="MATSys_Commands_CommandBase_Create__7_System_String___0___1___2___3___4___5___6_" data-uid="MATSys.Commands.CommandBase.Create``7(System.String,``0,``1,``2,``3,``4,``5,``6)">Create&lt;T1, T2, T3, T4, T5, T6, T7&gt;(String, T1, T2, T3, T4, T5, T6, T7)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Command&lt;T1, T2, T3, T4, T5, T6, T7&gt; Create&lt;T1, T2, T3, T4, T5, T6, T7&gt;(string methodName, T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6, T7 param7)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">methodName</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T1</span></td>
+        <td><span class="parametername">param1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T2</span></td>
+        <td><span class="parametername">param2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T3</span></td>
+        <td><span class="parametername">param3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T4</span></td>
+        <td><span class="parametername">param4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T5</span></td>
+        <td><span class="parametername">param5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T6</span></td>
+        <td><span class="parametername">param6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">T7</span></td>
+        <td><span class="parametername">param7</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.Commands.Command-7.html">Command</a>&lt;T1, T2, T3, T4, T5, T6, T7&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">Type Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="parametername">T1</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T2</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T3</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T4</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T5</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T6</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="parametername">T7</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_Deserialize_System_String_Type_.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.Deserialize(System.String%2CType)%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L61">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_Deserialize_" data-uid="MATSys.Commands.CommandBase.Deserialize*"></a>
+  <h4 id="MATSys_Commands_CommandBase_Deserialize_System_String_Type_" data-uid="MATSys.Commands.CommandBase.Deserialize(System.String,Type)">Deserialize(String, Type)</h4>
+  <div class="markdown level1 summary"><p>Deserialize the input string into ICommand object</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ICommand Deserialize(string rawString, Type t)</code></pre>
+  </div>
+  <h5 class="parameters">Parameters</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><span class="parametername">rawString</span></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><span class="xref">Type</span></td>
+        <td><span class="parametername">t</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a class="xref" href="MATSys.Commands.ICommand.html">ICommand</a></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_GetParameters.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.GetParameters%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L53">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_GetParameters_" data-uid="MATSys.Commands.CommandBase.GetParameters*"></a>
+  <h4 id="MATSys_Commands_CommandBase_GetParameters" data-uid="MATSys.Commands.CommandBase.GetParameters">GetParameters()</h4>
+  <div class="markdown level1 summary"><p>Get all parameter values</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract object[] GetParameters()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.Object</span>[]</td>
+        <td><p>parameter values</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <span class="small pull-right mobile-hide">
+    <span class="divider">|</span>
+    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase_Serialize.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase.Serialize%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">Improve this Doc</a>
+  </span>
+  <span class="small pull-right mobile-hide">
+    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L138">View Source</a>
+  </span>
+  <a id="MATSys_Commands_CommandBase_Serialize_" data-uid="MATSys.Commands.CommandBase.Serialize*"></a>
+  <h4 id="MATSys_Commands_CommandBase_Serialize" data-uid="MATSys.Commands.CommandBase.Serialize">Serialize()</h4>
+  <div class="markdown level1 summary"><p>Serialize the command instance into simplified string format</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">Declaration</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public abstract string Serialize()</code></pre>
+  </div>
+  <h5 class="returns">Returns</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">System.String</span></td>
+        <td><p>simplified string</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3 id="implements">Implements</h3>
+  <div>
+      <a class="xref" href="MATSys.Commands.ICommand.html">ICommand</a>
+  </div>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/JYTEKTaiwan/MATSys/new/master/apiSpec/new?filename=MATSys_Commands_CommandBase.md&amp;value=---%0Auid%3A%20MATSys.Commands.CommandBase%0Asummary%3A%20'*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax'%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A" class="contribution-link">Improve this Doc</a>
+                  </li>
+                  <li>
+                    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/Commands/CommandBase.cs/#L11" class="contribution-link">View Source</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

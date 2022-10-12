@@ -1,0 +1,751 @@
+{
+  "homepages": [],
+  "source_base_path": "C:/Users/JYTW/source/repos/JYTEKTaiwan/MATSys/MATSys/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.Command-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.Command-1.html",
+          "hash": "ggC47hop/AjK3MwYhW9lCAtbap1gvCuiqAYFsSs/C1g="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.Command-2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.Command-2.html",
+          "hash": "ZdxH0BGTMDe5ZQoU9FHY4TP7pST8WIok9wdGSX4mDAM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.Command-3.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.Command-3.html",
+          "hash": "A1qeUhNPlPONJ+eisU/J+BZBGE+7Ib7ZFfrWyEi5LAg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.Command-4.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.Command-4.html",
+          "hash": "7Airz6doGaN+05Xindhry3LXoFpoXpN7Of582OGbgUo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.Command-5.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.Command-5.html",
+          "hash": "KWssifnFujrm18XwUG27EpKgif8pYx/sQMJrynzKyl8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.Command-6.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.Command-6.html",
+          "hash": "pyMNbFbXaa3ybu4qZS5DgoXm5B317p3sEU/rhGd3EP0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.Command-7.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.Command-7.html",
+          "hash": "FDUcxdjlTFmdLme5KoibwOE0JKP5JSrvRnn0JPApmB0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.Command.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.Command.html",
+          "hash": "wqfE5WQk+3wWm1yk3iE9Wh7+VdryOZirPPeEnxH/htI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.CommandBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.CommandBase.html",
+          "hash": "F59v75kx2YBK9Ieh8DL2y7TMD0OGYljIJvLaPY44pUc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.ICommand.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.ICommand.html",
+          "hash": "NCzV7UyLjkCW2EWbVIkqFiFw9TgTurE5JKizFBmqzXw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.MATSysCommandAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.MATSysCommandAttribute.html",
+          "hash": "6brQE5220w/6qKv7tLSfdeUU/q0IbE84+r1GgH0PrKs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.MethodInvoker.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.MethodInvoker.html",
+          "hash": "1r35glnWM6iyASr9gNi5fLHeVsDzRck8IeYKQLv+xqA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Commands.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Commands.html",
+          "hash": "uZAnLIOh0iO9qNcACNOs9vxdArTb3ISfn1a0qwOiznM="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.DependencyLoader.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.DependencyLoader.html",
+          "hash": "DtfnrTLVmkVehxDAkouFkHEXRcobvQbBBG+748fvBro="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.ExceptionHandler.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.ExceptionHandler.html",
+          "hash": "V3Pokg4NJOXU35IzO7tdjKi59UJh5tDzBekR63aqgzU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Factories.IModuleFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Factories.IModuleFactory.html",
+          "hash": "3fWe6i92MYGy95KwAxDspOF5RO74RUuUFwuDegYmWPY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Factories.INotifierFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Factories.INotifierFactory.html",
+          "hash": "IIbbUXG5uHtmbS9ouFM57sDfSZSSNuwYbZwu64vm2Xs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Factories.IRecorderFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Factories.IRecorderFactory.html",
+          "hash": "o+kCnIBvLPI/uaMqHrK1JC9cqMp3DwDEtLmIpTgVTV4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Factories.ITransceiverFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Factories.ITransceiverFactory.html",
+          "hash": "yvF7Of+5dONqUh+sFeUvGnvzba7p1HmTDrDMSoRnXWA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Factories.ModuleFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Factories.ModuleFactory.html",
+          "hash": "gEt6bmlTMrsrrladiEOel50igroSk9kekbWa91eVyDs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Factories.NotifierFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Factories.NotifierFactory.html",
+          "hash": "HN56I2gpeGJYGYXoKcImVo9gjwXE6yCNmvIDeEE4UcY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Factories.RecorderFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Factories.RecorderFactory.html",
+          "hash": "Cf6tueU8EemoWsz8HBf99JvROFBxXA4nr4VD8OS8WjI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Factories.TransceiverFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Factories.TransceiverFactory.html",
+          "hash": "nj+f/9Q9LChiAeM9nr4TvY5BiUW9jvOp/DlABUEHW0Q="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Factories.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Factories.html",
+          "hash": "ZJnXZAhy//UalWyG6NbapoG3q5Fnj4V53+GWiayI2gc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Hosting.MATSysExtension.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Hosting.MATSysExtension.html",
+          "hash": "xmtW7mYdu+pbXxfRUASEHWmxawRswlZ+g5n34ma7Jek="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Hosting.ModuleHubBackgroundService.ExecuteCompleteEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Hosting.ModuleHubBackgroundService.ExecuteCompleteEvent.html",
+          "hash": "8ltYih3KI4Qp9ZFY0L9SAQrwqnSKC6p+IM4BNtbCdgA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Hosting.ModuleHubBackgroundService.ReadyToExecuteEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Hosting.ModuleHubBackgroundService.ReadyToExecuteEvent.html",
+          "hash": "gBdyvIiQ6W2DQtriCpoROkXVxheIiGvOKVYmLtZ/uJo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Hosting.ModuleHubBackgroundService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Hosting.ModuleHubBackgroundService.html",
+          "hash": "iutvjKgBfCMj+cuJLUpxLcLuS5MwyiBtInCm8maOdkI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Hosting.TestItem.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Hosting.TestItem.html",
+          "hash": "ariy/hiyvy0MemmpuTRvfRg8Y1zy5IE0psOMv2CyRAU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Hosting.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Hosting.html",
+          "hash": "bHVh9pUgvhSX1+4RoGL+0ub/S6aWwTzsEUzKMNPvDN0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.IMATSysConfiguration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.IMATSysConfiguration.html",
+          "hash": "KTmoInsoM3L7aLYdvEwvUc8sswCy9Do+bI/6CCU2+Fk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.IModule.NewDataReady.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.IModule.NewDataReady.html",
+          "hash": "20ZizpIRFwhfqRcbyEYy+RnjeacMoGmCmAENR0K5Ndw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.IModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.IModule.html",
+          "hash": "P5p9F6S48SmdwuSQB0HnpVcsZlQNcQrE8xVbm7SMydU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.INotifier.NotifyEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.INotifier.NotifyEvent.html",
+          "hash": "4oELMHJN9/gBJtER27RIAz/JYSPIisRcnHUp6QUOImU="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.INotifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.INotifier.html",
+          "hash": "drlFQ7Kh8gyZwb0fWwhgu9cjUKcdN9F6cDSImpdp0r8="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.IPlugin.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.IPlugin.html",
+          "hash": "tZoE7yoxmYGoti3XJX57vJGDRDgbfOqHcG30HkmWlzw="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.IRecorder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.IRecorder.html",
+          "hash": "kST9ArRsZ+TyqzxhRht/KvzyR5sN1mC8+MZfHVQl0HA="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.IService.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.IService.html",
+          "hash": "qAGKl/TFE6kVfp9rScLhG9sfw2SHCibzF0/vR4aNum4="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.ITransceiver.RequestFiredEvent.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.ITransceiver.RequestFiredEvent.html",
+          "hash": "UzR3gSrz2PH6CRZyy05N1Ts820xq/TDtwwiERCsdoEY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.ITransceiver.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.ITransceiver.html",
+          "hash": "O7Hbbk4CebNGXXBataRfk+xXsNdUHPVGHs40YQV3A4M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.ModuleBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.ModuleBase.html",
+          "hash": "Yl21QuT/DjflVIejaPaI6QBqus3noNh+MNpsvsmvVmg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Plugins.CSVRecorder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Plugins.CSVRecorder.html",
+          "hash": "MyIKadfPezjO8n1q5uCxOL8DFLqjbcdLBYo7wecNKeg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Plugins.CSVRecorderConfiguration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Plugins.CSVRecorderConfiguration.html",
+          "hash": "lF67pMxHbawIUnuviFkWmoSswjLYtnyoWJQVqiIVCYk="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Plugins.EmptyNotifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Plugins.EmptyNotifier.html",
+          "hash": "pVS3GU8cgvCrXjzztM4XsV1l66GBxtHy+5wOVQMv9s0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Plugins.EmptyRecorder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Plugins.EmptyRecorder.html",
+          "hash": "8Dl/TtipyOMSmfypoPgtf8TlkLfQws4O3h7kk6xudnI="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Plugins.EmptyTransceiver.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Plugins.EmptyTransceiver.html",
+          "hash": "xYhr3QWJmn7sIsBsWt9ZaibW77XK5nW38TJtT3vVThc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Plugins.NetMQNotifier.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Plugins.NetMQNotifier.html",
+          "hash": "BOrCi0Fr6rrx23ZNfBlz/rconb2y8QP0MgPYFaTQ5jo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Plugins.NetMQNotifierConfiguration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Plugins.NetMQNotifierConfiguration.html",
+          "hash": "X4K7yWMN9EgDMJcgmbePlXAIQPiWeAKkl2K/H9Igr6Q="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Plugins.NetMQTransceiver.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Plugins.NetMQTransceiver.html",
+          "hash": "4sFv3jIJ42Jet4oC1VNJjnvnATIKMvPLC5Ngi9aYwIY="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Plugins.NetMQTransceiverConfiguration.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Plugins.NetMQTransceiverConfiguration.html",
+          "hash": "Po5Gsk/8/ERBBrALh3UAFNVUwmIKskcywiY8r+PSzoo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Plugins.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Plugins.html",
+          "hash": "gvHtN6sriUbhGrv7uWj67GMjbcJqEp180ahNO6Sgudg="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.html",
+          "hash": "5ns1dXFm91e4lQxOdx/3JVFjKapM3w5lYIBMDfZAbqc="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "api/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "api/index.html",
+          "hash": "zMWVsUKisV20L0/tw2Ub8mMF3DVncM4MvIrsaT0zuPo="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/toc.html",
+          "hash": "Bu/B574ifl2426V1rRUK6vgJA5memH1plHM/UZ0yU+M="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/intro.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/intro.html",
+          "hash": "CQxZS16CPdIWZGsy92oNbRo7uvLSiEeBSR1EqxBtxyo="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "BlPxk5mtl2kgfcZUgkEguqiSAR/EUyUTT4EdebwkQvs="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html",
+          "hash": "Xz9VUoNav6z2RZiKDbmCFWnmxWa0OiFgEwaXjVZDBGg="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "toc.html",
+          "hash": "WSuRrYiGwKKMbtdG9z8W9fXmLoCyTnGg9AxbPKLXm2Y="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    }
+  ],
+  "incremental_info": [
+    {
+      "status": {
+        "can_incremental": true,
+        "incrementalPhase": "build",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {
+        "ConceptualDocumentProcessor": {
+          "can_incremental": true,
+          "incrementalPhase": "build",
+          "total_file_count": 3,
+          "skipped_file_count": 3
+        },
+        "ManagedReferenceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ManagedReferenceDocumentProcessor disable incremental build because last build doesn't contain version .",
+          "incrementalPhase": "build",
+          "total_file_count": 52,
+          "skipped_file_count": 0
+        },
+        "TocDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor TocDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
+          "skipped_file_count": 0
+        }
+      }
+    },
+    {
+      "status": {
+        "can_incremental": true,
+        "details": "Can support incremental post processing.",
+        "incrementalPhase": "postProcessing",
+        "total_file_count": 0,
+        "skipped_file_count": 0
+      },
+      "processors": {}
+    }
+  ],
+  "version_info": {},
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}
