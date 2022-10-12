@@ -27,9 +27,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SystemMonitorDEMO", "exampl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark", "examples\Benchmark\Benchmark.csproj", "{11AE0A50-412B-483C-937D-F260096E0DC7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configuration", "configuration", "{7439C459-A1F7-438C-9CDF-9D95FE47BA38}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{7439C459-A1F7-438C-9CDF-9D95FE47BA38}"
 	ProjectSection(SolutionItems) = preProject
-		appsettings.json = appsettings.json
+		config\applicationsetting.md = config\applicationsetting.md
+		config\appsettings.json = config\appsettings.json
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractionWithHost", "examples\InteractionWithHost\InteractionWithHost.csproj", "{4C9D1302-D22A-447D-BA56-E92489AE5503}"
@@ -283,7 +284,7 @@ Global
 		{A627F3FC-8592-4C6B-8333-0293DBE451C4} = {3787A6AD-AE85-4828-8476-2DE0E4E7F6CA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
 	EndGlobalSection
 EndGlobal
