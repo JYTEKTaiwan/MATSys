@@ -12,13 +12,13 @@
   href: ModuleBase.md
 - name: Plugins
   items:
-    - name: Built-in plugins
-    - href: Plugins.md
-    - name: ITransceiver
-    - href: ITransceiver.md
-    - name: INotifier
-    - href: INotifier.md
-    - name: IRecorder
-    - href: IRecorder.md
+  - name: Built-in plugins
+  - href: Plugins.md
+  - name: ITransceiver
+  - href: ITransceiver.md
+  - name: INotifier
+  - href: INotifier.md
+  - name: IRecorder
+  - href: IRecorder.md
 - name: Examples
   href: Examples.md
