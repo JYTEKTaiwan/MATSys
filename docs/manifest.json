@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-1.html",
-          "hash": "ggC47hop/AjK3MwYhW9lCAtbap1gvCuiqAYFsSs/C1g="
+          "hash": "UsFdJwILrNzWdWVNLk9Xfmi5sNSPdB6QUlaFz84mUsA="
         }
       },
       "is_incremental": false,
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-2.html",
-          "hash": "ZdxH0BGTMDe5ZQoU9FHY4TP7pST8WIok9wdGSX4mDAM="
+          "hash": "Mq6mlz6patiV7ZoN59ol4e1gKpl9WoWiM9vZxhg3EVQ="
         }
       },
       "is_incremental": false,
@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-3.html",
-          "hash": "A1qeUhNPlPONJ+eisU/J+BZBGE+7Ib7ZFfrWyEi5LAg="
+          "hash": "jNoCCbZVZKgSBTNb3kcfATebaXSwCVD0ZXG4JUQd7HE="
         }
       },
       "is_incremental": false,
@@ -45,7 +45,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-4.html",
-          "hash": "7Airz6doGaN+05Xindhry3LXoFpoXpN7Of582OGbgUo="
+          "hash": "Xdn0ODSHZSS6z4ySzdWReduy0KaP3EW0EplPRmdBouI="
         }
       },
       "is_incremental": false,
@@ -57,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-5.html",
-          "hash": "KWssifnFujrm18XwUG27EpKgif8pYx/sQMJrynzKyl8="
+          "hash": "vq2OwN0x9cSa+y53QJ3LCwz/hd4K/0UrpJB+o/9sCZc="
         }
       },
       "is_incremental": false,
@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-6.html",
-          "hash": "pyMNbFbXaa3ybu4qZS5DgoXm5B317p3sEU/rhGd3EP0="
+          "hash": "ssEYmM92PVtvAPAIOF2qAmMC0SK/txBu18wmmfrXXgw="
         }
       },
       "is_incremental": false,
@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-7.html",
-          "hash": "FDUcxdjlTFmdLme5KoibwOE0JKP5JSrvRnn0JPApmB0="
+          "hash": "TGijkxhgGi7EVAvgeB7EMdTr8n2OXRLXr0bPtSFXL3M="
         }
       },
       "is_incremental": false,
@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command.html",
-          "hash": "wqfE5WQk+3wWm1yk3iE9Wh7+VdryOZirPPeEnxH/htI="
+          "hash": "AO6p55YVvqQeDq0l7aGr7g7uyBNRsm54OuEZCI+trf8="
         }
       },
       "is_incremental": false,
@@ -105,7 +105,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.CommandBase.html",
-          "hash": "F59v75kx2YBK9Ieh8DL2y7TMD0OGYljIJvLaPY44pUc="
+          "hash": "dQOAPw8UpqgBsr/gaqfqzOtr3mUtswK7Dz9sXs9d0as="
         }
       },
       "is_incremental": false,
@@ -117,7 +117,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.ICommand.html",
-          "hash": "NCzV7UyLjkCW2EWbVIkqFiFw9TgTurE5JKizFBmqzXw="
+          "hash": "vpnFKgEsQr+LJ6iiG/dov6vDbYbZ2IABx7h4EkEOUxM="
         }
       },
       "is_incremental": false,
@@ -129,7 +129,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.MATSysCommandAttribute.html",
-          "hash": "6brQE5220w/6qKv7tLSfdeUU/q0IbE84+r1GgH0PrKs="
+          "hash": "Rsu5WQMWejrloecEjNaTAyR/1O6aN7eJ/qSMTEM7C5I="
         }
       },
       "is_incremental": false,
@@ -141,7 +141,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.MethodInvoker.html",
-          "hash": "1r35glnWM6iyASr9gNi5fLHeVsDzRck8IeYKQLv+xqA="
+          "hash": "i9IWCuNWPJHAZ+YJ9d6pgIQ4cillQmaQrOK2iaOFBDg="
         }
       },
       "is_incremental": false,
@@ -153,7 +153,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.html",
-          "hash": "uZAnLIOh0iO9qNcACNOs9vxdArTb3ISfn1a0qwOiznM="
+          "hash": "yHwyOmD4fnYV49y7Bs1I6DIT8Mv7AbD6FAp63CMEGPI="
         }
       },
       "is_incremental": false,
@@ -165,7 +165,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.DependencyLoader.html",
-          "hash": "DtfnrTLVmkVehxDAkouFkHEXRcobvQbBBG+748fvBro="
+          "hash": "UwLPJGSYl0Lw3lBspYvPNEg2WfsvXcp9UAM/DvDp2FY="
         }
       },
       "is_incremental": false,
@@ -177,7 +177,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.ExceptionHandler.html",
-          "hash": "V3Pokg4NJOXU35IzO7tdjKi59UJh5tDzBekR63aqgzU="
+          "hash": "D8g07uS0Rd2Nct6MIsoCirmGmOk8u6e1WCwX432K3Ls="
         }
       },
       "is_incremental": false,
@@ -189,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Factories.IModuleFactory.html",
-          "hash": "3fWe6i92MYGy95KwAxDspOF5RO74RUuUFwuDegYmWPY="
+          "hash": "/oPEVEwV0TOUR95KgtBHIsJ1PUOb+V1v3mxCCJUHv4E="
         }
       },
       "is_incremental": false,
@@ -201,7 +201,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Factories.INotifierFactory.html",
-          "hash": "IIbbUXG5uHtmbS9ouFM57sDfSZSSNuwYbZwu64vm2Xs="
+          "hash": "V2QSbdM2C5FszcHmPD/f657QckfBGgyb2Wb0q0ts4VI="
         }
       },
       "is_incremental": false,
@@ -213,7 +213,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Factories.IRecorderFactory.html",
-          "hash": "o+kCnIBvLPI/uaMqHrK1JC9cqMp3DwDEtLmIpTgVTV4="
+          "hash": "pPApPhPx4bI3QMwNLBuxPDn49cwYKHEabfSTR9MXcj4="
         }
       },
       "is_incremental": false,
@@ -225,7 +225,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Factories.ITransceiverFactory.html",
-          "hash": "yvF7Of+5dONqUh+sFeUvGnvzba7p1HmTDrDMSoRnXWA="
+          "hash": "7e6suvYST+Ki7tI0/uLuXgAU4Zrb0EBgsaJY3rraZ2I="
         }
       },
       "is_incremental": false,
@@ -237,7 +237,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Factories.ModuleFactory.html",
-          "hash": "gEt6bmlTMrsrrladiEOel50igroSk9kekbWa91eVyDs="
+          "hash": "a27xhuXK7HWQgDIfJSgXdLfUbo2Od5UsH8RFhc3piCA="
         }
       },
       "is_incremental": false,
@@ -249,7 +249,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Factories.NotifierFactory.html",
-          "hash": "HN56I2gpeGJYGYXoKcImVo9gjwXE6yCNmvIDeEE4UcY="
+          "hash": "3/w93OpK7e3n4oPG2bJk7Gr7vpKmsQ9dyj3y9zyxxGA="
         }
       },
       "is_incremental": false,
@@ -261,7 +261,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Factories.RecorderFactory.html",
-          "hash": "Cf6tueU8EemoWsz8HBf99JvROFBxXA4nr4VD8OS8WjI="
+          "hash": "2F080kFsseq6QqAFKojeVDYZvpWDOx900kG6id4zsT4="
         }
       },
       "is_incremental": false,
@@ -273,7 +273,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Factories.TransceiverFactory.html",
-          "hash": "nj+f/9Q9LChiAeM9nr4TvY5BiUW9jvOp/DlABUEHW0Q="
+          "hash": "NL8riCWUC2uxX3lmJGyrUf/wjc0x6lh21SzusUdcOB0="
         }
       },
       "is_incremental": false,
@@ -285,7 +285,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Factories.html",
-          "hash": "ZJnXZAhy//UalWyG6NbapoG3q5Fnj4V53+GWiayI2gc="
+          "hash": "rCiNXGEonrWX1XFotlQiQOLmuZiEY8AkJ+g8QrP5vbI="
         }
       },
       "is_incremental": false,
@@ -297,7 +297,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Hosting.MATSysExtension.html",
-          "hash": "xmtW7mYdu+pbXxfRUASEHWmxawRswlZ+g5n34ma7Jek="
+          "hash": "ed1qlYCxWbdcjeofHgh8Ry4mf648DWSb85trGL2ODx8="
         }
       },
       "is_incremental": false,
@@ -309,7 +309,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Hosting.ModuleHubBackgroundService.ExecuteCompleteEvent.html",
-          "hash": "8ltYih3KI4Qp9ZFY0L9SAQrwqnSKC6p+IM4BNtbCdgA="
+          "hash": "SUeH5HKBFAoRDtPY0l/26ZhWCMCjm1nYDPWVtD/TEvc="
         }
       },
       "is_incremental": false,
@@ -321,7 +321,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Hosting.ModuleHubBackgroundService.ReadyToExecuteEvent.html",
-          "hash": "gBdyvIiQ6W2DQtriCpoROkXVxheIiGvOKVYmLtZ/uJo="
+          "hash": "rPp/aT92uQ7VO2X1sH3es+rX6VDWYac9tnkwCMM/fz8="
         }
       },
       "is_incremental": false,
@@ -333,7 +333,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Hosting.ModuleHubBackgroundService.html",
-          "hash": "iutvjKgBfCMj+cuJLUpxLcLuS5MwyiBtInCm8maOdkI="
+          "hash": "28uxYmL3bfInvJwwvKXCE6PltxLPOhUHeMsbiDZQkBU="
         }
       },
       "is_incremental": false,
@@ -345,7 +345,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Hosting.TestItem.html",
-          "hash": "ariy/hiyvy0MemmpuTRvfRg8Y1zy5IE0psOMv2CyRAU="
+          "hash": "HtQMjeAOfGzWzkBvAp2x49bkJMiL3qkYq1QEiSRXF7s="
         }
       },
       "is_incremental": false,
@@ -357,7 +357,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Hosting.html",
-          "hash": "bHVh9pUgvhSX1+4RoGL+0ub/S6aWwTzsEUzKMNPvDN0="
+          "hash": "eC2QkHJeDFgw1UIM87xkpUua4TBwBZVs/dATUP2qRCo="
         }
       },
       "is_incremental": false,
@@ -369,7 +369,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.IMATSysConfiguration.html",
-          "hash": "KTmoInsoM3L7aLYdvEwvUc8sswCy9Do+bI/6CCU2+Fk="
+          "hash": "nw4aknpPI4sJOrEdVCLt3yNVOBi8jkR8D7fLI1jkeQ0="
         }
       },
       "is_incremental": false,
@@ -381,7 +381,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.IModule.NewDataReady.html",
-          "hash": "20ZizpIRFwhfqRcbyEYy+RnjeacMoGmCmAENR0K5Ndw="
+          "hash": "k6JHasNRVu3kr7LaHe/VwkZT2xMOzVqURad8oAPuZeg="
         }
       },
       "is_incremental": false,
@@ -393,7 +393,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.IModule.html",
-          "hash": "P5p9F6S48SmdwuSQB0HnpVcsZlQNcQrE8xVbm7SMydU="
+          "hash": "v0v3uA5lnamysjvNG1c8siAQLaIr3UTRHYoQ5GMslPM="
         }
       },
       "is_incremental": false,
@@ -405,7 +405,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.INotifier.NotifyEvent.html",
-          "hash": "4oELMHJN9/gBJtER27RIAz/JYSPIisRcnHUp6QUOImU="
+          "hash": "Jgqlf+Ujo63CMDNbLKabcgTnedctb+38/v+A+X01DKc="
         }
       },
       "is_incremental": false,
@@ -417,7 +417,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.INotifier.html",
-          "hash": "drlFQ7Kh8gyZwb0fWwhgu9cjUKcdN9F6cDSImpdp0r8="
+          "hash": "ag2e8s9j1J2YIBd17AtK2D3JWLmZxkvjQ73RxzQqw8I="
         }
       },
       "is_incremental": false,
@@ -429,7 +429,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.IPlugin.html",
-          "hash": "tZoE7yoxmYGoti3XJX57vJGDRDgbfOqHcG30HkmWlzw="
+          "hash": "fzbrAHc3VMdt04/G5VkNXnVA6lnReY67tTNqBgsJ0qQ="
         }
       },
       "is_incremental": false,
@@ -441,7 +441,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.IRecorder.html",
-          "hash": "kST9ArRsZ+TyqzxhRht/KvzyR5sN1mC8+MZfHVQl0HA="
+          "hash": "SCIsNPzSZGEbzF9bXeFyL+nfjgyaCqz0ddRe3Wi7MKU="
         }
       },
       "is_incremental": false,
@@ -453,7 +453,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.IService.html",
-          "hash": "qAGKl/TFE6kVfp9rScLhG9sfw2SHCibzF0/vR4aNum4="
+          "hash": "TTFuwDHcrvfHhEqj6SVq6fUhZLAvGB0llZfnzGcmavI="
         }
       },
       "is_incremental": false,
@@ -465,7 +465,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.ITransceiver.RequestFiredEvent.html",
-          "hash": "UzR3gSrz2PH6CRZyy05N1Ts820xq/TDtwwiERCsdoEY="
+          "hash": "qqlRQSAuHBj0o7Ypn+09hDSIF16gzq7w1Dxf4XE0gS0="
         }
       },
       "is_incremental": false,
@@ -477,7 +477,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.ITransceiver.html",
-          "hash": "O7Hbbk4CebNGXXBataRfk+xXsNdUHPVGHs40YQV3A4M="
+          "hash": "hEt+mpeqSj2oJ6rPARCvFPdWRHzfsyk8AKkXEwLuK7E="
         }
       },
       "is_incremental": false,
@@ -489,7 +489,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.ModuleBase.html",
-          "hash": "Yl21QuT/DjflVIejaPaI6QBqus3noNh+MNpsvsmvVmg="
+          "hash": "2KO5crLqOqceDQtOjAxy83Zz4e1NTzVxfSLcoENbzdQ="
         }
       },
       "is_incremental": false,
@@ -501,7 +501,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Plugins.CSVRecorder.html",
-          "hash": "MyIKadfPezjO8n1q5uCxOL8DFLqjbcdLBYo7wecNKeg="
+          "hash": "2SI8YismwC+xLRi9FPv51z2ij9rW4p2KHFi7JnboRPc="
         }
       },
       "is_incremental": false,
@@ -513,7 +513,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Plugins.CSVRecorderConfiguration.html",
-          "hash": "lF67pMxHbawIUnuviFkWmoSswjLYtnyoWJQVqiIVCYk="
+          "hash": "FCS7WoAucbgQq50jky1EzXgwxZWhtoUDb2dRG76y3b8="
         }
       },
       "is_incremental": false,
@@ -525,7 +525,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Plugins.EmptyNotifier.html",
-          "hash": "pVS3GU8cgvCrXjzztM4XsV1l66GBxtHy+5wOVQMv9s0="
+          "hash": "byXCaEs9GS5oX1M2CjK1GpLiGUNHCehZWhXw5o3xNlM="
         }
       },
       "is_incremental": false,
@@ -537,7 +537,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Plugins.EmptyRecorder.html",
-          "hash": "8Dl/TtipyOMSmfypoPgtf8TlkLfQws4O3h7kk6xudnI="
+          "hash": "OD7wfjLCVY/I6U280NHCQyaCxdfgh95oD9daedSvXIw="
         }
       },
       "is_incremental": false,
@@ -549,7 +549,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Plugins.EmptyTransceiver.html",
-          "hash": "xYhr3QWJmn7sIsBsWt9ZaibW77XK5nW38TJtT3vVThc="
+          "hash": "rp5CaLqox5UW4BMDH/0hdXnG8V0as6r5J4Ke69wCABU="
         }
       },
       "is_incremental": false,
@@ -561,7 +561,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Plugins.NetMQNotifier.html",
-          "hash": "BOrCi0Fr6rrx23ZNfBlz/rconb2y8QP0MgPYFaTQ5jo="
+          "hash": "JfmDC1foUg2P6UE8zcFdqin+lHebmugOqiW0LwTaLSQ="
         }
       },
       "is_incremental": false,
@@ -573,7 +573,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Plugins.NetMQNotifierConfiguration.html",
-          "hash": "X4K7yWMN9EgDMJcgmbePlXAIQPiWeAKkl2K/H9Igr6Q="
+          "hash": "jWmwFj05/F7TNDT2H9wunw1xWRtWv/VsUqB9kTtIzAE="
         }
       },
       "is_incremental": false,
@@ -585,7 +585,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Plugins.NetMQTransceiver.html",
-          "hash": "4sFv3jIJ42Jet4oC1VNJjnvnATIKMvPLC5Ngi9aYwIY="
+          "hash": "lnIw4bvKc5rwl9rQIRHCAVo/m85PLSeKckl+exzIb+I="
         }
       },
       "is_incremental": false,
@@ -597,7 +597,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Plugins.NetMQTransceiverConfiguration.html",
-          "hash": "Po5Gsk/8/ERBBrALh3UAFNVUwmIKskcywiY8r+PSzoo="
+          "hash": "1lVg6P/q2rBU10VtVSbjEgs9Fy+KtqXjWgjWv2f9ewE="
         }
       },
       "is_incremental": false,
@@ -609,7 +609,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Plugins.html",
-          "hash": "gvHtN6sriUbhGrv7uWj67GMjbcJqEp180ahNO6Sgudg="
+          "hash": "s2L5/xybV5uAJmyGVbS88QXPayfmQ5JqCWNaZyj5XP4="
         }
       },
       "is_incremental": false,
@@ -621,7 +621,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.html",
-          "hash": "5ns1dXFm91e4lQxOdx/3JVFjKapM3w5lYIBMDfZAbqc="
+          "hash": "0HpColHdJwXjxNAaWmDCr1ZrjZMFVzu+bc834nw/43Y="
         }
       },
       "is_incremental": false,
@@ -633,7 +633,7 @@
       "output": {
         ".html": {
           "relative_path": "api/index.html",
-          "hash": "r6EWpYR6f1flCLLaQQZg3QrWczXqf8XUWmQeZMGSQQs="
+          "hash": "1xkIyhROtyvkgvy6kKL6QMFIK4a0SIejNdqN0Txcznw="
         }
       },
       "is_incremental": false,
@@ -657,7 +657,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/MATSys.Commands.html",
-          "hash": "l2bqOG3Yk5Xb7WllVVXe76eYju/MF+Bos++NUKtRJds="
+          "hash": "UZK0YjkFf5ZZz8MGIy7GlpJ5mTutS5PcNEWMcq3WQNM="
         }
       },
       "is_incremental": false,
@@ -669,7 +669,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/MATSys.Factories.html",
-          "hash": "lg6uueiq7hhptZakZUZJeXafVJKz/M1YRthwXd78PA0="
+          "hash": "jmumM2VnxTmi1FQ39HyPWgiqDdvhsNXmIVhL6NcFhHU="
         }
       },
       "is_incremental": false,
@@ -681,7 +681,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/MATSys.Hosting.html",
-          "hash": "ifCDAcVzOwbvXDglynA/j0mx2IOh7Qb9oV79/t4vq3k="
+          "hash": "a35Ufg5eOXCT7qEW9z6Yp7XQBqvsmrBU7ks7GI16hyY="
         }
       },
       "is_incremental": false,
@@ -693,7 +693,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/MATSys.html",
-          "hash": "RaBjbrzMeyNy6uta2TxMkxempDIVzLBznjOQ6FVAS68="
+          "hash": "7zsygkCMqTfqwEMj5Lbh9AIXM7PhJ4/GSSym2eF2zQk="
         }
       },
       "is_incremental": false,
@@ -705,7 +705,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/appsettings.html",
-          "hash": "txLsW4dA9Beyxv0+B8mCcDdvP5VvmanvAmV5MsG2HUk="
+          "hash": "n3JKcZXLBgE/XRNUxi+kFtA+BktI9RiP8LIjNGQsUnI="
         }
       },
       "is_incremental": false,
@@ -717,7 +717,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/intro.html",
-          "hash": "nzj3nZSTldqmGMlu3nZJJIODlMZRm0QzNxHM0vuKyTU="
+          "hash": "9hWSeHGYSHW200dCrxNDNPss2WFPo0rXyl5Nsqak8zA="
         }
       },
       "is_incremental": false,
@@ -736,12 +736,56 @@
       "version": ""
     },
     {
+      "type": "Resource",
+      "source_relative_path": "images/JYTEK Taiwan-LOGO.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/JYTEK Taiwan-LOGO.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/JYTEK Taiwan-LOGO_white.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/JYTEK Taiwan-LOGO_white.svg"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/JYTek.ico",
+      "output": {
+        "resource": {
+          "relative_path": "images/JYTek.ico"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/JYTek.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/JYTek.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "index.md",
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "uQiOLckxmpguAW0I3wZ9MSJZhXIpk/qTLoh07UkkF3s="
+          "hash": "YRC9440bTr6O+OVJeUXgP6132KsnX+l5xApjNMeukis="
         }
       },
       "is_incremental": false,
@@ -781,6 +825,13 @@
           "can_incremental": false,
           "incrementalPhase": "build",
           "total_file_count": 52,
+          "skipped_file_count": 0
+        },
+        "ResourceDocumentProcessor": {
+          "can_incremental": false,
+          "details": "Processor ResourceDocumentProcessor cannot support incremental build because the processor doesn't implement ISupportIncrementalDocumentProcessor interface.",
+          "incrementalPhase": "build",
+          "total_file_count": 0,
           "skipped_file_count": 0
         },
         "TocDocumentProcessor": {
