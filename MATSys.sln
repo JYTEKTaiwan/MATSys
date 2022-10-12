@@ -29,8 +29,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark", "examples\Bench
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{7439C459-A1F7-438C-9CDF-9D95FE47BA38}"
 	ProjectSection(SolutionItems) = preProject
-		config\applicationsetting.md = config\applicationsetting.md
 		config\appsettings.json = config\appsettings.json
+		config\README.md = config\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractionWithHost", "examples\InteractionWithHost\InteractionWithHost.csproj", "{4C9D1302-D22A-447D-BA56-E92489AE5503}"
