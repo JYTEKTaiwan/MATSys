@@ -12,35 +12,42 @@ All of these factory are designed to be used in (1) manually creation and (2) em
 
 ## Factories for plugins (Transceiver/Notifier/Recorder)
 Take TransceiverFactory as example(NotifierFactory and RecorderFactory are the same), User can create the factory instance first before create the transceiver instance.
-<pre><code>// Constructor, use configuration file(appsettings.json) as parameter
-public TransceiverFactory(IConfiguration config)
+<pre>
+// Constructor, use configuration file(appsettings.json) as parameter
+<code>public TransceiverFactory(IConfiguration config)</code>
 
 // create the plugin
-public ITransceiver CreateTransceiver(IConfigurationSection section)</code></pre>
+<code>public ITransceiver CreateTransceiver(IConfigurationSection section)</code>
+</pre>
 
 User can also use the static method to create instance. Noted that MATSys allow user to dynamically load the assembly from other directory
-<pre><code>// static method 
-public static ITransceiver CreateNew(string assemblyPath, string typeString, object args)
+<pre>
+// static method 
+<code>public static ITransceiver CreateNew(string assemblyPath, string typeString, object args)</code>
 
-public static T CreateNew<T>(object args)
+<code>public static T CreateNew<T>(object args)</code>
 
-public static ITransceiver CreateNew(Type t, object args)</code></pre>
+<code>public static ITransceiver CreateNew(Type t, object args)</code>
+</pre>
 Transceiver, Notifier and Recorder instances can be created using these way above.
 
 
 ## Factory for Module
 ModuleFactory is slightly different since Module need to have plugins injected in. User can create Module instance by injecting factories or instance as parameters
-<pre><code>// Constructor for ModuleFactory, inject factories of plulgins as parameters
-public ModuleFactory(IConfiguration config, ITransceiverFactory tran_factory, INotifierFactory noti_factory, IRecorderFactory rec_factory)
+<pre>
+// Constructor for ModuleFactory, inject factories of plulgins as parameters
+<code>public ModuleFactory(IConfiguration config, ITransceiverFactory tran_factory, INotifierFactory noti_factory, IRecorderFactory rec_factory)</code>
 
 // Create module
-public IModule CreateModule(IConfigurationSection section)
-</code></pre>
+<code>public IModule CreateModule(IConfigurationSection section)</code>
+</pre>
 
 ModuleFactory also support static creation
-<pre><code>//static method, inject plugin instance as parameters
-public static IModule CreateNew(string assemblyPath, string typeString, object configuration, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "")
+<pre>
+//static method, inject plugin instance as parameters
+<code>public static IModule CreateNew(string assemblyPath, string typeString, object configuration, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "")</code>
 
-public static T CreateNew<T>(object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")
+<code>public static T CreateNew<T>(object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")</code>
 
-public static IModule CreateNew(Type moduleType, object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")</code></pre>
+<code>public static IModule CreateNew(Type moduleType, object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")</code>
+</pre>
