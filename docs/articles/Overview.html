@@ -72,21 +72,21 @@
 <h2 id="whats-the-problem-were-facing">What's the problem we're facing?</h2>
 <ul>
 <li>Complexity of combination of DAQ devices in the OT side (drivers, application,...etc)</li>
-<li>Lack of consideration of re-use and extendable codes</li>
-<li>A good tool to track the contorl flow in the background.</li>
+<li>Lack of consideration of re-usable and extendable codes</li>
+<li>A good tool to track the control flow in the background.</li>
 </ul>
 <h2 id="design-purpose">Design Purpose</h2>
 <ul>
 <li>Isolate each working instance with its own thread, like a service</li>
-<li>Simmplify the coding process by providing a abstract class equipped with pre-defined plugins.</li>
+<li>Simplify the coding process by providing a abstract class equipped with pre-defined plugins.</li>
 <li>These plugins can be swapped between buil-in libraries and external custom plugins.</li>
-<li>Introduct powerful open source log tool to increase the debug process</li>
+<li>Introduce powerful open source log tool to increase the debug process</li>
 <li>All of the instance can be defined in json file.</li>
 </ul>
 <h2 id="key-features-for-matsys">Key Features for MATSys</h2>
 <ul>
-<li>4 built-in features are ready to use after inheriting from the base class</li>
-<li>Instance can be loaded from configuratio file</li>
+<li>4 built-in plugins are ready to use after inheriting from the base class</li>
+<li>Instance can be loaded from configuration file</li>
 <li>Access through string-typed command</li>
 <li>Embedded into .Net generic host, easily to move between applications</li>
 </ul>

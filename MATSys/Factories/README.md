@@ -23,11 +23,11 @@ Take TransceiverFactory as example(NotifierFactory and RecorderFactory are the s
 User can also use the static method to create instance. Noted that MATSys allow user to dynamically load the assembly from other directory
 <pre>
 // static method 
-<code>public static ITransceiver CreateNew(string assemblyPath, string typeString, object args)</code>
+<code>public static ITransceiver CreateNew(string assemblyPath, string typeString, object args)
 
-<code>public static T CreateNew&lt;T>(object args)</code>
+public static T CreateNew&lt;T>(object args)
 
-<code>public static ITransceiver CreateNew(Type t, object args)</code>
+public static ITransceiver CreateNew(Type t, object args)</code>
 </pre>
 Transceiver, Notifier and Recorder instances can be created using these way above.
 
@@ -45,9 +45,9 @@ ModuleFactory is slightly different since Module need to have plugins injected i
 ModuleFactory also support static creation
 <pre>
 //static method, inject plugin instance as parameters
-<code>public static IModule CreateNew(string assemblyPath, string typeString, object configuration, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "")</code>
+<code>public static IModule CreateNew(string assemblyPath, string typeString, object configuration, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "")
 
-<code>public static T CreateNew&lt;T>(object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")</code>
+public static T CreateNew&lt;T>(object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")
 
-<code>public static IModule CreateNew(Type moduleType, object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")</code>
+public static IModule CreateNew(Type moduleType, object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")</code>
 </pre>

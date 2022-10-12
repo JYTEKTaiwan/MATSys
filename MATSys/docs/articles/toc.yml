@@ -10,5 +10,12 @@
   href: appsettings.md
 - name: Add-on Plugins
   href:
+  items:
+    - name: Transceiver
+    - href:
+    - name: Notifier
+    - href:
+    - name: Recorder
+    - href:
 - name: Examples
   href: 

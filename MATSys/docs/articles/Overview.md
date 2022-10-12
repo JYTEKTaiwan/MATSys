@@ -2,19 +2,19 @@
 
 ## What's the problem we're facing?
 - Complexity of combination of DAQ devices in the OT side (drivers, application,...etc)
-- Lack of consideration of re-use and extendable codes
-- A good tool to track the contorl flow in the background.
+- Lack of consideration of re-usable and extendable codes
+- A good tool to track the control flow in the background.
 
 ## Design Purpose
 - Isolate each working instance with its own thread, like a service
-- Simmplify the coding process by providing a abstract class equipped with pre-defined plugins.
+- Simplify the coding process by providing a abstract class equipped with pre-defined plugins.
 - These plugins can be swapped between buil-in libraries and external custom plugins.
-- Introduct powerful open source log tool to increase the debug process
+- Introduce powerful open source log tool to increase the debug process
 - All of the instance can be defined in json file.
 
 ## Key Features for MATSys
-- 4 built-in features are ready to use after inheriting from the base class    
-- Instance can be loaded from configuratio file
+- 4 built-in plugins are ready to use after inheriting from the base class    
+- Instance can be loaded from configuration file
 - Access through string-typed command
 - Embedded into .Net generic host, easily to move between applications
 
