@@ -1,24 +1,26 @@
 - name: Overview
   href: Overview.md
-- name: Factories Design
-  href: MATSys.Factories.md
-- name: Command Pattern
-  href: MATSys.Commands.md
-- name: Embedded to Host
-  href: MATSys.Hosting.md
-- name: Application setting
-  href: appsettings.md
 - name: ModuleBase class
   href: ModuleBase.md
-- name: Plugins
+- name: Built-in plugins
+  href: Plugins.md
+- name: Custom plugins design
   items:
-  - name: Built-in plugins
-  - href: Plugins.md
   - name: ITransceiver
-  - href: ITransceiver.md
+    href: ITransceiver.md
   - name: INotifier
-  - href: INotifier.md
+    href: INotifier.md
   - name: IRecorder
-  - href: IRecorder.md
+    href: IRecorder.md
+- name: How to use
+  items:
+  - name: Factories Design
+    href: MATSys.Factories.md
+  - name: Command Pattern
+    href: MATSys.Commands.md
+  - name: Embedded to Host
+    href: MATSys.Hosting.md
+  - name: Application setting
+    href: appsettings.md
 - name: Examples
   href: Examples.md
