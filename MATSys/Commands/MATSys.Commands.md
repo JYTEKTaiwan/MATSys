@@ -52,7 +52,7 @@ Once the <b>MATSysCommandAttribute</b> is assigned, this method can now be acces
     {
         //return something;
     }
-    //this method will be access with name "Test" and type Command&lt;string>
+    //this method will be access with name "Test" and type Command&lt;string> assigned by attribute
 </code></pre>
 
 <b>MATSysCommandAttribute</b> has two parameters, first is the alias name of the method(use default if empty). The second is the type of the Command.
@@ -64,7 +64,7 @@ User can leave the parameters empty, system will automatically choose the defaul
     {
         //return something;
     }
-    //this method will be access with name "Hello" and type Command&lt;string>
+    //this method will be access with name "Hello" and type Command&lt;string> from the parameters definition
 </code></pre>
 
 
