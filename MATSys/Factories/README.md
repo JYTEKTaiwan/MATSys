@@ -25,7 +25,7 @@ User can also use the static method to create instance. Noted that MATSys allow 
 // static method 
 <code>public static ITransceiver CreateNew(string assemblyPath, string typeString, object args)</code>
 
-<code>public static T CreateNew<T>(object args)</code>
+<code>public static T CreateNew&lt;T>(object args)</code>
 
 <code>public static ITransceiver CreateNew(Type t, object args)</code>
 </pre>
@@ -47,7 +47,7 @@ ModuleFactory also support static creation
 //static method, inject plugin instance as parameters
 <code>public static IModule CreateNew(string assemblyPath, string typeString, object configuration, ITransceiver transceiver, INotifier notifier, IRecorder recorder, string aliasName = "")</code>
 
-<code>public static T CreateNew<T>(object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")</code>
+<code>public static T CreateNew&lt;T>(object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")</code>
 
 <code>public static IModule CreateNew(Type moduleType, object parameter, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "")</code>
 </pre>
