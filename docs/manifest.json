@@ -657,7 +657,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/MATSys.Commands.html",
-          "hash": "4CDLHg85RGujt5vp+Uy3cEqr+0G0/VBh7mBHsDBHwXk="
+          "hash": "l2bqOG3Yk5Xb7WllVVXe76eYju/MF+Bos++NUKtRJds="
         }
       },
       "is_incremental": false,
@@ -670,6 +670,42 @@
         ".html": {
           "relative_path": "articles/MATSys.Factories.html",
           "hash": "lg6uueiq7hhptZakZUZJeXafVJKz/M1YRthwXd78PA0="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MATSys.Hosting.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MATSys.Hosting.html",
+          "hash": "ifCDAcVzOwbvXDglynA/j0mx2IOh7Qb9oV79/t4vq3k="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MATSys.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MATSys.html",
+          "hash": "RaBjbrzMeyNy6uta2TxMkxempDIVzLBznjOQ6FVAS68="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/appsettings.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/appsettings.html",
+          "hash": "txLsW4dA9Beyxv0+B8mCcDdvP5VvmanvAmV5MsG2HUk="
         }
       },
       "is_incremental": false,
@@ -693,7 +729,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "O/JITGPAm4NXk1g79mInn9nfRYK+adW0Eja1VQF97DM="
+          "hash": "m33K9cGsco26fJULlMGYiqzTXEkxacRw+XbGlGOVUgk="
         }
       },
       "is_incremental": false,
@@ -717,7 +753,7 @@
       "output": {
         ".html": {
           "relative_path": "toc.html",
-          "hash": "s5zYBmRq1dUlg1MMS9D195PbHoYy2rh04ROCUAD5a9I="
+          "hash": "GCeLnVs6gzjTNY8wuUmJEtwKJ+9J3engwfxaszAmIMQ="
         }
       },
       "is_incremental": false,
@@ -738,7 +774,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 5,
+          "total_file_count": 8,
           "skipped_file_count": 0
         },
         "ManagedReferenceDocumentProcessor": {
