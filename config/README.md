@@ -71,7 +71,7 @@ Configuration may look like this:
         "Transceiver": {  }
         //other custom parameters (key-value pair) can be added here
 
-      }
+      },
       {
         "Alias": "Dev2",
         "Type": "TestDevice",
@@ -101,7 +101,7 @@ The configuration will be like following snippet
     "MATSys": {
         "ScriptMode": true,
         "Scripts": {
-            "Setup": [ "Dev1:Test,"Hello" ],
+            "Setup": [ "Dev1:Test,\"Hello\"" ],
             "Test": [],
             "Teardown": []
     }
@@ -238,7 +238,7 @@ If disable system will load the NLog.config in the bin folder.
       "Transceivers": [ ".\\modules\\NetMQTransceiver.dll" ]
     },
     "Scripts": {
-      "Setup": [ "Dev1:Test,"Hello"" ],
+      "Setup": [ "Dev1:Test,\"Hello\"" ],
       "Test": [],
       "Teardown": []
     }
