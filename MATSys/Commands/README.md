@@ -1,4 +1,4 @@
-﻿README# Command Pattern Design
+﻿# Command Pattern Design
 
 namespace: <ins><b>MATSys.Commands</b></ins> 
 
