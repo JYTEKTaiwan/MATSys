@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Embedded to Host </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Embedded to Host ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../images/JYTek.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/JYTEK Taiwan-LOGO.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="embedded-to-host">Embedded to Host</h1>
+
+<p>namespace: <ins><b>MATSys.Hosting</b></ins></p>
+<p>MATSys uses DI(dependency injection) to keep the function flexible. It can also be injected into the .Net generic host ( refer to <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/generic-host">.NET Generic Host</a>).
+Each Module/Transceiver/Notifier/Recorder is a standalone service, running in their own thread.</p>
+<blockquote>
+<p>A host is an object that encapsulates an app's resources and lifetime functionality</p>
+</blockquote>
+<p>Once MATSys is embeded into Host, system will automatically do the rest:</p>
+<ul>
+<li>Load configuration from appsettings.json in bin foilder</li>
+<li>Bring up internal background service to handle all modules</li>
+<li>Start/Stop all modules based on the Host status</li>
+</ul>
+<h2 id="how-to-use">How to use</h2>
+<p>Use can call <b>UseMATsys()</b> extended method to add MATSys into the generic Host.like following code snippet</p>
+<pre><code>
+IHost host = Host.CreateDefaultBuilder().<b>UseMATSys()</b>.Build();
+host.RunAsync()
+</code></pre>
+<h2 id="how-to-get-the-handle-of-the-background-service">How to get the handle of the background service</h2>
+<p>All modules are kept in the backgroun service intance, and user can get backgroun service handle by calling the extended method:</p>
+<pre><code>
+var handle = host.Services.GetMATSysHandle();
+</code></pre>
+<h2 id="how-to-send-the-command">How to send the command</h2>
+<p>After getting the handle, user can send the command and system will automatically dispatch to coresponding module in the background.
+Command look like this</p>
+<pre>
+Dev1:Test="hello"
+</pre>
+<ul>
+<li>Dev1 represents the module alias name</li>
+<li>Test represents the method alias name in the module &quot;Dev1&quot;</li>
+<li>&quot;hello&quot; is the parameter of the method &quot;Test&quot;</li>
+</ul>
+<p>Alternatively, background service is also equipped with a transceiver plugin, which means user can send the command using transceiver without having the handle.</p>
+<h2 id="advanced-feature---automation-testing">Advanced feature - Automation Testing</h2>
+<p>Since everything now is in string type, we implement a simple automatic testing feature by script.</p>
+<p>Scripts are loaded from the appsettings.json when starting the service. User can call the <b>RunTest()</b> method to execute the automation test.</p>
+<p>The automation test can separated into 3 groups:</p>
+<ul>
+<li>Setup</li>
+<li>Test</li>
+<li>TearDown</li>
+</ul>
+<p>Group <b>Setup</b> and group <b>TearDown</b> will execute only once in the beginning of the test and ending of the test. Group <b>Test</b> will execute once or multiple times due to the parameter assigned by user.</p>
+<p>Each group can have multiple line of script, so user can implement the test plan by modifying the appsettings.json.</p>
+<p>Automation test can be executed use <b>RunTest()</b> method, like following code</p>
+<pre><code>
+IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
+host.RunAsync().Wait(1000); ;
+
+var dev = host.Services.GetMATSysHandle();
+dev.RunTest(3);
+</code></pre>
+<p>The parameter <b>3</b> in the <b>RunTest(3)</b> means it will execute Setup script one time, then Test script 3 times, and then TearDown script 1 time.</p>
+<p>If the parameter is less than 1, system will run infinitely until user call <b>StopTeest()</b></p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/docs/articles/MATSys.Hosting.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (c) JYTEK TAIWAN CORP. 2019-2022
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Built-in Plugins </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Built-in Plugins ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../images/JYTek.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/JYTEK Taiwan-LOGO.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="built-in-plugins">Built-in Plugins</h1>
+
+<p>namespace: <ins><b>MATSys.Plugins</b></ins></p>
+<h2 id="transceiver"><strong>Transceiver</strong></h2>
+<h3 id="emptytransceiver"><u>EmptyTransceiver</u></h3>
+<p>Default transceiver instance, doing nothing</p>
+<h3 id="netmqtransceiver"><u>NetMQTransceiver</u></h3>
+<p>REQ/REP is implemented using NetMQRouterSocket and NetMQDealerSocket.</p>
+<pre><code>
+    //Optional parameter
+    public class NetMQTransceiverConfiguration : IMATSysConfiguration
+    {
+        public string Type { get; set; } = "netmq";
+        public bool EnableLogging { get; set; } = false;
+        public string LocalIP { get; set; } = "";
+        public int Port { get; set; } = -1;
+    }
+</code></pre>
+<h2 id="notifier"><strong>Notifier</strong></h2>
+<h3 id="emptynotifgier"><u>EmptyNotifgier</u></h3>
+<p>Default notifier instance, doing nothing</p>
+<h3 id="netmqnotifier"><u>NetMQNotifier</u></h3>
+<p>Pub/Sub is implemented using NetMQPublisherSocket and NetMQSubscriberSocket.</p>
+<pre><code>
+    //Optional parameters
+    public class NetMQNotifierConfiguration : IMATSysConfiguration
+    {
+        public string Type { get; set; } = "netmq";
+        public bool EnableLogging { get; set; } = false;
+        public string Address { get; set; } = "127.0.0.1:5000";
+        public string Protocal { get; set; } = "tcp";
+        public string Topic { get; set; } = "";
+        public bool DisableEvent { get; set; } = true;
+
+        public static NetMQNotifierConfiguration Default => new NetMQNotifierConfiguration();
+    }
+</code></pre>
+<h2 id="recorder"><strong>Recorder</strong></h2>
+<h3 id="emptyrecorder"><u>EmptyRecorder</u></h3>
+<p>Default recorder instance, doing nothing</p>
+<h3 id="csvrecorder"><u>CSVRecorder</u></h3>
+<p>Write object data into CSV file. User should define the dataset in class. CSVRecorder will parse all the properties and writes to the file separately.</p>
+<pre><code>
+    //Optional paramters
+    public class CSVRecorderConfiguration : IMATSysConfiguration
+    {
+        public string Type { get; set; } = "csv";
+        public bool EnableLogging { get; set; } = false;
+        public bool WaitForComplete { get; set; } = true;
+        public int QueueSize { get; set; } = 2000;
+        public int WaitForCompleteTimeout { get; set; } = 5000;
+        public static CSVRecorderConfiguration Default = new CSVRecorderConfiguration();
+
+        public BoundedChannelFullMode BoundedChannelFullMode { get; set; } = BoundedChannelFullMode.DropOldest;
+    }
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/docs/articles/Plugins.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (c) JYTEK TAIWAN CORP. 2019-2022
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,347 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Application Setting File </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Application Setting File ">
+    <meta name="generator" content="docfx 2.59.4.0">
+    
+    <link rel="shortcut icon" href="../images/JYTek.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/JYTEK Taiwan-LOGO.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="application-setting-file">Application Setting File</h1>
+
+<p>location: <ins><b>appsettings.json</b></ins> in bin folder</p>
+<p>When MATSys is embedded into the .Net generic host, it will automatically read the content of <b>appsettings.json</b> in the bin folder. There are two sections we're gonna to introduce in the following article.</p>
+<ul>
+<li>MATSys section</li>
+<li>NLog section</li>
+</ul>
+<h2 id="matsys">MATSys</h2>
+<p>In the MATSys section , user can assign the following information:</p>
+<ul>
+<li>Reference assembly paths</li>
+<li>Transceiver information for MATSys background service</li>
+<li>Modules information</li>
+<li>Plugins information</li>
+<li>Scripts information</li>
+</ul>
+<p>The hierachy may look like this</p>
+<pre>
+  "MATSys": {    
+    "ScriptMode": true,
+    "Transceiver": {          },
+    "Modules": [          ],
+    "References": {    },
+    "Scripts": {    }
+  } 
+</pre>
+<p>We're going to take a deep look into it</p>
+<h3 id="references-assemblies">References assemblies</h3>
+<p>MATSys supports loading an external assemblies, so user should assigned the assembly path in the section.</p>
+<pre>
+    "References": {
+      "Modules": [],
+      "Recorders": [ ".\\modules\\CSVRecorder.dll" ],
+      "Notifiers": [ ".\\modules\\NetMQNotifier.dll" ],
+      "Transceivers": [ ".\\modules\\NetMQTransceiver.dll" ]
+    }
+</pre>
+<p>In the <b>References</b> section, user can assign the paths of the assemblies. In general, we recommend to create a folder named <b>&quot;modules&quot;</b> to put all external assemblies in it.</p>
+<p>There's some cases that assemblies might need another depenent assemblie. These dependent assemblies should put in the same folder too.</p>
+<h3 id="transceiver-information-for-matsys-background-service">Transceiver information for MATSys background service</h3>
+<p>The background service supports REQ/REP mode to accept command using Transceiver instance. If nothing is assigned, then user can only access the method by having the handle of the instance and direct call.</p>
+<p>For more detail of the configuration, please refer to <a href="#Plugininformation">Plugin information</a>.</p>
+<h3 id="modules-information">Modules information</h3>
+<p>All the modules in the MATSys system can be created by parsing the information of the <b>Modules</b> section. There are several keys to be explained here:</p>
+<ul>
+<li>Alias</li>
+<li>Type</li>
+<li>Recorder</li>
+<li>Notifier</li>
+<li>Transceiver</li>
+<li>(other custom settings)</li>
+</ul>
+<p>Configuration may look like this:</p>
+<pre>
+    "Modules": [
+      {
+        "Alias": "Dev1",
+        "Type": "TestDevice",
+        "Recorder": {  },
+        "Notifier": {  },
+        "Transceiver": {  }
+        //other custom parameters (key-value pair) can be added here
+
+      },
+      {
+        "Alias": "Dev2",
+        "Type": "TestDevice",
+      }
+    ],
+
+</pre>
+<p><b>Alias</b> is the nickname of the Module instance. user can use different alis name for the same typeof Module. System will identify the Module using Alis properrty.</p>
+<p><b>Type</b> is the type name of the Module, system will use this property to search in the executing assemblies and dynamically create instance for further usage.</p>
+<p><b>Transceiver</b>, <b>Notifier</b> and <b>Recorder</b> are the plugin information which are injected to the Module, so each module may has different type of plugins. If section is not exist or empty content, system will inject empty plugins into Module.
+For more detail of the configuration, please refer to <a href="#Plugininformation">Plugin information</a>.</p>
+<p>If there are some unique congifuation setting for custom Module, user can add to the section using key-value pattern.</p>
+<h3 id="scripts-information">Scripts information</h3>
+<p>MATSys supports automation testing using scripts, user can easily achieve the feature by 2 steps</p>
+<ol>
+<li>Enable the script mode using ScriptMode in appsettings.json</li>
+<li>Add script for 3 different groups.</li>
+</ol>
+<p>The configuration will be like following snippet</p>
+<pre>
+    "MATSys": {
+        "ScriptMode": true,
+        "Scripts": {
+            "Setup": [ "Dev1:Test,\"Hello\"" ],
+            "Test": [],
+            "Teardown": []
+    }
+  
+</pre>
+<p>If <b>ScriptMode</b> is disabled, system will only execute command manually.</p>
+<p>To be noted that <b>Setup</b> and <b>TearDown</b> are only executed once in the beginning and ending of the whole test.</p>
+<h3 id="plugin-information">Plugin information</h3>
+<p>Each Module can have its own type of Plugin, so user should fill the configuration setting in the coresponding section.
+There are 3 types of plugins</p>
+<ul>
+<li>Transceiver</li>
+<li>Notifier</li>
+<li>Recorder</li>
+</ul>
+<p>Property <b>Type</b> in the plugins is verty important. System will use this property to search the right plugins. For example, <b>Type</b> value <u>&quot;csv&quot;</u> in <b>Recorder</b> means system will search &quot;csvRecorder&quot; in the executing assemblie (caption is ignored).</p>
+<p>This means if user is going create their own plugins, type name should meet the requirement( xxxRecorder, xxxNotifier, xxxTransceiver)</p>
+<p>Like Module, user can assign extra key-value pairs in the section so the custom plugin will take it for configuration.</p>
+<p>Take the following snippet as example:</p>
+<pre>
+    "Notifier": {
+      "Type": "netmq",
+      "Address": "127.0.0.1:12345",
+      "Protocal": "inproc",
+      "Topic": "AA",
+      "DisableEvent": true
+    },
+    "Transceiver": {
+      "Type": "netmq",
+      "LocalIP": "tcp://127.0.0.1",
+      "Port": 1234
+    }
+ 
+</pre>
+<p>System will seach &quot;netmqNotifier&quot; and &quot;netTransceiver&quot; plugin in the executing assemblies and load the key-value pair to configure when initialization.</p>
+<p>Take netMQNotifier as exmaple:</p>
+<pre><code>
+        public void Load(IConfigurationSection section)
+        {
+            _config = section.Get&lt;NetMQNotifierConfiguration>();
+
+        }
+
+</code></pre>
+<p>User can also define a custom class to parse from json section</p>
+<pre><code>
+    public class NetMQNotifierConfiguration : IMATSysConfiguration
+    {
+        public string Type { get; set; } = "netmq";
+        public bool EnableLogging { get; set; } = false;
+        public string Address { get; set; } = "127.0.0.1:5000";
+        public string Protocal { get; set; } = "tcp";
+        public string Topic { get; set; } = "";
+        public bool DisableEvent { get; set; } = true;
+    }
+
+</code></pre>
+<h2 id="nlog">NLog</h2>
+<p>MATSys inplement the power tool <a href="https://nlog-project.org/">Nlog</a> as the logging tool. The configuration can be integrated into appsettings.json.</p>
+<p>For more detail of the Nlog setting, please refer to <a href="https://nlog-project.org/">NLog project site</a></p>
+<p>In MATSys section , if <b>EnableNLogInJsonFile</b> is enabled, then the system will load nlog setting in the appsettings.json.</p>
+<p>If disable system will load the NLog.config in the bin folder.</p>
+<pre>
+  "MATSys": {
+    "EnableNLogInJsonFile": true,
+  }, 
+  "NLog": {
+    "throwConfigExceptions": true,
+    "targets": {
+      "async": true,
+      "logfile": {
+        "type": "File",
+        "fileName": "./${shortdate}.log"
+      },
+      "logconsole": {
+        "type": "Console"
+      }
+    },
+    "rules": [
+      {
+        "logger": "*",
+        "minLevel": "Trace",
+        "writeTo": "logfile"
+      }
+    ]
+  }</pre>
+<h1 id="example-of-appsettingjson">Example of appsetting.json</h1>
+  <pre>
+  {
+  "MATSys": {
+    "EnableNLogInJsonFile": true,
+    "ScriptMode": true,
+    "Transceiver": {
+    },
+    "Modules": [
+      {
+        "Alias": "Dev1",
+        "Type": "TestDevice",
+        "Recorder": {
+          "Type": ""
+        },
+        "Notifier": {
+          "Type": "netmq",
+          "Address": "127.0.0.1:12345",
+          "Protocal": "inproc",
+          "Topic": "AA",
+          "DisableEvent": true
+        },
+        "Transceiver": {
+          "Type": "netmq",
+          "LocalIP": "tcp://127.0.0.1",
+          "Port": 1234
+        }
+      }
+    ],
+    "References": {
+      "Modules": [],
+      "Recorders": [ ".\\modules\\CSVRecorder.dll" ],
+      "Notifiers": [ ".\\modules\\NetMQNotifier.dll" ],
+      "Transceivers": [ ".\\modules\\NetMQTransceiver.dll" ]
+    },
+    "Scripts": {
+      "Setup": [ "Dev1:Test,\"Hello\"" ],
+      "Test": [],
+      "Teardown": []
+    }
+  }, 
+  "NLog": {
+    "throwConfigExceptions": true,
+    "targets": {
+      "async": true,
+      "logfile": {
+        "type": "File",
+        "fileName": "./${shortdate}.log"
+      },
+      "logconsole": {
+        "type": "Console"
+      }
+    },
+    "rules": [
+      {
+        "logger": "*",
+        "minLevel": "Trace",
+        "writeTo": "logfile"
+      }
+    ]
+  }
+}
+  </pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                  <li>
+                    <a href="https://github.com/JYTEKTaiwan/MATSys/blob/master/MATSys/docs/articles/appsettings.md/#L1" class="contribution-link">Improve this Doc</a>
+                  </li>
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            Copyright (c) JYTEK TAIWAN CORP. 2019-2022
+            
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
