@@ -151,7 +151,7 @@ public class UT_ModuleBase
         dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("HO"));
         dev.StopService();
-        Assert.IsTrue(res.Contains(ModuleBase.cmd_notFound));
+        Assert.IsTrue(res.Contains(ExceptionHandler.cmd_notFound));
     }
 
     [Test]
@@ -163,7 +163,7 @@ public class UT_ModuleBase
         dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("HO").Serialize());
         dev.StopService();
-        Assert.IsTrue(res.Contains(ModuleBase.cmd_notFound));
+        Assert.IsTrue(res.Contains(ExceptionHandler.cmd_notFound));
     }
 
     [Test]
@@ -175,7 +175,7 @@ public class UT_ModuleBase
         dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("Exception"));
         dev.StopService();
-        Assert.IsTrue(res.Contains(ModuleBase.cmd_execError));
+        Assert.IsTrue(res.Contains(ExceptionHandler.cmd_execError));
     }
 
     [Test]
@@ -187,7 +187,7 @@ public class UT_ModuleBase
         dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("WrongArgs", 1.5).Serialize());
         dev.StopService();
-        Assert.IsTrue(res.Contains(ModuleBase.cmd_execError));
+        Assert.IsTrue(res.Contains(ExceptionHandler.cmd_execError));
     }
     [Test]
     [Category("Execute")]
@@ -199,6 +199,6 @@ public class UT_ModuleBase
 
         var res = dev.Execute(CommandBase.Create("WrongSerDes", 8.8).Serialize());
         dev.StopService();
-        Assert.IsTrue(res.Contains(ModuleBase.cmd_serDesError));
+        Assert.IsTrue(res.Contains(ExceptionHandler.cmd_serDesError));
     }
 }
