@@ -35,7 +35,7 @@
               </button>
               
               <a class="navbar-brand" href="../index.html">
-                <img id="logo" class="svg" src="../images/JYTEK Taiwan-LOGO_white.svg" alt="">
+                <img id="logo" class="svg" src="../images/JYTEK Taiwan-LOGO.svg" alt="">
               </a>
             </div>
             <div class="collapse navbar-collapse" id="navbar">
@@ -70,6 +70,14 @@
 <h1 id="modulebase-class">ModuleBase class</h1>
 
 <p>namespace: <ins><b>MATSys</b></ins></p>
+<h2 id="introduction">Introduction</h2>
+<h2 id="dependency-injection">Dependency Injection</h2>
+<h2 id="how-to-operate">How to operate</h2>
+<h2 id="-reminder-">*** Reminder ***</h2>
+<p>To perfectly implement the Dependenc Injection pattern, ModuleBase uses constructor to inject the <b>IPlugin</b> instance. This means when user inherit from ModuleBase class, it will also implement the ctor. If there's some custom logic that need to peform, we recommend to put the logic in the override <b>Load()</b> method.</p>
+<blockquote>
+<p>ModuleBase will call <strong>Load()</strong> method in the ctor process, user can put custom logic in the <strong>Load()</strong> method.</p>
+</blockquote>
 </article>
           </div>
           
