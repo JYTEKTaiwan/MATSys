@@ -18,7 +18,7 @@ namespace InteractionWithHost_net472
             var dev = host.Services.GetMATSysHandle();
 
             dev.Modules["Dev1"].OnDataReady += IModule_OnDataReady;
-            dev.OnReadyToExecute += (mod, cmd) => { Console.WriteLine($"{mod}*{cmd}"); };
+            dev.OnReadyToExecute += (cmd) => { Console.WriteLine($"{cmd.ModuleName}*{cmd.Command}"); };
             dev.OnExecuteComplete += (item, res) => { Console.WriteLine($"{res}"); };
             dev.RunTest(3);
 
