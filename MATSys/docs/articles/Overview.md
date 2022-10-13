@@ -34,3 +34,5 @@ var response=dev.Execute("Dev1","Test=\"Hello\"");
 //Stop the host
 host.StopAsync();
 </code></pre>
+
+For more examples, please check [Examples](Examples.md)
