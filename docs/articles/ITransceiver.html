@@ -70,6 +70,18 @@
 <h1 id="itransceiver">ITransceiver</h1>
 
 <p>namespace: <ins><b>MATSys.Plugins</b></ins></p>
+<pre><code>
+    public interface ITransceiver : IPlugin
+    {
+    
+        // Indicate whether new request is happened        
+        delegate string RequestFiredEvent(object sender, string commandObjectInJson);
+        
+        // Event for the new coming request
+        event RequestFiredEvent? OnNewRequest;
+
+    }
+</code></pre>
 </article>
           </div>
           

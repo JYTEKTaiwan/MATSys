@@ -70,11 +70,51 @@
 <h1 id="modulebase-class">ModuleBase class</h1>
 
 <p>namespace: <ins><b>MATSys</b></ins></p>
-<h2 id="introduction">Introduction</h2>
-<h2 id="dependency-injection">Dependency Injection</h2>
-<h2 id="how-to-operate">How to operate</h2>
-<h2 id="-reminder-">*** Reminder ***</h2>
-<p>To perfectly implement the Dependenc Injection pattern, ModuleBase uses constructor to inject the <b>IPlugin</b> instance. This means when user inherit from ModuleBase class, it will also implement the ctor. If there's some custom logic that need to peform, we recommend to put the logic in the override <b>Load()</b> method.</p>
+<h2 id="introduction"><strong>Introduction</strong></h2>
+<p>ModuleBase is an abstract class that integrate most of the operation logics between plugins. User can inherit ModuleBase class and get the well-defined plugins immediately.
+<br></p>
+<h3 id="plugins">Plugins</h3>
+<p>ModuleBase equipped with 3 different types of plugins</p>
+<ul>
+<li>Transceiver (REQ/REP model for command)</li>
+<li>Notifier (Pub/Sub model for reminder)</li>
+<li>Recorder (internal data saving)
+<br></li>
+</ul>
+<h3 id="dependency-injection">Dependency Injection</h3>
+<p>Plugins are injected into ModuleBase instance using interface, meanin user can put any implemented instace in the ModuleBase instance. This will maximize the flexibility of the plugins.</p>
+<p>Please refer the link for more information: <a href="https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection">Dependency Injection</a></p>
+<p><br></p>
+<h2 id="how-to-operate"><strong>How to operate</strong></h2>
+<pre><code>
+ public class TestDevice : ModuleBase
+    {
+        public TestDevice(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "") : base(configuration, server, bus, recorder, configurationKey)
+        {
+            //do something in ctor
+        }
+
+        public override void Load(IConfigurationSection section)
+        {
+            //this will be execute during ctor if object can be casted in IConfigurationSection type
+        }
+
+        public override void Load(object configuration)
+        {
+            //this will be execute during ctor if object cannot be casted in IConfigurationSection type
+        }
+
+
+        [MATSysCommand] //Marked as command
+        public string Method(string c)
+        {
+            //custom method
+            return c;
+        }
+    }
+</code></pre>
+<h2 id="reminder"><em><strong>Reminder</strong></em></h2>
+<p>To perfectly implement the Dependency Injection pattern, ModuleBase uses constructor to inject the <b>IPlugin</b> instance. This means when user inherit from ModuleBase class, it will also implement the ctor. If there's some custom logic that need to peform, we recommend to put the logic in the override <b>Load()</b> method.</p>
 <blockquote>
 <p>ModuleBase will call <strong>Load()</strong> method in the ctor process, user can put custom logic in the <strong>Load()</strong> method.</p>
 </blockquote>
