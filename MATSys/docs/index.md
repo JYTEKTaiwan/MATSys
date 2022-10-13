@@ -1,4 +1,12 @@
-# This is the **HOMEPAGE**.
-Refer to [Markdown](http://daringfireball.net/projects/markdown/) for how to write markdown files.
-## Quick Start Notes:
-1. Add images to the *images* folder if the file is referencing an image.
+# Welcome to MATSys homepage
+MATSys stands for **Modular Automated Testing System**
+
+- 100% C# language
+- Focus on the Measurement and automation scenraio
+- High performance
+- Extendable, re-usable codes
+
+
+Contact us if you have any problems
+[Github page](https://github.com/JYTEKTaiwan/MATSys)
+
