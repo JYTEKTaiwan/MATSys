@@ -12,15 +12,10 @@ namespace MATSys.Plugins
     {
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
 
-        /// <summary>
-        /// Name of the instance
-        /// </summary>
-        /// <returns>"EmptyNotifier"</returns>
+
         public string Name => nameof(EmptyNotifier);
 
-        /// <summary>
-        /// Event when data is ready to publish
-        /// </summary>
+
         public event INotifier.NotifyEvent? OnNotify;
 
 

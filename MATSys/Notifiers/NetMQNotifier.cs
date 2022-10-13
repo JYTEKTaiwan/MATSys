@@ -6,6 +6,9 @@ using Newtonsoft.Json.Linq;
 
 namespace MATSys.Plugins
 {
+    /// <summary>
+    /// Notifier implemented by NetMQ library
+    /// </summary>
     public sealed class NetMQNotifier : INotifier
     {
         private PublisherSocket _pub = new PublisherSocket();
@@ -95,6 +98,10 @@ namespace MATSys.Plugins
         }
 
     }
+
+    /// <summary>
+    /// Configuration definition for NetMQNotifier
+    /// </summary>
     public class NetMQNotifierConfiguration : IMATSysConfiguration
     {
         public string Type { get; set; } = "netmq";

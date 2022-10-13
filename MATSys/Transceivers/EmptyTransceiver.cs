@@ -5,6 +5,9 @@ using Newtonsoft.Json.Linq;
 
 namespace MATSys.Plugins
 {
+    /// <summary>
+    /// Default instance for transceiver, do nothing
+    /// </summary>
     public sealed class EmptyTransceiver : ITransceiver
     {
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();

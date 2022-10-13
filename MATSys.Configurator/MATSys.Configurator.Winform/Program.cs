@@ -12,7 +12,7 @@ namespace MATSys.Configurator.Winform
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
 
-            var root = args.Length == 0?"":args[0];
+            var root = args.Length == 0 ? "" : args[0];
             Application.Run(new MainForm(root));
         }
     }

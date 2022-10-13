@@ -5,6 +5,9 @@ using Newtonsoft.Json.Linq;
 
 namespace MATSys.Plugins
 {
+    /// <summary>
+    /// Transceiver implemented by NetMQ library
+    /// </summary>
     public sealed class NetMQTransceiver : ITransceiver
     {
         private NetMQ.Sockets.RouterSocket _routerSocket = new NetMQ.Sockets.RouterSocket();
@@ -97,6 +100,9 @@ namespace MATSys.Plugins
         }
 
     }
+    /// <summary>
+    /// Configuration definition for NetMQTransceiver
+    /// </summary>
     public class NetMQTransceiverConfiguration : IMATSysConfiguration
     {
         public string Type { get; set; } = "netmq";

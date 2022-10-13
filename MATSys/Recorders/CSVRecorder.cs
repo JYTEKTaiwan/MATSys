@@ -6,6 +6,9 @@ using System.Threading.Channels;
 
 namespace MATSys.Plugins
 {
+    /// <summary>
+    /// Recorder implemented by CsvHelper library
+    /// </summary>
     public class CSVRecorder : IRecorder
     {
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
@@ -120,7 +123,9 @@ namespace MATSys.Plugins
         }
 
     }
-
+    /// <summary>
+    /// Configuration definition for CSVRecorder
+    /// </summary>
     public class CSVRecorderConfiguration : IMATSysConfiguration
     {
         public string Type { get; set; } = "csv";
