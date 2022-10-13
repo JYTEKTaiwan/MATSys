@@ -2,7 +2,7 @@
 
 namespace: <ins><b>MATSys.Plugins</b></ins> 
 
-<pre>code>
+<pre><code>
     public interface IRecorder : IPlugin
     {
     
