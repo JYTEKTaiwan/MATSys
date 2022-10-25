@@ -15,6 +15,7 @@ namespace MATSys.Hosting
         private readonly IModuleFactory _moduleFactory;
         private readonly IConfiguration _config;
         private readonly ITransceiver _transceiver;
+        private readonly INotifier _notifier;
         private readonly AutoTestScheduler _scheduler;
         private readonly ILogger _logger;
         private readonly bool _scriptMode = false;
@@ -65,6 +66,7 @@ namespace MATSys.Hosting
                 }
                 _transceiver = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(_config.GetSection("Transceiver"));
                 _transceiver.OnNewRequest += _transceiver_OnNewRequest;
+                _notifier = services.GetService<INotifierFactory>().CreateNotifier(_config.GetSection("Notifier"));
                 _scheduler = services.GetRequiredService<AutoTestScheduler>();
             }
             catch (Exception ex)
@@ -152,6 +154,7 @@ namespace MATSys.Hosting
                         var testItem = await _scheduler.Dequeue(stoppingToken);
                         OnReadyToExecute?.Invoke(testItem);
                         var response = Modules[testItem.ModuleName].Execute(testItem.Command);
+                        _notifier.Publish(response);
                         OnExecuteComplete?.Invoke(testItem, response);
                     }
                 }
