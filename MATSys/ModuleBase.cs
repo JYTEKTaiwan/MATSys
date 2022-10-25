@@ -99,13 +99,19 @@ namespace MATSys
         /// Load condfiguration from IConfigurationSection instance
         /// </summary>
         /// <param name="section"></param>
-        public abstract void Load(IConfigurationSection section);
+        public virtual void Load(IConfigurationSection section)
+        {
+            //do nothing(let user to assign the logic)
+        }
 
         /// <summary>
         /// Load condfiguration from custom instance
         /// </summary>
         /// <param name="configuration"></param>
-        public abstract void Load(object configuration);
+        public virtual void Load(object configuration)
+        {
+            //do nothing(let user to assign the logic)
+        }
 
 
         /// <summary>
