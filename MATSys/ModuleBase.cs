@@ -47,6 +47,11 @@ namespace MATSys
         public IModule Base => this;
 
         /// <summary>
+        /// Collection of IModules created by ModuleHubBackgroundService
+        /// </summary>
+        public Dictionary<string,IModule> LocalPeers { get; set; } = new Dictionary<string, IModule>();
+
+        /// <summary>
         /// ILogger instance
         /// </summary>
         ILogger IModule.Logger => _logger;

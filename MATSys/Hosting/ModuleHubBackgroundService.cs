@@ -19,8 +19,9 @@ namespace MATSys.Hosting
         private readonly AutoTestScheduler _scheduler;
         private readonly ILogger _logger;
         private readonly bool _scriptMode = false;
-
         private CancellationTokenSource cts = new CancellationTokenSource();
+
+        
 
         /// <summary>
         /// Event when TestItem is ready to execute
@@ -63,6 +64,11 @@ namespace MATSys.Hosting
                 foreach (var item in _config.GetSection("Modules").GetChildren())
                 {
                     Modules.Add(item.GetValue<string>("Alias"), _moduleFactory.CreateModule(item));
+                }
+                foreach (var item in Modules)
+                {
+                    //Assign the LocalPeers properties (Modules can access each other instance locally)
+                    item.Value.LocalPeers = Modules;
                 }
                 _transceiver = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(_config.GetSection("Transceiver"));
                 _transceiver.OnNewRequest += _transceiver_OnNewRequest;
@@ -155,7 +161,7 @@ namespace MATSys.Hosting
                         OnReadyToExecute?.Invoke(testItem);
                         var response = Modules[testItem.ModuleName].Execute(testItem.Command);
                         _notifier.Publish(response);
-                        OnExecuteComplete?.Invoke(testItem, response);
+                         OnExecuteComplete?.Invoke(testItem, response);
                     }
                 }
                 Cleanup();
@@ -193,7 +199,6 @@ namespace MATSys.Hosting
 
             }
             _scheduler.AddTearDownItem();
-
         }
         private void Setup(CancellationToken stoppingToken)
         {

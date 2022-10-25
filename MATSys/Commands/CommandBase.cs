@@ -41,8 +41,14 @@ namespace MATSys.Commands
             }
             else
             {
-                var ret = obj.ToString();
-                return string.IsNullOrEmpty(ret) ? "" : ret;
+                try
+                {
+                    return JsonConvert.SerializeObject(obj);                    
+                }
+                catch (Exception ex)
+                {
+                    return ex.Message;
+                }
             }
         }
 
