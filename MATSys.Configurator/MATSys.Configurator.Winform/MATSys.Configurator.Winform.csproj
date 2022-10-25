@@ -11,8 +11,9 @@
 		<Authors>Way Lin</Authors>
 		<Company>JYTEK TAIWAN CORP.</Company>
 		<Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
-		<VersionPrefix>1.3.0</VersionPrefix>
+		<VersionPrefix>1.3.2</VersionPrefix>
 		<ApplicationIcon>JYTek.ico</ApplicationIcon>
+		<PackageIcon>JYTek.png</PackageIcon>
 
 	</PropertyGroup>
 
@@ -22,6 +23,13 @@
 
 	<ItemGroup>
 		<Folder Include="icon\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\..\icon\JYTek.png">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 	<ItemGroup>
