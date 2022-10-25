@@ -58,9 +58,8 @@ public class TestDevice : ModuleBase
 
     [MATSysCommand]
     public string Method(string c)
-    {
-
-        return c;
+    {        
+        return c;        
     }
 }
 
