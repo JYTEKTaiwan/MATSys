@@ -7,43 +7,46 @@ namespace MATSys.Hosting
     {
         private readonly Channel<TestItem> _queue = Channel.CreateUnbounded<TestItem>();
         private readonly TestScript script = new TestScript();
+        private List<TestItem> setupItems = new List<TestItem>();
         private List<TestItem> testItems = new List<TestItem>();
+        private List<TestItem> teardownItems = new List<TestItem>();
+
         public bool IsAvailable => _queue.Reader.Count > 0;
         public AutoTestScheduler(IConfiguration config)
         {
             if (config.GetSection("MATSys:Scripts").Exists())
             {
                 script = config.GetSection("MATSys:Scripts").Get<TestScript>();
-                testItems.AddRange(TestScript.GetTestItems(script.Setup));
-                testItems.AddRange(TestScript.GetTestItems(script.Test));
-                testItems.AddRange(TestScript.GetTestItems(script.Teardown));
+                setupItems.AddRange(script.ConvertToTestItem(script.Setup));
+                testItems.AddRange(script.ConvertToTestItem(script.Test));
+                teardownItems.AddRange(script.ConvertToTestItem(script.Teardown));
             }
 
         }
         public void AddSetupItem()
         {
             //setup
-            foreach (var item in TestScript.GetTestItems(script.Setup))
+            foreach (var item in setupItems)
             {
-                _queue.Writer.WriteAsync(item).AsTask().Wait(100);
+                _queue.Writer.WriteAsync(item).AsTask().Wait(1);
             }
 
         }
         public void AddTearDownItem()
         {
             //teardown
-            foreach (var item in TestScript.GetTestItems(script.Teardown))
+            foreach (var item in teardownItems)
             {
-                _queue.Writer.WriteAsync(item).AsTask().Wait(100);
+                _queue.Writer.WriteAsync(item).AsTask().Wait(1);
             }
         }
 
         public void AddTestItem()
         {
             //test
-            foreach (var item in TestScript.GetTestItems(script.Test))
+            foreach (var item in testItems)
             {
-                _queue.Writer.WriteAsync(item).AsTask().Wait(100);
+                _queue.Writer.WriteAsync(item).AsTask().Wait(1);
             }
         }
 
@@ -56,20 +59,56 @@ namespace MATSys.Hosting
     }
     internal class TestScript
     {
+        public string RootDirectory { get; set; } = @".\scripts";
         public string[]? Setup { get; set; }
         public string[]? Test { get; set; }
         public string[]? Teardown { get; set; }
-        public static IEnumerable<TestItem> GetTestItems(string[]? scripts)
+        public IEnumerable<TestItem> ConvertToTestItem(string[]? scripts)
         {
             if (scripts != null)
             {
                 foreach (var item in scripts)
                 {
-                    var pat = item.Split(':');
-                    yield return new TestItem(pat[0], pat[1]);
+                    if (item.Contains(".ats"))
+                    {
+                        foreach (var subItem in ReadFromFile(item))
+                        {
+                            yield return subItem;
+                        } ;
+                    }
+                    else
+                    {
+                        var pat = item.Split(':');
+                        yield return new TestItem(pat[0], pat[1]);
+
+                    }
                 }
             }
 
+
+        }
+        private IEnumerable<TestItem> ReadFromFile(string filePath)
+        {
+            var p = Path.Combine(RootDirectory, filePath);
+            if (File.Exists(p))
+            {
+                foreach (var item in File.ReadLines(p))
+                {
+                    if (item.Contains(".ats"))
+                    {
+                        foreach (var subItem in ReadFromFile(item))
+                        {
+                            yield return subItem;
+                        }
+                    }
+                    else
+                    {
+                        var pat = item.Split(':');
+                        yield return new TestItem(pat[0],pat[1]);
+                    }
+
+                }
+            }
         }
 
     }

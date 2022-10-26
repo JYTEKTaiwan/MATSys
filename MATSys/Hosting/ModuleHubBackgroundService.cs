@@ -22,11 +22,6 @@ namespace MATSys.Hosting
         private CancellationTokenSource cts = new CancellationTokenSource();
 
         /// <summary>
-        /// Collection of test item in the script section in appsetting.json
-        /// </summary>
-        public TestItem[] TestItems { get; }
-
-        /// <summary>
         /// Event when TestItem is ready to execute
         /// </summary>
         /// <param name="item">TestItem instance</param>
@@ -63,7 +58,6 @@ namespace MATSys.Hosting
                 _logger = LogManager.GetCurrentClassLogger();
                 _config = services.GetRequiredService<IConfiguration>().GetSection("MATSys");
                 _scriptMode = _config.GetValue<bool>("ScriptMode");
-                TestItems = TestScript.GetTestItems(_config.GetSection("Scripts").Get<TestScript>().Test).ToArray();
                 _moduleFactory = services.GetRequiredService<IModuleFactory>();
                 foreach (var item in _config.GetSection("Modules").GetChildren())
                 {
