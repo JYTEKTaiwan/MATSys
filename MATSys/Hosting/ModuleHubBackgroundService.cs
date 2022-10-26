@@ -21,7 +21,10 @@ namespace MATSys.Hosting
         private readonly bool _scriptMode = false;
         private CancellationTokenSource cts = new CancellationTokenSource();
 
-        
+        /// <summary>
+        /// Collection of test item in the script section in appsetting.json
+        /// </summary>
+        public TestItem[] TestItems { get; }
 
         /// <summary>
         /// Event when TestItem is ready to execute
@@ -45,7 +48,7 @@ namespace MATSys.Hosting
         public event ExecuteCompleteEvent? OnExecuteComplete;
 
         /// <summary>
-        /// Dictionary for all modules in the background servie
+        /// Collection for all modules created the background servie
         /// </summary>
         public Dictionary<string, IModule> Modules { get; } = new Dictionary<string, IModule>();
         /// <summary>
@@ -60,6 +63,7 @@ namespace MATSys.Hosting
                 _logger = LogManager.GetCurrentClassLogger();
                 _config = services.GetRequiredService<IConfiguration>().GetSection("MATSys");
                 _scriptMode = _config.GetValue<bool>("ScriptMode");
+                TestItems = TestScript.GetTestItems(_config.GetSection("Scripts").Get<TestScript>().Test).ToArray();
                 _moduleFactory = services.GetRequiredService<IModuleFactory>();
                 foreach (var item in _config.GetSection("Modules").GetChildren())
                 {
