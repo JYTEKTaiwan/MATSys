@@ -1643,6 +1643,19 @@ references:
   isSpec: "True"
   fullName: MATSys.IModule.IsRunning
   nameWithType: IModule.IsRunning
+- uid: MATSys.IModule.LocalPeers
+  name: LocalPeers
+  href: api/MATSys.IModule.html#MATSys_IModule_LocalPeers
+  commentId: P:MATSys.IModule.LocalPeers
+  fullName: MATSys.IModule.LocalPeers
+  nameWithType: IModule.LocalPeers
+- uid: MATSys.IModule.LocalPeers*
+  name: LocalPeers
+  href: api/MATSys.IModule.html#MATSys_IModule_LocalPeers_
+  commentId: Overload:MATSys.IModule.LocalPeers
+  isSpec: "True"
+  fullName: MATSys.IModule.LocalPeers
+  nameWithType: IModule.LocalPeers
 - uid: MATSys.IModule.Logger
   name: Logger
   href: api/MATSys.IModule.html#MATSys_IModule_Logger
@@ -2005,6 +2018,19 @@ references:
   isSpec: "True"
   fullName: MATSys.ModuleBase.Load
   nameWithType: ModuleBase.Load
+- uid: MATSys.ModuleBase.LocalPeers
+  name: LocalPeers
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_LocalPeers
+  commentId: P:MATSys.ModuleBase.LocalPeers
+  fullName: MATSys.ModuleBase.LocalPeers
+  nameWithType: ModuleBase.LocalPeers
+- uid: MATSys.ModuleBase.LocalPeers*
+  name: LocalPeers
+  href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_LocalPeers_
+  commentId: Overload:MATSys.ModuleBase.LocalPeers
+  isSpec: "True"
+  fullName: MATSys.ModuleBase.LocalPeers
+  nameWithType: ModuleBase.LocalPeers
 - uid: MATSys.ModuleBase.MATSys#IModule#Logger
   name: IModule.Logger
   href: api/MATSys.ModuleBase.html#MATSys_ModuleBase_MATSys_IModule_Logger
