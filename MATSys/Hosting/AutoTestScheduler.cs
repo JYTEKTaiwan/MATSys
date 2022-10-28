@@ -57,7 +57,15 @@ namespace MATSys.Hosting
         {
             return await _queue.Reader.ReadAsync(token);
         }
-
+        public void ClearItems()
+        {
+            //flush all items in the queue
+            TestItem ti;
+            while (_queue.Reader.TryRead(out ti))
+            {
+                Thread.Sleep(0);
+            }
+        }
     }
     internal class TestScript
     {

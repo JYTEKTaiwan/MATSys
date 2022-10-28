@@ -199,8 +199,8 @@ namespace MATSys.Hosting
                 {
                     SpinWait.SpinUntil(() => false, 5);
                 }
-
             }
+            _scheduler.ClearItems();
             _scheduler.AddTearDownItem();
         }
         private void Setup(CancellationToken stoppingToken)

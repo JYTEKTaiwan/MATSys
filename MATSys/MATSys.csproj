@@ -11,7 +11,7 @@
 		<Company>JYTEK TAIWAN CORP.</Company>
 		<Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
 		<PackageIcon>JYTek.png</PackageIcon>
-		<VersionPrefix>1.3.6</VersionPrefix>
+		<VersionPrefix>1.3.8</VersionPrefix>
 		<RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/</RepositoryUrl>
 
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -69,10 +69,6 @@
 		</PackageReference>
 		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
 		<PackageReference Include="System.Threading.Channels" Version="6.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="content\" />
 	</ItemGroup>
 
 </Project>
