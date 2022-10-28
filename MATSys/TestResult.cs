@@ -11,15 +11,11 @@ namespace MATSys
         public DateTime Timestamp { get; } = DateTime.Now;
         public Classification Result { get; }
         public int BinNumber { get; }
-        public object Value { get; }
-        public object Attributes { get; }
+        public string Value { get; }
+        public string Attributes { get; }
 
-        public TestItemResult(Classification result, int bin, object value, object attributes, DateTime dt)
+        public TestItemResult(Classification result, int bin, string value, string attributes)
         {
-            if (dt != null)
-            {
-                Timestamp = dt;
-            }
             BinNumber = bin;
             Result = result;
             Value = value;

@@ -19,9 +19,9 @@ namespace MATSys.Hosting
             if (config.GetSection("MATSys:Scripts").Exists())
             {
                 script = config.GetSection("MATSys:Scripts").Get<TestScript>();
-                SetupItems.AddRange(script.ConvertToTestItem(script.Setup));
-                TestItems.AddRange(script.ConvertToTestItem(script.Test));
-                TeardownItems.AddRange(script.ConvertToTestItem(script.Teardown));
+                SetupItems.AddRange(script.ConvertToTestItem(script.Setup, ScriptType.Setup));
+                TestItems.AddRange(script.ConvertToTestItem(script.Test, ScriptType.Test));
+                TeardownItems.AddRange(script.ConvertToTestItem(script.Teardown, ScriptType.Teardown));
             }
 
         }
@@ -73,7 +73,7 @@ namespace MATSys.Hosting
         public string[]? Setup { get; set; }
         public string[]? Test { get; set; }
         public string[]? Teardown { get; set; }
-        public IEnumerable<TestItem> ConvertToTestItem(string[]? scripts)
+        public IEnumerable<TestItem> ConvertToTestItem(string[]? scripts, ScriptType type)
         {
             if (scripts != null)
             {
@@ -81,7 +81,7 @@ namespace MATSys.Hosting
                 {
                     if (item.Contains(".ats"))
                     {
-                        foreach (var subItem in ReadFromFile(item))
+                        foreach (var subItem in ReadFromFile(item,type))
                         {
                             yield return subItem;
                         };
@@ -89,7 +89,7 @@ namespace MATSys.Hosting
                     else
                     {
                         var pat = item.Split(':');
-                        yield return new TestItem(pat[0], pat[1]);
+                        yield return new TestItem(type,pat[0], pat[1]);
 
                     }
                 }
@@ -97,7 +97,7 @@ namespace MATSys.Hosting
 
 
         }
-        private IEnumerable<TestItem> ReadFromFile(string filePath)
+        private IEnumerable<TestItem> ReadFromFile(string filePath,ScriptType type)
         {
             var p = Path.Combine(RootDirectory, filePath);
             if (File.Exists(p))
@@ -106,7 +106,7 @@ namespace MATSys.Hosting
                 {
                     if (item.Contains(".ats"))
                     {
-                        foreach (var subItem in ReadFromFile(item))
+                        foreach (var subItem in ReadFromFile(item,type))
                         {
                             yield return subItem;
                         }
@@ -114,7 +114,7 @@ namespace MATSys.Hosting
                     else
                     {
                         var pat = item.Split(':');
-                        yield return new TestItem(pat[0], pat[1]);
+                        yield return new TestItem(type,pat[0], pat[1]);
                     }
 
                 }
@@ -122,12 +122,19 @@ namespace MATSys.Hosting
         }
 
     }
+    public enum ScriptType
+    {
+        Setup,
+        Test,
+        Teardown
+    }
 
     /// <summary>
     /// Represent the single test item in the script mode
     /// </summary>
     public class TestItem
     {
+        public ScriptType Type { get; set; }
         /// <summary>
         /// Name of the module
         /// </summary>
@@ -148,13 +155,13 @@ namespace MATSys.Hosting
         /// </summary>
         /// <param name="name">Module name</param>
         /// <param name="cmd">Command string</param>
-        public TestItem(string name, string cmd)
+        public TestItem(ScriptType type,string name, string cmd)
         {
+            Type = type;
             ID = GetHashCode();
             ModuleName = name;
             Command = cmd;
         }
-        public static TestItem Empty => new TestItem("", "");
 
     }
 

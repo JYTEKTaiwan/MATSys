@@ -161,10 +161,29 @@ namespace MATSys.Hosting
                     if (SpinWait.SpinUntil(() => _scheduler.IsAvailable, 5))
                     {
                         var testItem = await _scheduler.Dequeue(stoppingToken);
-                        OnReadyToExecute?.Invoke(testItem);
-                        var response = Modules[testItem.ModuleName].Execute(testItem.Command);
-                        _notifier.Publish(response);
-                         OnExecuteComplete?.Invoke(testItem, response);
+                        if (!cts.IsCancellationRequested)
+                        {
+                            //when script is running
+                            OnReadyToExecute?.Invoke(testItem);
+                            var response = Modules[testItem.ModuleName].Execute(testItem.Command);
+                            _notifier.Publish(response);
+                            OnExecuteComplete?.Invoke(testItem, response);
+                        }
+                        else if (testItem.Type== ScriptType.Test)
+                        {
+                            //StopTest() is called.
+                            //TestItems are ignored
+                        }
+                        else
+                        {
+                            //StopTest() is called
+                            //Setup and teardown items
+                            OnReadyToExecute?.Invoke(testItem);
+                            var response = Modules[testItem.ModuleName].Execute(testItem.Command);
+                            _notifier.Publish(response);
+                            OnExecuteComplete?.Invoke(testItem, response);
+
+                        }
                     }
                 }
                 Cleanup();
@@ -200,7 +219,6 @@ namespace MATSys.Hosting
                     SpinWait.SpinUntil(() => false, 5);
                 }
             }
-            _scheduler.ClearItems();
             _scheduler.AddTearDownItem();
         }
         private void Setup(CancellationToken stoppingToken)
