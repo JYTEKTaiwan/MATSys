@@ -21,6 +21,11 @@ namespace MATSys.Hosting
         private readonly bool _scriptMode = false;
         private CancellationTokenSource cts = new CancellationTokenSource();
 
+        public TestItemCollection TestItems => _scheduler.TestItems;
+        public TestItemCollection SetupItems => _scheduler.SetupItems;
+        public TestItemCollection TeardownItems => _scheduler.TeardownItems;
+
+
         /// <summary>
         /// Event when TestItem is ready to execute
         /// </summary>

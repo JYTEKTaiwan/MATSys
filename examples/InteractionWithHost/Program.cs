@@ -13,7 +13,7 @@ host.RunAsync().Wait(1000); ;
 var dev = host.Services.GetMATSysHandle();
 
 dev.Modules["Dev1"].OnDataReady += IModule_OnDataReady;
-dev.OnReadyToExecute += (cmd) => { Console.WriteLine($"{cmd.ModuleName}*{cmd.Command}"); };
+dev.OnReadyToExecute += (item) => { Console.WriteLine($"[{item.ID}]{item.ModuleName}*{item.Command}"); };
 dev.OnExecuteComplete += (item, res) => { Console.WriteLine($"{res}"); };
 dev.RunTest(3);
 
