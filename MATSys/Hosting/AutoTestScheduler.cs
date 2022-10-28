@@ -8,11 +8,11 @@ namespace MATSys.Hosting
     {
         private readonly Channel<TestItem> _queue = Channel.CreateUnbounded<TestItem>();
         private readonly TestScript script = new TestScript();
-        public TestItemCollection SetupItems => new TestItemCollection();
-        public TestItemCollection TestItems => new TestItemCollection();
-        public TestItemCollection TeardownItems => new TestItemCollection();
+        public TestItemCollection SetupItems { get; } = new TestItemCollection();
+        public TestItemCollection TestItems { get; } = new TestItemCollection();
+        public TestItemCollection TeardownItems { get; } = new TestItemCollection();
 
-        
+
         public bool IsAvailable => _queue.Reader.Count > 0;
         public AutoTestScheduler(IConfiguration config)
         {
