@@ -1407,6 +1407,18 @@ references:
   isSpec: "True"
   fullName: MATSys.Hosting.ModuleHubBackgroundService.ModuleHubBackgroundService
   nameWithType: ModuleHubBackgroundService.ModuleHubBackgroundService
+- uid: MATSys.Hosting.ModuleHubBackgroundService.AfterTestItem
+  name: AfterTestItem
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_AfterTestItem
+  commentId: E:MATSys.Hosting.ModuleHubBackgroundService.AfterTestItem
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.AfterTestItem
+  nameWithType: ModuleHubBackgroundService.AfterTestItem
+- uid: MATSys.Hosting.ModuleHubBackgroundService.BeforeTestItem
+  name: BeforeTestItem
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_BeforeTestItem
+  commentId: E:MATSys.Hosting.ModuleHubBackgroundService.BeforeTestItem
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.BeforeTestItem
+  nameWithType: ModuleHubBackgroundService.BeforeTestItem
 - uid: MATSys.Hosting.ModuleHubBackgroundService.ExecuteAsync(CancellationToken)
   name: ExecuteAsync(CancellationToken)
   href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_ExecuteAsync_CancellationToken_
@@ -1458,18 +1470,6 @@ references:
   isSpec: "True"
   fullName: MATSys.Hosting.ModuleHubBackgroundService.Modules
   nameWithType: ModuleHubBackgroundService.Modules
-- uid: MATSys.Hosting.ModuleHubBackgroundService.OnExecuteComplete
-  name: OnExecuteComplete
-  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_OnExecuteComplete
-  commentId: E:MATSys.Hosting.ModuleHubBackgroundService.OnExecuteComplete
-  fullName: MATSys.Hosting.ModuleHubBackgroundService.OnExecuteComplete
-  nameWithType: ModuleHubBackgroundService.OnExecuteComplete
-- uid: MATSys.Hosting.ModuleHubBackgroundService.OnReadyToExecute
-  name: OnReadyToExecute
-  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_OnReadyToExecute
-  commentId: E:MATSys.Hosting.ModuleHubBackgroundService.OnReadyToExecute
-  fullName: MATSys.Hosting.ModuleHubBackgroundService.OnReadyToExecute
-  nameWithType: ModuleHubBackgroundService.OnReadyToExecute
 - uid: MATSys.Hosting.ModuleHubBackgroundService.ReadyToExecuteEvent
   name: ModuleHubBackgroundService.ReadyToExecuteEvent
   href: api/MATSys.Hosting.ModuleHubBackgroundService.ReadyToExecuteEvent.html
@@ -1489,6 +1489,19 @@ references:
   isSpec: "True"
   fullName: MATSys.Hosting.ModuleHubBackgroundService.RunTest
   nameWithType: ModuleHubBackgroundService.RunTest
+- uid: MATSys.Hosting.ModuleHubBackgroundService.SetupItems
+  name: SetupItems
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_SetupItems
+  commentId: P:MATSys.Hosting.ModuleHubBackgroundService.SetupItems
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.SetupItems
+  nameWithType: ModuleHubBackgroundService.SetupItems
+- uid: MATSys.Hosting.ModuleHubBackgroundService.SetupItems*
+  name: SetupItems
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_SetupItems_
+  commentId: Overload:MATSys.Hosting.ModuleHubBackgroundService.SetupItems
+  isSpec: "True"
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.SetupItems
+  nameWithType: ModuleHubBackgroundService.SetupItems
 - uid: MATSys.Hosting.ModuleHubBackgroundService.StopTest
   name: StopTest()
   href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_StopTest
@@ -1502,18 +1515,68 @@ references:
   isSpec: "True"
   fullName: MATSys.Hosting.ModuleHubBackgroundService.StopTest
   nameWithType: ModuleHubBackgroundService.StopTest
+- uid: MATSys.Hosting.ModuleHubBackgroundService.TeardownItems
+  name: TeardownItems
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_TeardownItems
+  commentId: P:MATSys.Hosting.ModuleHubBackgroundService.TeardownItems
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.TeardownItems
+  nameWithType: ModuleHubBackgroundService.TeardownItems
+- uid: MATSys.Hosting.ModuleHubBackgroundService.TeardownItems*
+  name: TeardownItems
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_TeardownItems_
+  commentId: Overload:MATSys.Hosting.ModuleHubBackgroundService.TeardownItems
+  isSpec: "True"
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.TeardownItems
+  nameWithType: ModuleHubBackgroundService.TeardownItems
+- uid: MATSys.Hosting.ModuleHubBackgroundService.TestItems
+  name: TestItems
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_TestItems
+  commentId: P:MATSys.Hosting.ModuleHubBackgroundService.TestItems
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.TestItems
+  nameWithType: ModuleHubBackgroundService.TestItems
+- uid: MATSys.Hosting.ModuleHubBackgroundService.TestItems*
+  name: TestItems
+  href: api/MATSys.Hosting.ModuleHubBackgroundService.html#MATSys_Hosting_ModuleHubBackgroundService_TestItems_
+  commentId: Overload:MATSys.Hosting.ModuleHubBackgroundService.TestItems
+  isSpec: "True"
+  fullName: MATSys.Hosting.ModuleHubBackgroundService.TestItems
+  nameWithType: ModuleHubBackgroundService.TestItems
+- uid: MATSys.Hosting.ScriptType
+  name: ScriptType
+  href: api/MATSys.Hosting.ScriptType.html
+  commentId: T:MATSys.Hosting.ScriptType
+  fullName: MATSys.Hosting.ScriptType
+  nameWithType: ScriptType
+- uid: MATSys.Hosting.ScriptType.Setup
+  name: Setup
+  href: api/MATSys.Hosting.ScriptType.html#MATSys_Hosting_ScriptType_Setup
+  commentId: F:MATSys.Hosting.ScriptType.Setup
+  fullName: MATSys.Hosting.ScriptType.Setup
+  nameWithType: ScriptType.Setup
+- uid: MATSys.Hosting.ScriptType.Teardown
+  name: Teardown
+  href: api/MATSys.Hosting.ScriptType.html#MATSys_Hosting_ScriptType_Teardown
+  commentId: F:MATSys.Hosting.ScriptType.Teardown
+  fullName: MATSys.Hosting.ScriptType.Teardown
+  nameWithType: ScriptType.Teardown
+- uid: MATSys.Hosting.ScriptType.Test
+  name: Test
+  href: api/MATSys.Hosting.ScriptType.html#MATSys_Hosting_ScriptType_Test
+  commentId: F:MATSys.Hosting.ScriptType.Test
+  fullName: MATSys.Hosting.ScriptType.Test
+  nameWithType: ScriptType.Test
 - uid: MATSys.Hosting.TestItem
   name: TestItem
   href: api/MATSys.Hosting.TestItem.html
   commentId: T:MATSys.Hosting.TestItem
   fullName: MATSys.Hosting.TestItem
   nameWithType: TestItem
-- uid: MATSys.Hosting.TestItem.#ctor(System.String,System.String)
-  name: TestItem(String, String)
-  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem__ctor_System_String_System_String_
-  commentId: M:MATSys.Hosting.TestItem.#ctor(System.String,System.String)
-  fullName: MATSys.Hosting.TestItem.TestItem(System.String, System.String)
-  nameWithType: TestItem.TestItem(String, String)
+- uid: MATSys.Hosting.TestItem.#ctor(MATSys.Hosting.ScriptType,System.String,System.String)
+  name: TestItem(ScriptType, String, String)
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem__ctor_MATSys_Hosting_ScriptType_System_String_System_String_
+  commentId: M:MATSys.Hosting.TestItem.#ctor(MATSys.Hosting.ScriptType,System.String,System.String)
+  fullName: MATSys.Hosting.TestItem.TestItem(MATSys.Hosting.ScriptType, System.String, System.String)
+  nameWithType: TestItem.TestItem(ScriptType, String, String)
 - uid: MATSys.Hosting.TestItem.#ctor*
   name: TestItem
   href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem__ctor_
@@ -1534,19 +1597,19 @@ references:
   isSpec: "True"
   fullName: MATSys.Hosting.TestItem.Command
   nameWithType: TestItem.Command
-- uid: MATSys.Hosting.TestItem.Empty
-  name: Empty
-  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_Empty
-  commentId: P:MATSys.Hosting.TestItem.Empty
-  fullName: MATSys.Hosting.TestItem.Empty
-  nameWithType: TestItem.Empty
-- uid: MATSys.Hosting.TestItem.Empty*
-  name: Empty
-  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_Empty_
-  commentId: Overload:MATSys.Hosting.TestItem.Empty
+- uid: MATSys.Hosting.TestItem.ID
+  name: ID
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_ID
+  commentId: P:MATSys.Hosting.TestItem.ID
+  fullName: MATSys.Hosting.TestItem.ID
+  nameWithType: TestItem.ID
+- uid: MATSys.Hosting.TestItem.ID*
+  name: ID
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_ID_
+  commentId: Overload:MATSys.Hosting.TestItem.ID
   isSpec: "True"
-  fullName: MATSys.Hosting.TestItem.Empty
-  nameWithType: TestItem.Empty
+  fullName: MATSys.Hosting.TestItem.ID
+  nameWithType: TestItem.ID
 - uid: MATSys.Hosting.TestItem.ModuleName
   name: ModuleName
   href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_ModuleName
@@ -1560,6 +1623,41 @@ references:
   isSpec: "True"
   fullName: MATSys.Hosting.TestItem.ModuleName
   nameWithType: TestItem.ModuleName
+- uid: MATSys.Hosting.TestItem.Type
+  name: Type
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_Type
+  commentId: P:MATSys.Hosting.TestItem.Type
+  fullName: MATSys.Hosting.TestItem.Type
+  nameWithType: TestItem.Type
+- uid: MATSys.Hosting.TestItem.Type*
+  name: Type
+  href: api/MATSys.Hosting.TestItem.html#MATSys_Hosting_TestItem_Type_
+  commentId: Overload:MATSys.Hosting.TestItem.Type
+  isSpec: "True"
+  fullName: MATSys.Hosting.TestItem.Type
+  nameWithType: TestItem.Type
+- uid: MATSys.Hosting.TestItemCollection
+  name: TestItemCollection
+  href: api/MATSys.Hosting.TestItemCollection.html
+  commentId: T:MATSys.Hosting.TestItemCollection
+  fullName: MATSys.Hosting.TestItemCollection
+  nameWithType: TestItemCollection
+- uid: MATSys.Hosting.TestItemCollection.Item(System.Int32)
+  name: Item[Int32]
+  href: api/MATSys.Hosting.TestItemCollection.html#MATSys_Hosting_TestItemCollection_Item_System_Int32_
+  commentId: P:MATSys.Hosting.TestItemCollection.Item(System.Int32)
+  name.vb: Item(Int32)
+  fullName: MATSys.Hosting.TestItemCollection.Item[System.Int32]
+  fullName.vb: MATSys.Hosting.TestItemCollection.Item(System.Int32)
+  nameWithType: TestItemCollection.Item[Int32]
+  nameWithType.vb: TestItemCollection.Item(Int32)
+- uid: MATSys.Hosting.TestItemCollection.Item*
+  name: Item
+  href: api/MATSys.Hosting.TestItemCollection.html#MATSys_Hosting_TestItemCollection_Item_
+  commentId: Overload:MATSys.Hosting.TestItemCollection.Item
+  isSpec: "True"
+  fullName: MATSys.Hosting.TestItemCollection.Item
+  nameWithType: TestItemCollection.Item
 - uid: MATSys.IMATSysConfiguration
   name: IMATSysConfiguration
   href: api/MATSys.IMATSysConfiguration.html
@@ -3060,3 +3158,111 @@ references:
   isSpec: "True"
   fullName: MATSys.Plugins.NetMQTransceiverConfiguration.Type
   nameWithType: NetMQTransceiverConfiguration.Type
+- uid: MATSys.TestItemResult
+  name: TestItemResult
+  href: api/MATSys.TestItemResult.html
+  commentId: T:MATSys.TestItemResult
+  fullName: MATSys.TestItemResult
+  nameWithType: TestItemResult
+- uid: MATSys.TestItemResult.#ctor(MATSys.TestResultType,System.Int32,System.Object,System.Object)
+  name: TestItemResult(TestResultType, Int32, Object, Object)
+  href: api/MATSys.TestItemResult.html#MATSys_TestItemResult__ctor_MATSys_TestResultType_System_Int32_System_Object_System_Object_
+  commentId: M:MATSys.TestItemResult.#ctor(MATSys.TestResultType,System.Int32,System.Object,System.Object)
+  fullName: MATSys.TestItemResult.TestItemResult(MATSys.TestResultType, System.Int32, System.Object, System.Object)
+  nameWithType: TestItemResult.TestItemResult(TestResultType, Int32, Object, Object)
+- uid: MATSys.TestItemResult.#ctor*
+  name: TestItemResult
+  href: api/MATSys.TestItemResult.html#MATSys_TestItemResult__ctor_
+  commentId: Overload:MATSys.TestItemResult.#ctor
+  isSpec: "True"
+  fullName: MATSys.TestItemResult.TestItemResult
+  nameWithType: TestItemResult.TestItemResult
+- uid: MATSys.TestItemResult.Attributes
+  name: Attributes
+  href: api/MATSys.TestItemResult.html#MATSys_TestItemResult_Attributes
+  commentId: P:MATSys.TestItemResult.Attributes
+  fullName: MATSys.TestItemResult.Attributes
+  nameWithType: TestItemResult.Attributes
+- uid: MATSys.TestItemResult.Attributes*
+  name: Attributes
+  href: api/MATSys.TestItemResult.html#MATSys_TestItemResult_Attributes_
+  commentId: Overload:MATSys.TestItemResult.Attributes
+  isSpec: "True"
+  fullName: MATSys.TestItemResult.Attributes
+  nameWithType: TestItemResult.Attributes
+- uid: MATSys.TestItemResult.BinNumber
+  name: BinNumber
+  href: api/MATSys.TestItemResult.html#MATSys_TestItemResult_BinNumber
+  commentId: P:MATSys.TestItemResult.BinNumber
+  fullName: MATSys.TestItemResult.BinNumber
+  nameWithType: TestItemResult.BinNumber
+- uid: MATSys.TestItemResult.BinNumber*
+  name: BinNumber
+  href: api/MATSys.TestItemResult.html#MATSys_TestItemResult_BinNumber_
+  commentId: Overload:MATSys.TestItemResult.BinNumber
+  isSpec: "True"
+  fullName: MATSys.TestItemResult.BinNumber
+  nameWithType: TestItemResult.BinNumber
+- uid: MATSys.TestItemResult.Result
+  name: Result
+  href: api/MATSys.TestItemResult.html#MATSys_TestItemResult_Result
+  commentId: P:MATSys.TestItemResult.Result
+  fullName: MATSys.TestItemResult.Result
+  nameWithType: TestItemResult.Result
+- uid: MATSys.TestItemResult.Result*
+  name: Result
+  href: api/MATSys.TestItemResult.html#MATSys_TestItemResult_Result_
+  commentId: Overload:MATSys.TestItemResult.Result
+  isSpec: "True"
+  fullName: MATSys.TestItemResult.Result
+  nameWithType: TestItemResult.Result
+- uid: MATSys.TestItemResult.Timestamp
+  name: Timestamp
+  href: api/MATSys.TestItemResult.html#MATSys_TestItemResult_Timestamp
+  commentId: P:MATSys.TestItemResult.Timestamp
+  fullName: MATSys.TestItemResult.Timestamp
+  nameWithType: TestItemResult.Timestamp
+- uid: MATSys.TestItemResult.Timestamp*
+  name: Timestamp
+  href: api/MATSys.TestItemResult.html#MATSys_TestItemResult_Timestamp_
+  commentId: Overload:MATSys.TestItemResult.Timestamp
+  isSpec: "True"
+  fullName: MATSys.TestItemResult.Timestamp
+  nameWithType: TestItemResult.Timestamp
+- uid: MATSys.TestItemResult.Value
+  name: Value
+  href: api/MATSys.TestItemResult.html#MATSys_TestItemResult_Value
+  commentId: P:MATSys.TestItemResult.Value
+  fullName: MATSys.TestItemResult.Value
+  nameWithType: TestItemResult.Value
+- uid: MATSys.TestItemResult.Value*
+  name: Value
+  href: api/MATSys.TestItemResult.html#MATSys_TestItemResult_Value_
+  commentId: Overload:MATSys.TestItemResult.Value
+  isSpec: "True"
+  fullName: MATSys.TestItemResult.Value
+  nameWithType: TestItemResult.Value
+- uid: MATSys.TestResultType
+  name: TestResultType
+  href: api/MATSys.TestResultType.html
+  commentId: T:MATSys.TestResultType
+  fullName: MATSys.TestResultType
+  nameWithType: TestResultType
+- uid: MATSys.TestResultType.Fail
+  name: Fail
+  href: api/MATSys.TestResultType.html#MATSys_TestResultType_Fail
+  commentId: F:MATSys.TestResultType.Fail
+  fullName: MATSys.TestResultType.Fail
+  nameWithType: TestResultType.Fail
+- uid: MATSys.TestResultType.Pass
+  name: Pass
+  href: api/MATSys.TestResultType.html#MATSys_TestResultType_Pass
+  commentId: F:MATSys.TestResultType.Pass
+  fullName: MATSys.TestResultType.Pass
+  nameWithType: TestResultType.Pass
+- uid: MATSys.TestResultType.Skip
+  name: Skip
+  href: api/MATSys.TestResultType.html#MATSys_TestResultType_Skip
+  commentId: F:MATSys.TestResultType.Skip
+  fullName: MATSys.TestResultType.Skip
+  nameWithType: TestResultType.Skip

@@ -9,7 +9,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-1.html",
-          "hash": "9vBnodgrlEqcBtj2EMnsDvo4Kr5jdwL3jxKlFVzuL5g="
+          "hash": "0qeb9OnLDKz3NykfsjW96+6gjoWKAXpek5GKb85aRKg="
         }
       },
       "is_incremental": false,
@@ -21,7 +21,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-2.html",
-          "hash": "L/cySl4wjmyVwlCb3gPF09WAzpgIGFOUQ4wYbMX653M="
+          "hash": "yT2AKEzdi14yg15ZRGMBZSL9QD4wa/VZz2XDaEauz6k="
         }
       },
       "is_incremental": false,
@@ -33,7 +33,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-3.html",
-          "hash": "Z3FvV4TYKH9sifm9vTRp04YSURsE4RlZ/pX4IOy6xNc="
+          "hash": "hXgWWYkLbx8q+cP6Tg6xnMaHGMTbEy+y9v84URiudes="
         }
       },
       "is_incremental": false,
@@ -45,7 +45,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-4.html",
-          "hash": "nEG3FRyIZYPRnQA3Y6I5X47rpt4ScrYnhoLFXzxaWx4="
+          "hash": "RHVaXRAhGVVr/Jm0scHpba5mRFL6TxvBykBHkA0qQBQ="
         }
       },
       "is_incremental": false,
@@ -57,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-5.html",
-          "hash": "Yxd1+i4npsiZr7UmkauQNUTkdO5cD68BA6gNabam1iM="
+          "hash": "iGa+szDJ6faEl+v36OJiCOy5ZxDIseAUSIwMlEnG9PQ="
         }
       },
       "is_incremental": false,
@@ -69,7 +69,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-6.html",
-          "hash": "0AbZR40ZqURXX/rMYC9nzYjm6Dkgg/A18LkAnFS/Uvs="
+          "hash": "TYiDO5KOoqNPop6j71hBGPk0Ggu8R8ipV9cIIYYE+vc="
         }
       },
       "is_incremental": false,
@@ -81,7 +81,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command-7.html",
-          "hash": "kE5xLz0vqtYCFBNC9SwsM+FhTsiG301NXJqVTu4UOA8="
+          "hash": "6FXDAlMMEef0cxv9KzLERM2jZPb3/l0qZQ9cYl3pgdA="
         }
       },
       "is_incremental": false,
@@ -93,7 +93,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.Command.html",
-          "hash": "buKPe2R9oS+8MlRPTTFwZWjo2wyWce0dEjlF+SfJ4m8="
+          "hash": "mxCF0+wURv707xAMvepzOlMHzeEG/S89mgOAwThArp0="
         }
       },
       "is_incremental": false,
@@ -105,7 +105,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Commands.CommandBase.html",
-          "hash": "ibJLSpJrRlfXZZQM9DjBHyXrpaeTvDzdzJffcKYLe88="
+          "hash": "6kbs3KlsxQj0Y3mWkc+A2MPVKCACoLobChqaMk4UbrQ="
         }
       },
       "is_incremental": false,
@@ -132,7 +132,7 @@
           "hash": "zPjO5SGrNNWWO4Ni7vUO/cp0hpDgSZe/qEYjvdnKKmY="
         }
       },
-      "is_incremental": true,
+      "is_incremental": false,
       "version": ""
     },
     {
@@ -165,7 +165,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.DependencyLoader.html",
-          "hash": "StEJWAyqEPCE6BMlw51Fg8nOb4Y4ymmpjH5va5ymIS4="
+          "hash": "G92WLB9LthXH8p1dNOuvalktjp8kzZAsUtt28M7Yuvw="
         }
       },
       "is_incremental": true,
@@ -177,7 +177,7 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.ExceptionHandler.html",
-          "hash": "7AFW9Wj9VOTgCp9kSJYmn2E3IQogA5rkinX+43Uj2gA="
+          "hash": "H+4AURjVi9T3CH1Z1B2PKybH3A1dRp07d0daWA1aIsw="
         }
       },
       "is_incremental": true,
@@ -192,7 +192,7 @@
           "hash": "cVve5JjryE1rn8iYfXXXqmSxUmcHItxoqJrCKZ9xDFg="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -240,7 +240,7 @@
           "hash": "62+gLbI4xaVZIjSrpHg8i7QwNyH0qlbYh5GDA8qJxkI="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -288,7 +288,7 @@
           "hash": "DxDAf45Zs2n5O+W0vXMsJPriYW9aJ4d6PSN0iJTRV4o="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -300,7 +300,7 @@
           "hash": "IomXJVz0CNwf4nSfUhp5tVvLYLPeU8ttXzBXC/FsiEw="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -309,10 +309,10 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Hosting.ModuleHubBackgroundService.ExecuteCompleteEvent.html",
-          "hash": "h6LepLa/4Y6ytoT4x5C1qxzrIzT06un7bfJHi3Q86sE="
+          "hash": "8y5+ac0uB9A9d3PwtxgPrGJgwFukhSFP8ae9wpaI8F4="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -321,10 +321,10 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Hosting.ModuleHubBackgroundService.ReadyToExecuteEvent.html",
-          "hash": "u4dM10j7ZGqn0WNHXnsLMRWIpnvilhh0mEfqeuic8ug="
+          "hash": "Xk/MmuDhkvObxGgTT3SmhRxy3oHmbupyGmJss/Xr3Nk="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -333,10 +333,22 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Hosting.ModuleHubBackgroundService.html",
-          "hash": "MsFEqmdhlc/1C7KGUMY6/aFnAd5mCQLua7Ux5Z59LXk="
+          "hash": "4DmzSRmc2inzW4+wIoxOuMuHxnElBAjOGCRkANBaPiQ="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Hosting.ScriptType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Hosting.ScriptType.html",
+          "hash": "RwntMCNm+kdtqzFuUFzJgRy7ptMzgY4nsN0tTawXyvw="
+        }
+      },
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -345,10 +357,22 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Hosting.TestItem.html",
-          "hash": "4YmFjqd3/VAFvC6PXZNh+OBn16HLeg651Kg3R9EYXS0="
+          "hash": "KNr8svzpBWbhVEOJZKjdK5FI2LA19MMuP+g4HjLl9yE="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.Hosting.TestItemCollection.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.Hosting.TestItemCollection.html",
+          "hash": "wA5GPAKGmiytTqNALi/kfmq1oiSCdp1mi1Gad7AuoGI="
+        }
+      },
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -357,10 +381,10 @@
       "output": {
         ".html": {
           "relative_path": "api/MATSys.Hosting.html",
-          "hash": "rtrcTu2S8V2ALKRBkFPdnJrXcAraHjMJX5QeG/IlAh8="
+          "hash": "zDX0iQ7DSkGp+pLEfRrNZkmW9Bg7E8Kbwwn4puo621U="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -396,7 +420,7 @@
           "hash": "nLzRA6tInW0VQVJGEVp9NFU6RKTvHEF7iq38zEmkQ5I="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -492,7 +516,7 @@
           "hash": "mZeOrHW5ZzK+66NdUmyYN8ly+5SvXPZcwFJyv1msldQ="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -617,14 +641,38 @@
     },
     {
       "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.TestItemResult.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.TestItemResult.html",
+          "hash": "bVM+AQ2AfGaaFo23RVXY3pMUyHwR1oz30PonsvfwnYQ="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MATSys.TestResultType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MATSys.TestResultType.html",
+          "hash": "4frR+OUjXlZyZOlbfK314E6skQ1TjoyPr9l7FrkqVHI="
+        }
+      },
+      "is_incremental": true,
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
       "source_relative_path": "api/MATSys.yml",
       "output": {
         ".html": {
           "relative_path": "api/MATSys.html",
-          "hash": "MEob/I+4XR8ptrwIJxNQU45Sh9kh5ST0AY73pfq+Dp0="
+          "hash": "Rs+aqLWERAItVB6CWKFsLB5+3Jpxn0GoN6uGtHnsntg="
         }
       },
-      "is_incremental": false,
+      "is_incremental": true,
       "version": ""
     },
     {
@@ -645,7 +693,7 @@
       "output": {
         ".html": {
           "relative_path": "api/toc.html",
-          "hash": "Bu/B574ifl2426V1rRUK6vgJA5memH1plHM/UZ0yU+M="
+          "hash": "YRFtJU4gS4rpJGD4/kX3tie1lUlcX/f6Udu6mK0TzBE="
         }
       },
       "is_incremental": false,
@@ -872,8 +920,8 @@
         "ManagedReferenceDocumentProcessor": {
           "can_incremental": true,
           "incrementalPhase": "build",
-          "total_file_count": 52,
-          "skipped_file_count": 39
+          "total_file_count": 56,
+          "skipped_file_count": 46
         },
         "ResourceDocumentProcessor": {
           "can_incremental": false,
