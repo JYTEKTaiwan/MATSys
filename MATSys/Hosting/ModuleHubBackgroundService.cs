@@ -89,7 +89,7 @@ namespace MATSys.Hosting
                 }
                 _transceiver = services.GetRequiredService<ITransceiverFactory>().CreateTransceiver(_config.GetSection("Transceiver"));
                 _transceiver.OnNewRequest += _transceiver_OnNewRequest;
-                _notifier = services.GetService<INotifierFactory>().CreateNotifier(_config.GetSection("Notifier"));
+                _notifier = services.GetRequiredService<INotifierFactory>().CreateNotifier(_config.GetSection("Notifier"));
                 _scheduler = services.GetRequiredService<AutoTestScheduler>();
             }
             catch (Exception ex)
@@ -138,7 +138,7 @@ namespace MATSys.Hosting
         /// <summary>
         /// Run the test in script mode (ScripMode property must be set to true in advance)
         /// </summary>
-        /// <param name="iteration">iteration count (infinitely if value<=0)</param>
+        /// <param name="iteration">iteration count (infinitely if value less than or equals to 0)</param>
         public void RunTest(int iteration)
         {
             if (_scriptMode)

@@ -118,8 +118,17 @@ namespace MATSys.Hosting
     /// </summary>
     public enum ScriptType
     {
+        /// <summary>
+        /// setup script
+        /// </summary>
         Setup,
+        /// <summary>
+        /// test script
+        /// </summary>
         Test,
+        /// <summary>
+        /// teardown script
+        /// </summary>
         Teardown
     }
 
@@ -128,6 +137,9 @@ namespace MATSys.Hosting
     /// </summary>
     public class TestItem
     {
+        /// <summary>
+        /// Type of the test item
+        /// </summary>
         public ScriptType Type { get; set; }
         /// <summary>
         /// Name of the module
@@ -147,6 +159,7 @@ namespace MATSys.Hosting
         /// <summary>
         /// Constructor for TestItem
         /// </summary>
+        /// <param name="type">type of the script</param>
         /// <param name="name">Module name</param>
         /// <param name="cmd">Command string</param>
         public TestItem(ScriptType type,string name, string cmd)
@@ -164,10 +177,12 @@ namespace MATSys.Hosting
     /// </summary>
     public class TestItemCollection : List<TestItem>
     {
-        public TestItem? this[int id]
-        {
-            get => this.FirstOrDefault(x => x.ID == id);
-        }
+        /// <summary>
+        /// Return test item using its unique ID property as key
+        /// </summary>
+        /// <param name="id">the unique id of the test item</param>
+        /// <returns>test item</returns>
+        public new TestItem? this[int id] => this.FirstOrDefault(x => x.ID == id);
     }
 
 }
