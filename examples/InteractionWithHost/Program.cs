@@ -12,23 +12,22 @@ host.RunAsync().Wait(1000); ;
 
 var dev = host.Services.GetMATSysHandle();
 
-dev.Modules["Dev1"].OnDataReady += IModule_OnDataReady;
-dev.OnReadyToExecute += (item) => { Console.WriteLine($"[{item.ID}]{item.ModuleName}*{item.Command}"); };
-dev.OnExecuteComplete += (item, res) => { Console.WriteLine($"{res}"); };
-dev.RunTest(3);
-
-void IModule_OnDataReady(string jsonString)
+dev.Modules["Dev1"].OnDataReady += (txt) =>
 {
-    Console.WriteLine(jsonString);
-}
+    //event is fired when internal notifier publishes data
+};
+dev.BeforeTestItem += (item) =>
+{
+    //event is fired before executing test item;    
+};
+dev.AfterTestItem += (item, res) =>
+{
+    //event is fired after executeing test item;
+    Console.WriteLine($"{res}");
+};
+dev.RunTest(1);
 
-//for (int i = 0; i < 10; i++)
-//{
-//   var response= dev.Execute("Dev1", CommandBase.Create<TestDevice.Data>
-//        ("Test",
-//        new TestDevice.Data() { Date = DateTime.Now.ToString(), Number = new Random().NextDouble() }));
-//    //Console.WriteLine(response);
-//}
+
 
 Console.WriteLine("PRESS ANY KEY TO EXIT");
 
@@ -58,8 +57,8 @@ public class TestDevice : ModuleBase
 
     [MATSysCommand]
     public string Method(string c)
-    {        
-        return c;        
+    {
+        return c;
     }
 }
 

@@ -21,8 +21,19 @@ namespace MATSys.Hosting
         private readonly bool _scriptMode = false;
         private CancellationTokenSource cts = new CancellationTokenSource();
 
+        /// <summary>
+        /// Test items loaded from appsetting.json
+        /// </summary>
         public TestItemCollection TestItems => _scheduler.TestItems;
+
+        /// <summary>
+        /// Setup items loaded from appsettings.json
+        /// </summary>
         public TestItemCollection SetupItems => _scheduler.SetupItems;
+
+        /// <summary>
+        /// Teardown items loaded from appsettings.json
+        /// </summary>
         public TestItemCollection TeardownItems => _scheduler.TeardownItems;
 
 
@@ -35,22 +46,25 @@ namespace MATSys.Hosting
         /// <summary>
         /// Event when TestItem is ready to execute
         /// </summary>
-        public event ReadyToExecuteEvent? OnReadyToExecute;
+        public event ReadyToExecuteEvent? BeforeTestItem;
+
         /// <summary>
         /// Event when TestItem is executed completely
         /// </summary>
         /// <param name="item">TestItem instsance</param>
         /// <param name="result">Executed result</param>
         public delegate void ExecuteCompleteEvent(TestItem item, string result);
+
         /// <summary>
         /// Event when TestItem is executed completely
         /// </summary>
-        public event ExecuteCompleteEvent? OnExecuteComplete;
+        public event ExecuteCompleteEvent? AfterTestItem;
 
         /// <summary>
         /// Collection for all modules created the background servie
         /// </summary>
         public Dictionary<string, IModule> Modules { get; } = new Dictionary<string, IModule>();
+
         /// <summary>
         /// Constructor for the background service
         /// </summary>
@@ -158,32 +172,29 @@ namespace MATSys.Hosting
                 Setup(stoppingToken);
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    if (SpinWait.SpinUntil(() => _scheduler.IsAvailable, 5))
+                    var testItem = await _scheduler.Dequeue(stoppingToken);
+                    if (!cts.IsCancellationRequested)
                     {
-                        var testItem = await _scheduler.Dequeue(stoppingToken);
-                        if (!cts.IsCancellationRequested)
-                        {
-                            //when script is running
-                            OnReadyToExecute?.Invoke(testItem);
-                            var response = Modules[testItem.ModuleName].Execute(testItem.Command);
-                            _notifier.Publish(response);
-                            OnExecuteComplete?.Invoke(testItem, response);
-                        }
-                        else if (testItem.Type== ScriptType.Test)
-                        {
-                            //StopTest() is called.
-                            //TestItems are ignored
-                        }
-                        else
-                        {
-                            //StopTest() is called
-                            //Setup and teardown items
-                            OnReadyToExecute?.Invoke(testItem);
-                            var response = Modules[testItem.ModuleName].Execute(testItem.Command);
-                            _notifier.Publish(response);
-                            OnExecuteComplete?.Invoke(testItem, response);
+                        //when script is running
+                        BeforeTestItem?.Invoke(testItem);
+                        var response = Modules[testItem.ModuleName].Execute(testItem.Command);
+                        _notifier.Publish(response);
+                        AfterTestItem?.Invoke(testItem, response);
+                    }
+                    else if (testItem.Type == ScriptType.Test)
+                    {
+                        //StopTest() is called.
+                        //TestItems are ignored
+                    }
+                    else
+                    {
+                        //StopTest() is called
+                        //Setup and teardown items
+                        BeforeTestItem?.Invoke(testItem);
+                        var response = Modules[testItem.ModuleName].Execute(testItem.Command);
+                        _notifier.Publish(response);
+                        AfterTestItem?.Invoke(testItem, response);
 
-                        }
                     }
                 }
                 Cleanup();
@@ -201,22 +212,20 @@ namespace MATSys.Hosting
         private void AutoTesting(int iteration, CancellationToken token)
         {
             _scheduler.AddSetupItem();
-            _scheduler.AddTestItem();
-            int cnt = 1;
+            int cnt = 0;
             while (!token.IsCancellationRequested)
             {
-                if (cnt == iteration)
+                if (SpinWait.SpinUntil(() => !_scheduler.IsAvailable, 0))
                 {
-                    cts.Cancel();
-                }
-                else if (!_scheduler.IsAvailable)
-                {
-                    _scheduler.AddTestItem();
-                    Interlocked.Increment(ref cnt);
-                }
-                else
-                {
-                    SpinWait.SpinUntil(() => false, 5);
+                    if (cnt == iteration && iteration != 0)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        _scheduler.AddTestItem();
+                        Interlocked.Increment(ref cnt);
+                    }
                 }
             }
             _scheduler.AddTearDownItem();
