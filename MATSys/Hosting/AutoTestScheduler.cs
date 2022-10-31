@@ -57,15 +57,6 @@ namespace MATSys.Hosting
         {
             return await _queue.Reader.ReadAsync(token);
         }
-        public void ClearItems()
-        {
-            //flush all items in the queue
-            TestItem ti;
-            while (_queue.Reader.TryRead(out ti))
-            {
-                Thread.Sleep(0);
-            }
-        }
     }
     internal class TestScript
     {
@@ -122,6 +113,9 @@ namespace MATSys.Hosting
         }
 
     }
+    /// <summary>
+    /// Type of the script
+    /// </summary>
     public enum ScriptType
     {
         Setup,
@@ -165,6 +159,9 @@ namespace MATSys.Hosting
 
     }
 
+    /// <summary>
+    /// Collection of test item
+    /// </summary>
     public class TestItemCollection : List<TestItem>
     {
         public TestItem? this[int id]

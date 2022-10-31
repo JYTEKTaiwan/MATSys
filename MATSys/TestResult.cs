@@ -6,15 +6,43 @@ using System.Threading.Tasks;
 
 namespace MATSys
 {
-    public struct TestItemResult
+    /// <summary>
+    /// Common class which store the test result information
+    /// </summary>
+    public class TestItemResult
     {
+        /// <summary>
+        /// DateTime information
+        /// </summary>
         public DateTime Timestamp { get; } = DateTime.Now;
-        public Classification Result { get; }
-        public int BinNumber { get; }
-        public string Value { get; }
-        public string Attributes { get; }
 
-        public TestItemResult(Classification result, int bin, string value, string attributes)
+        /// <summary>
+        /// Type of the test result (Uses <see cref="TestResultType"/>)
+        /// </summary>
+        public TestResultType Result { get; }
+
+        /// <summary>
+        /// Bin number
+        /// </summary>
+        public int BinNumber { get; }
+
+        /// <summary>
+        /// Value for after the execution
+        /// </summary>
+        public object Value { get; }
+        /// <summary>
+        /// Any other arguments or attributes
+        /// </summary>
+        public object Attributes { get; }
+
+        /// <summary>
+        /// ctor
+        /// </summary>
+        /// <param name="result">Result</param>
+        /// <param name="bin">Bin number</param>
+        /// <param name="value">Value</param>
+        /// <param name="attributes">Attributes</param>
+        public TestItemResult(TestResultType result, int bin, object value, object attributes)
         {
             BinNumber = bin;
             Result = result;
@@ -23,11 +51,23 @@ namespace MATSys
         }
     }
 
-    public enum Classification
+    /// <summary>
+    /// Type of test result
+    /// </summary>
+    public enum TestResultType
     {
-        Pass,
-        Fail,
-        Skip
+        /// <summary>
+        /// Pass (1)
+        /// </summary>
+        Pass=1,
+        /// <summary>
+        /// Fail (-1)
+        /// </summary>
+        Fail=-1,
+        /// <summary>
+        /// Skip (0)
+        /// </summary>
+        Skip=0
 
     }
 }
