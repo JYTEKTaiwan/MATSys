@@ -59,10 +59,10 @@ namespace MATSys.Commands
 
 
         /// <summary>
-        /// Get the simplified command string 
+        /// Get the simplified command string        
         /// </summary>
         /// <returns>command string</returns>
-        /// <exception cref="ArgumentNullException">Throw when property CommandType is null</exception>
+        /// <exception cref="ArgumentException">throws for any exception</exception>        
         public string GetTemplateString()
         {
             if (CommandType != null)

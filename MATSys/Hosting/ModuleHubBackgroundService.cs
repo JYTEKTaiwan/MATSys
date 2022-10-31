@@ -69,7 +69,7 @@ namespace MATSys.Hosting
         /// Constructor for the background service
         /// </summary>
         /// <param name="services">IServiceProvider instance</param>
-        /// <exception cref="Exception">Every exception is included</exception>
+        /// <exception> throw <see cref="Exception"/> for any exception</exception>
         public ModuleHubBackgroundService(IServiceProvider services)
         {
             try

@@ -21,7 +21,7 @@ namespace MATSys.Commands
         /// <param name="target">taget object</param>
         /// <param name="mi">method information</param>
         /// <returns>Invoker instance</returns>
-        /// <exception cref="NullReferenceException">Every exception</exception>
+        /// <exception> throw <see cref="NullReferenceException"/> for any exception</exception>
         public static MethodInvoker Create(object target, MethodInfo mi)
         {
             try

@@ -43,7 +43,7 @@ namespace MATSys.Commands
             {
                 try
                 {
-                    return JsonConvert.SerializeObject(obj);                    
+                    return JsonConvert.SerializeObject(obj);
                 }
                 catch (Exception ex)
                 {
@@ -149,7 +149,7 @@ namespace MATSys.Commands
         /// <typeparam name="T1">Type of the first parameter</typeparam>
         /// <param name="methodName">name</param>
         /// <param name="param1">parameter value</param>
-        /// <returns>Command<<typeparamref name="T1"/>> object </returns>
+        /// <returns>Command&lt;<typeparamref name="T1"/>> object </returns>
         public static Command<T1> Create<T1>(string methodName, T1 param1)
         {
             return new Command<T1>(methodName, param1);
@@ -163,7 +163,7 @@ namespace MATSys.Commands
         /// <param name="methodName">name</param>
         /// <param name="param1">parameter value</param>
         /// <param name="param2">parameter value</param>
-        /// <returns>Command<<typeparamref name="T1"/>,<typeparamref name="T2"/>></returns>
+        /// <returns>Command&lt;<typeparamref name="T1"/>,<typeparamref name="T2"/>></returns>
         public static Command<T1, T2> Create<T1, T2>(string methodName, T1 param1, T2 param2)
         {
             return new Command<T1, T2>(methodName, param1, param2);
@@ -179,7 +179,7 @@ namespace MATSys.Commands
         /// <param name="param1">parameter value</param>
         /// <param name="param2">parameter value</param>
         /// <param name="param3">parameter value</param>
-        /// <returns>Command<<typeparamref name="T1"/>,<typeparamref name="T2"/>,<typeparamref name="T3"/>></returns>
+        /// <returns>Command&lt;<typeparamref name="T1"/>,<typeparamref name="T2"/>,<typeparamref name="T3"/>></returns>
         public static Command<T1, T2, T3> Create<T1, T2, T3>(string methodName, T1 param1, T2 param2, T3 param3)
         {
             return new Command<T1, T2, T3>(methodName, param1, param2, param3);
@@ -197,7 +197,7 @@ namespace MATSys.Commands
         /// <param name="param2">parameter value</param>
         /// <param name="param3">parameter value</param>
         /// <param name="param4">parameter value</param>
-        /// <returns>Command<<typeparamref name="T1"/>,<typeparamref name="T2"/>,<typeparamref name="T3"/>,<typeparamref name="T4"/>></returns>
+        /// <returns>Command&lt;<typeparamref name="T1"/>,<typeparamref name="T2"/>,<typeparamref name="T3"/>,<typeparamref name="T4"/>></returns>
         public static Command<T1, T2, T3, T4> Create<T1, T2, T3, T4>(string methodName, T1 param1, T2 param2, T3 param3, T4 param4)
         {
             return new Command<T1, T2, T3, T4>(methodName, param1, param2, param3, param4);
@@ -217,7 +217,7 @@ namespace MATSys.Commands
         /// <param name="param3">parameter value</param>
         /// <param name="param4">parameter value</param>
         /// <param name="param5">parameter value</param>
-        /// <returns>Command<<typeparamref name="T1"/>,<typeparamref name="T2"/>,<typeparamref name="T3"/>,<typeparamref name="T4"/>,<typeparamref name="T5"/>></returns>
+        /// <returns>Command&lt;<typeparamref name="T1"/>,<typeparamref name="T2"/>,<typeparamref name="T3"/>,<typeparamref name="T4"/>,<typeparamref name="T5"/>></returns>
         public static Command<T1, T2, T3, T4, T5> Create<T1, T2, T3, T4, T5>(string methodName, T1 param1, T2 param2, T3 param3, T4 param4, T5 param5)
         {
             return new Command<T1, T2, T3, T4, T5>(methodName, param1, param2, param3, param4, param5);
@@ -239,7 +239,7 @@ namespace MATSys.Commands
         /// <param name="param4">parameter value</param>
         /// <param name="param5">parameter value</param>
         /// <param name="param6">parameter value</param>
-        /// <returns>Command<<typeparamref name="T1"/>,<typeparamref name="T2"/>,<typeparamref name="T3"/>,<typeparamref name="T4"/>,<typeparamref name="T5"/>,<typeparamref name="T6"/>></returns>
+        /// <returns>Command&lt;<typeparamref name="T1"/>,<typeparamref name="T2"/>,<typeparamref name="T3"/>,<typeparamref name="T4"/>,<typeparamref name="T5"/>,<typeparamref name="T6"/>></returns>
         public static Command<T1, T2, T3, T4, T5, T6> Create<T1, T2, T3, T4, T5, T6>(string methodName, T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6)
         {
             return new Command<T1, T2, T3, T4, T5, T6>(methodName, param1, param2, param3, param4, param5, param6);
@@ -263,7 +263,7 @@ namespace MATSys.Commands
         /// <param name="param5">parameter value</param>
         /// <param name="param6">parameter value</param>
         /// <param name="param7">parameter value</param>
-        /// <returns>Command<<typeparamref name="T1"/>,<typeparamref name="T2"/>,<typeparamref name="T3"/>,<typeparamref name="T4"/>,<typeparamref name="T5"/>,<typeparamref name="T6"/>,<typeparamref name="T7"/>></returns>
+        /// <returns>Command&lt;<typeparamref name="T1"/>,<typeparamref name="T2"/>,<typeparamref name="T3"/>,<typeparamref name="T4"/>,<typeparamref name="T5"/>,<typeparamref name="T6"/>,<typeparamref name="T7"/>></returns>
         public static Command<T1, T2, T3, T4, T5, T6, T7> Create<T1, T2, T3, T4, T5, T6, T7>(string methodName, T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6, T7 param7)
         {
             return new Command<T1, T2, T3, T4, T5, T6, T7>(methodName, param1, param2, param3, param4, param5, param6, param7);
@@ -291,6 +291,11 @@ namespace MATSys.Commands
         {
             return new object[0];
         }
+
+        /// <summary>
+        /// Serialize the cmd object into string
+        /// </summary>
+        /// <returns>command string</returns>
         public override string Serialize()
         {
             var sb = new StringBuilder();
@@ -307,6 +312,9 @@ namespace MATSys.Commands
     /// <typeparam name="T1"></typeparam>
     public sealed class Command<T1> : CommandBase
     {
+        /// <summary>
+        /// Parameters (<see cref="ValueTuple{T1}"/>)
+        /// </summary>
         [JsonProperty(Order = 1)]
         public ValueTuple<T1> Parameter { get; set; }
 
@@ -328,6 +336,10 @@ namespace MATSys.Commands
         {
             return new object[] { Parameter.Item1! };
         }
+        /// <summary>
+        /// Serialize the cmd object into string
+        /// </summary>
+        /// <returns>command string</returns>
         public override string Serialize()
         {
             var sb = new StringBuilder();
@@ -346,6 +358,9 @@ namespace MATSys.Commands
     /// <typeparam name="T2"></typeparam>
     public sealed class Command<T1, T2> : CommandBase
     {
+        /// <summary>
+        /// Parameters (<see cref="ValueTuple{T1,T2}"/>)
+        /// </summary>
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2> Parameter { get; set; }
 
@@ -359,11 +374,18 @@ namespace MATSys.Commands
         {
             Parameter = ValueTuple.Create<T1, T2>(param1, param2);
         }
-
+        /// <summary>
+        /// return the parameters in object array
+        /// </summary>
+        /// <returns></returns>
         public override object[]? GetParameters()
         {
             return new object[] { Parameter.Item1!, Parameter.Item2! };
         }
+        /// <summary>
+        /// Serialize the cmd object into string
+        /// </summary>
+        /// <returns>command string</returns>
         public override string Serialize()
         {
             var sb = new StringBuilder();
@@ -385,7 +407,10 @@ namespace MATSys.Commands
     /// <typeparam name="T2"></typeparam>
     /// <typeparam name="T3"></typeparam>
     public sealed class Command<T1, T2, T3> : CommandBase
-    {
+    {        /// <summary>
+             /// Parameters (<see cref="ValueTuple{T1,T2,T3}"/>)
+             /// </summary>
+
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3> Parameter { get; set; }
 
@@ -400,11 +425,20 @@ namespace MATSys.Commands
         {
             Parameter = ValueTuple.Create(param1, param2, param3);
         }
+        /// <summary>
+        /// return the parameters in object array
+        /// </summary>
+        /// <returns></returns>
 
         public override object[]? GetParameters()
         {
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3! };
         }
+        /// <summary>
+        /// Serialize the cmd object into string
+        /// </summary>
+        /// <returns>command string</returns>
+
         public override string Serialize()
         {
             var sb = new StringBuilder();
@@ -431,6 +465,10 @@ namespace MATSys.Commands
     /// <typeparam name="T4"></typeparam>
     public sealed class Command<T1, T2, T3, T4> : CommandBase
     {
+        /// <summary>
+        /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4}"/>)
+        /// </summary>
+
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4> Parameter { get; set; }
 
@@ -446,11 +484,20 @@ namespace MATSys.Commands
         {
             Parameter = ValueTuple.Create<T1, T2, T3, T4>(param1, param2, param3, param4);
         }
+        /// <summary>
+        /// return the parameters in object array
+        /// </summary>
+        /// <returns></returns>
 
         public override object[]? GetParameters()
         {
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4! };
         }
+        /// <summary>
+        /// Serialize the cmd object into string
+        /// </summary>
+        /// <returns>command string</returns>
+
         public override string Serialize()
         {
             var sb = new StringBuilder();
@@ -479,6 +526,10 @@ namespace MATSys.Commands
     /// <typeparam name="T5"></typeparam>
     public sealed class Command<T1, T2, T3, T4, T5> : CommandBase
     {
+        /// <summary>
+        /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4,T5}"/>)
+        /// </summary>
+
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4, T5> Parameter { get; set; }
         /// <summary>
@@ -494,11 +545,20 @@ namespace MATSys.Commands
         {
             Parameter = ValueTuple.Create<T1, T2, T3, T4, T5>(param1, param2, param3, param4, param5);
         }
+        /// <summary>
+        /// return the parameters in object array
+        /// </summary>
+        /// <returns></returns>
 
         public override object[]? GetParameters()
         {
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5! };
         }
+        /// <summary>
+        /// Serialize the cmd object into string
+        /// </summary>
+        /// <returns>command string</returns>
+
         public override string Serialize()
         {
             var sb = new StringBuilder();
@@ -530,6 +590,10 @@ namespace MATSys.Commands
     /// <typeparam name="T6"></typeparam>
     public sealed class Command<T1, T2, T3, T4, T5, T6> : CommandBase
     {
+        /// <summary>
+        /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4,T5,T6}"/>)
+        /// </summary>
+
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4, T5, T6> Parameter { get; set; }
 
@@ -547,11 +611,20 @@ namespace MATSys.Commands
         {
             Parameter = ValueTuple.Create<T1, T2, T3, T4, T5, T6>(param1, param2, param3, param4, param5, param6);
         }
+        /// <summary>
+        /// return the parameters in object array
+        /// </summary>
+        /// <returns></returns>
 
         public override object[]? GetParameters()
         {
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5!, Parameter.Item6! };
         }
+        /// <summary>
+        /// Serialize the cmd object into string
+        /// </summary>
+        /// <returns>command string</returns>
+
         public override string Serialize()
         {
             var sb = new StringBuilder();
@@ -586,6 +659,10 @@ namespace MATSys.Commands
     /// <typeparam name="T7"></typeparam>
     public sealed class Command<T1, T2, T3, T4, T5, T6, T7> : CommandBase
     {
+        /// <summary>
+        /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4,T5,T6,T7}"/>)
+        /// </summary>
+
         [JsonProperty(Order = 1)]
         public ValueTuple<T1, T2, T3, T4, T5, T6, T7> Parameter { get; set; }
 
@@ -604,11 +681,20 @@ namespace MATSys.Commands
         {
             Parameter = ValueTuple.Create<T1, T2, T3, T4, T5, T6, T7>(param1, param2, param3, param4, param5, param6, param7);
         }
+        /// <summary>
+        /// return the parameters in object array
+        /// </summary>
+        /// <returns></returns>
 
         public override object[]? GetParameters()
         {
             return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5!, Parameter.Item6!, Parameter.Item7! };
         }
+        /// <summary>
+        /// Serialize the cmd object into string
+        /// </summary>
+        /// <returns>command string</returns>
+
         public override string Serialize()
         {
             var sb = new StringBuilder();
