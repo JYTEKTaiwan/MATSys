@@ -1,4 +1,6 @@
-﻿namespace MATSys
+﻿using System.Text.Json.Serialization;
+
+namespace MATSys
 {
     /// <summary>
     /// Common class which store the test result information
@@ -8,40 +10,48 @@
         /// <summary>
         /// DateTime information
         /// </summary>
-        public DateTime Timestamp { get; } = DateTime.Now;
+        public DateTime Timestamp { get; set; } = DateTime.Now;
 
         /// <summary>
         /// Type of the test result (Uses <see cref="TestResultType"/>)
         /// </summary>
-        public TestResultType Result { get; }
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public TestResultType Result { get; set; }
 
         /// <summary>
         /// Bin number
         /// </summary>
-        public int BinNumber { get; }
+        public int BinNumber { get; set; }
 
         /// <summary>
         /// Value for after the execution
         /// </summary>
-        public object Value { get; }
+        public object? Value { get; set; }
         /// <summary>
         /// Any other arguments or attributes
         /// </summary>
-        public object Attributes { get; }
-
+        public object? Attributes { get; set; }
         /// <summary>
         /// ctor
         /// </summary>
-        /// <param name="result">Result</param>
-        /// <param name="bin">Bin number</param>
-        /// <param name="value">Value</param>
-        /// <param name="attributes">Attributes</param>
-        public TestItemResult(TestResultType result, int bin, object value, object attributes)
+        public TestItemResult() { }
+        /// <summary>
+        /// Create new instance of TestItemResult
+        /// </summary>
+        /// <param name="result">Type:<see cref="TestResultType">TestResultType</see></param>
+        /// <param name="bin">Bin Number</param>
+        /// <param name="value">Raw value</param>
+        /// <param name="attributes">Custom attributes</param>
+        /// <returns>Instance of TestItemResult</returns>
+        public static TestItemResult Create(TestResultType result = TestResultType.Skip, int bin = -1, object? value = null, object? attributes = null)
         {
-            BinNumber = bin;
-            Result = result;
-            Value = value;
-            Attributes = attributes;
+            return new TestItemResult()
+            {
+                BinNumber = bin,
+                Result = result,
+                Value = value,
+                Attributes = attributes
+            };
         }
     }
 
