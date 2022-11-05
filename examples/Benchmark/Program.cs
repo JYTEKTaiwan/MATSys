@@ -4,21 +4,55 @@ using MATSys.Commands;
 using MATSys.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using System.Drawing.Text;
+using System.Runtime.InteropServices.ObjectiveC;
 
-IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
+IHost host = Host.CreateDefaultBuilder().ConfigureLogging(log=>log.ClearProviders()).UseMATSys().Build();
+
 host.RunAsync().Wait(1000); ;
 
 var dev = host.Services.GetMATSysHandle();
 var iteration = 1000000;
-Console.WriteLine($"Send same command for {iteration} times");
-
-dev.ExecuteCommand("Dev1", $"StringMethod=\"tt\"");
 Stopwatch stopwatch = new Stopwatch();
+
+Console.WriteLine($"Send command (no arguments) for {iteration} times");
+var cmd = CommandBase.Create("NoArgument").Serialize();
+Console.WriteLine($"Command size={cmd.Length} bytes");
+dev.ExecuteCommand("Dev1", cmd);
 stopwatch.Restart();
 for (int i = 0; i < iteration; i++)
 {
-    dev.ExecuteCommand("Dev1", $"StringMethod=\"{i}\"");
+    dev.ExecuteCommand("Dev1", cmd);
+}
+stopwatch.Stop();
+Console.WriteLine($"Total {stopwatch.Elapsed.TotalSeconds} seconds (Average:{stopwatch.Elapsed.TotalMilliseconds / iteration} ms)");
+
+Console.WriteLine();
+
+Console.WriteLine($"Send command (1 arguments) for {iteration} times");
+cmd = CommandBase.Create("OneArgument","HI").Serialize();
+Console.WriteLine($"Command size={cmd.Length} bytes");
+dev.ExecuteCommand("Dev1", cmd);
+stopwatch.Restart();
+for (int i = 0; i < iteration; i++)
+{
+    dev.ExecuteCommand("Dev1", cmd);
+}
+stopwatch.Stop();
+Console.WriteLine($"Total {stopwatch.Elapsed.TotalSeconds} seconds (Average:{stopwatch.Elapsed.TotalMilliseconds / iteration} ms)");
+
+Console.WriteLine();
+
+Console.WriteLine($"Send command (7 arguments) for {iteration} times");
+cmd = CommandBase.Create("SevenArgument", 1,1.0,"HI",true,DateTime.Now,new Object(),(decimal)10).Serialize();
+Console.WriteLine($"Command size={cmd.Length} bytes");
+dev.ExecuteCommand("Dev1", cmd);
+stopwatch.Restart();
+for (int i = 0; i < iteration; i++)
+{
+    dev.ExecuteCommand("Dev1", cmd);
 }
 stopwatch.Stop();
 Console.WriteLine($"Total {stopwatch.Elapsed.TotalSeconds} seconds (Average:{stopwatch.Elapsed.TotalMilliseconds / iteration} ms)");
@@ -27,20 +61,13 @@ Console.WriteLine($"Total {stopwatch.Elapsed.TotalSeconds} seconds (Average:{sto
 Console.WriteLine("PRESS ANY KEY TO EXIT");
 Console.ReadKey();
 host.StopAsync();
+
+
 public class TestDevice : ModuleBase
 {
 
     public TestDevice(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "") : base(configuration, server, bus, recorder, configurationKey)
     {
-    }
-
-    public override void Load(IConfigurationSection section)
-    {
-    }
-
-    public override void Load(object configuration)
-    {
-
     }
 
     public class Data
@@ -50,20 +77,21 @@ public class TestDevice : ModuleBase
     }
 
     [MATSysCommand]
-    public string Test(Data a)
+    public string SevenArgument(int a,double b, string c, bool d, DateTime e, object f, decimal g)
     {
-        var res = a.Date + "---" + a.Number.ToString();
-        Base.Recorder.Write(a);
-        Base.Notifier.Publish(a);
-        return res;
+        return "";
     }
 
-    [MATSysCommand("StringMethod")]
-    public string Method(string c)
+    [MATSysCommand]
+    public string OneArgument(string a)
     {
-        Base.Notifier.Publish(c);
+        return "";
+    }
 
-        return c;
+    [MATSysCommand]
+    public string NoArgument()
+    {
+        return "";
     }
 }
 
