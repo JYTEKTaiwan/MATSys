@@ -1,7 +1,7 @@
 ﻿using CsvHelper;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Channels;
 
 namespace MATSys.Plugins
@@ -108,18 +108,18 @@ namespace MATSys.Plugins
         {
             await Task.Run(() =>
             {
-                _logger.Debug(JsonConvert.SerializeObject(data));
+                _logger.Debug(JsonSerializer.Serialize(data));
                 _queue!.Writer.TryWrite(data);
                 _logger.Info("Data is queued to filestream");
             });
         }
-        public JObject Export()
+        public JsonObject Export()
         {
-            return JObject.FromObject(_config);
+            return JsonObject.Parse(JsonSerializer.Serialize(_config)).AsObject();
         }
-        public string Export(Formatting format = Formatting.Indented)
+        public string Export(bool indented=true)
         {
-            return Export().ToString(Formatting.Indented);
+            return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
 
     }

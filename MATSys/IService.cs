@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
 
 namespace MATSys
 {
@@ -34,14 +33,14 @@ namespace MATSys
         /// Export the service insatnce into JObject format
         /// </summary>
         /// <returns>JObject instance</returns>
-        JObject Export();
+        JsonObject Export();
 
         /// <summary>
         /// Export the service instance into string format
         /// </summary>
         /// <param name="format">Format</param>
         /// <returns>string</returns>
-        string Export(Formatting format = Formatting.Indented);
+        string Export(bool indented = true);
         /// <summary>
         /// Stop service
         /// </summary>

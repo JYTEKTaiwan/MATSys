@@ -1,12 +1,11 @@
 ﻿using MATSys.Commands;
 using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NLog;
 using System.Data;
 using System.Reflection;
 using System.Text;
+using System.Text.Json.Nodes;
 
 namespace MATSys
 {
@@ -264,9 +263,10 @@ namespace MATSys
         /// Export the ModuleBase instance to json context
         /// </summary>
         /// <returns></returns>
-        public JObject Export()
+        public JsonObject Export()
         {
-            JObject jObj = _config == null ? new JObject() : JObject.FromObject(_config);
+            var setting = _config as IConfigurationSection;
+            JsonObject jObj = setting.Value == null ? new JsonObject() : JsonObject.Parse(setting.Value).AsObject();
             jObj.Add("Name", Name);
             jObj.Add("Type", this.GetType().Name);
             jObj.Add("Recorder", _recorder.Export());
@@ -280,9 +280,9 @@ namespace MATSys
         /// </summary>
         /// <param name="format"></param>
         /// <returns></returns>
-        public string Export(Formatting format = Formatting.Indented)
+        public string Export(bool indented=true)
         {
-            return Export().ToString(Formatting.Indented);
+            return Export().ToJsonString(new System.Text.Json.JsonSerializerOptions() { WriteIndented = indented });
         }
 
         #region Private methods
@@ -445,12 +445,7 @@ namespace MATSys
                 _logger.Warn(ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, commandObjectInJson);
             }
-            catch (JsonReaderException ex)
-            {
-                _logger.Warn(ex);
-                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_serDesError, ex, commandObjectInJson);
-            }
-            catch (JsonSerializationException ex)
+            catch (System.Text.Json.JsonException ex)
             {
                 _logger.Warn(ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_serDesError, ex, commandObjectInJson);

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using NetMQ;
 using NetMQ.Sockets;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json.Nodes;
+using System.Text.Json;
 
 namespace MATSys.Plugins
 {
@@ -24,7 +24,7 @@ namespace MATSys.Plugins
 
         public void Publish(object data)
         {
-            var json = JsonConvert.SerializeObject(data);
+            var json = JsonSerializer.Serialize(data);
             latestString = json;
             _logger.Trace("Ready to publish message");
             var msg = new NetMQMessage();
@@ -82,14 +82,14 @@ namespace MATSys.Plugins
         {
             return latestString;
         }
-        public JObject Export()
+        public JsonObject Export()
         {
-            return JObject.FromObject(_config);
+            return JsonObject.Parse(JsonSerializer.Serialize(_config)).AsObject();
 
         }
-        public string Export(Formatting format = Formatting.Indented)
+        public string Export(bool indented=true)
         {
-            return Export().ToString(Formatting.Indented);
+            return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented =indented});
         }
 
 

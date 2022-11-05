@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Channels;
 
 namespace MATSys.Plugins
@@ -38,10 +38,10 @@ namespace MATSys.Plugins
 
         public void Publish(object data)
         {
-            _ch!.Writer.TryWrite(JsonConvert.SerializeObject(data));
+            _ch!.Writer.TryWrite(JsonSerializer.Serialize(data));
             if (!_config!.DisableEvent)
             {
-                OnNotify?.Invoke(JsonConvert.SerializeObject(data));
+                OnNotify?.Invoke(JsonSerializer.Serialize(data));
             }
         }
 
@@ -54,14 +54,14 @@ namespace MATSys.Plugins
         {
             _ch!.Writer.Complete();
         }
-        public JObject Export()
+        public JsonObject Export()
         {
-            return JObject.FromObject(_config);
+            return JsonObject.Parse(JsonSerializer.Serialize(_config)).AsObject();
 
         }
-        public string Export(Formatting format = Formatting.Indented)
+        public string Export(bool indented=true)
         {
-            return Export().ToString(Formatting.Indented);
+            return Export().ToJsonString(new JsonSerializerOptions() {WriteIndented=indented });
         }
 
 

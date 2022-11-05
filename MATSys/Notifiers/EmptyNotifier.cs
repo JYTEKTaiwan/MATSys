@@ -1,7 +1,6 @@
-﻿
-using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Microsoft.Extensions.Configuration;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace MATSys.Plugins
 {
@@ -40,7 +39,7 @@ namespace MATSys.Plugins
         /// <param name="data">data need to publish</param>
         public void Publish(object data)
         {
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);
+            var json = JsonSerializer.Serialize(data);
             OnNotify?.Invoke(json);
         }
 
@@ -51,13 +50,13 @@ namespace MATSys.Plugins
         public void StopService()
         {
         }
-        public JObject Export()
+        public JsonObject Export()
         {
-            return new JObject();
+            return new JsonObject();
         }
-        public string Export(Formatting format = Formatting.Indented)
+        public string Export(bool indented=true)
         {
-            return Export().ToString(Formatting.Indented);
+            return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
 
     }

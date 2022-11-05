@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
 namespace MATSys.Commands
@@ -12,11 +13,16 @@ namespace MATSys.Commands
     {
         private static Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}|[a-zA-Z]+");
         internal const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
+        protected static JsonSerializerOptions opt=new JsonSerializerOptions()
+        {
+            WriteIndented = true,
+            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+        };
 
         /// <summary>
         /// Name of the current command
         /// </summary>
-        [JsonProperty(Order = 0)]
+        [JsonPropertyOrder(0)]
         public string MethodName { get; set; }
 
         /// <summary>
@@ -43,7 +49,7 @@ namespace MATSys.Commands
             {
                 try
                 {
-                    return JsonConvert.SerializeObject(obj);
+                    return System.Text.Json.JsonSerializer.Serialize(obj,opt);
                 }
                 catch (Exception ex)
                 {
@@ -69,13 +75,9 @@ namespace MATSys.Commands
             try
             {
                 if (typeof(ICommand).IsAssignableFrom(t))
-                {
-                    var cmdInfo = ConvertToJsonFormat(rawString);
-                    if (cmdInfo.parameterCount != t.GenericTypeArguments.Length)
-                    {
-                        throw new ArgumentOutOfRangeException();
-                    }
-                    var cmd = JsonConvert.DeserializeObject(cmdInfo.jsonString, t) as ICommand;
+                {                    
+                    var cmdString = $"\"{rawString.Replace("\"", "\\\"")}\"";
+                    var cmd = System.Text.Json.JsonSerializer.Deserialize(cmdString, t,opt) as ICommand;
                     if (cmd == null)
                     {
                         throw new NullReferenceException("command is null");
@@ -273,6 +275,7 @@ namespace MATSys.Commands
     /// <summary>
     /// Command object without any parameter
     /// </summary>
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
     public sealed class Command : CommandBase
     {
         /// <summary>
@@ -298,10 +301,11 @@ namespace MATSys.Commands
         /// <returns>command string</returns>
         public override string Serialize()
         {
-            var sb = new StringBuilder();
-            sb.Append(MethodName);
-            sb.Append("=");
-            return sb.ToString();
+            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
+            //var sb = new StringBuilder();
+            //sb.Append(MethodName);
+            //sb.Append("=");
+            //return sb.ToString();
         }
 
     }
@@ -310,12 +314,13 @@ namespace MATSys.Commands
     /// Command object with 1 parameter
     /// </summary>
     /// <typeparam name="T1"></typeparam>
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
     public sealed class Command<T1> : CommandBase
     {
         /// <summary>
         /// Parameters (<see cref="ValueTuple{T1}"/>)
         /// </summary>
-        [JsonProperty(Order = 1)]
+        [JsonPropertyOrder(1)]
         public ValueTuple<T1> Parameter { get; set; }
 
         /// <summary>
@@ -342,11 +347,12 @@ namespace MATSys.Commands
         /// <returns>command string</returns>
         public override string Serialize()
         {
-            var sb = new StringBuilder();
-            sb.Append(MethodName);
-            sb.Append("=");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            return sb.ToString();
+            return System.Text.Json.JsonSerializer.Serialize(this,opt).Replace("\"", "").Replace("\\", "\""); 
+            //var sb = new StringBuilder();
+            //sb.Append(MethodName);
+            //sb.Append("=");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            //return sb.ToString();
         }
 
     }
@@ -356,13 +362,13 @@ namespace MATSys.Commands
     /// </summary>
     /// <typeparam name="T1"></typeparam>
     /// <typeparam name="T2"></typeparam>
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
     public sealed class Command<T1, T2> : CommandBase
     {
         /// <summary>
         /// Parameters (<see cref="ValueTuple{T1,T2}"/>)
         /// </summary>
-        [JsonProperty(Order = 1)]
-        public ValueTuple<T1, T2> Parameter { get; set; }
+        [JsonPropertyOrder(1)] public ValueTuple<T1, T2> Parameter { get; set; }
 
         /// <summary>
         /// Constructor
@@ -388,13 +394,14 @@ namespace MATSys.Commands
         /// <returns>command string</returns>
         public override string Serialize()
         {
-            var sb = new StringBuilder();
-            sb.Append(MethodName);
-            sb.Append("=");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-            return sb.ToString();
+            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
+            //var sb = new StringBuilder();
+            //sb.Append(MethodName);
+            //sb.Append("=");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
+            //return sb.ToString();
 
         }
 
@@ -406,13 +413,13 @@ namespace MATSys.Commands
     /// <typeparam name="T1"></typeparam>
     /// <typeparam name="T2"></typeparam>
     /// <typeparam name="T3"></typeparam>
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
     public sealed class Command<T1, T2, T3> : CommandBase
     {        /// <summary>
              /// Parameters (<see cref="ValueTuple{T1,T2,T3}"/>)
              /// </summary>
 
-        [JsonProperty(Order = 1)]
-        public ValueTuple<T1, T2, T3> Parameter { get; set; }
+        [JsonPropertyOrder(1)] public ValueTuple<T1, T2, T3> Parameter { get; set; }
 
         /// <summary>
         /// Constructor
@@ -441,16 +448,17 @@ namespace MATSys.Commands
 
         public override string Serialize()
         {
-            var sb = new StringBuilder();
-            sb.Append(MethodName);
-            sb.Append("=");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
+            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
+            //var sb = new StringBuilder();
+            //sb.Append(MethodName);
+            //sb.Append("=");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
 
-            return sb.ToString();
+            //return sb.ToString();
 
         }
 
@@ -463,14 +471,14 @@ namespace MATSys.Commands
     /// <typeparam name="T2"></typeparam>
     /// <typeparam name="T3"></typeparam>
     /// <typeparam name="T4"></typeparam>
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
     public sealed class Command<T1, T2, T3, T4> : CommandBase
     {
         /// <summary>
         /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4}"/>)
         /// </summary>
 
-        [JsonProperty(Order = 1)]
-        public ValueTuple<T1, T2, T3, T4> Parameter { get; set; }
+        [JsonPropertyOrder(1)] public ValueTuple<T1, T2, T3, T4> Parameter { get; set; }
 
         /// <summary>
         /// Constructor
@@ -500,17 +508,18 @@ namespace MATSys.Commands
 
         public override string Serialize()
         {
-            var sb = new StringBuilder();
-            sb.Append(MethodName);
-            sb.Append("=");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
-            return sb.ToString();
+            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
+            //var sb = new StringBuilder();
+            //sb.Append(MethodName);
+            //sb.Append("=");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
+            //return sb.ToString();
 
         }
 
@@ -524,14 +533,14 @@ namespace MATSys.Commands
     /// <typeparam name="T3"></typeparam>
     /// <typeparam name="T4"></typeparam>
     /// <typeparam name="T5"></typeparam>
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
     public sealed class Command<T1, T2, T3, T4, T5> : CommandBase
     {
         /// <summary>
         /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4,T5}"/>)
         /// </summary>
 
-        [JsonProperty(Order = 1)]
-        public ValueTuple<T1, T2, T3, T4, T5> Parameter { get; set; }
+        [JsonPropertyOrder(1)] public ValueTuple<T1, T2, T3, T4, T5> Parameter { get; set; }
         /// <summary>
         /// Constructor
         /// </summary>
@@ -561,19 +570,20 @@ namespace MATSys.Commands
 
         public override string Serialize()
         {
-            var sb = new StringBuilder();
-            sb.Append(MethodName);
-            sb.Append("=");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item5));
-            return sb.ToString();
+            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
+            //var sb = new StringBuilder();
+            //sb.Append(MethodName);
+            //sb.Append("=");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item5));
+            //return sb.ToString();
 
         }
 
@@ -588,14 +598,14 @@ namespace MATSys.Commands
     /// <typeparam name="T4"></typeparam>
     /// <typeparam name="T5"></typeparam>
     /// <typeparam name="T6"></typeparam>
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
     public sealed class Command<T1, T2, T3, T4, T5, T6> : CommandBase
     {
         /// <summary>
         /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4,T5,T6}"/>)
         /// </summary>
 
-        [JsonProperty(Order = 1)]
-        public ValueTuple<T1, T2, T3, T4, T5, T6> Parameter { get; set; }
+        [JsonPropertyOrder(1)] public ValueTuple<T1, T2, T3, T4, T5, T6> Parameter { get; set; }
 
         /// <summary>
         /// Constructor
@@ -627,21 +637,22 @@ namespace MATSys.Commands
 
         public override string Serialize()
         {
-            var sb = new StringBuilder();
-            sb.Append(MethodName);
-            sb.Append("=");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item5));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item6));
-            return sb.ToString();
+            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
+            //var sb = new StringBuilder();
+            //sb.Append(MethodName);
+            //sb.Append("=");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item5));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item6));
+            //return sb.ToString();
 
         }
 
@@ -657,13 +668,14 @@ namespace MATSys.Commands
     /// <typeparam name="T5"></typeparam>
     /// <typeparam name="T6"></typeparam>
     /// <typeparam name="T7"></typeparam>
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
     public sealed class Command<T1, T2, T3, T4, T5, T6, T7> : CommandBase
     {
         /// <summary>
         /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4,T5,T6,T7}"/>)
         /// </summary>
 
-        [JsonProperty(Order = 1)]
+        [JsonPropertyOrder(1)] 
         public ValueTuple<T1, T2, T3, T4, T5, T6, T7> Parameter { get; set; }
 
         /// <summary>
@@ -697,23 +709,24 @@ namespace MATSys.Commands
 
         public override string Serialize()
         {
-            var sb = new StringBuilder();
-            sb.Append(MethodName);
-            sb.Append("=");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item5));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item6));
-            sb.Append(",");
-            sb.Append(JsonConvert.SerializeObject(Parameter.Item7));
-            return sb.ToString();
+            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
+            //var sb = new StringBuilder();
+            //sb.Append(MethodName);
+            //sb.Append("=");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item5));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item6));
+            //sb.Append(",");
+            //sb.Append(JsonConvert.SerializeObject(Parameter.Item7));
+            //return sb.ToString();
 
         }
 

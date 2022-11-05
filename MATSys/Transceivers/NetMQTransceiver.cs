@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using NetMQ;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace MATSys.Plugins
 {
@@ -89,14 +89,14 @@ namespace MATSys.Plugins
 
             _logger.Info("NetMQTransceiver is initiated");
         }
-        public JObject Export()
+        public JsonObject Export()
         {
-            return JObject.FromObject(_config);
+            return JsonObject.Parse(JsonSerializer.Serialize(_config)).AsObject();
 
         }
-        public string Export(Formatting format = Formatting.Indented)
+        public string Export(bool indented=true)
         {
-            return Export().ToString(Formatting.Indented);
+            return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented=indented});
         }
 
     }

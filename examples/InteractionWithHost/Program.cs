@@ -4,6 +4,7 @@ using MATSys.Commands;
 using MATSys.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using System.Text.Json;
 
 Console.WriteLine("Hello, World!");
 
@@ -11,7 +12,6 @@ IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
 host.RunAsync().Wait(1000); ;
 
 var dev = host.Services.GetMATSysHandle();
-
 dev.Modules["Dev1"].OnDataReady += (txt) =>
 {
     //event is fired when internal notifier publishes data
@@ -26,7 +26,6 @@ dev.AfterTestItem += (item, res) =>
     Console.WriteLine($"{res}");
 };
 dev.RunTest(1);
-
 
 
 Console.WriteLine("PRESS ANY KEY TO EXIT");

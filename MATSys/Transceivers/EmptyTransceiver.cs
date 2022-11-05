@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace MATSys.Plugins
 {
@@ -32,13 +32,13 @@ namespace MATSys.Plugins
         public void StopService()
         {
         }
-        public JObject Export()
+        public JsonObject Export()
         {
-            return new JObject();
+            return new JsonObject();
         }
-        public string Export(Formatting format = Formatting.Indented)
+        public string Export(bool indented = true)
         {
-            return Export().ToString(Formatting.Indented);
+            return Export().ToJsonString(new JsonSerializerOptions(){WriteIndented=indented});
         }
 
     }
