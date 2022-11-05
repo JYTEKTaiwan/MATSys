@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MATSys
+﻿namespace MATSys
 {
     /// <summary>
     /// Common class which store the test result information
@@ -59,15 +53,15 @@ namespace MATSys
         /// <summary>
         /// Pass (1)
         /// </summary>
-        Pass=1,
+        Pass = 1,
         /// <summary>
         /// Fail (-1)
         /// </summary>
-        Fail=-1,
+        Fail = -1,
         /// <summary>
         /// Skip (0)
         /// </summary>
-        Skip=0
+        Skip = 0
 
     }
 }

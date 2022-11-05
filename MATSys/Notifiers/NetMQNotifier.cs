@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using NetMQ;
 using NetMQ.Sockets;
-using System.Text.Json.Nodes;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace MATSys.Plugins
 {
@@ -87,9 +87,9 @@ namespace MATSys.Plugins
             return JsonObject.Parse(JsonSerializer.Serialize(_config)).AsObject();
 
         }
-        public string Export(bool indented=true)
+        public string Export(bool indented = true)
         {
-            return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented =indented});
+            return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented = indented });
         }
 
 

@@ -68,7 +68,7 @@ namespace MATSys
         /// <summary>
         /// Collection of IModule instances created from ModuleHubBackgroundService. Null if Module is manually created.
         /// </summary>
-        Dictionary<string,IModule> LocalPeers { get; set; }
+        Dictionary<string, IModule> LocalPeers { get; set; }
 
     }
 }

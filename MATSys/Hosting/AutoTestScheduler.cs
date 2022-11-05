@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System.Threading.Channels;
 
 namespace MATSys.Hosting
@@ -72,7 +71,7 @@ namespace MATSys.Hosting
                 {
                     if (item.Contains(".ats"))
                     {
-                        foreach (var subItem in ReadFromFile(item,type))
+                        foreach (var subItem in ReadFromFile(item, type))
                         {
                             yield return subItem;
                         };
@@ -80,7 +79,7 @@ namespace MATSys.Hosting
                     else
                     {
                         var pat = item.Split(':');
-                        yield return new TestItem(type,pat[0], pat[1]);
+                        yield return new TestItem(type, pat[0], pat[1]);
 
                     }
                 }
@@ -88,7 +87,7 @@ namespace MATSys.Hosting
 
 
         }
-        private IEnumerable<TestItem> ReadFromFile(string filePath,ScriptType type)
+        private IEnumerable<TestItem> ReadFromFile(string filePath, ScriptType type)
         {
             var p = Path.Combine(RootDirectory, filePath);
             if (File.Exists(p))
@@ -97,7 +96,7 @@ namespace MATSys.Hosting
                 {
                     if (item.Contains(".ats"))
                     {
-                        foreach (var subItem in ReadFromFile(item,type))
+                        foreach (var subItem in ReadFromFile(item, type))
                         {
                             yield return subItem;
                         }
@@ -105,7 +104,7 @@ namespace MATSys.Hosting
                     else
                     {
                         var pat = item.Split(':');
-                        yield return new TestItem(type,pat[0], pat[1]);
+                        yield return new TestItem(type, pat[0], pat[1]);
                     }
 
                 }
@@ -162,7 +161,7 @@ namespace MATSys.Hosting
         /// <param name="type">type of the script</param>
         /// <param name="name">Module name</param>
         /// <param name="cmd">Command string</param>
-        public TestItem(ScriptType type,string name, string cmd)
+        public TestItem(ScriptType type, string name, string cmd)
         {
             Type = type;
             ID = GetHashCode();

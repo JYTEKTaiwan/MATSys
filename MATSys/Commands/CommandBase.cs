@@ -13,7 +13,7 @@ namespace MATSys.Commands
     {
         private static Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}|[a-zA-Z]+");
         internal const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
-        protected static JsonSerializerOptions opt=new JsonSerializerOptions()
+        protected static JsonSerializerOptions opt = new JsonSerializerOptions()
         {
             WriteIndented = true,
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -49,7 +49,7 @@ namespace MATSys.Commands
             {
                 try
                 {
-                    return System.Text.Json.JsonSerializer.Serialize(obj,opt);
+                    return System.Text.Json.JsonSerializer.Serialize(obj, opt);
                 }
                 catch (Exception ex)
                 {
@@ -75,9 +75,9 @@ namespace MATSys.Commands
             try
             {
                 if (typeof(ICommand).IsAssignableFrom(t))
-                {                    
+                {
                     var cmdString = $"\"{rawString.Replace("\"", "\\\"")}\"";
-                    var cmd = System.Text.Json.JsonSerializer.Deserialize(cmdString, t,opt) as ICommand;
+                    var cmd = System.Text.Json.JsonSerializer.Deserialize(cmdString, t, opt) as ICommand;
                     if (cmd == null)
                     {
                         throw new NullReferenceException("command is null");
@@ -347,7 +347,7 @@ namespace MATSys.Commands
         /// <returns>command string</returns>
         public override string Serialize()
         {
-            return System.Text.Json.JsonSerializer.Serialize(this,opt).Replace("\"", "").Replace("\\", "\""); 
+            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
             //var sb = new StringBuilder();
             //sb.Append(MethodName);
             //sb.Append("=");
@@ -675,7 +675,7 @@ namespace MATSys.Commands
         /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4,T5,T6,T7}"/>)
         /// </summary>
 
-        [JsonPropertyOrder(1)] 
+        [JsonPropertyOrder(1)]
         public ValueTuple<T1, T2, T3, T4, T5, T6, T7> Parameter { get; set; }
 
         /// <summary>

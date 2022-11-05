@@ -4,7 +4,6 @@ using MATSys.Commands;
 using MATSys.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using System.Text.Json;
 
 Console.WriteLine("Hello, World!");
 

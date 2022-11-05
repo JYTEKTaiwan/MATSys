@@ -1,7 +1,6 @@
 ﻿using MATSys;
 using MATSys.Commands;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Management;
 using System.Threading.Channels;

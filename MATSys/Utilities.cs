@@ -1,5 +1,4 @@
 using MATSys.Commands;
-using MATSys.Hosting;
 using System.Reflection;
 
 #if NET6_0_OR_GREATER

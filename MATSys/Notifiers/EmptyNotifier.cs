@@ -54,7 +54,7 @@ namespace MATSys.Plugins
         {
             return new JsonObject();
         }
-        public string Export(bool indented=true)
+        public string Export(bool indented = true)
         {
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }

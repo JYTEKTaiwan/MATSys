@@ -48,7 +48,7 @@ namespace MATSys
         /// <summary>
         /// Collection of IModules created by ModuleHubBackgroundService
         /// </summary>
-        public Dictionary<string,IModule> LocalPeers { get; set; } = new Dictionary<string, IModule>();
+        public Dictionary<string, IModule> LocalPeers { get; set; } = new Dictionary<string, IModule>();
 
         /// <summary>
         /// ILogger instance
@@ -280,7 +280,7 @@ namespace MATSys
         /// </summary>
         /// <param name="format"></param>
         /// <returns></returns>
-        public string Export(bool indented=true)
+        public string Export(bool indented = true)
         {
             return Export().ToJsonString(new System.Text.Json.JsonSerializerOptions() { WriteIndented = indented });
         }
