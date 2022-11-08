@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CsvHelper.TypeConversion;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Threading.Channels;
 
 namespace MATSys.Hosting
@@ -41,7 +43,6 @@ namespace MATSys.Hosting
                 _queue.Writer.WriteAsync(item).AsTask().Wait();
             }
         }
-
         public void AddTestItem()
         {
             //test
@@ -50,8 +51,6 @@ namespace MATSys.Hosting
                 _queue.Writer.WriteAsync(item).AsTask().Wait();
             }
         }
-
-
         public async Task<TestItem> Dequeue(CancellationToken token)
         {
             return await _queue.Reader.ReadAsync(token);

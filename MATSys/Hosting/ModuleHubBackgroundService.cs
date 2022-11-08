@@ -215,7 +215,7 @@ namespace MATSys.Hosting
             int cnt = 0;
             while (!token.IsCancellationRequested)
             {
-                if (SpinWait.SpinUntil(() => !_scheduler.IsAvailable, 0))
+                if (SpinWait.SpinUntil(() => !_scheduler.IsAvailable, 1))
                 {
                     if (cnt == iteration && iteration != 0)
                     {
