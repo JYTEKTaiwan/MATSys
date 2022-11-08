@@ -1,4 +1,6 @@
 using MATSys.Commands;
+using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace UT_MATSys;
 
@@ -113,4 +115,63 @@ public class UT_Command
             Assert.Fail(ex.Message);
         }
     }
+}
+
+public class UT_Command_Performance
+{
+    [Test]
+    public void SevenArgumentsSerialization()
+    {
+        var cmd = CommandBase.Create("Test", 1, 1.0, (decimal)1, true, DateTime.Now, new object(), "");
+        var str = cmd.Serialize();
+        var cnt = 10000;
+        Stopwatch sw = new Stopwatch();
+        sw.Restart();
+        for (int i = 0; i < cnt; i++)
+        {
+            str=cmd.Serialize();
+        }
+        sw.Stop();
+        TestContext.Out.WriteLine($"Len={str.Length} bytes, {sw.Elapsed.TotalSeconds/ cnt}ms");
+        Assert.Pass();
+    }
+    [Test]
+    public void SevenArgumentsDeserialization()
+    {
+        var cmd = CommandBase.Create("Test", 1, 1.0, (decimal)1, true, DateTime.Now, new object(), "");
+        var str = cmd.Serialize();
+        var t=cmd.GetType();
+        var obj = CommandBase.Deserialize(str, t);
+        var cnt = 10000;
+        Stopwatch sw = new Stopwatch();
+        sw.Restart();
+        for (int i = 0; i < cnt; i++)
+        {
+            obj = CommandBase.Deserialize(str, t);
+        }
+        sw.Stop();
+        TestContext.Out.WriteLine($"Len={str.Length} bytes, {sw.Elapsed.TotalSeconds / cnt}ms");
+        Assert.Pass();
+    }
+
+    [Test]
+    public void SevenArgumentsValueTupleDeserialization()
+    {
+        var cmd = ValueTuple.Create(1, 1.0, (decimal)1, true, DateTime.Now, new object(), "");
+        var str = Newtonsoft.Json.JsonConvert.SerializeObject(cmd);
+        var t = typeof(ValueTuple<int, double, decimal, bool, DateTime, object, string>);
+        var obj = Newtonsoft.Json.JsonConvert.DeserializeObject(str,t);
+        var cnt = 10000;
+        Stopwatch sw = new Stopwatch();
+        sw.Restart();
+        for (int i = 0; i < cnt; i++)
+        {
+            obj = Newtonsoft.Json.JsonConvert.DeserializeObject(str, t);
+        }
+        sw.Stop();
+        TestContext.Out.WriteLine($"Len={str.Length} bytes, {sw.Elapsed.TotalSeconds / cnt}ms");
+        Assert.Pass();
+    }
+
+
 }

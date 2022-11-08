@@ -11,7 +11,7 @@ public class UT_Export
         NetMQTransceiverConfiguration config = new NetMQTransceiverConfiguration();
         var tran = TransceiverFactory.CreateNew<NetMQTransceiver>(config);
         var mod = ModuleFactory.CreateNew<UT_ModuleBase.NormalDevice>(null, tran);
-        var a = mod.Export(Newtonsoft.Json.Formatting.Indented);
+        var a = mod.Export(true);
     }
 
 }
