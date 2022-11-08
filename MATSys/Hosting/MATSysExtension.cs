@@ -23,10 +23,10 @@ namespace MATSys.Hosting
    .SetBasePath(Directory.GetCurrentDirectory())
    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
    .Build();
-            if (config.GetSection("MATSys:EnableNLogInJsonFile").Get<bool>())
-            {
-                NLog.LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
-            }
+            //if (config.GetSection("MATSys:EnableNLogInJsonFile").Get<bool>())
+            //{
+            //    NLog.LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
+            //}
 
             return hostBuilder.ConfigureServices(service =>
             service.AddHostedService<ModuleHubBackgroundService>()
