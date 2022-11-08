@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using NLog;
 using System.Reflection;
+using System.Text.Json;
 
 namespace MATSys.Factories
 {
@@ -32,6 +35,7 @@ namespace MATSys.Factories
         private readonly ITransceiverFactory _transceiverFactory;
         private readonly INotifierFactory _notifierFactory;
         private readonly IRecorderFactory _recorderFactory;
+        private readonly NLog.ILogger _logger;
         /// <summary>
         /// Constructor for Module factory (dynamically load the assemblies and dependencies from the specified path)
         /// </summary>
@@ -41,13 +45,16 @@ namespace MATSys.Factories
         /// <param name="rec_factory">Factory for Recorder</param>
         public ModuleFactory(IConfiguration config, ITransceiverFactory tran_factory, INotifierFactory noti_factory, IRecorderFactory rec_factory)
         {
+            _logger = LogManager.GetCurrentClassLogger();
             _config = config;
             _transceiverFactory = tran_factory;
             _notifierFactory = noti_factory;
             _recorderFactory = rec_factory;
             var plugins = _config.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
+            _logger.Debug($"External references: {JsonSerializer.Serialize(plugins)}");
             //Load plugin assemblies into memoery
             DependencyLoader.LoadPluginAssemblies(plugins);
+            _logger.Info($"{plugins.Length} External references is/are loaded");
         }
         /// <summary>
         /// Create IModule instance using specific section in json file
@@ -56,12 +63,12 @@ namespace MATSys.Factories
         /// <returns>IModule instance</returns>
         public IModule CreateModule(IConfigurationSection section)
         {
+            _logger.Trace($"Path: {section.Path}");
             var _section = section;
             //get the name of the instance
             var name = section.GetSection("Alias").Get<string>();
             //get the type string of the instance
             var typeString = section.GetSection("Type").Get<string>();
-
             //Derive the correct Type from AppDomain.CurrentDomain
             Type t = ParseType(typeString);
 
@@ -69,6 +76,7 @@ namespace MATSys.Factories
             var trans = _transceiverFactory.CreateTransceiver(section.GetSection(key_transceiver));
             var noti = _notifierFactory.CreateNotifier(section.GetSection(key_notifier));
             var rec = _recorderFactory.CreateRecorder(section.GetSection(key_recorder));
+            _logger.Debug($"[{name}]{typeString} is created with {trans.Name},{noti.Name},{rec.Name}");
 
             //Create instance and return 
             return (IModule)Activator.CreateInstance(t, new object[] { section, trans, noti, rec, name })!;
