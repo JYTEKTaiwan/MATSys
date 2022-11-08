@@ -1,6 +1,8 @@
 ﻿using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
+using NLog;
 using System.Reflection;
+using System.Text.Json;
 
 namespace MATSys.Factories
 {
@@ -21,6 +23,8 @@ namespace MATSys.Factories
         private readonly static Type DefaultType = typeof(EmptyNotifier);
         private static Lazy<INotifier> _default = new Lazy<INotifier>(() => new EmptyNotifier());
         private static INotifier DefaultInstance => _default.Value;
+        private readonly NLog.ILogger _logger;
+
 
         /// <summary>
         /// ctor of notifier factory (dynamically load the assemblies and dependencies from the specified path)
@@ -28,11 +32,15 @@ namespace MATSys.Factories
         /// <param name="config">configuration instance</param>
         public NotifierFactory(IConfiguration config)
         {
+            _logger = LogManager.GetCurrentClassLogger();
             // list the notifier reference paths in the json file
             var plugins = config.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
+            _logger.Debug($"External references: {JsonSerializer.Serialize(plugins)}");
 
             //Load plugin assemblies into memoery
             DependencyLoader.LoadPluginAssemblies(plugins);
+            _logger.Info($"{plugins.Length} External references is/are loaded");
+
         }
 
         /// <summary>
@@ -44,6 +52,7 @@ namespace MATSys.Factories
         {
             try
             {
+                _logger.Trace($"Path: {section.Path}");
                 Type t = DefaultType;
                 //check if section in the json configuration exits
                 if (section.Exists())
@@ -68,6 +77,7 @@ namespace MATSys.Factories
                         }
                     }
                 }
+                _logger.Debug($"{t.Name} is used");
                 return CreateNotifier(t, section);
             }
             catch (Exception ex)
