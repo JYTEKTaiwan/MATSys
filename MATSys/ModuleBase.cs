@@ -236,30 +236,17 @@ namespace MATSys
         {
             foreach (var item in cmds.Values)
             {
-                yield return GetTemplateString(item.CommandType);
+                var args = item.CommandType.GenericTypeArguments;
+                JsonArray arr = new JsonArray();
+                for(int i = 0; i < args.Length; i++)
+                {
+                    arr.Add(args[i].Name);
+                }
+                JsonObject jobj = new JsonObject();
+                jobj.Add(item.Alias,arr);
+                yield return jobj.ToJsonString();
             }
 
-            /* Unmerged change from project 'MATSys (net472)'
-            Before:
-                    }
-
-                    /// <summary>
-            After:
-                    }
-
-                    /// <summary>
-            */
-
-            /* Unmerged change from project 'MATSys (netstandard2.0)'
-            Before:
-                    }
-
-                    /// <summary>
-            After:
-                    }
-
-                    /// <summary>
-            */
         }
 
         /// <summary>
@@ -305,32 +292,6 @@ namespace MATSys
                     cmd.Invoker = MethodInvoker.Create(this, x);
                     return cmd;
                 }).ToDictionary(x => x.Alias);
-        }
-
-        private string GetTemplateString(Type? t)
-        {
-            if (t != null)
-            {
-                var args = t.GenericTypeArguments;
-                var sb = new StringBuilder();
-                sb.Append(Name);
-                sb.Append("=");
-                for (int i = 0; i < args.Length; i++)
-                {
-                    sb.Append(args[i].FullName);
-                    if (i != args.Length - 1)
-                    {
-                        sb.Append(",");
-                    }
-                }
-                return sb.ToString();
-            }
-            else
-            {
-                throw new ArgumentNullException("null input");
-            }
-
-
         }
 
 
@@ -434,13 +395,13 @@ namespace MATSys
         {
             try
             {
-                var answer = "";
-                _logger.Trace($"OnDataReady event fired: {commandObjectInJson}");                               
-                var item = cmds[JsonDocument.Parse(commandObjectInJson).RootElement.EnumerateObject().First().Name];
+                _logger.Trace($"OnDataReady event fired: {commandObjectInJson}");
+                var item = cmds[commandObjectInJson.Substring(2, commandObjectInJson.IndexOf(':') - 3)];
+                //var sp = commandObjectInJson.AsSpan();
+                //var item = cmds[sp.Slice(2, sp.IndexOf(':') - 3).ToString()];
                 var cmd = CommandBase.Deserialize(commandObjectInJson, item.CommandType!);
                 _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
-                answer = Execute(cmd);
-                return answer;
+                return Execute(cmd);
             }
             catch (KeyNotFoundException ex)
             {
