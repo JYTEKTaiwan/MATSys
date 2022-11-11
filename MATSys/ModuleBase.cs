@@ -184,7 +184,7 @@ namespace MATSys
         {
             try
             {
-                _logger.Trace($"Command is ready to executed {cmd.Serialize()}");
+                _logger.Trace($"Command is ready to executed {cmd.MethodName}");
                 var invoker = cmds[cmd.MethodName].Invoker;
                 if (invoker == null)
                 {
