@@ -4,8 +4,11 @@ using Microsoft.Extensions.Configuration;
 using NLog;
 using System.Data;
 using System.Reflection;
+using System.Reflection.Metadata;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Json.Serialization.Metadata;
 
 namespace MATSys
 {
@@ -432,9 +435,8 @@ namespace MATSys
             try
             {
                 var answer = "";
-                _logger.Trace($"OnDataReady event fired: {commandObjectInJson}");
-                var parsedName = commandObjectInJson.Split('=')[0];
-                var item = cmds[parsedName];
+                _logger.Trace($"OnDataReady event fired: {commandObjectInJson}");                               
+                var item = cmds[JsonDocument.Parse(commandObjectInJson).RootElement.EnumerateObject().First().Name];
                 var cmd = CommandBase.Deserialize(commandObjectInJson, item.CommandType!);
                 _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
                 answer = Execute(cmd);

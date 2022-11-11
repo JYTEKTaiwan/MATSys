@@ -8,7 +8,8 @@ using NLog.Extensions.Logging;
 var a = ModuleFactory.CreateNew<TestModule>(new object(), null, null, null, "TEST");
 
 //var a = ModuleFactory.CreateNew(@".\TestDevice.dll", "TestDevice", null, null, null, null, "TEST");
-var response = a.Execute(CommandBase.Create("Method", "HELLO"));
+//var response = a.Execute(CommandBase.Create("Method", "HELLO"));
+var response = a.Execute(@"""Method"":[""Hello""]");
 Console.WriteLine(response);
 Console.ReadLine();
 

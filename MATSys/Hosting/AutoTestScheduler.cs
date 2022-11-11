@@ -1,6 +1,7 @@
 ﻿using CsvHelper.TypeConversion;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Text.Json;
 using System.Threading.Channels;
 
 namespace MATSys.Hosting
@@ -77,8 +78,12 @@ namespace MATSys.Hosting
                     }
                     else
                     {
-                        var pat = item.Split(':');
-                        yield return new TestItem(type, pat[0], pat[1]);
+                        ReadOnlySpan<char> sp = item.AsSpan();                        
+                        int start = sp.IndexOf('\"');
+                        int stop = sp.IndexOf(':');
+                        var name = item.Substring(start+1, stop - start-1);
+                        var cmd = item.Remove(start+1, stop - start);                        
+                        yield return new TestItem(type, name,cmd);
 
                     }
                 }
@@ -102,8 +107,12 @@ namespace MATSys.Hosting
                     }
                     else
                     {
-                        var pat = item.Split(':');
-                        yield return new TestItem(type, pat[0], pat[1]);
+                        ReadOnlySpan<char> sp = item.AsSpan();
+                        int start = sp.IndexOf('\"');
+                        int stop = sp.IndexOf(':');
+                        var name = item.Substring(start + 1, stop - start - 1);
+                        var cmd = item.Remove(start + 1, stop - start);
+                        yield return new TestItem(type, name, cmd);
                     }
 
                 }

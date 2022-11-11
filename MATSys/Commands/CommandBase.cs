@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using static NetMQ.NetMQSelector;
 
 namespace MATSys.Commands
 {
@@ -15,14 +16,13 @@ namespace MATSys.Commands
         internal const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
         protected static JsonSerializerOptions opt = new JsonSerializerOptions()
         {
-            WriteIndented = true,
+            WriteIndented = false,
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
         };
 
         /// <summary>
         /// Name of the current command
         /// </summary>
-        [JsonPropertyOrder(0)]
         public string MethodName { get; set; }
 
         /// <summary>
@@ -76,8 +76,7 @@ namespace MATSys.Commands
             {
                 if (typeof(ICommand).IsAssignableFrom(t))
                 {
-                    var cmdString = $"\"{rawString.Replace("\"", "\\\"")}\"";
-                    var cmd = System.Text.Json.JsonSerializer.Deserialize(cmdString, t, opt) as ICommand;
+                    var cmd = JsonSerializer.Deserialize(rawString, t, opt) as ICommand;
                     if (cmd == null)
                     {
                         throw new NullReferenceException("command is null");
@@ -294,18 +293,13 @@ namespace MATSys.Commands
         {
             return new object[0];
         }
-
         /// <summary>
-        /// Serialize the cmd object into string
+        /// Serialize the command instance into simplified string format
         /// </summary>
-        /// <returns>command string</returns>
+        /// <returns>simplified string</returns>
         public override string Serialize()
         {
-            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
-            //var sb = new StringBuilder();
-            //sb.Append(MethodName);
-            //sb.Append("=");
-            //return sb.ToString();
+            return JsonSerializer.Serialize(this, opt);
         }
 
     }
@@ -318,10 +312,9 @@ namespace MATSys.Commands
     public sealed class Command<T1> : CommandBase
     {
         /// <summary>
-        /// Parameters (<see cref="ValueTuple{T1}"/>)
+        /// Parameter Type <typeparamref name="T1"/>
         /// </summary>
-        [JsonPropertyOrder(1)]
-        public ValueTuple<T1> Parameter { get; set; }
+        public T1 Item1 { get; set; }
 
         /// <summary>
         /// Constructor
@@ -330,7 +323,7 @@ namespace MATSys.Commands
         /// <param name="param1"></param>
         public Command(string name, T1 param1) : base(name)
         {
-            Parameter = ValueTuple.Create(param1);
+            Item1= param1;
         }
 
         /// <summary>
@@ -339,20 +332,15 @@ namespace MATSys.Commands
         /// <returns></returns>
         public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1! };
+            return new object[] { Item1! };
         }
         /// <summary>
-        /// Serialize the cmd object into string
+        /// Serialize the command instance into simplified string format
         /// </summary>
-        /// <returns>command string</returns>
+        /// <returns>simplified string</returns>
         public override string Serialize()
         {
-            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
-            //var sb = new StringBuilder();
-            //sb.Append(MethodName);
-            //sb.Append("=");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            //return sb.ToString();
+            return JsonSerializer.Serialize(this, opt);
         }
 
     }
@@ -366,9 +354,13 @@ namespace MATSys.Commands
     public sealed class Command<T1, T2> : CommandBase
     {
         /// <summary>
-        /// Parameters (<see cref="ValueTuple{T1,T2}"/>)
+        /// Parameter Type <typeparamref name="T1"/>
         /// </summary>
-        [JsonPropertyOrder(1)] public ValueTuple<T1, T2> Parameter { get; set; }
+        public T1 Item1 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T2"/>
+        /// </summary>
+        public T2 Item2 { get; set; }
 
         /// <summary>
         /// Constructor
@@ -378,7 +370,8 @@ namespace MATSys.Commands
         /// <param name="param2"></param>
         public Command(string name, T1 param1, T2 param2) : base(name)
         {
-            Parameter = ValueTuple.Create<T1, T2>(param1, param2);
+            Item1 = param1;
+            Item2 = param2;
         }
         /// <summary>
         /// return the parameters in object array
@@ -386,23 +379,15 @@ namespace MATSys.Commands
         /// <returns></returns>
         public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1!, Parameter.Item2! };
+            return new object[] { Item1!, Item2! };
         }
         /// <summary>
-        /// Serialize the cmd object into string
+        /// Serialize the command instance into simplified string format
         /// </summary>
-        /// <returns>command string</returns>
+        /// <returns>simplified string</returns>
         public override string Serialize()
         {
-            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
-            //var sb = new StringBuilder();
-            //sb.Append(MethodName);
-            //sb.Append("=");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-            //return sb.ToString();
-
+            return JsonSerializer.Serialize(this, opt);
         }
 
     }
@@ -415,11 +400,19 @@ namespace MATSys.Commands
     /// <typeparam name="T3"></typeparam>
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
     public sealed class Command<T1, T2, T3> : CommandBase
-    {        /// <summary>
-             /// Parameters (<see cref="ValueTuple{T1,T2,T3}"/>)
-             /// </summary>
-
-        [JsonPropertyOrder(1)] public ValueTuple<T1, T2, T3> Parameter { get; set; }
+    {
+        /// <summary>
+        /// Parameter Type <typeparamref name="T1"/>
+        /// </summary>
+        public T1 Item1 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T2"/>
+        /// </summary>
+        public T2 Item2 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T3"/>
+        /// </summary>
+        public T3 Item3 { get; set; }
 
         /// <summary>
         /// Constructor
@@ -430,7 +423,9 @@ namespace MATSys.Commands
         /// <param name="param3"></param>
         public Command(string name, T1 param1, T2 param2, T3 param3) : base(name)
         {
-            Parameter = ValueTuple.Create(param1, param2, param3);
+            Item1 = param1;
+            Item2 = param2;
+            Item3 = param3;
         }
         /// <summary>
         /// return the parameters in object array
@@ -439,27 +434,15 @@ namespace MATSys.Commands
 
         public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3! };
+            return new object[] { Item1!, Item2!, Item3! };
         }
         /// <summary>
-        /// Serialize the cmd object into string
+        /// Serialize the command instance into simplified string format
         /// </summary>
-        /// <returns>command string</returns>
-
+        /// <returns>simplified string</returns>
         public override string Serialize()
         {
-            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
-            //var sb = new StringBuilder();
-            //sb.Append(MethodName);
-            //sb.Append("=");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
-
-            //return sb.ToString();
-
+            return JsonSerializer.Serialize(this, opt);
         }
 
     }
@@ -475,10 +458,21 @@ namespace MATSys.Commands
     public sealed class Command<T1, T2, T3, T4> : CommandBase
     {
         /// <summary>
-        /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4}"/>)
+        /// Parameter Type <typeparamref name="T1"/>
         /// </summary>
-
-        [JsonPropertyOrder(1)] public ValueTuple<T1, T2, T3, T4> Parameter { get; set; }
+        public T1 Item1 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T2"/>
+        /// </summary>
+        public T2 Item2 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T3"/>
+        /// </summary>
+        public T3 Item3 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T4"/>
+        /// </summary>
+        public T4 Item4 { get; set; }
 
         /// <summary>
         /// Constructor
@@ -490,7 +484,10 @@ namespace MATSys.Commands
         /// <param name="param4"></param>
         public Command(string name, T1 param1, T2 param2, T3 param3, T4 param4) : base(name)
         {
-            Parameter = ValueTuple.Create<T1, T2, T3, T4>(param1, param2, param3, param4);
+            Item1 = param1;
+            Item2 = param2;
+            Item3 = param3;
+            Item4 = param4;
         }
         /// <summary>
         /// return the parameters in object array
@@ -499,28 +496,15 @@ namespace MATSys.Commands
 
         public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4! };
+            return new object[] { Item1!, Item2!, Item3!, Item4! };
         }
         /// <summary>
-        /// Serialize the cmd object into string
+        /// Serialize the command instance into simplified string format
         /// </summary>
-        /// <returns>command string</returns>
-
+        /// <returns>simplified string</returns>
         public override string Serialize()
         {
-            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
-            //var sb = new StringBuilder();
-            //sb.Append(MethodName);
-            //sb.Append("=");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
-            //return sb.ToString();
-
+            return JsonSerializer.Serialize(this, opt);
         }
 
     }
@@ -537,10 +521,25 @@ namespace MATSys.Commands
     public sealed class Command<T1, T2, T3, T4, T5> : CommandBase
     {
         /// <summary>
-        /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4,T5}"/>)
+        /// Parameter Type <typeparamref name="T1"/>
         /// </summary>
-
-        [JsonPropertyOrder(1)] public ValueTuple<T1, T2, T3, T4, T5> Parameter { get; set; }
+        public T1 Item1 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T2"/>
+        /// </summary>
+        public T2 Item2 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T3"/>
+        /// </summary>
+        public T3 Item3 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T4"/>
+        /// </summary>
+        public T4 Item4 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T5"/>
+        /// </summary>
+        public T5 Item5 { get; set; }
         /// <summary>
         /// Constructor
         /// </summary>
@@ -552,7 +551,11 @@ namespace MATSys.Commands
         /// <param name="param5"></param>
         public Command(string name, T1 param1, T2 param2, T3 param3, T4 param4, T5 param5) : base(name)
         {
-            Parameter = ValueTuple.Create<T1, T2, T3, T4, T5>(param1, param2, param3, param4, param5);
+            Item1 = param1;
+            Item2 = param2;
+            Item3 = param3;
+            Item4 = param4;
+            Item5 = param5;
         }
         /// <summary>
         /// return the parameters in object array
@@ -561,30 +564,15 @@ namespace MATSys.Commands
 
         public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5! };
+            return new object[] { Item1!, Item2!, Item3!, Item4!, Item5! };
         }
         /// <summary>
-        /// Serialize the cmd object into string
+        /// Serialize the command instance into simplified string format
         /// </summary>
-        /// <returns>command string</returns>
-
+        /// <returns>simplified string</returns>
         public override string Serialize()
         {
-            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
-            //var sb = new StringBuilder();
-            //sb.Append(MethodName);
-            //sb.Append("=");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item5));
-            //return sb.ToString();
-
+            return JsonSerializer.Serialize(this, opt);
         }
 
     }
@@ -602,11 +590,29 @@ namespace MATSys.Commands
     public sealed class Command<T1, T2, T3, T4, T5, T6> : CommandBase
     {
         /// <summary>
-        /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4,T5,T6}"/>)
+        /// Parameter Type <typeparamref name="T1"/>
         /// </summary>
-
-        [JsonPropertyOrder(1)] public ValueTuple<T1, T2, T3, T4, T5, T6> Parameter { get; set; }
-
+        public T1 Item1 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T2"/>
+        /// </summary>
+        public T2 Item2 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T3"/>
+        /// </summary>
+        public T3 Item3 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T4"/>
+        /// </summary>
+        public T4 Item4 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T5"/>
+        /// </summary>
+        public T5 Item5 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T6"/>
+        /// </summary>
+        public T6 Item6 { get; set; }
         /// <summary>
         /// Constructor
         /// </summary>
@@ -619,41 +625,28 @@ namespace MATSys.Commands
         /// <param name="param6"></param>
         public Command(string name, T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6) : base(name)
         {
-            Parameter = ValueTuple.Create<T1, T2, T3, T4, T5, T6>(param1, param2, param3, param4, param5, param6);
-        }
-        /// <summary>
-        /// return the parameters in object array
-        /// </summary>
-        /// <returns></returns>
-
-        public override object[]? GetParameters()
-        {
-            return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5!, Parameter.Item6! };
+            Item1 = param1;
+            Item2 = param2;
+            Item3 = param3;
+            Item4 = param4;
+            Item5 = param5;
+            Item6 = param6;
         }
         /// <summary>
         /// Serialize the cmd object into string
         /// </summary>
         /// <returns>command string</returns>
-
+        public override object[]? GetParameters()
+        {
+            return new object[] { Item1!, Item2!, Item3!, Item4!, Item5!, Item6! };
+        }
+        /// <summary>
+        /// Serialize the command instance into simplified string format
+        /// </summary>
+        /// <returns>simplified string</returns>
         public override string Serialize()
         {
-            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
-            //var sb = new StringBuilder();
-            //sb.Append(MethodName);
-            //sb.Append("=");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item5));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item6));
-            //return sb.ToString();
-
+            return JsonSerializer.Serialize(this, opt);
         }
 
     }
@@ -672,11 +665,33 @@ namespace MATSys.Commands
     public sealed class Command<T1, T2, T3, T4, T5, T6, T7> : CommandBase
     {
         /// <summary>
-        /// Parameters (<see cref="ValueTuple{T1,T2,T3,T4,T5,T6,T7}"/>)
+        /// Parameter Type <typeparamref name="T1"/>
         /// </summary>
-
-        [JsonPropertyOrder(1)]
-        public ValueTuple<T1, T2, T3, T4, T5, T6, T7> Parameter { get; set; }
+        public T1 Item1 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T2"/>
+        /// </summary>
+        public T2 Item2 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T3"/>
+        /// </summary>
+        public T3 Item3 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T4"/>
+        /// </summary>
+        public T4 Item4 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T5"/>
+        /// </summary>
+        public T5 Item5 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T6"/>
+        /// </summary>
+        public T6 Item6 { get; set; }
+        /// <summary>
+        /// Parameter Type <typeparamref name="T7"/>
+        /// </summary>
+        public T7 Item7 { get; set; }
 
         /// <summary>
         /// Constructor
@@ -691,7 +706,13 @@ namespace MATSys.Commands
         /// <param name="param7"></param>
         public Command(string name, T1 param1, T2 param2, T3 param3, T4 param4, T5 param5, T6 param6, T7 param7) : base(name)
         {
-            Parameter = ValueTuple.Create<T1, T2, T3, T4, T5, T6, T7>(param1, param2, param3, param4, param5, param6, param7);
+            Item1 = param1;
+            Item2 = param2;
+            Item3 = param3;
+            Item4 = param4;
+            Item5 = param5;
+            Item6 = param6;
+            Item7 = param7;
         }
         /// <summary>
         /// return the parameters in object array
@@ -700,34 +721,20 @@ namespace MATSys.Commands
 
         public override object[]? GetParameters()
         {
-            return new object[] { Parameter.Item1!, Parameter.Item2!, Parameter.Item3!, Parameter.Item4!, Parameter.Item5!, Parameter.Item6!, Parameter.Item7! };
+            return new object[] { Item1!, Item2!, Item3!, Item4!, Item5!, Item6!, Item7! };
         }
         /// <summary>
         /// Serialize the cmd object into string
         /// </summary>
         /// <returns>command string</returns>
 
+        /// <summary>
+        /// Serialize the command instance into simplified string format
+        /// </summary>
+        /// <returns>simplified string</returns>
         public override string Serialize()
         {
-            return System.Text.Json.JsonSerializer.Serialize(this, opt).Replace("\"", "").Replace("\\", "\"");
-            //var sb = new StringBuilder();
-            //sb.Append(MethodName);
-            //sb.Append("=");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item1));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item2));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item3));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item4));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item5));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item6));
-            //sb.Append(",");
-            //sb.Append(JsonConvert.SerializeObject(Parameter.Item7));
-            //return sb.ToString();
-
+            return JsonSerializer.Serialize(this, opt);
         }
 
     }

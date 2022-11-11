@@ -53,20 +53,27 @@ namespace MATSys.Commands
             }
 
             JsonConverter converter = (JsonConverter)Activator.CreateInstance(
-                t
-                )!;
+                t, options)!;
 
             return converter;
         }
         private class CommandConverter : JsonConverter<Command>
         {
-            private Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}|[a-zA-Z]+");
+
+            public CommandConverter(JsonSerializerOptions options)
+            {
+
+            }
+
             public override Command Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var value = reader.GetString();
-                var matches = regex.Matches(value);
-                var name = matches[0].Value;
+                reader.Read();//property name
+                var name = reader.GetString();
+                reader.Read();//start of array
+                reader.Read();//end of array
+                reader.Read();//end of object
                 return CommandBase.Create(name);
+
             }
 
             public override void Write(
@@ -74,25 +81,40 @@ namespace MATSys.Commands
                 Command value,
                 JsonSerializerOptions options)
             {
-                var sb = new StringBuilder();
-                sb.Append(value.MethodName);
-                sb.Append("=");
-                writer.WriteStringValue(sb.ToString());
+                writer.WriteStartObject();
+                writer.WritePropertyName(value.MethodName);
+                writer.WriteStartArray();
+                writer.WriteEndArray();
+                writer.WriteEndObject();
 
             }
+
 
         }
         private class CommandConverter<T1> : JsonConverter<Command<T1>>
         {
-            private Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}|[a-zA-Z]+");
+            private readonly JsonConverter<T1> _v1Converter;
+            private readonly Type _v1Type;
+
+            public CommandConverter(JsonSerializerOptions options)
+            {
+                _v1Converter = (JsonConverter<T1>)options
+                                    .GetConverter(typeof(T1));
+                _v1Type = typeof(T1);
+
+            }
+
             public override Command<T1> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var value = reader.GetString();
-                var matches = regex.Matches(value);
-                var name = matches[0].Value;
-                return CommandBase.Create(name,
-                    JsonSerializer.Deserialize<T1>(matches[1].Value, options)
-                    )!;
+                reader.Read();//property name
+                var name = reader.GetString();
+                reader.Read();//start of array
+                reader.Read();
+                T1 v1 = _v1Converter.Read(ref reader, _v1Type, options);
+                reader.Read();//end of array
+                reader.Read();//end of object
+                return CommandBase.Create(name, v1);
+
             }
 
             public override void Write(
@@ -100,26 +122,48 @@ namespace MATSys.Commands
                 Command<T1> value,
                 JsonSerializerOptions options)
             {
-                var sb = new StringBuilder();
-                sb.Append(value.MethodName);
-                sb.Append("=");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item1, options));
-                writer.WriteStringValue(sb.ToString());
+                writer.WriteStartObject();
+                writer.WritePropertyName(value.MethodName);
+                writer.WriteStartArray();
+                _v1Converter.Write(writer, value.Item1, options);
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+
             }
+
 
         }
         private class CommandConverter<T1, T2> : JsonConverter<Command<T1, T2>>
         {
-            private Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}|[a-zA-Z]+");
+            private readonly JsonConverter<T1> _v1Converter;
+            private readonly Type _v1Type;
+            private readonly JsonConverter<T2> _v2Converter;
+            private readonly Type _v2Type;
+
+            public CommandConverter(JsonSerializerOptions options)
+            {
+                _v1Converter = (JsonConverter<T1>)options
+                                    .GetConverter(typeof(T1));
+                _v1Type = typeof(T1);
+                _v2Converter = (JsonConverter<T2>)options
+                        .GetConverter(typeof(T2));
+                _v2Type = typeof(T2);
+
+            }
+
             public override Command<T1, T2> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var value = reader.GetString();
-                var matches = regex.Matches(value);
-                var name = matches[0].Value;
-                return CommandBase.Create(name,
-                    JsonSerializer.Deserialize<T1>(matches[1].Value, options),
-                    JsonSerializer.Deserialize<T2>(matches[2].Value, options)
-                    )!;
+                reader.Read();//property name
+                var name = reader.GetString();
+                reader.Read();//start of array
+                reader.Read();
+                T1 v1 = _v1Converter.Read(ref reader, _v1Type, options);
+                reader.Read();
+                T2 v2 = _v2Converter.Read(ref reader, _v2Type, options);
+                reader.Read();//end of array
+                reader.Read();//end of object
+                return CommandBase.Create(name, v1, v2);
+
             }
 
             public override void Write(
@@ -127,29 +171,56 @@ namespace MATSys.Commands
                 Command<T1, T2> value,
                 JsonSerializerOptions options)
             {
-                var sb = new StringBuilder();
-                sb.Append(value.MethodName);
-                sb.Append("=");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item1, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item2, options));
-                writer.WriteStringValue(sb.ToString());
+                writer.WriteStartObject();
+                writer.WritePropertyName(value.MethodName);
+                writer.WriteStartArray();
+                _v1Converter.Write(writer, value.Item1, options);
+                _v2Converter.Write(writer, value.Item2, options);
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+
             }
+
 
         }
         private class CommandConverter<T1, T2, T3> : JsonConverter<Command<T1, T2, T3>>
         {
-            private Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}|[a-zA-Z]+");
+            private readonly JsonConverter<T1> _v1Converter;
+            private readonly Type _v1Type;
+            private readonly JsonConverter<T2> _v2Converter;
+            private readonly Type _v2Type;
+            private readonly JsonConverter<T3> _v3Converter;
+            private readonly Type _v3Type;
+
+            public CommandConverter(JsonSerializerOptions options)
+            {
+                _v1Converter = (JsonConverter<T1>)options
+                                    .GetConverter(typeof(T1));
+                _v1Type = typeof(T1);
+                _v2Converter = (JsonConverter<T2>)options
+                        .GetConverter(typeof(T2));
+                _v2Type = typeof(T2);
+                _v3Converter = (JsonConverter<T3>)options
+                                    .GetConverter(typeof(T3));
+                _v3Type = typeof(T1);
+
+            }
+
             public override Command<T1, T2, T3> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var value = reader.GetString();
-                var matches = regex.Matches(value);
-                var name = matches[0].Value;
-                return CommandBase.Create(name,
-                    JsonSerializer.Deserialize<T1>(matches[1].Value, options),
-                    JsonSerializer.Deserialize<T2>(matches[2].Value, options),
-                    JsonSerializer.Deserialize<T3>(matches[3].Value, options)
-                    )!;
+                reader.Read();//property name
+                var name = reader.GetString();
+                reader.Read();//start of array
+                reader.Read();
+                T1 v1 = _v1Converter.Read(ref reader, _v1Type, options);
+                reader.Read();
+                T2 v2 = _v2Converter.Read(ref reader, _v2Type, options);
+                reader.Read();
+                T3 v3 = _v3Converter.Read(ref reader, _v3Type, options);
+                reader.Read();//end of array
+                reader.Read();//end of object
+                return CommandBase.Create(name, v1, v2, v3);
+
             }
 
             public override void Write(
@@ -157,32 +228,64 @@ namespace MATSys.Commands
                 Command<T1, T2, T3> value,
                 JsonSerializerOptions options)
             {
-                var sb = new StringBuilder();
-                sb.Append(value.MethodName);
-                sb.Append("=");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item1, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item2, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item3, options));
-                writer.WriteStringValue(sb.ToString());
+                writer.WriteStartObject();
+                writer.WritePropertyName(value.MethodName);
+                writer.WriteStartArray();
+                _v1Converter.Write(writer, value.Item1, options);
+                _v2Converter.Write(writer, value.Item2, options);
+                _v3Converter.Write(writer, value.Item3, options);
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+
             }
+
 
         }
         private class CommandConverter<T1, T2, T3, T4> : JsonConverter<Command<T1, T2, T3, T4>>
         {
-            private Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}|[a-zA-Z]+");
+            private readonly JsonConverter<T1> _v1Converter;
+            private readonly Type _v1Type;
+            private readonly JsonConverter<T2> _v2Converter;
+            private readonly Type _v2Type;
+            private readonly JsonConverter<T3> _v3Converter;
+            private readonly Type _v3Type;
+            private readonly JsonConverter<T4> _v4Converter;
+            private readonly Type _v4Type;
+
+            public CommandConverter(JsonSerializerOptions options)
+            {
+                _v1Converter = (JsonConverter<T1>)options
+                                    .GetConverter(typeof(T1));
+                _v1Type = typeof(T1);
+                _v2Converter = (JsonConverter<T2>)options
+                        .GetConverter(typeof(T2));
+                _v2Type = typeof(T2);
+                _v3Converter = (JsonConverter<T3>)options
+                                    .GetConverter(typeof(T3));
+                _v3Type = typeof(T1);
+                _v4Converter = (JsonConverter<T4>)options
+                                    .GetConverter(typeof(T4));
+                _v4Type = typeof(T4);
+
+            }
+
             public override Command<T1, T2, T3, T4> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var value = reader.GetString();
-                var matches = regex.Matches(value);
-                var name = matches[0].Value;
-                return CommandBase.Create(name,
-                    JsonSerializer.Deserialize<T1>(matches[1].Value, options),
-                    JsonSerializer.Deserialize<T2>(matches[2].Value, options),
-                    JsonSerializer.Deserialize<T3>(matches[3].Value, options),
-                    JsonSerializer.Deserialize<T4>(matches[4].Value, options)
-                    )!;
+                reader.Read();//property name
+                var name = reader.GetString();
+                reader.Read();//start of array
+                reader.Read();
+                T1 v1 = _v1Converter.Read(ref reader, _v1Type, options);
+                reader.Read();
+                T2 v2 = _v2Converter.Read(ref reader, _v2Type, options);
+                reader.Read();
+                T3 v3 = _v3Converter.Read(ref reader, _v3Type, options);
+                reader.Read();
+                T4 v4 = _v4Converter.Read(ref reader, _v4Type, options);
+                reader.Read();//end of array
+                reader.Read();//end of object
+                return CommandBase.Create(name, v1, v2, v3, v4);
+
             }
 
             public override void Write(
@@ -190,35 +293,72 @@ namespace MATSys.Commands
                 Command<T1, T2, T3, T4> value,
                 JsonSerializerOptions options)
             {
-                var sb = new StringBuilder();
-                sb.Append(value.MethodName);
-                sb.Append("=");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item1, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item2, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item3, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item4, options));
-                writer.WriteStringValue(sb.ToString());
+                writer.WriteStartObject();
+                writer.WritePropertyName(value.MethodName);
+                writer.WriteStartArray();
+                _v1Converter.Write(writer, value.Item1, options);
+                _v2Converter.Write(writer, value.Item2, options);
+                _v3Converter.Write(writer, value.Item3, options);
+                _v4Converter.Write(writer, value.Item4, options);
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+
             }
+
 
         }
         private class CommandConverter<T1, T2, T3, T4, T5> : JsonConverter<Command<T1, T2, T3, T4, T5>>
         {
-            private Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}|[a-zA-Z]+");
+            private readonly JsonConverter<T1> _v1Converter;
+            private readonly Type _v1Type;
+            private readonly JsonConverter<T2> _v2Converter;
+            private readonly Type _v2Type;
+            private readonly JsonConverter<T3> _v3Converter;
+            private readonly Type _v3Type;
+            private readonly JsonConverter<T4> _v4Converter;
+            private readonly Type _v4Type;
+            private readonly JsonConverter<T5> _v5Converter;
+            private readonly Type _v5Type;
+
+            public CommandConverter(JsonSerializerOptions options)
+            {
+                _v1Converter = (JsonConverter<T1>)options
+                                    .GetConverter(typeof(T1));
+                _v1Type = typeof(T1);
+                _v2Converter = (JsonConverter<T2>)options
+                        .GetConverter(typeof(T2));
+                _v2Type = typeof(T2);
+                _v3Converter = (JsonConverter<T3>)options
+                                    .GetConverter(typeof(T3));
+                _v3Type = typeof(T1);
+                _v4Converter = (JsonConverter<T4>)options
+                                    .GetConverter(typeof(T4));
+                _v4Type = typeof(T4);
+                _v5Converter = (JsonConverter<T5>)options
+                                    .GetConverter(typeof(T5));
+                _v5Type = typeof(T5);
+
+            }
+
             public override Command<T1, T2, T3, T4, T5> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var value = reader.GetString();
-                var matches = regex.Matches(value);
-                var name = matches[0].Value;
-                return CommandBase.Create(name,
-                    JsonSerializer.Deserialize<T1>(matches[1].Value, options),
-                    JsonSerializer.Deserialize<T2>(matches[2].Value, options),
-                    JsonSerializer.Deserialize<T3>(matches[3].Value, options),
-                    JsonSerializer.Deserialize<T4>(matches[4].Value, options),
-                    JsonSerializer.Deserialize<T5>(matches[5].Value, options)
-                    )!;
+                reader.Read();//property name
+                var name = reader.GetString();
+                reader.Read();//start of array
+                reader.Read();
+                T1 v1 = _v1Converter.Read(ref reader, _v1Type, options);
+                reader.Read();
+                T2 v2 = _v2Converter.Read(ref reader, _v2Type, options);
+                reader.Read();
+                T3 v3 = _v3Converter.Read(ref reader, _v3Type, options);
+                reader.Read();
+                T4 v4 = _v4Converter.Read(ref reader, _v4Type, options);
+                reader.Read();
+                T5 v5 = _v5Converter.Read(ref reader, _v5Type, options);
+                reader.Read();//end of array
+                reader.Read();//end of object
+                return CommandBase.Create(name, v1, v2, v3, v4, v5);
+
             }
 
             public override void Write(
@@ -226,39 +366,80 @@ namespace MATSys.Commands
                 Command<T1, T2, T3, T4, T5> value,
                 JsonSerializerOptions options)
             {
-                var sb = new StringBuilder();
-                sb.Append(value.MethodName);
-                sb.Append("=");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item1, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item2, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item3, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item4, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item5, options));
-                writer.WriteStringValue(sb.ToString());
+                writer.WriteStartObject();
+                writer.WritePropertyName(value.MethodName);
+                writer.WriteStartArray();
+                _v1Converter.Write(writer, value.Item1, options);
+                _v2Converter.Write(writer, value.Item2, options);
+                _v3Converter.Write(writer, value.Item3, options);
+                _v4Converter.Write(writer, value.Item4, options);
+                _v5Converter.Write(writer, value.Item5, options);
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+
             }
+
 
         }
         private class CommandConverter<T1, T2, T3, T4, T5, T6> : JsonConverter<Command<T1, T2, T3, T4, T5, T6>>
         {
-            private Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}|[a-zA-Z]+");
+            private readonly JsonConverter<T1> _v1Converter;
+            private readonly Type _v1Type;
+            private readonly JsonConverter<T2> _v2Converter;
+            private readonly Type _v2Type;
+            private readonly JsonConverter<T3> _v3Converter;
+            private readonly Type _v3Type;
+            private readonly JsonConverter<T4> _v4Converter;
+            private readonly Type _v4Type;
+            private readonly JsonConverter<T5> _v5Converter;
+            private readonly Type _v5Type;
+            private readonly JsonConverter<T6> _v6Converter;
+            private readonly Type _v6Type;
+
+            public CommandConverter(JsonSerializerOptions options)
+            {
+                _v1Converter = (JsonConverter<T1>)options
+                                    .GetConverter(typeof(T1));
+                _v1Type = typeof(T1);
+                _v2Converter = (JsonConverter<T2>)options
+                        .GetConverter(typeof(T2));
+                _v2Type = typeof(T2);
+                _v3Converter = (JsonConverter<T3>)options
+                                    .GetConverter(typeof(T3));
+                _v3Type = typeof(T1);
+                _v4Converter = (JsonConverter<T4>)options
+                                    .GetConverter(typeof(T4));
+                _v4Type = typeof(T4);
+                _v5Converter = (JsonConverter<T5>)options
+                                    .GetConverter(typeof(T5));
+                _v5Type = typeof(T5);
+                _v6Converter = (JsonConverter<T6>)options
+                                    .GetConverter(typeof(T6));
+                _v6Type = typeof(T6);
+
+            }
+
             public override Command<T1, T2, T3, T4, T5, T6> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                var value = reader.GetString();
-                var matches = regex.Matches(value);
-                var name = matches[0].Value;
-                return CommandBase.Create(name,
-                    JsonSerializer.Deserialize<T1>(matches[1].Value, options),
-                    JsonSerializer.Deserialize<T2>(matches[2].Value, options),
-                    JsonSerializer.Deserialize<T3>(matches[3].Value, options),
-                    JsonSerializer.Deserialize<T4>(matches[4].Value, options),
-                    JsonSerializer.Deserialize<T5>(matches[5].Value, options),
-                    JsonSerializer.Deserialize<T6>(matches[6].Value, options)
+                reader.Read();//property name
+                var name = reader.GetString();
+                reader.Read();//start of array
+                reader.Read();
+                T1 v1 = _v1Converter.Read(ref reader, _v1Type, options);
+                reader.Read();
+                T2 v2 = _v2Converter.Read(ref reader, _v2Type, options);
+                reader.Read();
+                T3 v3 = _v3Converter.Read(ref reader, _v3Type, options);
+                reader.Read();
+                T4 v4 = _v4Converter.Read(ref reader, _v4Type, options);
+                reader.Read();
+                T5 v5 = _v5Converter.Read(ref reader, _v5Type, options);
+                reader.Read();
+                T6 v6 = _v6Converter.Read(ref reader, _v6Type, options);
+                reader.Read();//end of array
+                reader.Read();//end of object
+                return CommandBase.Create(name, v1, v2, v3, v4, v5, v6);
 
-                    )!;
             }
 
             public override void Write(
@@ -266,47 +447,87 @@ namespace MATSys.Commands
                 Command<T1, T2, T3, T4, T5, T6> value,
                 JsonSerializerOptions options)
             {
-                var sb = new StringBuilder();
-                sb.Append(value.MethodName);
-                sb.Append("=");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item1, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item2, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item3, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item4, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item5, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item6, options));
-                writer.WriteStringValue(sb.ToString());
+                writer.WriteStartObject();
+                writer.WritePropertyName(value.MethodName);
+                writer.WriteStartArray();
+                _v1Converter.Write(writer, value.Item1, options);
+                _v2Converter.Write(writer, value.Item2, options);
+                _v3Converter.Write(writer, value.Item3, options);
+                _v4Converter.Write(writer, value.Item4, options);
+                _v5Converter.Write(writer, value.Item5, options);
+                _v6Converter.Write(writer, value.Item6, options);
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+
             }
+
 
         }
         private class CommandConverter<T1, T2, T3, T4, T5, T6, T7> : JsonConverter<Command<T1, T2, T3, T4, T5, T6, T7>>
         {
-            private Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}|[a-zA-Z]+");
+            private readonly JsonConverter<T1> _v1Converter;
+            private readonly Type _v1Type;
+            private readonly JsonConverter<T2> _v2Converter;
+            private readonly Type _v2Type;
+            private readonly JsonConverter<T3> _v3Converter;
+            private readonly Type _v3Type;
+            private readonly JsonConverter<T4> _v4Converter;
+            private readonly Type _v4Type;
+            private readonly JsonConverter<T5> _v5Converter;
+            private readonly Type _v5Type;
+            private readonly JsonConverter<T6> _v6Converter;
+            private readonly Type _v6Type;
+            private readonly JsonConverter<T7> _v7Converter;
+            private readonly Type _v7Type;
+
+            public CommandConverter(JsonSerializerOptions options)
+            {
+                _v1Converter = (JsonConverter<T1>)options
+                                    .GetConverter(typeof(T1));
+                _v1Type = typeof(T1);
+                _v2Converter = (JsonConverter<T2>)options
+                        .GetConverter(typeof(T2));
+                _v2Type = typeof(T2);
+                _v3Converter = (JsonConverter<T3>)options
+                                    .GetConverter(typeof(T3));
+                _v3Type = typeof(T1);
+                _v4Converter = (JsonConverter<T4>)options
+                                    .GetConverter(typeof(T4));
+                _v4Type = typeof(T4);
+                _v5Converter = (JsonConverter<T5>)options
+                                    .GetConverter(typeof(T5));
+                _v5Type = typeof(T5);
+                _v6Converter = (JsonConverter<T6>)options
+                                    .GetConverter(typeof(T6));
+                _v6Type = typeof(T6);
+                _v7Converter = (JsonConverter<T7>)options
+                                    .GetConverter(typeof(T7));
+                _v7Type = typeof(T7);
+
+            }
+
             public override Command<T1, T2, T3, T4, T5, T6, T7> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                Stopwatch sw = new Stopwatch();
-
-                var value = reader.GetString();
-                var matches = regex.Matches(value);
-                var name = matches[0].Value;
-
-                var cmd = CommandBase.Create(name,
-                    JsonSerializer.Deserialize<T1>(matches[1].Value, options),
-                    JsonSerializer.Deserialize<T2>(matches[2].Value, options),
-                    JsonSerializer.Deserialize<T3>(matches[3].Value, options),
-                    JsonSerializer.Deserialize<T4>(matches[4].Value, options),
-                    JsonSerializer.Deserialize<T5>(matches[5].Value, options),
-                    JsonSerializer.Deserialize<T6>(matches[6].Value, options),
-                    JsonSerializer.Deserialize<T7>(matches[7].Value, options)
-                                    )!;
-
-                return cmd;
-
+                reader.Read();//property name
+                var name = reader.GetString();
+                reader.Read();//start of array
+                reader.Read();
+                T1 v1 = _v1Converter.Read(ref reader, _v1Type, options);
+                reader.Read();
+                T2 v2 = _v2Converter.Read(ref reader, _v2Type, options);
+                reader.Read();
+                T3 v3 = _v3Converter.Read(ref reader, _v3Type, options);
+                reader.Read();
+                T4 v4 = _v4Converter.Read(ref reader, _v4Type, options);
+                reader.Read();
+                T5 v5 = _v5Converter.Read(ref reader, _v5Type, options);
+                reader.Read();
+                T6 v6 = _v6Converter.Read(ref reader, _v6Type, options);
+                reader.Read();
+                T7 v7 = _v7Converter.Read(ref reader, _v7Type, options);
+                reader.Read();//end of array
+                reader.Read();//end of object
+                return CommandBase.Create(name, v1, v2, v3, v4, v5, v6, v7);
 
             }
 
@@ -315,24 +536,21 @@ namespace MATSys.Commands
                 Command<T1, T2, T3, T4, T5, T6, T7> value,
                 JsonSerializerOptions options)
             {
-                var sb = new StringBuilder();
-                sb.Append(value.MethodName);
-                sb.Append("=");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item1, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item2, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item3, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item4, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item5, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item6, options));
-                sb.Append(",");
-                sb.Append(JsonSerializer.Serialize(value.Parameter.Item7, options));
-                writer.WriteStringValue(sb.ToString());
+                writer.WriteStartObject();
+                writer.WritePropertyName(value.MethodName);
+                writer.WriteStartArray();
+                _v1Converter.Write(writer, value.Item1, options);
+                _v2Converter.Write(writer, value.Item2, options);
+                _v3Converter.Write(writer, value.Item3, options);
+                _v4Converter.Write(writer, value.Item4, options);
+                _v5Converter.Write(writer, value.Item5, options);
+                _v6Converter.Write(writer, value.Item6, options);
+                _v7Converter.Write(writer, value.Item7, options);
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+
             }
+
 
         }
 
