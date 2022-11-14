@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Channels;
 
 namespace MATSys.Hosting
@@ -78,12 +79,8 @@ namespace MATSys.Hosting
                     }
                     else
                     {
-                        ReadOnlySpan<char> sp = item.AsSpan();                        
-                        int start = sp.IndexOf('\"');
-                        int stop = sp.IndexOf(':');
-                        var name = item.Substring(start+1, stop - start-1);
-                        var cmd = item.Remove(start+1, stop - start);                        
-                        yield return new TestItem(type, name,cmd);
+                        var obj=JsonObject.Parse(item).AsObject().First();
+                        yield return new TestItem(type, obj.Key,obj.Value.ToJsonString());
 
                     }
                 }
@@ -107,12 +104,8 @@ namespace MATSys.Hosting
                     }
                     else
                     {
-                        ReadOnlySpan<char> sp = item.AsSpan();
-                        int start = sp.IndexOf('\"');
-                        int stop = sp.IndexOf(':');
-                        var name = item.Substring(start + 1, stop - start - 1);
-                        var cmd = item.Remove(start + 1, stop - start);
-                        yield return new TestItem(type, name, cmd);
+                        var obj = JsonObject.Parse(item).AsObject().First();
+                        yield return new TestItem(type, obj.Key, obj.Value.ToJsonString());
                     }
 
                 }
