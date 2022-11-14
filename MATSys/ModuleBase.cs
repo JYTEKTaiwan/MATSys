@@ -398,7 +398,10 @@ namespace MATSys
             try
             {
                 _logger?.Trace($"Command received: {commandObjectInJson}");
-                var item = cmds[commandObjectInJson.Substring(2, commandObjectInJson.IndexOf(':') - 3)];
+                var sp = commandObjectInJson.AsSpan();
+                var end = sp.IndexOf(':');
+                var start = sp.IndexOf('\"');
+                var item = cmds[sp.Slice(start + 1, end - start - 2).ToString()];
                 var cmd = CommandBase.Deserialize(commandObjectInJson, item.CommandType!);
                 return Execute(cmd);
             }
