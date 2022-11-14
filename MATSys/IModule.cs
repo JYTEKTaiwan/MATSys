@@ -26,7 +26,7 @@ namespace MATSys
         /// <summary>
         /// Logger instance
         /// </summary>
-        NLog.ILogger Logger { get; }
+        NLog.ILogger? Logger { get; }
         /// <summary>
         /// Recorder instance
         /// </summary>

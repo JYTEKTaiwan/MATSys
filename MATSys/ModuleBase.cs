@@ -2,6 +2,7 @@
 using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 using NLog;
+using System.ComponentModel;
 using System.Data;
 using System.Reflection;
 using System.Reflection.Metadata;
@@ -21,7 +22,7 @@ namespace MATSys
         /// <summary>
         /// Internal features injected
         /// </summary>
-        private readonly ILogger _logger;
+        private readonly ILogger? _logger;
         private readonly ITransceiver _transceiver;
         private readonly IRecorder _recorder;
         private readonly INotifier _notifier;
@@ -56,7 +57,7 @@ namespace MATSys
         /// <summary>
         /// ILogger instance
         /// </summary>
-        ILogger IModule.Logger => _logger;
+        ILogger? IModule.Logger => _logger;
 
         /// <summary>
         /// IRecorder instance
@@ -90,16 +91,17 @@ namespace MATSys
         public ModuleBase(object? configuration, ITransceiver? transceiver, INotifier? notifier, IRecorder? recorder, string aliasName = "")
         {
             Name = string.IsNullOrEmpty(aliasName) ? $"{GetType().Name}_{GetHashCode().ToString("X2")}" : aliasName;
-
-            _logger = LogManager.GetLogger(Name);
-
+            if (LogManager.Configuration!=null)
+            {
+                _logger = LogManager.GetLogger(Name);
+            }
             _config = configuration;
             LoadAndSetup(configuration);
             _recorder = InjectRecorder(recorder);
             _notifier = InjectNotifier(notifier);
             _transceiver = InjectTransceiver(transceiver);
             cmds = ListMATSysCommands();
-            _logger.Info($"{Name} base class initialization is completed");
+            _logger?.Info($"{Name} base class initialization is completed");
         }
 
         /// <summary>
@@ -131,18 +133,18 @@ namespace MATSys
             {
                 try
                 {
-                    _logger.Trace($"Starts the {_recorder.Name}");
+                    _logger?.Trace($"Starts the {_recorder.Name}");
                     _recorder.StartService(token);
-                    _logger.Trace($"Starts the {_notifier.Name}");
+                    _logger?.Trace($"Starts the {_notifier.Name}");
                     _notifier.StartService(token);
-                    _logger.Trace($"Starts the {_transceiver.Name}");
+                    _logger?.Trace($"Starts the {_transceiver.Name}");
                     _transceiver.StartService(token);
                     _isRunning = true;
-                    _logger.Info("Starts service");
+                    _logger?.Info("Starts service");
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex);
+                    _logger?.Error(ex);
                     throw new Exception($"RunAsync failed", ex);
                 }
             }
@@ -156,21 +158,21 @@ namespace MATSys
             {
                 if (_isRunning)
                 {
-                    _logger.Trace($"Stops the {_transceiver.Name}");
+                    _logger?.Trace($"Stops the {_transceiver.Name}");
                     _transceiver.StopService();
 
-                    _logger.Trace($"Stops the {_recorder.Name}");
+                    _logger?.Trace($"Stops the {_recorder.Name}");
                     _recorder.StopService();
 
-                    _logger.Trace($"Stops the {_notifier.Name}");
+                    _logger?.Trace($"Stops the {_notifier.Name}");
                     _notifier.StopService();
                     _isRunning = false;
-                    _logger.Info("Stops service");
+                    _logger?.Info("Stops service");
                 }
             }
             catch (Exception ex)
             {
-                _logger.Error(ex);
+                _logger?.Error(ex);
                 throw new Exception("Stop failed", ex);
             }
         }
@@ -184,7 +186,7 @@ namespace MATSys
         {
             try
             {
-                _logger.Trace($"Command is ready to executed {cmd.MethodName}");
+                _logger?.Trace($"Command is ready to executed {cmd.MethodName}");
                 var invoker = cmds[cmd.MethodName].Invoker;
                 if (invoker == null)
                 {
@@ -192,19 +194,19 @@ namespace MATSys
                 }
                 var result = invoker.Invoke(cmd.GetParameters());
                 var response = cmd.ConvertResultToString(result)!;
-                _logger.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
-                _logger.Info($"Command [{cmd.MethodName}] is executed successfully");
+                _logger?.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
+                _logger?.Info($"Command [{cmd.MethodName}] is executed successfully");
                 return response;
             }
             catch (KeyNotFoundException ex)
             {
-                _logger.Warn(ex);
+                _logger?.Warn(ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, cmd);
 
             }
             catch (Exception ex)
             {
-                _logger.Error(ex);
+                _logger?.Warn(ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
             }
         }
@@ -223,7 +225,7 @@ namespace MATSys
             }
             catch (Exception ex)
             {
-                _logger.Error(ex);
+                _logger?.Warn(ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmdInJson);
             }
         }
@@ -268,7 +270,7 @@ namespace MATSys
         /// <summary>
         /// Export ModuleBase instance to json string format
         /// </summary>
-        /// <param name="format"></param>
+        /// <param name="indented"></param>
         /// <returns></returns>
         public string Export(bool indented = true)
         {
@@ -322,12 +324,12 @@ namespace MATSys
             if (recorder == null)
             {
                 var _recorder = new EmptyRecorder();
-                _logger.Info($"Null reference is detected, {_recorder.Name} is injected");
+                _logger?.Info($"Null reference is detected, {_recorder.Name} is injected");
                 return _recorder;
             }
             else
             {
-                _logger.Info($"{recorder.Name} is injected");
+                _logger?.Info($"{recorder.Name} is injected");
                 return recorder;
             }
 
@@ -343,13 +345,13 @@ namespace MATSys
             {
                 var _transceiver = new EmptyTransceiver();
                 _transceiver.OnNewRequest += OnRequestReceived;
-                _logger.Info($"Null reference is detected, {_transceiver.Name} is injected");
+                _logger?.Info($"Null reference is detected, {_transceiver.Name} is injected");
                 return _transceiver;
             }
             else
             {
                 transceiver.OnNewRequest += OnRequestReceived;
-                _logger.Info($"{transceiver.Name} is injected");
+                _logger?.Info($"{transceiver.Name} is injected");
                 return transceiver;
             }
 
@@ -366,13 +368,13 @@ namespace MATSys
             {
                 var _notifier = new EmptyNotifier();
                 _notifier.OnNotify += OnNewDateGenerated;
-                _logger.Info($"Null reference is detected, {_notifier.Name} is injected");
+                _logger?.Info($"Null reference is detected, {_notifier.Name} is injected");
                 return _notifier;
             }
             else
             {
                 notifier.OnNotify += OnNewDateGenerated;
-                _logger.Info($"{notifier.Name} is injected");
+                _logger?.Info($"{notifier.Name} is injected");
                 return notifier;
             }
 
@@ -395,27 +397,24 @@ namespace MATSys
         {
             try
             {
-                _logger.Trace($"OnDataReady event fired: {commandObjectInJson}");
+                _logger?.Trace($"Command received: {commandObjectInJson}");
                 var item = cmds[commandObjectInJson.Substring(2, commandObjectInJson.IndexOf(':') - 3)];
-                //var sp = commandObjectInJson.AsSpan();
-                //var item = cmds[sp.Slice(2, sp.IndexOf(':') - 3).ToString()];
                 var cmd = CommandBase.Deserialize(commandObjectInJson, item.CommandType!);
-                _logger.Debug($"Converted to command object successfully: {cmd!.MethodName}");
                 return Execute(cmd);
             }
             catch (KeyNotFoundException ex)
             {
-                _logger.Warn(ex);
+                _logger?.Warn(ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, commandObjectInJson);
             }
             catch (System.Text.Json.JsonException ex)
             {
-                _logger.Warn(ex);
+                _logger?.Warn(ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_serDesError, ex, commandObjectInJson);
             }
             catch (Exception ex)
             {
-                _logger.Error(ex);
+                _logger?.Error(ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, commandObjectInJson);
             }
         }
