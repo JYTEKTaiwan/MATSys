@@ -5,14 +5,13 @@ namespace MATSys
     /// <summary>
     /// Common class which store the test result information
     /// </summary>
-    public class TestItemResult
+    public struct TestItemResult
     {
-        public TestItemResult() { }
 
         /// <summary>
         /// DateTime information
         /// </summary>
-        public DateTime Timestamp { get; set; } = DateTime.Now;
+        public DateTime Timestamp { get; set; }
 
         /// <summary>
         /// Type of the test result (Uses <see cref="TestResultType"/>)
@@ -20,10 +19,6 @@ namespace MATSys
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public TestResultType Result { get; set; }
 
-        /// <summary>
-        /// Bin number
-        /// </summary>
-        public int Bin { get; set; }
 
         /// <summary>
         /// Value for after the execution
@@ -41,12 +36,12 @@ namespace MATSys
         /// <param name="value">Raw value</param>
         /// <param name="attributes">Custom attributes</param>
         /// <returns>Instance of TestItemResult</returns>
-        public static TestItemResult Create(TestResultType result = TestResultType.Skip, int bin = -1, object? value = null, object? attributes = null)
+        public static TestItemResult Create(TestResultType result = TestResultType.Skip,  object? value = null, object? attributes = null)
         {
             return new TestItemResult()
             {
+                Timestamp = DateTime.Now,
                 Result=result,
-                Bin=bin,
                 Value=value,
                 Attributes=attributes
                 };
