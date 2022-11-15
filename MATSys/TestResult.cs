@@ -7,6 +7,8 @@ namespace MATSys
     /// </summary>
     public class TestItemResult
     {
+        public TestItemResult() { }
+
         /// <summary>
         /// DateTime information
         /// </summary>
@@ -21,7 +23,7 @@ namespace MATSys
         /// <summary>
         /// Bin number
         /// </summary>
-        public int BinNumber { get; set; }
+        public int Bin { get; set; }
 
         /// <summary>
         /// Value for after the execution
@@ -31,10 +33,6 @@ namespace MATSys
         /// Any other arguments or attributes
         /// </summary>
         public object? Attributes { get; set; }
-        /// <summary>
-        /// ctor
-        /// </summary>
-        public TestItemResult() { }
         /// <summary>
         /// Create new instance of TestItemResult
         /// </summary>
@@ -47,11 +45,12 @@ namespace MATSys
         {
             return new TestItemResult()
             {
-                BinNumber = bin,
-                Result = result,
-                Value = value,
-                Attributes = attributes
-            };
+                Result=result,
+                Bin=bin,
+                Value=value,
+                Attributes=attributes
+                };
+            
         }
     }
 

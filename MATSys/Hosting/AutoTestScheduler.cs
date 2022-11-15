@@ -79,7 +79,7 @@ namespace MATSys.Hosting
                     }
                     else
                     {
-                        var obj=JsonObject.Parse(item).AsObject().First();
+                        var obj= JsonNode.Parse(item).AsObject().First();
                         yield return new TestItem(type, obj.Key,obj.Value.ToJsonString());
 
                     }
@@ -104,7 +104,7 @@ namespace MATSys.Hosting
                     }
                     else
                     {
-                        var obj = JsonObject.Parse(item).AsObject().First();
+                        var obj = JsonNode.Parse(item).AsObject().First();
                         yield return new TestItem(type, obj.Key, obj.Value.ToJsonString());
                     }
 
