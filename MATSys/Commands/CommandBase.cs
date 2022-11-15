@@ -12,7 +12,6 @@ namespace MATSys.Commands
     /// </summary>
     public abstract class CommandBase : ICommand
     {
-        private static Regex regex = new Regex(@"^[a-zA-z0-9_]+|[0-9.]+|"".*?""|{.*?}|[a-zA-Z]+");
         internal const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
         protected static JsonSerializerOptions opt = new JsonSerializerOptions()
         {
@@ -94,38 +93,6 @@ namespace MATSys.Commands
                 throw;
             }
 
-        }
-        /// <summary>
-        /// Convert the input string into json format before deserialization
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public static (string jsonString, int parameterCount) ConvertToJsonFormat(string input)
-        {
-            var sb = new StringBuilder();
-            var matches = regex.Matches(input);
-            var cnt = matches.Count;
-            //Prepare header
-            sb.Append("{\"MethodName\":\"");
-            sb.Append(matches[0].Value);
-            sb.Append("\"");
-            //Prepare Parameter
-            if (cnt != 1)
-            {
-                //with parameter, continue
-                sb.Append(",\"Parameter\":{");
-                for (int i = 1; i < cnt; i++)
-                {
-                    if (i != 1)
-                    {
-                        sb.Append(",");
-                    }
-                    sb.Append($"\"Item{i}\":{matches[i].Value}");
-                }
-                sb.Append("}");
-            }
-            sb.Append("}");
-            return (sb.ToString(), matches.Count - 1);
         }
 
         /// <summary>
