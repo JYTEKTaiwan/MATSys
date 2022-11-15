@@ -70,18 +70,10 @@ namespace MATSys.Hosting
             {
                 foreach (var item in scripts)
                 {
-                    if (item.Contains(".ats"))
+                    var items = ReadFromFile(item,type);
+                    foreach (var testItem in items)
                     {
-                        foreach (var subItem in ReadFromFile(item, type))
-                        {
-                            yield return subItem;
-                        };
-                    }
-                    else
-                    {
-                        var obj= JsonNode.Parse(item).AsObject().First();
-                        yield return new TestItem(type, obj.Key,obj.Value.ToJsonString());
-
+                        yield return testItem;
                     }
                 }
             }
@@ -93,22 +85,30 @@ namespace MATSys.Hosting
             var p = Path.Combine(RootDirectory, filePath);
             if (File.Exists(p))
             {
-                foreach (var item in File.ReadLines(p))
+                var script = JsonObject.Parse(File.ReadAllText(p));
+                foreach (var item in script.AsArray())
                 {
-                    if (item.Contains(".ats"))
+                    var obj = item.AsObject().First();
+                    if (obj.Key == "Executer")
                     {
-                        foreach (var subItem in ReadFromFile(item, type))
+                        var data = obj.Value.AsObject().First();
+                        yield return new TestItem(type, data.Key, data.Value.ToJsonString());
+                    }
+                    else if (obj.Key == "Script")
+                    {
+                        var path = obj.Value.ToString();
+                        var subitems= ReadFromFile(path, type);
+                        foreach (var subItem in subitems)
                         {
                             yield return subItem;
                         }
                     }
                     else
                     {
-                        var obj = JsonNode.Parse(item).AsObject().First();
-                        yield return new TestItem(type, obj.Key, obj.Value.ToJsonString());
-                    }
 
+                    }
                 }
+
             }
         }
 
