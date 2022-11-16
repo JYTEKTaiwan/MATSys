@@ -12,6 +12,7 @@ IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
 host.RunAsync().Wait(1000); ;
 
 var dev = host.Services.GetMATSysHandle();
+
 dev.Modules["Dev1"].OnDataReady += (txt) =>
 {
     //event is fired when internal notifier publishes data
@@ -25,6 +26,7 @@ dev.AfterTestItem += (item, res) =>
     //event is fired after executeing test item;
     Console.WriteLine($"{res}");
 };
+
 dev.RunTest(1);
 
 
@@ -46,12 +48,6 @@ public class TestDevice : ModuleBase
     public override void Load(object configuration)
     {
 
-    }
-
-    public class Data
-    {
-        public string Date { get; set; } = "";
-        public double Number { get; set; } = 0.0;
     }
 
     [MATSysCommand]

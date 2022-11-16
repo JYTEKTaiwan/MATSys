@@ -70,11 +70,31 @@ namespace MATSys.Hosting
             {
                 foreach (var item in scripts)
                 {
-                    var items = ReadFromFile(item,type);
-                    foreach (var testItem in items)
+                    var obj = JsonObject.Parse(item).AsObject();
+                    if (obj.ContainsKey ("Executer"))
                     {
-                        yield return testItem;
+                        var data = obj["Executer"].AsObject().First();
+                        yield return new TestItem(type, data.Key, data.Value.ToJsonString());
                     }
+                    else if (obj.ContainsKey( "Script"))
+                    {
+                        var path = obj["Script"].GetValue<string>();
+                        var subitems = ReadFromFile(path, type);
+                        foreach (var subItem in subitems)
+                        {
+                            yield return subItem;
+                        }
+                    }
+                    else
+                    {
+
+                    }
+
+                    //var items = ReadFromFile(item,type);
+                    //foreach (var testItem in items)
+                    //{
+                    //    yield return testItem;
+                    //}
                 }
             }
 
