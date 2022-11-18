@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace MATSys
+namespace MATSys.Hosting.Scripting
 {
     /// <summary>
     /// Common class which store the test result information
@@ -19,7 +19,6 @@ namespace MATSys
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public TestResultType Result { get; set; }
 
-
         /// <summary>
         /// Value for after the execution
         /// </summary>
@@ -36,16 +35,16 @@ namespace MATSys
         /// <param name="value">Raw value</param>
         /// <param name="attributes">Custom attributes</param>
         /// <returns>Instance of TestItemResult</returns>
-        public static TestItemResult Create(TestResultType result = TestResultType.Skip,  object? value = null, object? attributes = null)
+        public static TestItemResult Create(TestResultType result = TestResultType.Skip, object? value = null, object? attributes = null)
         {
             return new TestItemResult()
             {
                 Timestamp = DateTime.Now,
-                Result=result,
-                Value=value,
-                Attributes=attributes
-                };
-            
+                Result = result,
+                Value = value,
+                Attributes = attributes
+            };
+
         }
     }
 

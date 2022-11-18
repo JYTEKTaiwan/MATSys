@@ -1,4 +1,5 @@
 ﻿using MATSys.Factories;
+using MATSys.Hosting.Scripting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -18,23 +19,13 @@ namespace MATSys.Hosting
         /// <returns></returns>
         public static IHostBuilder UseMATSys(this IHostBuilder hostBuilder)
         {
-
-            var config = new ConfigurationBuilder()
-   .SetBasePath(Directory.GetCurrentDirectory())
-   .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-   .Build();
-            //if (config.GetSection("MATSys:EnableNLogInJsonFile").Get<bool>())
-            //{
-            //    NLog.LogManager.Configuration = new NLogLoggingConfiguration(config.GetSection("NLog"));
-            //}
-
             return hostBuilder.ConfigureServices(service =>
             service.AddHostedService<ModuleHubBackgroundService>()
                     .AddSingleton<IModuleFactory, ModuleFactory>()
                     .AddSingleton<IRecorderFactory, RecorderFactory>()
                     .AddSingleton<INotifierFactory, NotifierFactory>()
                     .AddSingleton<ITransceiverFactory, TransceiverFactory>()
-                    .AddSingleton<AutoTestScheduler>()
+                    .AddSingleton<AutomationTestScriptContext>()
             )
             .ConfigureLogging(logging =>
                 logging.AddNLog()
@@ -42,14 +33,9 @@ namespace MATSys.Hosting
 
         }
 
-        /// <summary>
-        /// Extended method to get the handle of MATSys from IServiceProvider instance
-        /// </summary>
-        /// <param name="provider">instance of IServiceProvider</param>
-        /// <returns>instance of ModuleHubBackgroundService</returns>
-        public static ModuleHubBackgroundService GetMATSysHandle(this IServiceProvider provider)
+        public static IRunner GetRunner(this IServiceProvider provider)
         {
-            return provider.GetServices<IHostedService>().OfType<ModuleHubBackgroundService>().FirstOrDefault()!;
+            return provider.GetServices<IHostedService>().OfType<ModuleHubBackgroundService>().FirstOrDefault().GetRunner();
         }
     }
 }
