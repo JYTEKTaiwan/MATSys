@@ -11,20 +11,13 @@ using System.Text.Json.Serialization;
 IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
 host.RunAsync().Wait(1000); ;
 
-var dev = host.Services.GetMATSysHandle();
 
-dev.Modules["Dev1"].OnDataReady += (txt) =>
-{
-    //event is fired when internal notifier publishes data
-};
-dev.BeforeTestItem += (item) =>
-{
-    //event is fired before executing test item;    
-};
-dev.AfterTestItem += (item, res) =>
+var dev = host.Services.GetRunner();
+
+dev.AfterTestItemStops += (item, res) =>
 {
     //event is fired after executeing test item;
-    Console.WriteLine($"{res}");
+    Console.WriteLine($"{res.ToJsonString()}");
 };
 
 dev.RunTest(1);
