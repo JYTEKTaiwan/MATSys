@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace MATSys.Hosting.Scripting
@@ -15,6 +16,7 @@ namespace MATSys.Hosting.Scripting
         public event IRunner.ReadyToExecuteTestItemEvent? BeforeTestItemStarts;
         public event IRunner.ExecuteTestItemCompleteEvent? AfterTestItemStops;
         public event IRunner.ExecuteScriptCompleteEvent? AfterScriptStops;
+        public AutomationTestScriptContext TestScript { get; }
 
         public ManualRunner(Dictionary<string, IModule> modulesInHub)
         {
@@ -31,8 +33,9 @@ namespace MATSys.Hosting.Scripting
             return _modulesInHub[modName].Execute(cmd);
         }
 
-        public void RunTest(int iteration = 1)
+        public JsonArray RunTest(int iteration = 1)
         {
+            return null;
         }
 
         public void StopTest()
@@ -40,9 +43,9 @@ namespace MATSys.Hosting.Scripting
 
         }
 
-        public Task RunTestAsync(int iteration = 1)
+        public Task<JsonArray> RunTestAsync(int iteration = 1)
         {
-            return Task.CompletedTask;
+            return Task<JsonArray>.Run(() => new JsonArray());
         }
     }
 }

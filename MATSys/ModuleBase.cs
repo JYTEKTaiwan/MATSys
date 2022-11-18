@@ -33,7 +33,7 @@ namespace MATSys
         private volatile bool _isRunning = false;
         private readonly Dictionary<string, MATSysCommandAttribute> cmds;
         private object? _config;
-
+        private IServiceProvider _provider;
         #endregion
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace MATSys
         /// </summary>
         INotifier IModule.Notifier => _notifier;
 
-
+        IServiceProvider IModule.Provider { get; set; }
         /// <summary>
         /// Event when new data is generated inside ModuleBase instance
         /// </summary>

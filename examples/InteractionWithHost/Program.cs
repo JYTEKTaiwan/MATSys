@@ -3,7 +3,9 @@ using MATSys;
 using MATSys.Commands;
 using MATSys.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -12,16 +14,18 @@ IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
 host.RunAsync().Wait(1000); ;
 
 
-var dev = host.Services.GetRunner();
+var runner = host.Services.GetRunner();
 
-dev.AfterTestItemStops += (item, res) =>
+runner.AfterTestItemStops += (item, res) =>
 {
     //event is fired after executeing test item;
-    Console.WriteLine($"{res.ToJsonString()}");
+    //Console.WriteLine($"{res.ToJsonString()}");
 };
-
-dev.RunTest(1);
-
+runner.AfterScriptStops += (res) => 
+{
+    Console.WriteLine(res.ToJsonString());
+};
+runner.RunTest(1);
 
 Console.WriteLine("PRESS ANY KEY TO EXIT");
 

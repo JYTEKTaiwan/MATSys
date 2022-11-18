@@ -6,7 +6,7 @@ namespace MATSys
     /// </summary>
     public interface IModule : IService
     {
-
+        IServiceProvider Provider { get; set; }
         /// <summary>
         /// Indicate new data is generated from module
         /// </summary>

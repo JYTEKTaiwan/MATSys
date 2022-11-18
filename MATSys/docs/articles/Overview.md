@@ -28,8 +28,11 @@ IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
 //Run the host
 host.RunAsync().Wait(1000); ;
 
-//Access the method by send a set of string commands and get response
-var response=dev.Execute("Dev1","Test=\"Hello\"");
+//Get the runner instance
+var runner = host.Services.GetRunner();
+
+//Manually execute the command toward Module named "Dev1"
+runner.Execute("Dev1","{\"Test\":[1,2.0,\"hello\"]}");
 
 //Stop the host
 host.StopAsync();

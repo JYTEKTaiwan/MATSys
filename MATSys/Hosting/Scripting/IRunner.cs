@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
@@ -10,12 +11,13 @@ namespace MATSys.Hosting.Scripting
 {
     public interface IRunner
     {
+        AutomationTestScriptContext TestScript { get; }
 
         string Execute(string modName, string cmdInJson);
         string Execute(string modName, ICommand cmd);
-        void RunTest(int iteration = 1);
+        JsonArray RunTest(int iteration = 1);
         void StopTest();
-        Task RunTestAsync(int iteration = 1);
+        Task<JsonArray> RunTestAsync(int iteration = 1);
 
         delegate void ReadyToExecuteScriptEvent(AutomationTestScriptContext script);
 
@@ -29,7 +31,7 @@ namespace MATSys.Hosting.Scripting
 
         event ExecuteTestItemCompleteEvent? AfterTestItemStops;
 
-        delegate void ExecuteScriptCompleteEvent(IList<JsonNode> item);
+        delegate void ExecuteScriptCompleteEvent(JsonArray item);
 
         event ExecuteScriptCompleteEvent? AfterScriptStops;
     }

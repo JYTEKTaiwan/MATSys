@@ -45,6 +45,7 @@ namespace MATSys.Hosting
                 {
                     //Assign the LocalPeers properties (Modules can access each other instance locally)
                     item.Value.LocalPeers = Modules;
+                    item.Value.Provider = services;
                 }
                 if (_scriptMode)
                 {

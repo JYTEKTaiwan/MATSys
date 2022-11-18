@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using MATSys.Commands;
 using static NetMQ.NetMQSelector;
+using System.Xml.Linq;
 
 namespace MATSys.Hosting.Scripting
 {
@@ -26,11 +27,11 @@ namespace MATSys.Hosting.Scripting
         public event IRunner.ExecuteTestItemCompleteEvent? AfterTestItemStops;
         public event IRunner.ExecuteScriptCompleteEvent? AfterScriptStops;
         private Dictionary<string,IModule> _modulesInHub;
-        private AutomationTestScriptContext _testScript;
+        public AutomationTestScriptContext TestScript { get; }
         public ScriptRunner(AutomationTestScriptContext testScript, Dictionary<string, IModule> handle)
         {
             _modulesInHub = handle;
-            _testScript = testScript;
+            TestScript = testScript;
         }
         public string Execute(string modName, string cmdInJson)
         {
@@ -42,35 +43,36 @@ namespace MATSys.Hosting.Scripting
             return "[Warn] Service is in script mode";
         }
 
-        public void RunTest(int iteration = 1)
+        public JsonArray RunTest(int iteration = 1)
         {
-            RunTestAsync(iteration).Wait();
+            var t = RunTestAsync(iteration);
+            t.Wait();
+            return t.Result;
         }
-        public async Task RunTestAsync(int iteration = 1)
+        public async Task<JsonArray> RunTestAsync(int iteration = 1)
         {
-            await Task.Run(() =>
+            return await Task.Run(() =>
             {
                 _localCts = new CancellationTokenSource();
-                IList<JsonNode> responses = new List<JsonNode>();
-                BeforeScriptStarts?.Invoke(_testScript);
-                foreach (var item in _testScript.Setup)
+                JsonArray response = new JsonArray();
+                BeforeScriptStarts?.Invoke(TestScript);
+                foreach (var item in TestScript.Setup)
                 {
                     _runner = ChooseRunner(item);
-                    foreach (var ans in _runner.Invoke(item))
+                    foreach (var res in _runner.Invoke(item))
                     {
-                        responses.Add(ans);
+                        response.Add(res);
                     }
-                    //Console.WriteLine(item.Executer.Value.CommandString.ToJsonString());
                 }
                 for (int i = 0; i < iteration; i++)
                 {
-                    foreach (var item in _testScript.Test)
+                    foreach (var item in TestScript.Test)
                     {
                         _runner = ChooseRunner(item);
-                        foreach (var ans in _runner.Invoke(item))
+                        foreach (var res in _runner.Invoke(item))
                         {
-                            responses.Add(ans);
-                        }                //Console.WriteLine(item.Executer.Value.CommandString.ToJsonString());
+                            response.Add(res);
+                        }
                     }
                     if (_localCts.IsCancellationRequested)
                     {
@@ -78,16 +80,16 @@ namespace MATSys.Hosting.Scripting
                     }
                     SpinWait.SpinUntil(() => false, 0);
                 }
-                foreach (var item in _testScript.Teardown)
+                foreach (var item in TestScript.Teardown)
                 {
                     _runner = ChooseRunner(item);
-                    foreach (var ans in _runner.Invoke(item))
+                    foreach (var res in _runner.Invoke(item))
                     {
-                        responses.Add(ans);
+                        response.Add(res);
                     }
-                    //Console.WriteLine(item.Executer.Value.CommandString.ToJsonString());
                 }
-                AfterScriptStops?.Invoke(responses);
+                AfterScriptStops?.Invoke(response);
+                return response;
             });
         }
 
@@ -140,22 +142,19 @@ namespace MATSys.Hosting.Scripting
             {
                 BeforeTestItemStarts?.Invoke(item);
                 var ans = Execute(item);
-                var node = Analyze(item, ans, $"Retry: {i+1}/{item.Retry}");                
+                var node = Analyze(item, ans, $"Retry: {i+1}/{item.Retry}");
                 AfterTestItemStops?.Invoke(item, node.result);
+                response.Add(node.result);
                 if (node.isPassed)
                 {
-                    response.Add(node.result);
                     break;
                 }
-
                 if (_localCts.IsCancellationRequested)
                 {
                     break;
                 }
                 SpinWait.SpinUntil(() => false, 0);
             }
-
-
             return response;
         }
         private IList<JsonNode> SingleTest(TestItem item)
@@ -179,7 +178,6 @@ namespace MATSys.Hosting.Scripting
             var skipAnalyzer = item.Analyzer == null;
             var len = skipAnalyzer ? 0 : item.AnalyzerParameter.Length;
             TestItemResult result;
-            IList<JsonNode> response = new List<JsonNode>();
             bool valid = false;
             if (!skipAnalyzer)
             {
@@ -192,8 +190,8 @@ namespace MATSys.Hosting.Scripting
             {
                 result = TestItemResult.Create( TestResultType.Skip,execResult, attributesToWrite);
             }
-            var node = JsonSerializer.SerializeToNode(result, result.GetType(), options);
-            return (valid,node);
+            var element = JsonSerializer.SerializeToNode(result, result.GetType(), options);
+            return (valid,element);
         }
     }
 }
