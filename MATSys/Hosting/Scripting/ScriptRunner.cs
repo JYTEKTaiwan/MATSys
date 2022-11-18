@@ -121,7 +121,7 @@ namespace MATSys.Hosting.Scripting
             {
                 BeforeTestItemStarts?.Invoke(item);
                 var ans = Execute(item);
-                var node = Analyze(item, ans, $"Loop: {i}/{item.Loop}");
+                var node = Analyze(item, ans, $"Loop: {i+1}/{item.Loop}");
                 AfterTestItemStops?.Invoke(item, node.result);
                 response.Add(node.result);
 
@@ -140,7 +140,7 @@ namespace MATSys.Hosting.Scripting
             {
                 BeforeTestItemStarts?.Invoke(item);
                 var ans = Execute(item);
-                var node = Analyze(item, ans, $"Retry: {i}/{item.Retry}");                
+                var node = Analyze(item, ans, $"Retry: {i+1}/{item.Retry}");                
                 AfterTestItemStops?.Invoke(item, node.result);
                 if (node.isPassed)
                 {
