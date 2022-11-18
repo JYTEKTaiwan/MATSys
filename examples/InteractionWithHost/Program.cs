@@ -23,7 +23,10 @@ runner.AfterTestItemStops += (item, res) =>
 };
 runner.AfterScriptStops += (res) => 
 {
-    Console.WriteLine(res.ToJsonString());
+    foreach (var item in res)
+    {
+        Console.WriteLine(item.ToJsonString());
+    }
 };
 runner.RunTest(1);
 
