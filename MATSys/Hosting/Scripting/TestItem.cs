@@ -71,7 +71,7 @@ namespace MATSys.Hosting.Scripting
         {
             return new TestItem(node);
         }
-        public JsonObject GetCommand()
+        public JsonObject GetExecuter()
         {
             return _ctxt.AsObject()[ExecuterSection].AsObject();
         }
