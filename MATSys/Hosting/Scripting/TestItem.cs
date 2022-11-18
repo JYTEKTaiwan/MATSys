@@ -6,6 +6,8 @@ using System.Text;
 using System.Text.Json.Nodes;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace MATSys.Hosting.Scripting
 {
@@ -53,13 +55,13 @@ namespace MATSys.Hosting.Scripting
             {
                 var name = node.AsObject()[AnalyzerSection].AsObject().First().Key;
                 var param = node.AsObject()[AnalyzerSection].AsObject().First().Value.AsArray();
-                var mi = typeof(Analyzer).GetMethod(name);
+                var mi = AutomationTestScriptContext.AnalyzerExtMethods.FirstOrDefault(x => x.Name == name);
                 Analyzer = MethodInvoker.Create(mi);
-                var a = mi.GetParameters().Select(x => x.ParameterType).ToArray();
+                var types = mi.GetParameters().Select(x => x.ParameterType).ToArray();
                 AnalyzerParameter = new object[param.Count + 1];
                 for (int i = 0; i < param.Count; i++)
                 {
-                    AnalyzerParameter[i] = param[i].Deserialize(a[i]);
+                    AnalyzerParameter[i+1] = param[i].Deserialize(types[i+1]);
                 }
             }
 
@@ -76,6 +78,19 @@ namespace MATSys.Hosting.Scripting
         public JsonObject GetAnalyzer()
         {
             return _ctxt.AsObject()[AnalyzerSection].AsObject();
+        }
+
+        private static IEnumerable<MethodInfo> GetExtensionMethods(Assembly assembly,
+       Type extendedType)
+        {
+            var query = from type in assembly.GetTypes()
+                        where type.IsSealed && !type.IsGenericType && !type.IsNested
+                        from method in type.GetMethods(BindingFlags.Static
+                            | BindingFlags.Public | BindingFlags.NonPublic)
+                        where method.IsDefined(typeof(ExtensionAttribute), false)
+                        where method.GetParameters()[0].ParameterType == extendedType
+                        select method;
+            return query;
         }
     }
 }

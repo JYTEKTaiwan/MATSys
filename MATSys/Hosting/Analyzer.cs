@@ -8,11 +8,25 @@ using System.Threading.Tasks;
 
 namespace MATSys.Hosting
 {
-    public partial class Analyzer
+
+    public struct AnalyzeData
     {
-        public static bool LargerThan(double result, string input)
+        public string Value { get; }
+        public AnalyzeData(string data)
         {
-            return JsonSerializer.Deserialize<double>(input) > result;
+            Value = data;
+        }
+        public static AnalyzeData Create(string input)
+        {
+            return new AnalyzeData(input);
+        }
+    }
+
+    public static class Analyzer
+    {
+        public static bool LargerThan(this AnalyzeData data,double result)
+        {
+            return JsonSerializer.Deserialize<double>(data.Value) > result;
         }
     }
 }

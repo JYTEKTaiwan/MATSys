@@ -121,7 +121,7 @@ namespace MATSys.Hosting.Scripting
             {
                 BeforeTestItemStarts?.Invoke(item);
                 var ans = Execute(item);
-                var node = Analyze(item, ans, $"Retry: {i}/{item.Retry}");
+                var node = Analyze(item, ans, $"Loop: {i}/{item.Loop}");
                 AfterTestItemStops?.Invoke(item, node.result);
                 response.Add(node.result);
 
@@ -183,7 +183,7 @@ namespace MATSys.Hosting.Scripting
             bool valid = false;
             if (!skipAnalyzer)
             {
-                item.AnalyzerParameter[len - 1] = execResult;
+                item.AnalyzerParameter[0] = AnalyzeData.Create(execResult);
                 valid = (bool)item.Analyzer.Invoke(item.AnalyzerParameter);
                 var ans = valid ? TestResultType.Pass : TestResultType.Fail;
                 result = TestItemResult.Create(ans, execResult, attributesToWrite);

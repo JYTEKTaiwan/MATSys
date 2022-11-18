@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -9,12 +11,15 @@ namespace MATSys.Hosting.Scripting
 {
     public class AutomationTestScriptContext
     {
+        public static IEnumerable<MethodInfo> AnalyzerExtMethods { get; set; }
         public string RootDirectory { get; private set; } = @".\scripts";
         public List<TestItem> Setup { get; private set; } = new List<TestItem>();
         public List<TestItem> Test { get; private set; } = new List<TestItem>();
         public List<TestItem> Teardown { get; private set; } = new List<TestItem>();
         public AutomationTestScriptContext()
         {
+            AnalyzerExtMethods = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => GetAnalyzerDataExtensionMethods(x, typeof(AnalyzeData)));
+
             var content = JsonNode.Parse(File.ReadAllText("appsettings.json"));
             if (content["MATSys"].AsObject().ContainsKey("Scripts"))
             {
@@ -46,7 +51,7 @@ namespace MATSys.Hosting.Scripting
 
             }
         }
-        private  List<TestItem> ParseItem(JsonArray array)
+        private List<TestItem> ParseItem(JsonArray array)
         {
             List<TestItem> list = new List<TestItem>();
             foreach (var item in array)
@@ -63,9 +68,9 @@ namespace MATSys.Hosting.Scripting
             }
             return list;
         }
-        public  IEnumerable<TestItem> ReadFromScriptFile(string path)
+        public IEnumerable<TestItem> ReadFromScriptFile(string path)
         {
-            var p=Path.Combine(RootDirectory, path);
+            var p = Path.Combine(RootDirectory, path);
             var content = JsonNode.Parse(File.ReadAllText(p));
 
             foreach (var item in content.AsArray())
@@ -85,6 +90,17 @@ namespace MATSys.Hosting.Scripting
             }
 
         }
-
+        private static IEnumerable<MethodInfo> GetAnalyzerDataExtensionMethods(Assembly assembly,
+       Type extendedType)
+        {
+            var query = from type in assembly.GetTypes()
+                        where type.IsSealed && !type.IsGenericType && !type.IsNested
+                        from method in type.GetMethods(BindingFlags.Static
+                            | BindingFlags.Public | BindingFlags.NonPublic)
+                        where method.IsDefined(typeof(ExtensionAttribute), false)
+                        where method.GetParameters()[0].ParameterType == extendedType
+                        select method;
+            return query;
+        }
     }
 }
