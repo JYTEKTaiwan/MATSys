@@ -27,6 +27,7 @@ namespace MATSys.Hosting
                     .AddSingleton<IRunnerFactory,RunnerFactory>()
                     .AddSingleton<ITransceiverFactory, TransceiverFactory>()
                     .AddSingleton<AutomationTestScriptContext>()
+                    .AddSingleton<AnalyzerLoader>()
             )
             .ConfigureLogging(logging =>
                 logging.AddNLog()

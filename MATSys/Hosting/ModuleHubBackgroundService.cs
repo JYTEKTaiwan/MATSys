@@ -53,6 +53,7 @@ namespace MATSys.Hosting
                 _runner = _runnerFactory.CreateRunner(_config, _scriptMode);
                 _runner.InjectModules(Modules);
                 _runner.Load(runnerSection, services.GetRequiredService<AutomationTestScriptContext>());
+                services.GetRequiredService<AnalyzerLoader>();
             }
             catch (Exception ex)
             {
