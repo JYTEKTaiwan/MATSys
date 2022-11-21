@@ -19,13 +19,13 @@ var runner = host.Services.GetRunner();
 runner.AfterTestItemStops += (item, res) =>
 {
     //event is fired after executeing test item;
-    //Console.WriteLine($"{res.ToJsonString()}");
+    Console.WriteLine($"{res.ToJsonString()}");
 };
 runner.AfterScriptStops += (res) => 
 {
     foreach (var item in res)
     {
-        Console.WriteLine(item.ToJsonString());
+        //Console.WriteLine(item.ToJsonString());
     }
 };
 runner.RunTest(1);

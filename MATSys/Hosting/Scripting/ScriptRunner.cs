@@ -170,7 +170,7 @@ namespace MATSys.Hosting.Scripting
             var res = _modulesInHub[cmd.ModuleName].Execute(cmd.CommandString.ToJsonString());
             return res;
         }
-        private (bool isPassed,JsonNode result) Analyze(TestItem item,string execResult,object attributesToWrite)
+        private (bool isPassed,JsonNode result) Analyze(TestItem item,string execValue,object attributesToWrite)
         {
             var skipAnalyzer = item.Analyzer == null;
             var len = skipAnalyzer ? 0 : item.AnalyzerParameter.Length;
@@ -178,16 +178,16 @@ namespace MATSys.Hosting.Scripting
             bool valid = false;
             if (!skipAnalyzer)
             {
-                item.AnalyzerParameter[0] = AnalyzingData.Create(execResult);
+                item.AnalyzerParameter[0] = AnalyzingData.Create(execValue);
                 valid = (bool)item.Analyzer.Invoke(item.AnalyzerParameter);
-                var ans = valid ? TestResultType.Pass : TestResultType.Fail;
-                result = TestItemResult.Create(ans, execResult, attributesToWrite);
+                var testResult = valid ? TestResultType.Pass : TestResultType.Fail;
+                result = TestItemResult.Create(testResult, execValue, attributesToWrite);
             }
             else
             {
-                result = TestItemResult.Create( TestResultType.Skip,execResult, attributesToWrite);
+                result = TestItemResult.Create( TestResultType.Skip,execValue, attributesToWrite);
             }
-            var element = JsonSerializer.SerializeToNode(result, result.GetType(), options);
+            var element = JsonSerializer.SerializeToNode(result, typeof(TestItemResult),options);
             return (valid,element);
         }
 

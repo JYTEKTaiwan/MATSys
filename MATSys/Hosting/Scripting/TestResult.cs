@@ -22,7 +22,7 @@ namespace MATSys.Hosting.Scripting
         /// <summary>
         /// Value for after the execution
         /// </summary>
-        public object? Value { get; set; }
+        public string? Value { get; set; }
         /// <summary>
         /// Any other arguments or attributes
         /// </summary>
@@ -34,7 +34,7 @@ namespace MATSys.Hosting.Scripting
         /// <param name="value">Raw value</param>
         /// <param name="attributes">Custom attributes</param>
         /// <returns>Instance of TestItemResult</returns>
-        public static TestItemResult Create(TestResultType result = TestResultType.Skip, object? value = null, object? attributes = null)
+        public static TestItemResult Create(TestResultType result = TestResultType.Skip, string value = null, object? attributes = null)
         {
             return new TestItemResult()
             {
