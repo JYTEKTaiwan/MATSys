@@ -15,17 +15,12 @@ namespace InteractionWithHost_net472
             IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
             host.RunAsync().Wait(1000); ;
 
-            var dev = host.Services.GetMATSysHandle();
+            var dev = host.Services.GetRunner();
 
-            dev.Modules["Dev1"].OnDataReady += IModule_OnDataReady;
-            dev.BeforeTestItem += (cmd) => { Console.WriteLine($"{cmd.ModuleName}*{cmd.Command}"); };
-            dev.AfterTestItem += (item, res) => { Console.WriteLine($"{res}"); };
+            
+            dev.BeforeTestItemStarts += (cmd) => { Console.WriteLine($"{cmd.Executer.Value.ModuleName}*{cmd.Executer.Value.CommandString}"); };
+            dev.AfterTestItemStops += (item, res) => { Console.WriteLine($"{res}"); };
             dev.RunTest(3);
-
-            void IModule_OnDataReady(string jsonString)
-            {
-                Console.WriteLine(jsonString);
-            }
 
             //for (int i = 0; i < 10; i++)
             //{
