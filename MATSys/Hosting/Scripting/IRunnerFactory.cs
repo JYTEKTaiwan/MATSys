@@ -24,11 +24,8 @@ namespace MATSys.Hosting.Scripting
         /// </summary>
         /// <param name="type">Type of the runner</param>
         /// <param name="section">Configuration section in json file</param>
-        /// <returns></returns>
+        /// <returns><see cref="IRunner"/> instance</returns>
         IRunner CreateRunner(Type type,IConfigurationSection section);
-
-        void Load(IConfigurationSection section);
-
 
     }
 }
