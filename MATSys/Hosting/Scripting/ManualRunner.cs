@@ -1,4 +1,5 @@
 ﻿using MATSys.Commands;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,8 @@ namespace MATSys.Hosting.Scripting
         public event IRunner.ReadyToExecuteTestItemEvent? BeforeTestItemStarts;
         public event IRunner.ExecuteTestItemCompleteEvent? AfterTestItemStops;
         public event IRunner.ExecuteScriptCompleteEvent? AfterScriptStops;
-        public AutomationTestScriptContext TestScript { get; }
+        public AutomationTestScriptContext TestScript { get; set; }
 
-        public ManualRunner(Dictionary<string, IModule> modulesInHub)
-        {
-            _modulesInHub = modulesInHub;
-        }
 
         public string Execute(string modName, string cmdInJson)
         {
@@ -46,6 +43,15 @@ namespace MATSys.Hosting.Scripting
         public Task<JsonArray> RunTestAsync(int iteration = 1)
         {
             return Task<JsonArray>.Run(() => new JsonArray());
+        }
+
+        public void Load(IConfigurationSection section, AutomationTestScriptContext ts)
+        {
+        }
+
+        public void InjectModules(Dictionary<string, IModule> mods)
+        {
+            _modulesInHub = mods;
         }
     }
 }

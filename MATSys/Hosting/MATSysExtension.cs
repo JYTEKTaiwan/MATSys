@@ -24,6 +24,7 @@ namespace MATSys.Hosting
                     .AddSingleton<IModuleFactory, ModuleFactory>()
                     .AddSingleton<IRecorderFactory, RecorderFactory>()
                     .AddSingleton<INotifierFactory, NotifierFactory>()
+                    .AddSingleton<IRunnerFactory,RunnerFactory>()
                     .AddSingleton<ITransceiverFactory, TransceiverFactory>()
                     .AddSingleton<AutomationTestScriptContext>()
             )

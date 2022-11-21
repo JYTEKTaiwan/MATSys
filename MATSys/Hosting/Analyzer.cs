@@ -9,22 +9,22 @@ using System.Threading.Tasks;
 namespace MATSys.Hosting
 {
 
-    public struct AnalyzeData
+    public struct AnalyzingData
     {
         public string Value { get; }
-        public AnalyzeData(string data)
+        public AnalyzingData(string data)
         {
             Value = data;
         }
-        public static AnalyzeData Create(string input)
+        public static AnalyzingData Create(string input)
         {
-            return new AnalyzeData(input);
+            return new AnalyzingData(input);
         }
     }
 
     public static class Analyzer
     {
-        public static bool LargerThan(this AnalyzeData data,double result)
+        public static bool LargerThan(this AnalyzingData data,double result)
         {
             return JsonSerializer.Deserialize<double>(data.Value) > result;
         }

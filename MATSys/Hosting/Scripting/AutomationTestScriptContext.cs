@@ -18,37 +18,43 @@ namespace MATSys.Hosting.Scripting
         public List<TestItem> Teardown { get; private set; } = new List<TestItem>();
         public AutomationTestScriptContext()
         {
-            AnalyzerExtMethods = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => GetAnalyzerDataExtensionMethods(x, typeof(AnalyzeData)));
-
-            var content = JsonNode.Parse(File.ReadAllText("appsettings.json"));
-            if (content["MATSys"].AsObject().ContainsKey("Scripts"))
+            AnalyzerExtMethods = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => GetExtensionMethods<AnalyzingData>(x));
+            
+            try
             {
+                var content = JsonNode.Parse(File.ReadAllText("appsettings.json"));
                 var scriptSection = content["MATSys"]["Scripts"];
-                if (scriptSection.AsObject().ContainsKey("RootDirectory"))
+                if (scriptSection != null)
                 {
-                    RootDirectory = scriptSection["RootDirectory"].GetValue<string>();
-                }
-                if (scriptSection.AsObject().ContainsKey("Setup"))
-                {
-                    //load setup items
-                    var setups = scriptSection["Setup"].AsArray();
-                    Setup.AddRange(ParseItem(setups));
-                }
-                if (scriptSection.AsObject().ContainsKey("Test"))
-                {
-                    //load Test items
-                    var test = scriptSection["Test"].AsArray();
-                    Test.AddRange(ParseItem(test));
-                }
-                if (scriptSection.AsObject().ContainsKey("Teardown"))
-                {
-                    //load Teardown items
-                    var teardown = scriptSection["Teardown"].AsArray();
-                    Teardown.AddRange(ParseItem(teardown));
+                    if (scriptSection.AsObject().ContainsKey("RootDirectory"))
+                    {
+                        RootDirectory = scriptSection["RootDirectory"].GetValue<string>();
+                    }
+                    if (scriptSection.AsObject().ContainsKey("Setup"))
+                    {
+                        //load setup items
+                        var setups = scriptSection["Setup"].AsArray();
+                        Setup.AddRange(ParseItem(setups));
+                    }
+                    if (scriptSection.AsObject().ContainsKey("Test"))
+                    {
+                        //load Test items
+                        var test = scriptSection["Test"].AsArray();
+                        Test.AddRange(ParseItem(test));
+                    }
+                    if (scriptSection.AsObject().ContainsKey("Teardown"))
+                    {
+                        //load Teardown items
+                        var teardown = scriptSection["Teardown"].AsArray();
+                        Teardown.AddRange(ParseItem(teardown));
+                    }
+
                 }
 
-
-
+            }
+            catch (NullReferenceException ex)
+            {
+                throw ex;
             }
         }
         private List<TestItem> ParseItem(JsonArray array)
@@ -90,15 +96,14 @@ namespace MATSys.Hosting.Scripting
             }
 
         }
-        private static IEnumerable<MethodInfo> GetAnalyzerDataExtensionMethods(Assembly assembly,
-       Type extendedType)
+        private static IEnumerable<MethodInfo> GetExtensionMethods<T>(Assembly assembly)
         {
             var query = from type in assembly.GetTypes()
                         where type.IsSealed && !type.IsGenericType && !type.IsNested
                         from method in type.GetMethods(BindingFlags.Static
                             | BindingFlags.Public | BindingFlags.NonPublic)
                         where method.IsDefined(typeof(ExtensionAttribute), false)
-                        where method.GetParameters()[0].ParameterType == extendedType
+                        where method.GetParameters()[0].ParameterType == typeof(T)
                         select method;
             return query;
         }

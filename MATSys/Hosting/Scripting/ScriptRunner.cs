@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using MATSys.Commands;
 using static NetMQ.NetMQSelector;
 using System.Xml.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Hosting.Scripting
 {
@@ -27,12 +28,7 @@ namespace MATSys.Hosting.Scripting
         public event IRunner.ExecuteTestItemCompleteEvent? AfterTestItemStops;
         public event IRunner.ExecuteScriptCompleteEvent? AfterScriptStops;
         private Dictionary<string,IModule> _modulesInHub;
-        public AutomationTestScriptContext TestScript { get; }
-        public ScriptRunner(AutomationTestScriptContext testScript, Dictionary<string, IModule> handle)
-        {
-            _modulesInHub = handle;
-            TestScript = testScript;
-        }
+        public AutomationTestScriptContext TestScript { get; set; }
         public string Execute(string modName, string cmdInJson)
         {
             return "[Warn] Service is in script mode";
@@ -181,7 +177,7 @@ namespace MATSys.Hosting.Scripting
             bool valid = false;
             if (!skipAnalyzer)
             {
-                item.AnalyzerParameter[0] = AnalyzeData.Create(execResult);
+                item.AnalyzerParameter[0] = AnalyzingData.Create(execResult);
                 valid = (bool)item.Analyzer.Invoke(item.AnalyzerParameter);
                 var ans = valid ? TestResultType.Pass : TestResultType.Fail;
                 result = TestItemResult.Create(ans, execResult, attributesToWrite);
@@ -192,6 +188,16 @@ namespace MATSys.Hosting.Scripting
             }
             var element = JsonSerializer.SerializeToNode(result, result.GetType(), options);
             return (valid,element);
+        }
+
+        public void Load(IConfigurationSection section, AutomationTestScriptContext ts)
+        {
+            TestScript = ts;
+        }
+
+        public void InjectModules(Dictionary<string, IModule> mods)
+        {
+            _modulesInHub = mods;
         }
     }
 }

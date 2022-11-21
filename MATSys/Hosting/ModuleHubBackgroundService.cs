@@ -14,7 +14,8 @@ namespace MATSys.Hosting
     public sealed class ModuleHubBackgroundService : BackgroundService
     {
         private readonly IModuleFactory _moduleFactory;
-        private readonly IConfiguration _config;
+        private readonly IRunnerFactory _runnerFactory;
+        private readonly IConfigurationSection _config;
         private readonly ILogger _logger;
         private readonly IRunner _runner;
         private readonly bool _scriptMode = false;
@@ -37,6 +38,8 @@ namespace MATSys.Hosting
                 _config = services.GetRequiredService<IConfiguration>().GetSection("MATSys");
                 _scriptMode = _config.GetValue<bool>("ScriptMode");
                 _moduleFactory = services.GetRequiredService<IModuleFactory>();
+                _runnerFactory = services.GetRequiredService<IRunnerFactory>();
+                var runnerSection = _config.GetSection("Runner");
                 foreach (var item in _config.GetSection("Modules").GetChildren())
                 {
                     Modules.Add(item.GetValue<string>("Alias"), _moduleFactory.CreateModule(item));
@@ -47,15 +50,9 @@ namespace MATSys.Hosting
                     item.Value.LocalPeers = Modules;
                     item.Value.Provider = services;
                 }
-                if (_scriptMode)
-                {
-                    var script = services.GetRequiredService<AutomationTestScriptContext>();
-                    _runner = (ScriptRunner)Activator.CreateInstance(typeof(ScriptRunner),script, Modules);
-                }
-                else
-                {
-                    _runner = (ManualRunner)Activator.CreateInstance(typeof(ManualRunner),  Modules);
-                }
+                _runner = _runnerFactory.CreateRunner(_config, _scriptMode);
+                _runner.InjectModules(Modules);
+                _runner.Load(runnerSection, services.GetRequiredService<AutomationTestScriptContext>());
             }
             catch (Exception ex)
             {

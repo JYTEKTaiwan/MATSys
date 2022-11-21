@@ -1,4 +1,5 @@
 ﻿using MATSys.Commands;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,16 @@ namespace MATSys.Hosting.Scripting
 {
     public interface IRunner
     {
-        AutomationTestScriptContext TestScript { get; }
+        AutomationTestScriptContext TestScript { get; internal set; }
 
         string Execute(string modName, string cmdInJson);
         string Execute(string modName, ICommand cmd);
         JsonArray RunTest(int iteration = 1);
         void StopTest();
         Task<JsonArray> RunTestAsync(int iteration = 1);
+        void Load(IConfigurationSection section,AutomationTestScriptContext ts);        
+
+        void InjectModules(Dictionary<string,IModule> mods);
 
         delegate void ReadyToExecuteScriptEvent(AutomationTestScriptContext script);
 
