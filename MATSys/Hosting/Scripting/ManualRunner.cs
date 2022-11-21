@@ -32,12 +32,12 @@ namespace MATSys.Hosting.Scripting
 
         public JsonArray RunTest(int iteration = 1)
         {
-            return null;
+            throw new InvalidOperationException("Please ENABLE the ScripMode property in the configuration file");
         }
 
         public void StopTest()
         {
-
+            throw new InvalidOperationException("Please ENABLE the ScripMode property in the configuration file");
         }
 
         public Task<JsonArray> RunTestAsync(int iteration = 1)

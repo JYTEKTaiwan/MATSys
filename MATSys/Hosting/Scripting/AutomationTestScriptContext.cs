@@ -9,13 +9,38 @@ using System.Threading.Tasks;
 
 namespace MATSys.Hosting.Scripting
 {
+    /// <summary>
+    /// Context class for text loaded from json file
+    /// </summary>
     public class AutomationTestScriptContext
     {
+        /// <summary>
+        /// Collection for extended methods of <see cref="AnalyzingData"/> 
+        /// </summary>
         public static IEnumerable<MethodInfo> AnalyzerExtMethods { get; set; }
+
+        /// <summary>
+        /// Working directory for external script file
+        /// </summary>
         public string RootDirectory { get; private set; } = @".\scripts";
+        /// <summary>
+        /// Setup items
+        /// </summary>
         public List<TestItem> Setup { get; private set; } = new List<TestItem>();
+
+        /// <summary>
+        /// Test items
+        /// </summary>
         public List<TestItem> Test { get; private set; } = new List<TestItem>();
+
+       /// <summary>
+       /// Teardown items
+       /// </summary>
         public List<TestItem> Teardown { get; private set; } = new List<TestItem>();
+
+        /// <summary>
+        /// ctor
+        /// </summary>
         public AutomationTestScriptContext()
         {
             AnalyzerExtMethods = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => GetExtensionMethods<AnalyzingData>(x));
@@ -57,6 +82,12 @@ namespace MATSys.Hosting.Scripting
                 throw ex;
             }
         }
+
+        /// <summary>
+        /// Parse from JsonArray in json file
+        /// </summary>
+        /// <param name="array">Json Array</param>
+        /// <returns>Collection of <see cref="TestItem"/></returns>
         private List<TestItem> ParseItem(JsonArray array)
         {
             List<TestItem> list = new List<TestItem>();
@@ -74,6 +105,11 @@ namespace MATSys.Hosting.Scripting
             }
             return list;
         }
+        /// <summary>
+        /// Read the file and convert to TestItem colletion
+        /// </summary>
+        /// <param name="path">file path</param>
+        /// <returns>Collection of <see cref="TestItem"/></returns>
         public IEnumerable<TestItem> ReadFromScriptFile(string path)
         {
             var p = Path.Combine(RootDirectory, path);
@@ -98,14 +134,19 @@ namespace MATSys.Hosting.Scripting
         }
         private static IEnumerable<MethodInfo> GetExtensionMethods<T>(Assembly assembly)
         {
-            var query = from type in assembly.GetTypes()
-                        where type.IsSealed && !type.IsGenericType && !type.IsNested
-                        from method in type.GetMethods(BindingFlags.Static
-                            | BindingFlags.Public | BindingFlags.NonPublic)
-                        where method.IsDefined(typeof(ExtensionAttribute), false)
-                        where method.GetParameters()[0].ParameterType == typeof(T)
-                        select method;
-            return query;
+            var types = assembly.GetTypes().Where(type=>type.IsSealed && !type.IsGenericType && !type.IsNested);
+            foreach (var type in types)
+            {
+                foreach (var method in type.GetMethods(BindingFlags.Static
+                            | BindingFlags.Public | BindingFlags.NonPublic))
+                {
+                    if (method.IsDefined(typeof(ExtensionAttribute), false)&&
+                        method.GetParameters()[0].ParameterType == typeof(T))
+                    {
+                        yield return method;
+                    }
+                }
+            }            
         }
     }
 }

@@ -31,12 +31,13 @@ namespace MATSys.Hosting.Scripting
         public AutomationTestScriptContext TestScript { get; set; }
         public string Execute(string modName, string cmdInJson)
         {
-            return "[Warn] Service is in script mode";
+            throw new InvalidOperationException("Please DISABLE the ScripMode property in the configuration file");
+
         }
 
         public string Execute(string modName, ICommand cmd)
         {
-            return "[Warn] Service is in script mode";
+            throw new InvalidOperationException("Please DISABLE the ScripMode property in the configuration file");
         }
 
         public JsonArray RunTest(int iteration = 1)

@@ -31,7 +31,6 @@ namespace MATSys.Hosting.Scripting
         /// Create new instance of TestItemResult
         /// </summary>
         /// <param name="result">Type:<see cref="TestResultType">TestResultType</see></param>
-        /// <param name="bin">Bin Number</param>
         /// <param name="value">Raw value</param>
         /// <param name="attributes">Custom attributes</param>
         /// <returns>Instance of TestItemResult</returns>
