@@ -12,7 +12,7 @@
 		<Company>JYTEK TAIWAN CORP.</Company>
 		<Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
 		<PackageIcon>JYTek.png</PackageIcon>
-		<VersionPrefix>1.4.2</VersionPrefix>
+		<VersionPrefix>1.4.3</VersionPrefix>
 		<RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/</RepositoryUrl>
 
 		<PackageReadmeFile>README.md</PackageReadmeFile>
