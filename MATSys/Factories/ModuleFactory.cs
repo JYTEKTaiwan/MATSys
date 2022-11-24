@@ -70,8 +70,11 @@ namespace MATSys.Factories
             //get the type string of the instance
             var typeString = section.GetSection("Type").Get<string>();
             //Derive the correct Type from AppDomain.CurrentDomain
-            Type t = ParseType(typeString);
-
+            Type? t = ParseType(typeString);
+            if (t==null)
+            {
+                throw new InvalidDataException($"Cannot find type {typeString}");
+            }
             //Create Transceiver, Notifier, and Recorder
             var trans = _transceiverFactory.CreateTransceiver(section.GetSection(key_transceiver));
             var noti = _notifierFactory.CreateNotifier(section.GetSection(key_notifier));
@@ -87,10 +90,10 @@ namespace MATSys.Factories
         /// </summary>
         /// <param name="typeString"> string of type</param>
         /// <returns></returns>
-        public Type ParseType(string typeString)
+        public Type? ParseType(string typeString)
         {
             var assems = AppDomain.CurrentDomain.GetAssemblies();
-            Type t = typeof(object);
+            Type? t = null;
             //check if section in the json configuration exits
             if (!string.IsNullOrEmpty(typeString))
             {
