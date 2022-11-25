@@ -42,51 +42,49 @@ namespace MATSys.Hosting.Scripting
 
         public JsonArray RunTest(int iteration = 1)
         {
-            var t = RunTestAsync(iteration);
-            t.Wait();
-            return t.Result;
+            _localCts = new CancellationTokenSource();
+            JsonArray response = new JsonArray();
+            BeforeScriptStarts?.Invoke(TestScript);
+            foreach (var item in TestScript.Setup)
+            {
+                _runner = ChooseRunner(item);
+                foreach (var res in _runner.Invoke(item))
+                {
+                    response.Add(res);
+                }
+            }
+            for (int i = 0; i < iteration; i++)
+            {
+                foreach (var item in TestScript.Test)
+                {
+                    _runner = ChooseRunner(item);
+                    foreach (var res in _runner.Invoke(item))
+                    {
+                        response.Add(res);
+                    }
+                }
+                if (_localCts.IsCancellationRequested)
+                {
+                    break;
+                }
+                SpinWait.SpinUntil(() => false, 0);
+            }
+            foreach (var item in TestScript.Teardown)
+            {
+                _runner = ChooseRunner(item);
+                foreach (var res in _runner.Invoke(item))
+                {
+                    response.Add(res);
+                }
+            }
+            AfterScriptStops?.Invoke(response);
+            return response;
         }
         public async Task<JsonArray> RunTestAsync(int iteration = 1)
         {
             return await Task.Run(() =>
             {
-                _localCts = new CancellationTokenSource();
-                JsonArray response = new JsonArray();
-                BeforeScriptStarts?.Invoke(TestScript);
-                foreach (var item in TestScript.Setup)
-                {
-                    _runner = ChooseRunner(item);
-                    foreach (var res in _runner.Invoke(item))
-                    {
-                        response.Add(res);
-                    }
-                }
-                for (int i = 0; i < iteration; i++)
-                {
-                    foreach (var item in TestScript.Test)
-                    {
-                        _runner = ChooseRunner(item);
-                        foreach (var res in _runner.Invoke(item))
-                        {
-                            response.Add(res);
-                        }
-                    }
-                    if (_localCts.IsCancellationRequested)
-                    {
-                        break;
-                    }
-                    SpinWait.SpinUntil(() => false, 0);
-                }
-                foreach (var item in TestScript.Teardown)
-                {
-                    _runner = ChooseRunner(item);
-                    foreach (var res in _runner.Invoke(item))
-                    {
-                        response.Add(res);
-                    }
-                }
-                AfterScriptStops?.Invoke(response);
-                return response;
+                return RunTest(iteration);
             });
         }
 
