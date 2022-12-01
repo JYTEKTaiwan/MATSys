@@ -14,7 +14,7 @@ namespace MATSys.Hosting.Scripting
 {
     public class ScriptRunner : IRunner
     {
-        private delegate IList<JsonNode> TestItemRunner(TestItem item);
+        private delegate JsonNode TestItemRunner(TestItem item);
 
         private CancellationTokenSource _localCts;
         protected static JsonSerializerOptions options = new JsonSerializerOptions()
@@ -27,6 +27,8 @@ namespace MATSys.Hosting.Scripting
         public event IRunner.ReadyToExecuteTestItemEvent? BeforeTestItemStarts;
         public event IRunner.ExecuteTestItemCompleteEvent? AfterTestItemStops;
         public event IRunner.ExecuteScriptCompleteEvent? AfterScriptStops;
+        public event IRunner.ExecuteSubTestItemCompleteEvent? AfterSubTestItemComplete;
+
         private Dictionary<string,IModule> _modulesInHub;
         public AutomationTestScriptContext TestScript { get; set; }
         public string Execute(string modName, string cmdInJson)
@@ -47,21 +49,21 @@ namespace MATSys.Hosting.Scripting
             BeforeScriptStarts?.Invoke(TestScript);
             foreach (var item in TestScript.Setup)
             {
+                BeforeTestItemStarts?.Invoke(item);
                 _runner = ChooseRunner(item);
-                foreach (var res in _runner.Invoke(item))
-                {
-                    response.Add(res);
-                }
+                var result = _runner.Invoke(item);
+                response.Add(result);
+                AfterTestItemStops?.Invoke(item, result);
             }
             for (int i = 0; i < iteration; i++)
             {
                 foreach (var item in TestScript.Test)
                 {
+                    BeforeTestItemStarts?.Invoke(item);
                     _runner = ChooseRunner(item);
-                    foreach (var res in _runner.Invoke(item))
-                    {
-                        response.Add(res);
-                    }
+                    var result = _runner.Invoke(item);
+                    response.Add(result);
+                    AfterTestItemStops?.Invoke(item, result);
                 }
                 if (_localCts.IsCancellationRequested)
                 {
@@ -71,11 +73,12 @@ namespace MATSys.Hosting.Scripting
             }
             foreach (var item in TestScript.Teardown)
             {
+                BeforeTestItemStarts?.Invoke(item);
                 _runner = ChooseRunner(item);
-                foreach (var res in _runner.Invoke(item))
-                {
-                    response.Add(res);
-                }
+                var result=_runner.Invoke(item);
+                response.Add(result);
+                AfterTestItemStops?.Invoke(item, result);
+
             }
             AfterScriptStops?.Invoke(response);
             return response;
@@ -111,35 +114,34 @@ namespace MATSys.Hosting.Scripting
             _localCts.Cancel();
         }
 
-        private IList<JsonNode> LoopTest(TestItem item)
+        private JsonNode LoopTest(TestItem item)
         {
-            IList<JsonNode> response = new List<JsonNode>();
+            (bool isPassed,JsonNode result) node=ValueTuple.Create(false,new JsonObject() as JsonNode);
             for (int i = 0; i < item.Loop; i++)
             {
-                BeforeTestItemStarts?.Invoke(item);
                 var ans = Execute(item);
-                var node = Analyze(item, ans, $"Loop: {i+1}/{item.Loop}");
-                AfterTestItemStops?.Invoke(item, node.result);
-                response.Add(node.result);
-
+                node = Analyze(item, ans, $"Loop: {i+1}/{item.Loop}");
+                AfterSubTestItemComplete?.Invoke(item, node.result);
+                if (!node.isPassed)
+                {
+                    break;
+                }
                 if (_localCts.IsCancellationRequested)
                 {
                     break;
                 }
                 SpinWait.SpinUntil(() => false, 0);
             }
-            return response;
+            return node.result;
         }
-        private IList<JsonNode> RetryTest(TestItem item)
+        private JsonNode RetryTest(TestItem item)
         {
-            IList<JsonNode> response = new List<JsonNode>();
+            (bool isPassed, JsonNode result) node = ValueTuple.Create(false, new JsonObject() as JsonNode);
             for (int i = 0; i < item.Retry; i++)
             {
-                BeforeTestItemStarts?.Invoke(item);
                 var ans = Execute(item);
-                var node = Analyze(item, ans, $"Retry: {i+1}/{item.Retry}");
-                AfterTestItemStops?.Invoke(item, node.result);
-                response.Add(node.result);
+                node = Analyze(item, ans, $"Retry: {i+1}/{item.Retry}");
+                AfterSubTestItemComplete?.Invoke(item, node.result);
                 if (node.isPassed)
                 {
                     break;
@@ -150,17 +152,14 @@ namespace MATSys.Hosting.Scripting
                 }
                 SpinWait.SpinUntil(() => false, 0);
             }
-            return response;
+            return node.result;
         }
-        private IList<JsonNode> SingleTest(TestItem item)
+        private JsonNode SingleTest(TestItem item)
         {
-            var response = new List<JsonNode>();
-            BeforeTestItemStarts?.Invoke(item);
             var ans=Execute(item);
             var node = Analyze(item,ans,null);
-            AfterTestItemStops?.Invoke(item, node.result);
-            response.Add(node.result);
-            return response;
+            AfterSubTestItemComplete?.Invoke(item, node.result);
+            return node.result;
         }
         private string Execute(TestItem item)
         {
