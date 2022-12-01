@@ -17,6 +17,8 @@ namespace MATSys.Hosting.Scripting
         public event IRunner.ReadyToExecuteTestItemEvent? BeforeTestItemStarts;
         public event IRunner.ExecuteTestItemCompleteEvent? AfterTestItemStops;
         public event IRunner.ExecuteScriptCompleteEvent? AfterScriptStops;
+        public event IRunner.ExecuteSubTestItemCompleteEvent? AfterSubTestItemComplete;
+
         public AutomationTestScriptContext TestScript { get; set; }
 
 
