@@ -124,7 +124,8 @@ namespace MATSys.Hosting.Scripting
         /// <returns>JsonObject instance</returns>
         public JsonObject GetExecuter()
         {
-            return _ctxt.AsObject()[ExecuterSection]!.AsObject();
+            var obj = _ctxt.AsObject()[ExecuterSection];
+            return obj == null ? new JsonObject() : obj.AsObject();
         }
         /// <summary>
         /// Get the Analyzer Jsonobject
@@ -132,7 +133,8 @@ namespace MATSys.Hosting.Scripting
         /// <returns>JsonObject instance</returns>
         public JsonObject GetAnalyzer()
         {
-            return _ctxt.AsObject()[AnalyzerSection]!.AsObject();
+            var obj = _ctxt.AsObject()[AnalyzerSection];
+            return obj == null ? new JsonObject() : obj.AsObject();
         }
     }
 }
