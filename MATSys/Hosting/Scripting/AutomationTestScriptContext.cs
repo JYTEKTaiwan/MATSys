@@ -95,12 +95,35 @@ namespace MATSys.Hosting.Scripting
             {
                 if (item.AsObject().ContainsKey("Executer"))
                 {
-                    list.Add(TestItem.Parse(item));
+                    if (item.AsObject().ContainsKey("Repeat"))
+                    {
+                        var repeat = item["Repeat"].GetValue<int>();
+                        for (int i = 0; i < repeat; i++)
+                        {
+                            list.Add(TestItem.Parse(item));
+                        }
+                    }
+                    else
+                    {
+                        list.Add(TestItem.Parse(item));
+                    }
+                    
                 }
                 else if (item.AsObject().ContainsKey("Script"))
                 {
                     var p = item["Script"].GetValue<string>();
-                    list.AddRange(ReadFromScriptFile(p));
+                    if (item.AsObject().ContainsKey("Repeat"))
+                    {
+                        var repeat = item["Repeat"].GetValue<int>();
+                        for (int i = 0; i < repeat; i++)
+                        {
+                            list.AddRange(ReadFromScriptFile(p));
+                        }
+                    }
+                    else
+                    {
+                        list.AddRange(ReadFromScriptFile(p));
+                    }
                 }
             }
             return list;
@@ -119,15 +142,42 @@ namespace MATSys.Hosting.Scripting
             {
                 if (item.AsObject().ContainsKey("Executer"))
                 {
-                    yield return TestItem.Parse(item);
+                    if (item.AsObject().ContainsKey("Repeat"))
+                    {
+                        var repeat = item["Repeat"].GetValue<int>();
+                        for (int i = 0; i < repeat; i++)
+                        {
+                            yield return TestItem.Parse(item);
+                        }
+                    }
+                    else
+                    {
+                        yield return TestItem.Parse(item);
+                    }
+
                 }
                 else if (item.AsObject().ContainsKey("Script"))
                 {
                     var subPath = item["Script"].GetValue<string>();
-                    foreach (var subItem in ReadFromScriptFile(subPath))
+                    if (item.AsObject().ContainsKey("Repeat"))
                     {
-                        yield return subItem;
+                        var repeat = item["Repeat"].GetValue<int>();
+                        for (int i = 0; i < repeat; i++)
+                        {
+                            foreach (var subItem in ReadFromScriptFile(subPath))
+                            {
+                                yield return subItem;
+                            }
+                        }
                     }
+                    else
+                    {
+                        foreach (var subItem in ReadFromScriptFile(subPath))
+                        {
+                            yield return subItem;
+                        }
+                    }
+
                 }
             }
 
