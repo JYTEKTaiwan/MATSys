@@ -67,6 +67,7 @@ namespace MATSys.Hosting.Scripting
 
         delegate void ReadyToExecuteScriptEvent(AutomationTestScriptContext script);
         delegate void ReadyToExecuteTestItemEvent(TestItem item);
+        delegate void ExecuteSubTestItemCompleteEvent(TestItem item, JsonNode result);
         delegate void ExecuteTestItemCompleteEvent(TestItem item, JsonNode result);
         delegate void ExecuteScriptCompleteEvent(JsonArray item);
 
@@ -79,6 +80,10 @@ namespace MATSys.Hosting.Scripting
         /// Event before the item starts
         /// </summary>
         event ReadyToExecuteTestItemEvent? BeforeTestItemStarts;
+        /// <summary>
+        /// Event when each sub test item completed
+        /// </summary>
+        event ExecuteSubTestItemCompleteEvent? AfterSubTestItemComplete;
 
         /// <summary>
         /// Event after the item stops
