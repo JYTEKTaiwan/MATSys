@@ -54,6 +54,12 @@ namespace MATSys.Hosting.Scripting
         /// Retry setting
         /// </summary>
         public int Retry { get; set; } = -1;
+
+
+        public TestItem()
+        {
+
+        }
         /// <summary>
         /// ctor
         /// </summary>
@@ -99,8 +105,6 @@ namespace MATSys.Hosting.Scripting
                 }
                 
             }
-
-
         }
         /// <summary>
         /// Parse from JsonNode

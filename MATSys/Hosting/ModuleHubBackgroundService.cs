@@ -29,13 +29,15 @@ namespace MATSys.Hosting
         /// Constructor for the background service
         /// </summary>
         /// <param name="services">IServiceProvider instance</param>
-        /// <exception> throw <see cref="Exception"/> for any exception</exception>
+        /// <exception> throw <see cref="KeyNotFoundException"/>throw if MATSys section is not existed in json file</exception>
+        /// <exception> throw <see cref="InvalidDataException"/>throw if type of module is not found</exception>
+        /// <exception> throw <see cref="Exception"/>for all unhandled exception</exception>
         public ModuleHubBackgroundService(IServiceProvider services)
         {
             try
             {
-                _logger = LogManager.GetCurrentClassLogger();
-                _config = services.GetRequiredService<IConfiguration>().GetSection("MATSys");
+                _logger = LogManager.GetCurrentClassLogger();                
+                _config = GetMATSysSection(services);
                 _scriptMode = _config.GetValue<bool>("ScriptMode");
                 _moduleFactory = services.GetRequiredService<IModuleFactory>();
                 _runnerFactory = services.GetRequiredService<IRunnerFactory>();
@@ -54,6 +56,22 @@ namespace MATSys.Hosting
                 _runner.InjectModules(Modules);
                 _runner.Load(runnerSection, services.GetRequiredService<AutomationTestScriptContext>());
                 services.GetRequiredService<AnalyzerLoader>();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                throw ex;
+            }
+            catch (InvalidDataException  ex)
+            {
+                throw  ex;
+            }
+            catch   (DirectoryNotFoundException ex) 
+            {
+                throw  ex;
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -77,6 +95,20 @@ namespace MATSys.Hosting
         public IRunner GetRunner()
         {
             return _runner;
+        }
+
+        private IConfigurationSection GetMATSysSection(IServiceProvider services)
+        {
+            var config=services.GetRequiredService<IConfiguration>();
+            if (!config.GetSection("MATSys").Exists())
+            {
+                throw new KeyNotFoundException("MATSys section is not found in appsettings.json");
+            }
+            else
+            {
+                return config.GetSection("MATSys");
+            }
+
         }
     }
 

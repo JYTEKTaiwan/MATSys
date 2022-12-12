@@ -48,45 +48,6 @@ public class UT_ModuleBase
         IModule dev = new NormalDevice(recorder: new EmptyRecorder());
         Assert.IsTrue(dev.Recorder.Name == nameof(EmptyRecorder));
     }
-
-    internal class NormalDevice : ModuleBase
-    {
-        public NormalDevice(object? configuration = null, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "") : base(configuration, transceiver, notifier, recorder, aliasName)
-        {
-        }
-
-        public override void Load(IConfigurationSection section)
-        {
-        }
-
-        [MATSysCommand("Hi")]
-        public string Hello()
-        {
-            return "WORLD";
-        }
-
-        [MATSysCommand("Exception")]
-        public void Exception()
-        {
-            throw new Exception();
-        }
-
-        [MATSysCommand("WrongArgs")]
-        public void WrongArgs()
-        {
-
-        }
-
-        [MATSysCommand("WrongSerDes")]
-        public void WrongSerDes(int i)
-        {
-        }
-
-        public override void Load(object configuration)
-        {
-        }
-    }
-
     [Test]
     [Category("StartStop")]
     public void StopBeforeStart()

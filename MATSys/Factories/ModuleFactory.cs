@@ -63,26 +63,35 @@ namespace MATSys.Factories
         /// <returns>IModule instance</returns>
         public IModule CreateModule(IConfigurationSection section)
         {
-            _logger.Trace($"Path: {section.Path}");
-            var _section = section;
-            //get the name of the instance
-            var name = section.GetSection("Alias").Get<string>();
-            //get the type string of the instance
-            var typeString = section.GetSection("Type").Get<string>();
-            //Derive the correct Type from AppDomain.CurrentDomain
-            Type? t = ParseType(typeString);
-            if (t==null)
+            try
             {
-                throw new InvalidDataException($"Cannot find type {typeString}");
-            }
-            //Create Transceiver, Notifier, and Recorder
-            var trans = _transceiverFactory.CreateTransceiver(section.GetSection(key_transceiver));
-            var noti = _notifierFactory.CreateNotifier(section.GetSection(key_notifier));
-            var rec = _recorderFactory.CreateRecorder(section.GetSection(key_recorder));
-            _logger.Debug($"[{name}]{typeString} is created with {trans.Name},{noti.Name},{rec.Name}");
+                _logger.Trace($"Path: {section.Path}");
+                var _section = section;
+                //get the name of the instance
+                var name = section.GetSection("Alias").Get<string>();
+                //get the type string of the instance
+                var typeString = section.GetSection("Type").Get<string>();
+                //Derive the correct Type from AppDomain.CurrentDomain
+                Type? t = ParseType(typeString);
+                if (t == null)
+                {
+                    throw new InvalidDataException($"Cannot find type {typeString}");
+                }
+                //Create Transceiver, Notifier, and Recorder
+                var trans = _transceiverFactory.CreateTransceiver(section.GetSection(key_transceiver));
+                var noti = _notifierFactory.CreateNotifier(section.GetSection(key_notifier));
+                var rec = _recorderFactory.CreateRecorder(section.GetSection(key_recorder));
+                _logger.Debug($"[{name}]{typeString} is created with {trans.Name},{noti.Name},{rec.Name}");
 
-            //Create instance and return 
-            return (IModule)Activator.CreateInstance(t, new object[] { section, trans, noti, rec, name })!;
+                //Create instance and return 
+                return (IModule)Activator.CreateInstance(t, new object[] { section, trans, noti, rec, name })!;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
         }
 
         /// <summary>

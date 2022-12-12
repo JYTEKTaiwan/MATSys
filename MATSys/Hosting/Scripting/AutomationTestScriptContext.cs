@@ -4,8 +4,16 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.Json.Serialization.Metadata;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration.Json;
+using static System.Collections.Specialized.BitVector32;
+using static NetMQ.NetMQSelector;
 
 namespace MATSys.Hosting.Scripting
 {
@@ -18,6 +26,8 @@ namespace MATSys.Hosting.Scripting
         /// Collection for extended methods of <see cref="AnalyzingData"/> 
         /// </summary>
         public static IEnumerable<MethodInfo> AnalyzerExtMethods { get; set; }
+
+        private string _path = "";
 
         /// <summary>
         /// Working directory for external script file
@@ -33,49 +43,51 @@ namespace MATSys.Hosting.Scripting
         /// </summary>
         public List<TestItem> Test { get; private set; } = new List<TestItem>();
 
-       /// <summary>
-       /// Teardown items
-       /// </summary>
+        /// <summary>
+        /// Teardown items
+        /// </summary>
         public List<TestItem> Teardown { get; private set; } = new List<TestItem>();
 
         /// <summary>
         /// ctor
         /// </summary>
-        public AutomationTestScriptContext()
-        {
+        public AutomationTestScriptContext(IConfiguration config)
+        {            
             AnalyzerExtMethods = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => GetExtensionMethods<AnalyzingData>(x));
-            
+            _path = ((config as IConfigurationRoot).Providers.FirstOrDefault(x => x is JsonConfigurationProvider) as JsonConfigurationProvider).Source.Path;            
             try
             {
-                var content = JsonNode.Parse(File.ReadAllText("appsettings.json"));
-                var scriptSection = content["MATSys"]["Scripts"];
-                if (scriptSection != null)
+                var content = JsonNode.Parse(File.ReadAllText(_path));
+                var scriptSection=content["MATSys"]["Scripts"];
+                if (scriptSection!=null)
                 {
-                    if (scriptSection.AsObject().ContainsKey("RootDirectory"))
+                    if (scriptSection["RootDirectory"]!=null)
                     {
                         RootDirectory = scriptSection["RootDirectory"].GetValue<string>();
                     }
-                    if (scriptSection.AsObject().ContainsKey("Setup"))
+                    if (scriptSection["Setup"]!=null)
                     {
                         //load setup items
                         var setups = scriptSection["Setup"].AsArray();
-                        Setup.AddRange(ParseItem(setups));
+                        Setup.AddRange(ParseItems(setups));
                     }
-                    if (scriptSection.AsObject().ContainsKey("Test"))
+                    if (scriptSection["Test"]!=null)
                     {
                         //load Test items
                         var test = scriptSection["Test"].AsArray();
-                        Test.AddRange(ParseItem(test));
+                        Test.AddRange(ParseItems(test));
                     }
-                    if (scriptSection.AsObject().ContainsKey("Teardown"))
+                    if (scriptSection["Teardown"]!=null)
                     {
                         //load Teardown items
                         var teardown = scriptSection["Teardown"].AsArray();
-                        Teardown.AddRange(ParseItem(teardown));
+                        Teardown.AddRange(ParseItems(teardown));
                     }
-
                 }
-
+                else
+                {
+                    throw new KeyNotFoundException("MATSys:Scripts section is not found");
+                }
             }
             catch (NullReferenceException ex)
             {
@@ -88,55 +100,131 @@ namespace MATSys.Hosting.Scripting
         /// </summary>
         /// <param name="array">Json Array</param>
         /// <returns>Collection of <see cref="TestItem"/></returns>
-        private List<TestItem> ParseItem(JsonArray array)
+        private List<TestItem> ParseItems(JsonArray array)
         {
-            List<TestItem> list = new List<TestItem>();
-            foreach (var item in array)
+            try
             {
-                if (item.AsObject().ContainsKey("Executer"))
+                List<TestItem> list = new List<TestItem>();
+                foreach (var item in array)
                 {
-                    if (item.AsObject().ContainsKey("Repeat"))
+                    if (item["Executer"]!=null)
                     {
-                        var repeat = item["Repeat"].GetValue<int>();
-                        for (int i = 0; i < repeat; i++)
-                        {
-                            list.Add(TestItem.Parse(item));
-                        }
+                        list.AddRange(ParseExecuterTestItems(item));
                     }
-                    else
+                    else if (item["Script"]!=null)
                     {
-                        list.Add(TestItem.Parse(item));
+                        list.AddRange(ParseScriptsTestItems(item));
                     }
-                    
                 }
-                else if (item.AsObject().ContainsKey("Script"))
+                return list;
+            }
+            catch (ArgumentException ex)
+            {
+                throw ex;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+        }
+        private JsonNode ConvertToJsonNode(IConfiguration config)
+        {
+            try
+            {
+                var sb= new StringBuilder();
+                JsonObject obj = new JsonObject();
+                foreach (var child in config.GetChildren())
                 {
-                    var p = item["Script"].GetValue<string>();
-                    if (item.AsObject().ContainsKey("Repeat"))
+                    if (child.Path.EndsWith("0"))
                     {
-                        var repeat = item["Repeat"].GetValue<int>();
-                        for (int i = 0; i < repeat; i++)
+                        var arr = new JsonArray();
+                        foreach (var arrayChild in config.GetChildren())
                         {
-                            list.AddRange(ReadFromScriptFile(p));
+                            arr.Add(ConvertToJsonNode(arrayChild));
                         }
+
+                        return arr;
                     }
                     else
                     {
-                        list.AddRange(ReadFromScriptFile(p));
+                        obj.Add(child.Key, ConvertToJsonNode(child));
                     }
+                }
+
+                if (config is IConfigurationSection section && section.Value != null)
+                {
+                    var aa=section.Get<string>();                    
+                    return JsonNode.Parse(section.Value);
+                }
+                    
+
+                return obj;
+            }
+            catch   (JsonException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        private IEnumerable<TestItem> ParseExecuterTestItems(JsonNode node)
+        {
+            if (node["Repeat"]!=null)
+            {
+                var repeat = node["Repeat"].GetValue<int>();
+                for (int i = 0; i < repeat; i++)
+                {
+                    yield return TestItem.Parse(node);
                 }
             }
-            return list;
+            else
+            {
+                yield return TestItem.Parse(node);
+            }
+
+        }
+
+        private IEnumerable<TestItem> ParseScriptsTestItems(JsonNode item)
+        {
+            var p = item["Script"].GetValue<string>();
+            List<TestItem> items = new List<TestItem>();
+            if (item["Repeat"]!=null)
+            {
+                var repeat = item["Repeat"].GetValue<int>();
+                for (int i = 0; i < repeat; i++)
+                {
+                    items.AddRange(ReadFromScriptFile(p));
+                }
+            }
+            else
+            {
+               items.AddRange(ReadFromScriptFile(p));
+            }
+            return items;
         }
         /// <summary>
         /// Read the file and convert to TestItem colletion
         /// </summary>
         /// <param name="path">file path</param>
         /// <returns>Collection of <see cref="TestItem"/></returns>
-        public IEnumerable<TestItem> ReadFromScriptFile(string path)
+        private IEnumerable<TestItem> ReadFromScriptFile(string path)
         {
-            var p = Path.Combine(RootDirectory, path);
-            var content = JsonNode.Parse(File.ReadAllText(p));
+            JsonNode content;
+            try
+            {
+                var p = Path.Combine(RootDirectory, path);
+                content = JsonNode.Parse(File.ReadAllText(p));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            
 
             foreach (var item in content.AsArray())
             {
@@ -180,23 +268,22 @@ namespace MATSys.Hosting.Scripting
 
                 }
             }
-
         }
         private static IEnumerable<MethodInfo> GetExtensionMethods<T>(Assembly assembly)
         {
-            var types = assembly.GetTypes().Where(type=>type.IsSealed && !type.IsGenericType && !type.IsNested);
+            var types = assembly.GetTypes().Where(type => type.IsSealed && !type.IsGenericType && !type.IsNested);
             foreach (var type in types)
             {
                 foreach (var method in type.GetMethods(BindingFlags.Static
                             | BindingFlags.Public | BindingFlags.NonPublic))
                 {
-                    if (method.IsDefined(typeof(ExtensionAttribute), false)&&
+                    if (method.IsDefined(typeof(ExtensionAttribute), false) &&
                         method.GetParameters()[0].ParameterType == typeof(T))
                     {
                         yield return method;
                     }
                 }
-            }            
+            }
         }
     }
 }
