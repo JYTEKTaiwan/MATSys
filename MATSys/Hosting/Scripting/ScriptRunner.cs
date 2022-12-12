@@ -16,7 +16,7 @@ namespace MATSys.Hosting.Scripting
     {
         private delegate JsonNode TestItemRunner(TestItem item);
 
-        private CancellationTokenSource _localCts;
+        private CancellationTokenSource _localCts=new CancellationTokenSource();
         protected static JsonSerializerOptions options = new JsonSerializerOptions()
         {
             WriteIndented = false,
@@ -49,23 +49,26 @@ namespace MATSys.Hosting.Scripting
             BeforeScriptStarts?.Invoke(TestScript);
             foreach (var item in TestScript.Setup)
             {
-                BeforeTestItemStarts?.Invoke(item);
-                _runner = ChooseRunner(item);
-                var result = _runner.Invoke(item);
-                response.Add(result);
-                AfterTestItemStops?.Invoke(item, result);
+                var res = ExecuteTestItem(item, _localCts.Token);
+                if (res != null)
+                {
+                    response.Add(res);
+                }
             }
             for (int i = 0; i < iteration; i++)
             {
-                foreach (var item in TestScript.Test)
+                if (!_localCts.IsCancellationRequested)
                 {
-                    BeforeTestItemStarts?.Invoke(item);
-                    _runner = ChooseRunner(item);
-                    var result = _runner.Invoke(item);
-                    response.Add(result);
-                    AfterTestItemStops?.Invoke(item, result);
+                    foreach (var item in TestScript.Test)
+                    {
+                        var res = ExecuteTestItem(item, _localCts.Token);
+                        if (res != null)
+                        {
+                            response.Add(res);
+                        }
+                    }
                 }
-                if (_localCts.IsCancellationRequested)
+                else
                 {
                     break;
                 }
@@ -73,11 +76,11 @@ namespace MATSys.Hosting.Scripting
             }
             foreach (var item in TestScript.Teardown)
             {
-                BeforeTestItemStarts?.Invoke(item);
-                _runner = ChooseRunner(item);
-                var result=_runner.Invoke(item);
-                response.Add(result);
-                AfterTestItemStops?.Invoke(item, result);
+                var res=ExecuteTestItem(item, _localCts.Token);
+                if (res!=null)
+                {
+                    response.Add(res);
+                }               
 
             }
             AfterScriptStops?.Invoke(response);
@@ -91,6 +94,22 @@ namespace MATSys.Hosting.Scripting
             });
         }
 
+        private JsonNode ExecuteTestItem(TestItem item, CancellationToken token)
+        {
+            if (!token.IsCancellationRequested)
+            {
+                BeforeTestItemStarts?.Invoke(item);
+                _runner = ChooseRunner(item);
+                var result = _runner.Invoke(item);                
+                AfterTestItemStops?.Invoke(item, result);
+                return result;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
         private TestItemRunner ChooseRunner(TestItem item)
         {
             //if Loop and Retry both exists, ignore retry
@@ -156,10 +175,17 @@ namespace MATSys.Hosting.Scripting
         }
         private JsonNode SingleTest(TestItem item)
         {
-            var ans=Execute(item);
-            var node = Analyze(item,ans,null);
-            AfterSubTestItemComplete?.Invoke(item, node.result);
-            return node.result;
+            if (!_localCts.IsCancellationRequested)
+            {
+                var ans = Execute(item);
+                var node = Analyze(item, ans, null);
+                AfterSubTestItemComplete?.Invoke(item, node.result);
+                return node.result;
+            }
+            else
+            {                
+                return new JsonObject();
+            }
         }
         private string Execute(TestItem item)
         {
