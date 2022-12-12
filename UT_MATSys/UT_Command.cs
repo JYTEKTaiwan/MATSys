@@ -1,4 +1,6 @@
+using MATSys;
 using MATSys.Commands;
+using MATSys.Factories;
 using System.Diagnostics;
 using System.Security.Cryptography;
 
@@ -15,7 +17,8 @@ public class UT_Command
     public void ResultIsNullOrEmpty()
     {
         var cmd = CommandBase.Create("Test", 1, 2.0);
-        Assert.IsTrue(string.IsNullOrEmpty(cmd.ConvertResultToString("")));
+        var str=cmd.ConvertResultToString(null);
+        Assert.IsTrue(string.IsNullOrEmpty(str));
     }
 
     [Test]
@@ -25,7 +28,7 @@ public class UT_Command
         var str = cmd.Serialize();
         var att = new MATSysCommandAttribute("Test", typeof(Command<int, double>));
         var res = CommandBase.Deserialize(str, att.CommandType) as Command<int, double>;
-        Assert.IsTrue(res!.Parameter.Item1 == 1 && res.Parameter.Item2 == 2.0);
+        Assert.IsTrue(res!.Item1 == 1 && res.Item2 == 2.0);
     }
 
     [Test]
@@ -35,7 +38,7 @@ public class UT_Command
         var str = cmd.Serialize();
         var att = new MATSysCommandAttribute("Test", typeof(Command<Boolean>));
         var res = CommandBase.Deserialize(str, att.CommandType) as Command<Boolean>;
-        Assert.IsTrue(res!.Parameter.Item1 == true);
+        Assert.IsTrue(res!.Item1 == true);
     }
     [Test]
     public void SerDesTestWithCustomObject()
@@ -44,7 +47,7 @@ public class UT_Command
         var str = cmd.Serialize();
         var att = new MATSysCommandAttribute("Test", typeof(Command<int, Test>));
         var res = CommandBase.Deserialize(str, att.CommandType) as Command<int, Test>;
-        Assert.IsTrue(res!.Parameter.Item1 == 1 && res.Parameter.Item2.A == 20);
+        Assert.IsTrue(res!.Item1 == 1 && res.Item2.A == 20);
     }
     [Test]
     public void SerDesTestWithWrongType()
@@ -52,7 +55,7 @@ public class UT_Command
 
         Assert.Catch<Exception>(() =>
         {
-            var cmd = CommandBase.Create("Test", 1.0);
+            var cmd = CommandBase.Create("Test", "");
             var str = cmd.Serialize();
             var att = new MATSysCommandAttribute("Test", typeof(Command<int>));
             var res = CommandBase.Deserialize(str, att.CommandType) as Command<int>;

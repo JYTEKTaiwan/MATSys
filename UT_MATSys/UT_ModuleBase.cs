@@ -2,6 +2,7 @@ using MATSys;
 using MATSys.Commands;
 using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 
 namespace UT_MATSys;
 
@@ -127,7 +128,7 @@ public class UT_ModuleBase
         dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("Hi").Serialize());
         dev.StopService();
-        Assert.IsTrue(res == "WORLD");
+        Assert.IsTrue(res == System.Text.Json.JsonSerializer.Serialize("WORLD"));
     }
 
     [Test]
@@ -139,7 +140,7 @@ public class UT_ModuleBase
         dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("Hi"));
         dev.StopService();
-        Assert.IsTrue(res == "WORLD");
+        Assert.IsTrue(res == System.Text.Json.JsonSerializer.Serialize("WORLD"));
     }
 
     [Test]
@@ -187,7 +188,7 @@ public class UT_ModuleBase
         dev.StartService(cts.Token);
         var res = dev.Execute(CommandBase.Create("WrongArgs", 1.5).Serialize());
         dev.StopService();
-        Assert.IsTrue(res.Contains(ExceptionHandler.cmd_execError));
+        Assert.IsTrue(res.Contains(ExceptionHandler.cmd_serDesError));
     }
     [Test]
     [Category("Execute")]

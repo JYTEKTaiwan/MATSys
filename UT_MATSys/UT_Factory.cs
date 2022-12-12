@@ -11,18 +11,15 @@ public class UT_DataReocrderFactory
     [Category("Recorder")]
     public void CreateFromFile()
     {
-        Assert.Catch<FileNotFoundException>(() =>
-        {
-            var jsonStr = File.ReadAllText("appsettings.json");
-            var ms = new MemoryStream(Encoding.ASCII.GetBytes(jsonStr));
-            ConfigurationBuilder cb = new ConfigurationBuilder();
-            var config = cb.AddJsonStream(ms).Build();
-            ms.Close();
-            var fac = new RecorderFactory(config);
-            var recorder = fac.CreateRecorder(config.GetSection("Dev1:Recorder"));
-            recorder.StartService(new CancellationToken());
-            recorder.StopService();
-        });
+        var jsonStr = File.ReadAllText("appsettings.json");
+        var ms = new MemoryStream(Encoding.ASCII.GetBytes(jsonStr));
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        var config = cb.AddJsonStream(ms).Build();
+        ms.Close();
+        var fac = new RecorderFactory(config.GetSection("MATSys:Modules:0"));
+        var recorder = fac.CreateRecorder(config.GetSection("Dev1:Recorder"));
+        recorder.StartService(new CancellationToken());
+        recorder.StopService();
     }
 
     [Test]
