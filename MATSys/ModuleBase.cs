@@ -218,16 +218,8 @@ namespace MATSys
         /// <returns>reponse after executing the commnad</returns>
         public string Execute(string cmdInJson)
         {
-            try
-            {
-                var result = OnRequestReceived(this, cmdInJson);
-                return result!;
-            }
-            catch (Exception ex)
-            {
-                _logger?.Warn(ex);
-                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmdInJson);
-            }
+            var result = OnRequestReceived(this, cmdInJson);
+            return result!;
         }
 
         /// <summary>
@@ -258,12 +250,25 @@ namespace MATSys
         public JsonObject Export()
         {
             var setting = _config as IConfigurationSection;
-            JsonObject jObj = setting.Value == null ? new JsonObject() : JsonObject.Parse(setting.Value).AsObject();
+            JsonObject jObj = setting== null ? new JsonObject() : JsonObject.Parse(setting.Value).AsObject();
             jObj.Add("Name", Name);
             jObj.Add("Type", this.GetType().Name);
-            jObj.Add("Recorder", _recorder.Export());
-            jObj.Add("Notifier", _notifier.Export());
-            jObj.Add("Transceiver", _transceiver.Export());
+            var node = new JsonObject();
+            node=_recorder.Export();
+            if (node.Count>0)
+            {
+                jObj.Add("Recorder", _recorder.Export());
+            }
+            node = _notifier.Export();
+            if (node.Count > 0)
+            {
+                jObj.Add("Notifier", _notifier.Export());
+            }
+            node = _transceiver.Export();
+            if (node.Count > 0)
+            {
+                jObj.Add("Transceiver", _transceiver.Export());
+            }
             return jObj;
         }
 
