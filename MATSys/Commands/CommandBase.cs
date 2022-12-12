@@ -37,7 +37,7 @@ namespace MATSys.Commands
         /// Convert the response object to string. This method is optional. Command object will use ToString() is this method is not implemented. Return empty string if <paramref name="obj"/> is null
         /// </summary>
         /// <param name="obj">response from the device object</param>
-        /// <returns>result string</returns>
+        /// <returns>json formatted string (return empty if parameter "<paramref name="obj"/>" is null)</returns>
         public virtual string ConvertResultToString(object? obj)
         {
             if (obj == null)
