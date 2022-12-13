@@ -24,13 +24,21 @@ namespace MATSys.Hosting
                     .AddSingleton<IModuleFactory, ModuleFactory>()
                     .AddSingleton<IRecorderFactory, RecorderFactory>()
                     .AddSingleton<INotifierFactory, NotifierFactory>()
-                    .AddSingleton<IRunnerFactory,RunnerFactory>()
+                    .AddSingleton<IRunnerFactory, RunnerFactory>()
                     .AddSingleton<ITransceiverFactory, TransceiverFactory>()
-                    .AddSingleton<AutomationTestScriptContext>()
+                    .AddSingleton<TestScriptContext>()
                     .AddSingleton<AnalyzerLoader>()
             )
             .ConfigureLogging(logging =>
                 logging.AddNLog()
+            )
+            .ConfigureAppConfiguration(ctxt =>
+            {
+                ctxt.Sources.Clear();
+                ctxt.SetBasePath(Directory.GetCurrentDirectory());
+                ctxt.AddJsonFile("appsettings.json");
+            }
+
             );
 
         }
