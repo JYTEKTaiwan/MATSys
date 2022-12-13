@@ -30,16 +30,16 @@ namespace MATSys.Hosting.Scripting
         public event IRunner.ExecuteSubTestItemCompleteEvent? AfterSubTestItemComplete;
 
         private Dictionary<string,IModule> _modulesInHub;
-        public AutomationTestScriptContext TestScript { get; set; }
+        public TestScriptContext TestScript { get; set; }
         public string Execute(string modName, string cmdInJson)
         {
-            throw new InvalidOperationException("Please DISABLE the ScripMode property in the configuration file");
+            throw new NotImplementedException("This runner only supports scripting, use RunTest instead.");
 
         }
 
         public string Execute(string modName, ICommand cmd)
         {
-            throw new InvalidOperationException("Please DISABLE the ScripMode property in the configuration file");
+            throw new NotImplementedException("This runner only supports scripting, use RunTest instead.");
         }
 
         public JsonArray RunTest(int iteration = 1)
@@ -214,9 +214,10 @@ namespace MATSys.Hosting.Scripting
             return (valid,element);
         }
 
-        public void Load(IConfigurationSection section, AutomationTestScriptContext ts)
+        public void Load(JsonNode section)
         {
-            TestScript = ts;
+
+            TestScript = new TestScriptContext(section);
         }
 
         public void InjectModules(Dictionary<string, IModule> mods)

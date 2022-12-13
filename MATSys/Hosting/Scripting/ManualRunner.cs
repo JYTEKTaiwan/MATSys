@@ -19,8 +19,7 @@ namespace MATSys.Hosting.Scripting
         public event IRunner.ExecuteScriptCompleteEvent? AfterScriptStops;
         public event IRunner.ExecuteSubTestItemCompleteEvent? AfterSubTestItemComplete;
 
-        public AutomationTestScriptContext TestScript { get; set; }
-
+        public TestScriptContext TestScript { get; set; }
 
         public string Execute(string modName, string cmdInJson)
         {
@@ -34,12 +33,12 @@ namespace MATSys.Hosting.Scripting
 
         public JsonArray RunTest(int iteration = 1)
         {
-            throw new InvalidOperationException("Please ENABLE the ScripMode property in the configuration file");
+            throw new NotImplementedException("This runner only supports manually execution, use Execute instead.");
         }
 
         public void StopTest()
         {
-            throw new InvalidOperationException("Please ENABLE the ScripMode property in the configuration file");
+            throw new NotImplementedException("This runner only supports manually execution, use Execute instead.");
         }
 
         public Task<JsonArray> RunTestAsync(int iteration = 1)
@@ -47,7 +46,7 @@ namespace MATSys.Hosting.Scripting
             return Task<JsonArray>.Run(() => new JsonArray());
         }
 
-        public void Load(IConfigurationSection section, AutomationTestScriptContext ts)
+        public void Load(JsonNode section)
         {
         }
 

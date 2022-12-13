@@ -15,17 +15,8 @@ namespace MATSys.Hosting.Scripting
         /// <summary>
         /// Create Runner instance
         /// </summary>
-        /// <param name="section">Configuration section in json file</param>
-        /// <param name="enabled">if script mode is enable or not</param>
         /// <returns><see cref="IRunner"/> instance</returns>
-        IRunner CreateRunner(IConfigurationSection section,bool enabled);
-        /// <summary>
-        /// Create Runner instance
-        /// </summary>
-        /// <param name="type">Type of the runner</param>
-        /// <param name="section">Configuration section in json file</param>
-        /// <returns><see cref="IRunner"/> instance</returns>
-        IRunner CreateRunner(Type type,IConfigurationSection section);
+        IRunner CreateRunner();
 
     }
 }

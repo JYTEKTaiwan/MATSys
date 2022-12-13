@@ -92,7 +92,7 @@ namespace MATSys.Hosting.Scripting
                 //Analyzer property
                 var name = node.AsObject()[AnalyzerSection]!.AsObject().First().Key;
                 var param = node.AsObject()[AnalyzerSection]!.AsObject().First().Value!.AsArray();
-                var mi = AutomationTestScriptContext.AnalyzerExtMethods.FirstOrDefault(x => x.Name == name);
+                var mi = TestScriptContext.AnalyzerExtMethods.FirstOrDefault(x => x.Name == name);
                 Analyzer = MethodInvoker.Create(mi);
                 var types = mi.GetParameters().Select(x => x.ParameterType).ToArray();
                 AnalyzerParameter = new object[param.Count + 1];

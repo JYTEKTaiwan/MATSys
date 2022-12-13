@@ -19,16 +19,16 @@ namespace MATSys.Hosting.Scripting
         /// <summary>
         /// Test Script context
         /// </summary>
-        AutomationTestScriptContext TestScript { get; internal set; }
+        TestScriptContext TestScript { get; internal set; }
         /// <summary>
-        /// (ONLY VALID IF ScriptMode is disabled) Execute command to specific module
+        /// Execute command to specific module
         /// </summary>
         /// <param name="modName">Name of the Module</param>
         /// <param name="cmdInJson">Command in json string </param>
         /// <returns>Response from Module</returns>
         string Execute(string modName, string cmdInJson);
         /// <summary>
-        /// (ONLY VALID IF ScriptMode is disabled) Execute command to specific module
+        /// Execute command to specific module
         /// </summary>
         /// <param name="modName">Name of the Module</param>
         /// <param name="cmd">ICommand instance for command</param>
@@ -36,7 +36,7 @@ namespace MATSys.Hosting.Scripting
         string Execute(string modName, ICommand cmd);
 
         /// <summary>
-        /// (ONLY VALID IF ScriptMode is enabled) Run the script execution
+        /// Run the script execution
         /// </summary>
         /// <param name="iteration">iteration of script</param>
         /// <returns>answer in JsonArray format</returns>
@@ -46,7 +46,7 @@ namespace MATSys.Hosting.Scripting
         /// </summary>
         void StopTest();
         /// <summary>
-        /// (ONLY VALID IF ScriptMode is enabled) Run the script execution asynchronously
+        /// Run the script execution asynchronously
         /// </summary>
         /// <param name="iteration">iteration of script</param>
         /// <returns>answer in JsonArray format</returns>        
@@ -57,7 +57,7 @@ namespace MATSys.Hosting.Scripting
         /// </summary>
         /// <param name="section"></param>
         /// <param name="ts"></param>
-        void Load(IConfigurationSection section,AutomationTestScriptContext ts);        
+        void Load(JsonNode section);        
 
         /// <summary>
         /// Inject the modules that created from Hub
@@ -65,7 +65,7 @@ namespace MATSys.Hosting.Scripting
         /// <param name="mods"></param>
         void InjectModules(Dictionary<string,IModule> mods);
 
-        delegate void ReadyToExecuteScriptEvent(AutomationTestScriptContext script);
+        delegate void ReadyToExecuteScriptEvent(TestScriptContext script);
         delegate void ReadyToExecuteTestItemEvent(TestItem item);
         delegate void ExecuteSubTestItemCompleteEvent(TestItem item, JsonNode result);
         delegate void ExecuteTestItemCompleteEvent(TestItem item, JsonNode result);
