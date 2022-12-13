@@ -20,7 +20,7 @@ namespace MATSys.Hosting.Scripting
     /// <summary>
     /// Context class for text loaded from json file
     /// </summary>
-    public class AutomationTestScriptContext
+    public class TestScriptContext
     {
         /// <summary>
         /// Collection for extended methods of <see cref="AnalyzingData"/> 
@@ -51,42 +51,36 @@ namespace MATSys.Hosting.Scripting
         /// <summary>
         /// ctor
         /// </summary>
-        public AutomationTestScriptContext(IConfiguration config)
+        public TestScriptContext(JsonNode config)
         {            
             AnalyzerExtMethods = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => GetExtensionMethods<AnalyzingData>(x));
-            _path = ((config as IConfigurationRoot).Providers.FirstOrDefault(x => x is JsonConfigurationProvider) as JsonConfigurationProvider).Source.Path;            
             try
             {
-                var content = JsonNode.Parse(File.ReadAllText(_path));
-                var scriptSection=content["MATSys"]["Scripts"];
-                if (scriptSection!=null)
+                if (config != null)
                 {
-                    if (scriptSection["RootDirectory"]!=null)
+                    if (config["RootDirectory"] != null)
                     {
-                        RootDirectory = scriptSection["RootDirectory"].GetValue<string>();
+                        RootDirectory = config["RootDirectory"].GetValue<string>();
                     }
-                    if (scriptSection["Setup"]!=null)
+                    if (config["Setup"] != null)
                     {
                         //load setup items
-                        var setups = scriptSection["Setup"].AsArray();
+                        var setups = config["Setup"].AsArray();
                         Setup.AddRange(ParseItems(setups));
                     }
-                    if (scriptSection["Test"]!=null)
+                    if (config["Test"] != null)
                     {
                         //load Test items
-                        var test = scriptSection["Test"].AsArray();
+                        var test = config["Test"].AsArray();
                         Test.AddRange(ParseItems(test));
                     }
-                    if (scriptSection["Teardown"]!=null)
+                    if (config["Teardown"] != null)
                     {
                         //load Teardown items
-                        var teardown = scriptSection["Teardown"].AsArray();
+                        var teardown = config["Teardown"].AsArray();
                         Teardown.AddRange(ParseItems(teardown));
                     }
-                }
-                else
-                {
-                    throw new KeyNotFoundException("MATSys:Scripts section is not found");
+
                 }
             }
             catch (NullReferenceException ex)
