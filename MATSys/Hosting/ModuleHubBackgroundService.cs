@@ -52,9 +52,8 @@ namespace MATSys.Hosting
                     item.Value.LocalPeers = Modules;
                     item.Value.Provider = services;
                 }
-                _runner = _runnerFactory.CreateRunner(_config, _scriptMode);
+                _runner = _runnerFactory.CreateRunner();
                 _runner.InjectModules(Modules);
-                _runner.Load(runnerSection, services.GetRequiredService<AutomationTestScriptContext>());
                 services.GetRequiredService<AnalyzerLoader>();
             }
             catch (KeyNotFoundException ex)
