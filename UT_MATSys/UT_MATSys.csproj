@@ -20,7 +20,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="UT_Hosting_Scripts.json">
+    <None Update="UT_Hosting_References.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="UT_Hosting_Scripts - Copy.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="UT_Hosting_Plugins.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="appsettings.json" CopyToOutputDirectory="Always" />

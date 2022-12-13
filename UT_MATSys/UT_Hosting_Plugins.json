@@ -1,0 +1,14 @@
+{
+  "MATSys": {
+    "Modules": [
+      {
+        "Alias": "Dev1",
+        "Type": "NormalDevice",
+        "Transceiver": {
+          "Type": "netmq"
+        }
+      }
+
+    ]
+  }
+}
