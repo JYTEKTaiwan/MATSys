@@ -99,7 +99,7 @@ namespace MATSys.Hosting.Scripting
             if (!token.IsCancellationRequested)
             {
                 BeforeTestItemStarts?.Invoke(item);
-                _runner = ChooseRunner(item);
+                _runner = ChooseTestItemRunner(item);
                 var result = _runner.Invoke(item);                
                 AfterTestItemStops?.Invoke(item, result);
                 return result;
@@ -110,7 +110,7 @@ namespace MATSys.Hosting.Scripting
             }
 
         }
-        private TestItemRunner ChooseRunner(TestItem item)
+        private TestItemRunner ChooseTestItemRunner(TestItem item)
         {
             //if Loop and Retry both exists, ignore retry
             if (item.Loop > 0)
@@ -196,7 +196,6 @@ namespace MATSys.Hosting.Scripting
         private (bool isPassed,JsonNode result) Analyze(TestItem item,string execValue,object attributesToWrite)
         {
             var skipAnalyzer = item.Analyzer == null;
-            var len = skipAnalyzer ? 0 : item.AnalyzerParameter.Length;
             TestItemResult result;
             bool valid = false;
             if (!skipAnalyzer)

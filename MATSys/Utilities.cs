@@ -20,7 +20,7 @@ public class DependencyLoader
     /// <param name="plugins">assembly paths</param>
     public static void LoadPluginAssemblies(string[] plugins)
     {
-        var assemblyPaths = AppDomain.CurrentDomain.GetAssemblies().Select(x => x.Location);
+        var assemblyPaths = AppDomain.CurrentDomain.GetAssemblies().Where(p=>!p.IsDynamic).Select(x => x.Location);
         foreach (var item in plugins)
         {
             var p = Path.GetFullPath(item);
