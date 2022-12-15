@@ -58,23 +58,46 @@ namespace MATSys.Factories
                 //check if section in the json configuration exits
                 if (section.Exists())
                 {
-                    var assems = AppDomain.CurrentDomain.GetAssemblies();
                     string type = section.GetValue<string>("Type");
                     if (!string.IsNullOrEmpty(type))
                     {
-                        //if key has value, search the type with the default class name. eg. xxx=>xxxRecorder
-                        foreach (var assem in assems)
+                        if (type.Contains("."))
                         {
-                            var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower());
-                            if (dummy == null)
-                            {
-                                continue;
-                            }
-                            else
+                            //look up in the GAC
+                            var dummy = Type.GetType(Assembly.CreateQualifiedName(type, type));
+                            if (dummy != null)
                             {
                                 t = dummy;
-                                break;
                             }
+                        }
+                        else
+                        {
+                            //look up in the loaded assemblies
+                            var assems = AppDomain.CurrentDomain.GetAssemblies();
+                            foreach (var assem in assems)
+                            {
+                                try
+                                {
+
+                                    var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower());
+                                    if (dummy == null)
+                                    {
+                                        continue;
+                                    }
+                                    else
+                                    {
+                                        t = dummy;
+                                        break;
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+
+                                    throw;
+                                }
+
+                            }
+
                         }
                     }
                 }
