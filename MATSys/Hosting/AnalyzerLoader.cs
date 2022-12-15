@@ -1,12 +1,4 @@
-﻿using CsvHelper.Configuration;
-using Microsoft.Extensions.Configuration;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Hosting
 {
@@ -16,7 +8,7 @@ namespace MATSys.Hosting
     internal class AnalyzerLoader
     {
         private const string sectionKey = "MATSys:References:Analyzers";
-        
+
         /// <summary>
         /// Search for the paths in the section and dynamically load to the AppDomain
         /// </summary>
@@ -24,10 +16,10 @@ namespace MATSys.Hosting
         public AnalyzerLoader(IConfiguration config)
         {
             // list the Analyzer reference paths in the json file
-            var plugins = config.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();        
+            var plugins = config.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
 
             //Load analyzer assemblies into memoery
-            DependencyLoader.LoadPluginAssemblies(plugins);        
+            DependencyLoader.LoadPluginAssemblies(plugins);
 
         }
 

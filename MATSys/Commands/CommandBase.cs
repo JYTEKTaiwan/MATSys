@@ -1,9 +1,5 @@
 ﻿using System.Reflection;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
-using static NetMQ.NetMQSelector;
 
 namespace MATSys.Commands
 {
@@ -290,7 +286,7 @@ namespace MATSys.Commands
         /// <param name="param1"></param>
         public Command(string name, T1 param1) : base(name)
         {
-            Item1= param1;
+            Item1 = param1;
         }
 
         /// <summary>

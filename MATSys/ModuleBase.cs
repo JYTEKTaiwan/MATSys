@@ -2,14 +2,9 @@
 using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 using NLog;
-using System.ComponentModel;
 using System.Data;
 using System.Reflection;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization.Metadata;
 
 namespace MATSys
 {
@@ -91,7 +86,7 @@ namespace MATSys
         public ModuleBase(object? configuration, ITransceiver? transceiver, INotifier? notifier, IRecorder? recorder, string aliasName = "")
         {
             Name = string.IsNullOrEmpty(aliasName) ? $"{GetType().Name}_{GetHashCode().ToString("X2")}" : aliasName;
-            if (LogManager.Configuration!=null)
+            if (LogManager.Configuration != null)
             {
                 _logger = LogManager.GetLogger(Name);
             }
@@ -232,12 +227,12 @@ namespace MATSys
             {
                 var args = item.CommandType.GenericTypeArguments;
                 JsonArray arr = new JsonArray();
-                for(int i = 0; i < args.Length; i++)
+                for (int i = 0; i < args.Length; i++)
                 {
                     arr.Add(args[i].Name);
                 }
                 JsonObject jobj = new JsonObject();
-                jobj.Add(item.Alias,arr);
+                jobj.Add(item.Alias, arr);
                 yield return jobj.ToJsonString();
             }
 
@@ -250,12 +245,12 @@ namespace MATSys
         public JsonObject Export()
         {
             var setting = _config as IConfigurationSection;
-            JsonObject jObj = setting== null ? new JsonObject() : JsonObject.Parse(setting.Value).AsObject();
+            JsonObject jObj = setting == null ? new JsonObject() : JsonObject.Parse(setting.Value).AsObject();
             jObj.Add("Name", Name);
             jObj.Add("Type", this.GetType().Name);
             var node = new JsonObject();
-            node=_recorder.Export();
-            if (node.Count>0)
+            node = _recorder.Export();
+            if (node.Count > 0)
             {
                 jObj.Add("Recorder", _recorder.Export());
             }

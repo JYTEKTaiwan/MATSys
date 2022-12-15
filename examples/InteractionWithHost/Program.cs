@@ -3,11 +3,7 @@ using MATSys;
 using MATSys.Commands;
 using MATSys.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 
 IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
@@ -21,7 +17,7 @@ runner.AfterTestItemStops += (item, res) =>
     //event is fired after executeing test item;
     Console.WriteLine($"{res.ToJsonString()}");
 };
-runner.AfterScriptStops += (res) => 
+runner.AfterScriptStops += (res) =>
 {
     foreach (var item in res)
     {

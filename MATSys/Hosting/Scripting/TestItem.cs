@@ -1,13 +1,6 @@
 ﻿using MATSys.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Nodes;
 using System.Text.Json;
-using System.Threading.Tasks;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using System.Text.Json.Nodes;
 
 namespace MATSys.Hosting.Scripting
 {
@@ -96,14 +89,14 @@ namespace MATSys.Hosting.Scripting
                 Analyzer = MethodInvoker.Create(mi);
                 var types = mi.GetParameters().Select(x => x.ParameterType).ToArray();
                 AnalyzerParameter = new object[param.Count + 1];
-                if (param.Count!=0)
+                if (param.Count != 0)
                 {
                     for (int i = 0; i < param.Count; i++)
                     {
                         AnalyzerParameter[i + 1] = param[i].Deserialize(types[i + 1])!;
                     }
                 }
-                
+
             }
         }
         /// <summary>
@@ -113,7 +106,7 @@ namespace MATSys.Hosting.Scripting
         /// <returns>TestItem instance</returns>
         public static TestItem Parse(JsonNode node)
         {
-            if (node!=null)
+            if (node != null)
             {
                 return new TestItem(node);
             }

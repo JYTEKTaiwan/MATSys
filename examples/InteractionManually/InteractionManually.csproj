@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\MATSys\MATSys.csproj" />
+    <ProjectReference Include="..\..\plugins\MATSys.Plugins.NetMQTransceiver\MATSys.Plugins.NetMQTransceiver.csproj" />
   </ItemGroup>
 
   <ItemGroup>

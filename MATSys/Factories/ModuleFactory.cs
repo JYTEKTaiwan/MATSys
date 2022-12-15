@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using NLog;
 using System.Reflection;
 using System.Text.Json;
@@ -91,7 +90,7 @@ namespace MATSys.Factories
 
                 throw ex;
             }
-           
+
         }
 
         /// <summary>

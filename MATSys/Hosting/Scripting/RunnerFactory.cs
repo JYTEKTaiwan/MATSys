@@ -1,17 +1,8 @@
-﻿using MATSys.Plugins;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using NLog;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-using static System.Collections.Specialized.BitVector32;
 
 namespace MATSys.Hosting.Scripting
 {
@@ -34,7 +25,7 @@ namespace MATSys.Hosting.Scripting
         /// <param name="config">configuration instance</param>
         public RunnerFactory(IConfiguration config)
         {
-            _config= config;
+            _config = config;
             _logger = LogManager.GetCurrentClassLogger();
 
             // list the runner reference paths in the json file
@@ -99,14 +90,14 @@ namespace MATSys.Hosting.Scripting
         /// <returns><see cref="IRunner"/> instance</returns>
         private IRunner CreateNew(Type type)
         {
-            IRunner obj= null;
+            IRunner obj = null;
             if (typeof(IRunner).IsAssignableFrom(type))
             {
                 obj = (IRunner)Activator.CreateInstance(type)!;
-                
+
             }
             else
-                obj= (IRunner)Activator.CreateInstance(defaultType);
+                obj = (IRunner)Activator.CreateInstance(defaultType);
 
             var settingPath = ((_config as IConfigurationRoot).Providers.FirstOrDefault(x => x is JsonConfigurationProvider) as JsonConfigurationProvider).Source.Path;
             var node = JsonNode.Parse(File.ReadAllText(settingPath))["MATSys"]["Runner"];

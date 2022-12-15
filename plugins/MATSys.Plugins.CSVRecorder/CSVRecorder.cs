@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Channels;
 
-namespace MATSys.Plugins
+namespace MATSys.Plugins.CSVRecorder
 {
     /// <summary>
     /// Recorder implemented by CsvHelper library

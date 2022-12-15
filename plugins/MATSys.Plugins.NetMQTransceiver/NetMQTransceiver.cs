@@ -3,7 +3,7 @@ using NetMQ;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace MATSys.Plugins
+namespace MATSys.Plugins.NetMQTransceiver
 {
     /// <summary>
     /// Transceiver implemented by NetMQ library
@@ -35,37 +35,37 @@ namespace MATSys.Plugins
 
             //Errors happened in the internal loop were clarified as Fatal error
             Task.Run(() =>
-           {
-               try
-               {
-                   while (!_linkedCts.IsCancellationRequested)
-                   {
-                       if (_routerSocket.TryReceiveRoutingKey(TimeSpan.FromSeconds(1), ref key))
-                       {
-                           //index 0: CommandBase object in json format
-                           var content = _routerSocket.ReceiveMultipartStrings();
-                           _logger.Debug($"New message received {content[0]}");
+            {
+                try
+                {
+                    while (!_linkedCts.IsCancellationRequested)
+                    {
+                        if (_routerSocket.TryReceiveRoutingKey(TimeSpan.FromSeconds(1), ref key))
+                        {
+                            //index 0: CommandBase object in json format
+                            var content = _routerSocket.ReceiveMultipartStrings();
+                            _logger.Debug($"New message received {content[0]}");
 
-                           var response = OnNewRequest?.Invoke(this, content[0])!;
-                           _logger.Trace("Message is executed");
+                            var response = OnNewRequest?.Invoke(this, content[0])!;
+                            _logger.Trace("Message is executed");
 
-                           _routerSocket.SendMoreFrame(key);
-                           _routerSocket.SendFrame(response);
-                           _logger.Debug($"Response sent back {response}");
-                       }
-                   }
-               }
-               catch (Exception ex)
-               {
-                   _logger.Fatal(ex);
-               }
-               finally
-               {
-                   _routerSocket.Unbind(address);
-                   _logger.Debug($"Unbind to {address}");
-                   _logger.Info("Stop service");
-               }
-           });
+                            _routerSocket.SendMoreFrame(key);
+                            _routerSocket.SendFrame(response);
+                            _logger.Debug($"Response sent back {response}");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.Fatal(ex);
+                }
+                finally
+                {
+                    _routerSocket.Unbind(address);
+                    _logger.Debug($"Unbind to {address}");
+                    _logger.Info("Stop service");
+                }
+            });
         }
 
         public void StopService()
@@ -100,6 +100,7 @@ namespace MATSys.Plugins
         }
 
     }
+
     /// <summary>
     /// Configuration definition for NetMQTransceiver
     /// </summary>
@@ -110,5 +111,4 @@ namespace MATSys.Plugins
         public string LocalIP { get; set; } = "";
         public int Port { get; set; } = -1;
     }
-
 }

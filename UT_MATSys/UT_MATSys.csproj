@@ -17,6 +17,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MATSys\MATSys.csproj" />
+    <ProjectReference Include="..\plugins\MATSys.Plugins.CSVRecorder\MATSys.Plugins.CSVRecorder.csproj" />
+    <ProjectReference Include="..\plugins\MATSys.Plugins.NetMQNotifier\MATSys.Plugins.NetMQNotifier.csproj" />
+    <ProjectReference Include="..\plugins\MATSys.Plugins.NetMQTransceiver\MATSys.Plugins.NetMQTransceiver.csproj" />
   </ItemGroup>
 
   <ItemGroup>

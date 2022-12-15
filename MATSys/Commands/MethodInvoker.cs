@@ -51,7 +51,7 @@ namespace MATSys.Commands
             try
             {
                 var t = GetInvokerType(mi);
-                object obj = Activator.CreateInstance(t,mi);
+                object obj = Activator.CreateInstance(t, mi);
                 if (obj == null)
                 {
                     throw new NullReferenceException();
@@ -474,7 +474,7 @@ namespace MATSys.Commands
         }
         public InvokerWithReturn(MethodInfo mi)
         {
-            _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, Tout>),mi) as Func<T1, T2, T3, T4, Tout>;
+            _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, Tout>), mi) as Func<T1, T2, T3, T4, Tout>;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -504,7 +504,7 @@ namespace MATSys.Commands
         }
         public InvokerWithReturn(MethodInfo mi)
         {
-            _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, Tout>),mi) as Func<T1, T2, T3, T4, T5, Tout>;
+            _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, Tout>), mi) as Func<T1, T2, T3, T4, T5, Tout>;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -533,9 +533,9 @@ namespace MATSys.Commands
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, T6, Tout>), target, name) as Func<T1, T2, T3, T4, T5, T6, Tout>;
         }
-        public InvokerWithReturn(MethodInfo  mi)
+        public InvokerWithReturn(MethodInfo mi)
         {
-            _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, T6, Tout>),mi) as Func<T1, T2, T3, T4, T5, T6, Tout>;
+            _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, T6, Tout>), mi) as Func<T1, T2, T3, T4, T5, T6, Tout>;
         }
 
         public override object? Invoke(params object[]? parameter)

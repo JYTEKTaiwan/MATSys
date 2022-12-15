@@ -1,10 +1,10 @@
-﻿using MATSys.Commands;
-using MATSys.Factories;
+﻿using MATSys.Factories;
 using MATSys.Hosting.Scripting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog;
+using System.Reflection;
 
 namespace MATSys.Hosting
 {
@@ -36,7 +36,8 @@ namespace MATSys.Hosting
         {
             try
             {
-                _logger = LogManager.GetCurrentClassLogger();                
+                LoadBinAssemblies();
+                _logger = LogManager.GetCurrentClassLogger();
                 _config = GetMATSysSection(services);
                 _scriptMode = _config.GetValue<bool>("ScriptMode");
                 _moduleFactory = services.GetRequiredService<IModuleFactory>();
@@ -60,13 +61,13 @@ namespace MATSys.Hosting
             {
                 throw ex;
             }
-            catch (InvalidDataException  ex)
+            catch (InvalidDataException ex)
             {
-                throw  ex;
+                throw ex;
             }
-            catch   (DirectoryNotFoundException ex) 
+            catch (DirectoryNotFoundException ex)
             {
-                throw  ex;
+                throw ex;
             }
             catch (FileNotFoundException ex)
             {
@@ -98,7 +99,7 @@ namespace MATSys.Hosting
 
         private IConfigurationSection GetMATSysSection(IServiceProvider services)
         {
-            var config=services.GetRequiredService<IConfiguration>();
+            var config = services.GetRequiredService<IConfiguration>();
             if (!config.GetSection("MATSys").Exists())
             {
                 throw new KeyNotFoundException("MATSys section is not found in appsettings.json");
@@ -109,6 +110,24 @@ namespace MATSys.Hosting
             }
 
         }
+
+        private void LoadBinAssemblies()
+        {
+            var existedAssems = AppDomain.CurrentDomain.GetAssemblies();
+            List<Assembly> allAssemblies = new List<Assembly>();
+            string path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            foreach (string dll in Directory.GetFiles(path, "*.dll"))
+            {
+                if (!existedAssems.Any(x => x.Location == dll))
+                {
+                    allAssemblies.Add(Assembly.LoadFile(dll));
+                }
+            }
+
+
+        }
+
     }
 
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.ServiceModel.Channels;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 
 namespace MATSys.Hosting
 {
@@ -48,7 +42,7 @@ namespace MATSys.Hosting
         /// <param name="data">intput data</param>
         /// <param name="comparator">condition in double format</param>
         /// <returns>pass or fail</returns>
-        public static bool LargerThan(this AnalyzingData data,double comparator)
+        public static bool LargerThan(this AnalyzingData data, double comparator)
         {
             return JsonSerializer.Deserialize<double>(data.Value) > comparator;
         }

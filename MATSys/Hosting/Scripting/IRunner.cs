@@ -1,12 +1,5 @@
 ﻿using MATSys.Commands;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 
 namespace MATSys.Hosting.Scripting
 {
@@ -51,19 +44,19 @@ namespace MATSys.Hosting.Scripting
         /// <param name="iteration">iteration of script</param>
         /// <returns>answer in JsonArray format</returns>        
         Task<JsonArray> RunTestAsync(int iteration = 1);
-        
+
         /// <summary>
         /// Load configuration and test script context
         /// </summary>
         /// <param name="section"></param>
         /// <param name="ts"></param>
-        void Load(JsonNode section);        
+        void Load(JsonNode section);
 
         /// <summary>
         /// Inject the modules that created from Hub
         /// </summary>
         /// <param name="mods"></param>
-        void InjectModules(Dictionary<string,IModule> mods);
+        void InjectModules(Dictionary<string, IModule> mods);
 
         delegate void ReadyToExecuteScriptEvent(TestScriptContext script);
         delegate void ReadyToExecuteTestItemEvent(TestItem item);

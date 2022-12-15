@@ -16,11 +16,11 @@ public class UT_Hosting
         {
             try
             {
-                var host = Host.CreateDefaultBuilder().UseMATSys()                
+                var host = Host.CreateDefaultBuilder().UseMATSys()
                 .ConfigureAppConfiguration(configHost =>
                 {
                     configHost.Sources.Clear();
-                    configHost.SetBasePath(Directory.GetCurrentDirectory());       
+                    configHost.SetBasePath(Directory.GetCurrentDirectory());
                 }).Build();
                 host.Run();
                 host.StopAsync();
@@ -75,7 +75,7 @@ public class UT_Hosting
     [Category("MATSys_Scripts")]
     public void ATSFileNotFound()
     {
-        Assert.Catch<IOException>(() => 
+        Assert.Catch<IOException>(() =>
         {
             var host = Host.CreateDefaultBuilder().UseMATSys()
         .ConfigureAppConfiguration(configHost =>
@@ -87,7 +87,7 @@ public class UT_Hosting
             host.Run();
             host.StopAsync();
         });
-        
+
 
     }
 

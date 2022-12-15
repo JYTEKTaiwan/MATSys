@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+	  <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>enable</Nullable>
+	  <BaseOutputPath>..\..\bin\</BaseOutputPath>
+	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	  <AssemblyName>NetMQNotifier</AssemblyName>
+	  <Authors>Way Lin</Authors>
+	  <Company>JYTEK TAIWAN CORP.</Company>
+	  <PackageIcon>JYTek.png</PackageIcon>
+	  <Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
+
+	  <VersionPrefix>1.0.0</VersionPrefix>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\icon\JYTek.png" Link="JYTek.png">
+      <PackagePath>\</PackagePath>
+      <Pack>True</Pack>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NetMQ" Version="4.0.1.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\MATSys\MATSys.csproj" />
+  </ItemGroup>
+
+</Project>

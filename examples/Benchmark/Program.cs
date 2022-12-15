@@ -2,14 +2,11 @@
 using MATSys;
 using MATSys.Commands;
 using MATSys.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using System.Drawing.Text;
-using System.Runtime.InteropServices.ObjectiveC;
 
-IHost host = Host.CreateDefaultBuilder().ConfigureLogging(log=>log.ClearProviders()).UseMATSys().Build();
+IHost host = Host.CreateDefaultBuilder().ConfigureLogging(log => log.ClearProviders()).UseMATSys().Build();
 
 host.RunAsync().Wait(1000); ;
 
@@ -32,7 +29,7 @@ Console.WriteLine($"Total {stopwatch.Elapsed.TotalSeconds} seconds (Average:{sto
 Console.WriteLine();
 
 Console.WriteLine($"Send command (1 arguments) for {iteration} times");
-cmd = CommandBase.Create("OneArgument","HI").Serialize();
+cmd = CommandBase.Create("OneArgument", "HI").Serialize();
 Console.WriteLine($"Command size={cmd.Length} bytes");
 dev.Execute("Dev1", cmd);
 stopwatch.Restart();
@@ -46,7 +43,7 @@ Console.WriteLine($"Total {stopwatch.Elapsed.TotalSeconds} seconds (Average:{sto
 Console.WriteLine();
 
 Console.WriteLine($"Send command (7 arguments) for {iteration} times");
-cmd = CommandBase.Create("SevenArgument", 1,1.0,"HI",true,DateTime.Now,new Object(),(decimal)10).Serialize();
+cmd = CommandBase.Create("SevenArgument", 1, 1.0, "HI", true, DateTime.Now, new Object(), (decimal)10).Serialize();
 Console.WriteLine($"Command size={cmd.Length} bytes");
 dev.Execute("Dev1", cmd);
 stopwatch.Restart();
@@ -77,7 +74,7 @@ public class TestDevice : ModuleBase
     }
 
     [MATSysCommand]
-    public string SevenArgument(int a,double b, string c, bool d, DateTime e, object f, decimal g)
+    public string SevenArgument(int a, double b, string c, bool d, DateTime e, object f, decimal g)
     {
         return "";
     }

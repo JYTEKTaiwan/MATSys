@@ -17,7 +17,7 @@ namespace InteractionWithHost_net472
 
             var dev = host.Services.GetRunner();
 
-            
+
             dev.BeforeTestItemStarts += (cmd) => { Console.WriteLine($"{cmd.Executer.Value.ModuleName}*{cmd.Executer.Value.CommandString}"); };
             dev.AfterTestItemStops += (item, res) => { Console.WriteLine($"{res}"); };
             dev.RunTest(3);

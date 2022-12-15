@@ -1,8 +1,5 @@
-using MATSys;
 using MATSys.Commands;
-using MATSys.Factories;
 using System.Diagnostics;
-using System.Security.Cryptography;
 
 namespace UT_MATSys;
 
@@ -17,7 +14,7 @@ public class UT_Command
     public void ResultIsNullOrEmpty()
     {
         var cmd = CommandBase.Create("Test", 1, 2.0);
-        var str=cmd.ConvertResultToString(null);
+        var str = cmd.ConvertResultToString(null);
         Assert.IsTrue(string.IsNullOrEmpty(str));
     }
 
@@ -132,10 +129,10 @@ public class UT_Command_Performance
         sw.Restart();
         for (int i = 0; i < cnt; i++)
         {
-            str=cmd.Serialize();
+            str = cmd.Serialize();
         }
         sw.Stop();
-        TestContext.Out.WriteLine($"Len={str.Length} bytes, {sw.Elapsed.TotalSeconds/ cnt}ms");
+        TestContext.Out.WriteLine($"Len={str.Length} bytes, {sw.Elapsed.TotalSeconds / cnt}ms");
         Assert.Pass();
     }
     [Test]
@@ -143,7 +140,7 @@ public class UT_Command_Performance
     {
         var cmd = CommandBase.Create("Test", 1, 1.0, (decimal)1, true, DateTime.Now, new object(), "");
         var str = cmd.Serialize();
-        var t=cmd.GetType();
+        var t = cmd.GetType();
         var obj = CommandBase.Deserialize(str, t);
         var cnt = 10000;
         Stopwatch sw = new Stopwatch();
@@ -163,7 +160,7 @@ public class UT_Command_Performance
         var cmd = ValueTuple.Create(1, 1.0, (decimal)1, true, DateTime.Now, new object(), "");
         var str = Newtonsoft.Json.JsonConvert.SerializeObject(cmd);
         var t = typeof(ValueTuple<int, double, decimal, bool, DateTime, object, string>);
-        var obj = Newtonsoft.Json.JsonConvert.DeserializeObject(str,t);
+        var obj = Newtonsoft.Json.JsonConvert.DeserializeObject(str, t);
         var cnt = 10000;
         Stopwatch sw = new Stopwatch();
         sw.Restart();

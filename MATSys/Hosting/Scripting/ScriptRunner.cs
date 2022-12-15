@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Nodes;
+﻿using MATSys.Commands;
 using System.Text.Json;
-using System.Threading.Tasks;
-using MATSys.Commands;
-using static NetMQ.NetMQSelector;
-using System.Xml.Linq;
-using Microsoft.Extensions.Configuration;
+using System.Text.Json.Nodes;
 
 namespace MATSys.Hosting.Scripting
 {
@@ -16,7 +8,7 @@ namespace MATSys.Hosting.Scripting
     {
         private delegate JsonNode TestItemRunner(TestItem item);
 
-        private CancellationTokenSource _localCts=new CancellationTokenSource();
+        private CancellationTokenSource _localCts = new CancellationTokenSource();
         protected static JsonSerializerOptions options = new JsonSerializerOptions()
         {
             WriteIndented = false,
@@ -29,7 +21,7 @@ namespace MATSys.Hosting.Scripting
         public event IRunner.ExecuteScriptCompleteEvent? AfterScriptStops;
         public event IRunner.ExecuteSubTestItemCompleteEvent? AfterSubTestItemComplete;
 
-        private Dictionary<string,IModule> _modulesInHub;
+        private Dictionary<string, IModule> _modulesInHub;
         public TestScriptContext TestScript { get; set; }
         public string Execute(string modName, string cmdInJson)
         {
@@ -76,11 +68,11 @@ namespace MATSys.Hosting.Scripting
             }
             foreach (var item in TestScript.Teardown)
             {
-                var res=ExecuteTestItem(item, _localCts.Token);
-                if (res!=null)
+                var res = ExecuteTestItem(item, _localCts.Token);
+                if (res != null)
                 {
                     response.Add(res);
-                }               
+                }
 
             }
             AfterScriptStops?.Invoke(response);
@@ -100,7 +92,7 @@ namespace MATSys.Hosting.Scripting
             {
                 BeforeTestItemStarts?.Invoke(item);
                 _runner = ChooseTestItemRunner(item);
-                var result = _runner.Invoke(item);                
+                var result = _runner.Invoke(item);
                 AfterTestItemStops?.Invoke(item, result);
                 return result;
             }
@@ -135,11 +127,11 @@ namespace MATSys.Hosting.Scripting
 
         private JsonNode LoopTest(TestItem item)
         {
-            (bool isPassed,JsonNode result) node=ValueTuple.Create(false,new JsonObject() as JsonNode);
+            (bool isPassed, JsonNode result) node = ValueTuple.Create(false, new JsonObject() as JsonNode);
             for (int i = 0; i < item.Loop; i++)
             {
                 var ans = Execute(item);
-                node = Analyze(item, ans, $"Loop: {i+1}/{item.Loop}");
+                node = Analyze(item, ans, $"Loop: {i + 1}/{item.Loop}");
                 AfterSubTestItemComplete?.Invoke(item, node.result);
                 if (!node.isPassed)
                 {
@@ -159,7 +151,7 @@ namespace MATSys.Hosting.Scripting
             for (int i = 0; i < item.Retry; i++)
             {
                 var ans = Execute(item);
-                node = Analyze(item, ans, $"Retry: {i+1}/{item.Retry}");
+                node = Analyze(item, ans, $"Retry: {i + 1}/{item.Retry}");
                 AfterSubTestItemComplete?.Invoke(item, node.result);
                 if (node.isPassed)
                 {
@@ -183,7 +175,7 @@ namespace MATSys.Hosting.Scripting
                 return node.result;
             }
             else
-            {                
+            {
                 return new JsonObject();
             }
         }
@@ -193,7 +185,7 @@ namespace MATSys.Hosting.Scripting
             var res = _modulesInHub[cmd.ModuleName].Execute(cmd.CommandString.ToJsonString());
             return res;
         }
-        private (bool isPassed,JsonNode result) Analyze(TestItem item,string execValue,object attributesToWrite)
+        private (bool isPassed, JsonNode result) Analyze(TestItem item, string execValue, object attributesToWrite)
         {
             var skipAnalyzer = item.Analyzer == null;
             TestItemResult result;
@@ -207,10 +199,10 @@ namespace MATSys.Hosting.Scripting
             }
             else
             {
-                result = TestItemResult.Create( TestResultType.Skip,execValue, attributesToWrite);
+                result = TestItemResult.Create(TestResultType.Skip, execValue, attributesToWrite);
             }
-            var element = JsonSerializer.SerializeToNode(result, typeof(TestItemResult),options);
-            return (valid,element);
+            var element = JsonSerializer.SerializeToNode(result, typeof(TestItemResult), options);
+            return (valid, element);
         }
 
         public void Load(JsonNode section)

@@ -4,7 +4,7 @@ using NetMQ.Sockets;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace MATSys.Plugins
+namespace MATSys.Plugins.NetMQNotifier
 {
     /// <summary>
     /// Notifier implemented by NetMQ library
@@ -113,5 +113,4 @@ namespace MATSys.Plugins
 
         public static NetMQNotifierConfiguration Default => new NetMQNotifierConfiguration();
     }
-
 }

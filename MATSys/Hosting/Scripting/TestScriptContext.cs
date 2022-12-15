@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.Extensions.Configuration;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.Json.Serialization.Metadata;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
-using static System.Collections.Specialized.BitVector32;
-using static NetMQ.NetMQSelector;
 
 namespace MATSys.Hosting.Scripting
 {
@@ -52,7 +42,7 @@ namespace MATSys.Hosting.Scripting
         /// ctor
         /// </summary>
         public TestScriptContext(JsonNode config)
-        {            
+        {
             AnalyzerExtMethods = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => GetExtensionMethods<AnalyzingData>(x));
             try
             {
@@ -101,11 +91,11 @@ namespace MATSys.Hosting.Scripting
                 List<TestItem> list = new List<TestItem>();
                 foreach (var item in array)
                 {
-                    if (item["Executer"]!=null)
+                    if (item["Executer"] != null)
                     {
                         list.AddRange(ParseExecuterTestItems(item));
                     }
-                    else if (item["Script"]!=null)
+                    else if (item["Script"] != null)
                     {
                         list.AddRange(ParseScriptsTestItems(item));
                     }
@@ -121,13 +111,13 @@ namespace MATSys.Hosting.Scripting
 
                 throw;
             }
-            
+
         }
         private JsonNode ConvertToJsonNode(IConfiguration config)
         {
             try
             {
-                var sb= new StringBuilder();
+                var sb = new StringBuilder();
                 JsonObject obj = new JsonObject();
                 foreach (var child in config.GetChildren())
                 {
@@ -149,14 +139,14 @@ namespace MATSys.Hosting.Scripting
 
                 if (config is IConfigurationSection section && section.Value != null)
                 {
-                    var aa=section.Get<string>();                    
+                    var aa = section.Get<string>();
                     return JsonNode.Parse(section.Value);
                 }
-                    
+
 
                 return obj;
             }
-            catch   (JsonException ex)
+            catch (JsonException ex)
             {
                 throw ex;
             }
@@ -168,7 +158,7 @@ namespace MATSys.Hosting.Scripting
         }
         private IEnumerable<TestItem> ParseExecuterTestItems(JsonNode node)
         {
-            if (node["Repeat"]!=null)
+            if (node["Repeat"] != null)
             {
                 var repeat = node["Repeat"].GetValue<int>();
                 for (int i = 0; i < repeat; i++)
@@ -187,7 +177,7 @@ namespace MATSys.Hosting.Scripting
         {
             var p = item["Script"].GetValue<string>();
             List<TestItem> items = new List<TestItem>();
-            if (item["Repeat"]!=null)
+            if (item["Repeat"] != null)
             {
                 var repeat = item["Repeat"].GetValue<int>();
                 for (int i = 0; i < repeat; i++)
@@ -197,7 +187,7 @@ namespace MATSys.Hosting.Scripting
             }
             else
             {
-               items.AddRange(ReadFromScriptFile(p));
+                items.AddRange(ReadFromScriptFile(p));
             }
             return items;
         }
@@ -218,7 +208,7 @@ namespace MATSys.Hosting.Scripting
             {
                 throw ex;
             }
-            
+
 
             foreach (var item in content.AsArray())
             {
