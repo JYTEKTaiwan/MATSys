@@ -1,20 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFrameworks>net6.0;netstandard2.0;net472</TargetFrameworks>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
-		<ImplicitUsings>enable</ImplicitUsings>
+		<LangVersion>10.0</LangVersion>
 		<Nullable>enable</Nullable>
 		<BaseOutputPath>..\..\bin\</BaseOutputPath>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<AssemblyName>NetMQTransceiver</AssemblyName>
 		<Authors>Way Lin</Authors>
 		<Company>JYTEK TAIWAN CORP.</Company>
 		<PackageIcon>JYTek.png</PackageIcon>
 		<Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
-		<VersionPrefix>1.0.0</VersionPrefix>
 
 	</PropertyGroup>
 
