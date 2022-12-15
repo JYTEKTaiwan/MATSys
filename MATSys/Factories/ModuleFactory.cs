@@ -105,20 +105,34 @@ namespace MATSys.Factories
             //check if section in the json configuration exits
             if (!string.IsNullOrEmpty(typeString))
             {
-                //search all types in all assemblies
-                foreach (var assem in assems)
+                if (typeString.Contains("."))
                 {
-                    var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{typeString}".ToLower());
-                    if (dummy == null)
-                    {
-                        continue;
-                    }
-                    else
+                    //look up in the GAC
+                    var dummy = Type.GetType(Assembly.CreateQualifiedName(typeString, typeString));
+                    if (dummy != null)
                     {
                         t = dummy;
-                        break;
                     }
                 }
+                else
+                {
+                    //search all types in all assemblies
+                    foreach (var assem in assems)
+                    {
+                        var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{typeString}".ToLower());
+                        if (dummy == null)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            t = dummy;
+                            break;
+                        }
+                    }
+
+                }
+
             }
             return t;
         }
