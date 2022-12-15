@@ -38,8 +38,6 @@ namespace MATSys.Hosting
         {
             try
             {
-                //LoadBinAssemblies();
-
                 _logger = LogManager.GetCurrentClassLogger();
                 _config = GetMATSysSection(services);
                 _scriptMode = _config.GetValue<bool>("ScriptMode");
@@ -128,39 +126,10 @@ namespace MATSys.Hosting
             {
                 return config.GetSection("MATSys");
             }
-
         }
 
-        private void LoadBinAssemblies()
-        {
-            var existedAssems = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic);
-
-            string path = AppDomain.CurrentDomain.BaseDirectory;
-
-            
-            foreach (string dll in Directory.GetFiles(path, "*.dll"))
-            {
-                try
-                {
-
-                    if (dll.Contains("MATSys")&&!existedAssems.Any(x=>x.Location==dll))
-                    {
-#if NET6_0_OR_GREATER
-                        var loader = new PluginLoader(dll);
-                        loader.LoadFromAssemblyPath(dll);
-#endif
-#if NETSTANDARD2_0_OR_GREATER
-                var assem = Assembly.LoadFile(dll);
-#endif
-                    }
-                }
-                catch (FileLoadException loadEx)
-                { } // The Assembly has already been loaded.
-                catch (BadImageFormatException imgEx)
-                { } // If a BadImageFormatException exception is thrown, the file is not an assembly.
-            }
-
-        }
+        
+        
 
     }
 
