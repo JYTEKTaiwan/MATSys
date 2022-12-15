@@ -27,12 +27,18 @@ public class DependencyLoader
             if (File.Exists(p) && !assemblyPaths.Any(x => x == p))
             {
 #if NET6_0_OR_GREATER
-                var loader = new PluginLoader(p);
-                var assem = loader.LoadFromAssemblyPath(p);
+                                
+
+                                var loader = new PluginLoader(p);
+                                var assem = loader.LoadFromAssemblyPath(p);
+
 #endif
 #if NETSTANDARD2_0_OR_GREATER
                 var assem = Assembly.LoadFile(p);
-#endif
+
+#endif              
+
+
             }
 
         }

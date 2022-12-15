@@ -4,7 +4,7 @@ using NetMQ.Sockets;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace MATSys.Plugins.NetMQNotifier
+namespace MATSys.Plugins
 {
     /// <summary>
     /// Notifier implemented by NetMQ library

@@ -1,5 +1,6 @@
 ﻿using MATSys.Factories;
 using MATSys.Hosting.Scripting;
+using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -37,7 +38,8 @@ namespace MATSys.Hosting
         {
             try
             {
-                LoadBinAssemblies();
+                //LoadBinAssemblies();
+
                 _logger = LogManager.GetCurrentClassLogger();
                 _config = GetMATSysSection(services);
                 _scriptMode = _config.GetValue<bool>("ScriptMode");
@@ -80,6 +82,23 @@ namespace MATSys.Hosting
             }
         }
 
+
+        public override Task StartAsync(CancellationToken cancellationToken)
+        {
+            foreach (var mod in Modules)
+            {
+                mod.Value.StartService(cancellationToken);
+            }
+            return base.StartAsync(cancellationToken);
+        }
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {
+            foreach (var mod in Modules)
+            {
+                mod.Value.StopService();
+            }
+            return base.StopAsync(cancellationToken);
+        }
         /// <summary>
         /// This method will be called immediately once the host is started
         /// </summary>
@@ -114,15 +133,17 @@ namespace MATSys.Hosting
 
         private void LoadBinAssemblies()
         {
-            try
-            {
-                var existedAssems = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic);
-                
-                string path = AppDomain.CurrentDomain.BaseDirectory;
+            var existedAssems = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic);
 
-                foreach (string dll in Directory.GetFiles(path, "*.dll"))
+            string path = AppDomain.CurrentDomain.BaseDirectory;
+
+            
+            foreach (string dll in Directory.GetFiles(path, "*.dll"))
+            {
+                try
                 {
-                    if (!existedAssems.Any(x => x.Location == dll))
+
+                    if (dll.Contains("MATSys")&&!existedAssems.Any(x=>x.Location==dll))
                     {
 #if NET6_0_OR_GREATER
                         var loader = new PluginLoader(dll);
@@ -133,14 +154,11 @@ namespace MATSys.Hosting
 #endif
                     }
                 }
+                catch (FileLoadException loadEx)
+                { } // The Assembly has already been loaded.
+                catch (BadImageFormatException imgEx)
+                { } // If a BadImageFormatException exception is thrown, the file is not an assembly.
             }
-            catch (FileLoadException loadEx)
-            { } // The Assembly has already been loaded.
-            catch (BadImageFormatException imgEx)
-            { } // If a BadImageFormatException exception is thrown, the file is not an assembly.
-
-
-
 
         }
 

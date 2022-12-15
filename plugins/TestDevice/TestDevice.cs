@@ -2,7 +2,7 @@
 using MATSys.Commands;
 using Microsoft.Extensions.Configuration;
 
-namespace TestDevice
+namespace MATSys.Modules
 {
     public class TestDevice : ModuleBase
     {

@@ -4,13 +4,14 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Channels;
 
-namespace MATSys.Plugins.CSVRecorder
+namespace MATSys.Plugins
 {
     /// <summary>
     /// Recorder implemented by CsvHelper library
     /// </summary>
     public class CSVRecorder : IRecorder
     {
+        
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
         private Channel<object>? _queue;
         private CSVRecorderConfiguration? _config;
@@ -86,13 +87,13 @@ namespace MATSys.Plugins.CSVRecorder
                         {
                             writer.WriteRecord(data);
                             writer.NextRecord();
+                            writer.Flush();
+                            streamWriter.Flush();
                             _logger.Debug($"Data is written to file, elements in queue:{_queue.Reader.Count}");
                         }
                         SpinWait.SpinUntil(() => token.IsCancellationRequested, 1);
                     }
-                    writer.Flush();
                     _queue!.Writer.Complete();
-                    streamWriter.Flush();
                     streamWriter.Close();
                     _logger.Debug("File stream and queue are closed");
                     _localCts.Dispose();
@@ -121,7 +122,7 @@ namespace MATSys.Plugins.CSVRecorder
         {
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
-
+        
     }
     /// <summary>
     /// Configuration definition for CSVRecorder

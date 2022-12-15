@@ -13,6 +13,7 @@
 		<Company>JYTEK TAIWAN CORP.</Company>
 		<PackageIcon>JYTek.png</PackageIcon>
 		<Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
+		<VersionPrefix>1.0.1</VersionPrefix>
 
 	</PropertyGroup>
 

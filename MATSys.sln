@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys", "MATSys\MATSys.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UT_MATSys", "UT_MATSys\UT_MATSys.csproj", "{432A5E3A-DF9D-4ED6-813E-40A51BBF919F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueNotifier", "plugins\QueueNotifier\QueueNotifier.csproj", "{A8FBAEBB-8C67-4879-9E4A-2903DFA74C23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Plugins.QueueNotifier", "plugins\QueueNotifier\MATSys.Plugins.QueueNotifier.csproj", "{A8FBAEBB-8C67-4879-9E4A-2903DFA74C23}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestDevice", "plugins\TestDevice\TestDevice.csproj", "{BAAC3371-A45E-49D0-919A-871C5262E98A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Modules.TestDevice", "plugins\TestDevice\MATSys.Modules.TestDevice.csproj", "{BAAC3371-A45E-49D0-919A-871C5262E98A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Benchmark", "examples\Benchmark\Benchmark.csproj", "{11AE0A50-412B-483C-937D-F260096E0DC7}"
 EndProject
@@ -307,7 +307,7 @@ Global
 		{1A69BADC-0878-4476-AF14-1DCE6FA46373} = {A57D9273-7ECC-464C-A9FC-75B9A3379FA3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_StartDate = 2000/1/1
 		SolutionGuid = {32B03236-DABD-45EA-84ED-C27B760D41A3}
+		BuildVersion_StartDate = 2000/1/1
 	EndGlobalSection
 EndGlobal

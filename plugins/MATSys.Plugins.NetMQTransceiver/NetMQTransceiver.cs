@@ -3,7 +3,7 @@ using NetMQ;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-namespace MATSys.Plugins.NetMQTransceiver
+namespace MATSys.Plugin
 {
     /// <summary>
     /// Transceiver implemented by NetMQ library
