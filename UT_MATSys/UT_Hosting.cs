@@ -37,7 +37,7 @@ public class UT_Hosting
     [Category("MATSys_Modules")]
     public void ModulesTypeNotFound()
     {
-        Assert.Catch<AggregateException>(() =>
+        Assert.Catch<InvalidDataException>(() =>
         {
             var host = Host.CreateDefaultBuilder().UseMATSys()
                             .ConfigureAppConfiguration(configHost =>
@@ -91,23 +91,4 @@ public class UT_Hosting
 
     }
 
-    [Test]
-    [Category("MATSys_References")]
-    public void InvalidReferencePaths()
-    {
-        Assert.Catch<IOException>(() =>
-        {
-            var host = Host.CreateDefaultBuilder().UseMATSys()
-        .ConfigureAppConfiguration(configHost =>
-        {
-            configHost.Sources.Clear();
-            configHost.SetBasePath(Directory.GetCurrentDirectory());
-            configHost.AddJsonFile("UT_Hosting_References.json");
-        }).Build();
-            host.Run();
-            host.StopAsync();
-        });
-
-
-    }
 }
