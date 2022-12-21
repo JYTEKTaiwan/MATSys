@@ -18,17 +18,9 @@ namespace InteractionWithHost_net472
             var dev = host.Services.GetRunner();
 
 
-            dev.BeforeTestItemStarts += (cmd) => { Console.WriteLine($"{cmd.Executer.Value.ModuleName}*{cmd.Executer.Value.CommandString}"); };
-            dev.AfterTestItemStops += (item, res) => { Console.WriteLine($"{res}"); };
-            dev.RunTest(3);
+            dev.AfterTestItemStops += (item, res) => { Console.WriteLine($"{res.ToJsonString()}"); };
+            dev.RunTest();
 
-            //for (int i = 0; i < 10; i++)
-            //{
-            //   var response= dev.Execute("Dev1", CommandBase.Create<TestDevice.Data>
-            //        ("Test",
-            //        new TestDevice.Data() { Date = DateTime.Now.ToString(), Number = new Random().NextDouble() }));
-            //    //Console.WriteLine(response);
-            //}
 
             Console.WriteLine("PRESS ANY KEY TO EXIT");
 
@@ -54,16 +46,9 @@ namespace InteractionWithHost_net472
 
         }
 
-        public class Data
-        {
-            public string Date { get; set; } = "";
-            public double Number { get; set; } = 0.0;
-        }
-
-        [MATSysCommandAttribute("StringMethod")]
+        [MATSysCommand]
         public string Method(string c)
         {
-
             return c;
         }
     }
