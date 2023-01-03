@@ -44,7 +44,7 @@ public class UT_Hosting
                             {
                                 configHost.Sources.Clear();
                                 configHost.SetBasePath(Directory.GetCurrentDirectory());
-                                configHost.AddJsonFile("appsettings_UT_Hosting_Module.json");
+                                configHost.AddJsonFile("UT_Hosting_Modules.json");
                             }).Build();
             host.Run();
             host.StopAsync();
@@ -75,6 +75,7 @@ public class UT_Hosting
     [Category("MATSys_Scripts")]
     public void ATSFileNotFound()
     {
+        //DirectoryNotFoundException or FileNotFoundException
         Assert.Catch<IOException>(() =>
         {
             var host = Host.CreateDefaultBuilder().UseMATSys()

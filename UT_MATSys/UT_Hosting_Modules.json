@@ -3,7 +3,7 @@
     "Modules": [
       {
         "Alias": "Dev1",
-        "Type": "TestDevice",
+        "Type": "WrongType",
         "Notifier": {
           "Type": "netmq",
           "Address": "127.0.0.1:12345",
@@ -16,23 +16,10 @@
           "AliasName": "",
           "LocalIP": "tcp://127.0.0.1",
           "Port": 1234
-        },
+        }
       }
 
-    ],
-    "References": {
-      "Modules": [],
-      "Recorders": [ ".\\modules\\CSVRecorder.dll" ],
-      "Notifiers": [ ".\\modules\\NetMQNotifier.dll" ],
-      "Transceivers": [ ".\\modules\\NetMQTransceiver.dll" ]
-    },
-    "ScriptMode": true,
-    "Scripts": {
-      "RootDirectory": ".\\scripts",
-      "Setup": [ { "Executer": { "Dev1": { "Method": [ "Setup" ] } } } ],
-      "Test": [ { "Script": "maintest.ats" } ],
-      "Teardown": [ { "Executer": { "Dev1": { "Method": [ "Teardown" ] } } } ]
-    }
+    ]
   },
   "NLog": {
     "throwConfigExceptions": true,

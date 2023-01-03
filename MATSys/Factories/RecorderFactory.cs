@@ -1,5 +1,4 @@
 ﻿using MATSys.Plugins;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using NLog;
 using System.Reflection;
@@ -62,9 +61,9 @@ namespace MATSys.Factories
                     if (!string.IsNullOrEmpty(type))
                     {
                         if (type.Contains("."))
-                        {   
+                        {
                             //look up in the GAC
-                            var dummy=Type.GetType(Assembly.CreateQualifiedName(type, type));
+                            var dummy = Type.GetType(Assembly.CreateQualifiedName(type, type));
                             if (dummy != null)
                             {
                                 t = dummy;

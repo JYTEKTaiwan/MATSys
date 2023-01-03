@@ -11,7 +11,7 @@ namespace MATSys.Plugins
     /// </summary>
     public class CSVRecorder : IRecorder
     {
-        
+
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
         private Channel<object>? _queue;
         private CSVRecorderConfiguration? _config;
@@ -122,7 +122,7 @@ namespace MATSys.Plugins
         {
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
-        
+
     }
     /// <summary>
     /// Configuration definition for CSVRecorder

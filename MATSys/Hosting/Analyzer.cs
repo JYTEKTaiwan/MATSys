@@ -46,6 +46,24 @@ namespace MATSys.Hosting
         {
             return JsonSerializer.Deserialize<double>(data.Value) > comparator;
         }
+        public static bool SmallerThan(this AnalyzingData data, double comparator)
+        {
+            return JsonSerializer.Deserialize<double>(data.Value) < comparator;
+        }
+        public static bool Between(this AnalyzingData data, double low, double high)
+        {
+            var v = JsonSerializer.Deserialize<double>(data.Value);
+            return v > low && v < high;
+        }
+        public static bool EqualsTo(this AnalyzingData data, double comparator)
+        {
+            return JsonSerializer.Deserialize<double>(data.Value) == comparator;
+        }
+        public static bool IsTrue(this AnalyzingData data)
+        {
+            var v = JsonSerializer.Deserialize<bool>(data.Value);
+            return v;
+        }
 
     }
 }

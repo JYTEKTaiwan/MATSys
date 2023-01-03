@@ -23,14 +23,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="appsettings_UTFactory.json">
+    <None Update="appsettings_UT_Factory.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="UT_Hosting_Scripts.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="UT_Hosting_Plugins.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="appsettings.json" CopyToOutputDirectory="Always" />
-      <None Update="appsettings_UT_Hosting_Module.json" CopyToOutputDirectory="Always" />
+      <None Update="UT_Hosting_Modules.json" CopyToOutputDirectory="Always" />
       <None Update="appsettings_UT_Factory.json" CopyToOutputDirectory="Always" />
     
   </ItemGroup>

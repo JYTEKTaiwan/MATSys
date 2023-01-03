@@ -1,0 +1,22 @@
+{
+  "MATSys": {
+    "Modules": [
+      {
+        "Alias": "Dev1",
+        "Type": "NormalDevice",
+        "Transceiver": {
+          "Type": "netmq"
+        }
+      }
+
+    ],
+    "Runner": {
+      "Type": "SriptRunner",
+      "RootDirectory": ".\\",
+      "Setup": [ { "Script": "abt.ats" } ],
+      "Test": [],
+      "Teardown": []
+    }
+
+  }
+}

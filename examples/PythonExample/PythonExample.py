@@ -6,16 +6,16 @@ load("coreclr")
 import clr
 
 
-sys.path.append(r"C:\Users\JYTW\source\repos\JYTEKTaiwan\MATSys\examples\InteractionWithHost\bin\Debug\net6.0")
+sys.path.append(r"C:\Users\JYTW\source\repos\JYTEKTaiwan\MATSys\examples\InteractionWithHost_net472\bin\Debug")
 
-clr.AddReference("MATSys")
+#clr.AddReference("MATSys")
 clr.AddReference("Microsoft.Extensions.Hosting")
-clr.AddReference("Microsoft.Extensions.Logging")
-clr.AddReference("Microsoft.Extensions.Logging.EventLog")
-
+#clr.AddReference("Microsoft.Extensions.Logging")
+#clr.AddReference("Microsoft.Extensions.Logging.EventLog")
+clr.AddReference(r"C:\Users\JYTW\.nuget\packages\system.diagnostics.eventlog\6.0.0\lib\net461\System.Diagnostics.EventLog.dll")
 #clr.AddReference(r"C:\Users\JYTW\.nuget\packages\microsoft.extensions.logging\2.1.0\lib\netstandard2.0\Microsoft.Extensions.Logging.dll")
-clr.AddReference(r"C:\Users\JYTW\.nuget\packages\nlog\5.0.4\lib\netstandard2.0\NLog.dll")
-clr.AddReference(r"C:\Users\JYTW\.nuget\packages\nlog.extensions.logging\5.0.4\lib\netstandard2.0\NLog.Extensions.Logging.dll")
+#clr.AddReference(r"C:\Users\JYTW\.nuget\packages\nlog\5.0.4\lib\netstandard2.0\NLog.dll")
+#clr.AddReference(r"C:\Users\JYTW\.nuget\packages\nlog.extensions.logging\5.0.4\lib\netstandard2.0\NLog.Extensions.Logging.dll")
 
 #clr.AddReference(r"C:\Users\JYTW\.nuget\packages\microsoft.extensions.configuration\6.0.0\lib\net461\Microsoft.Extensions.Configuration.dll")
 #clr.AddReference(r"C:\Users\JYTW\.nuget\packages\microsoft.extensions.configuration.environmentvariables\6.0.0\lib\net461\Microsoft.Extensions.Configuration.EnvironmentVariables.dll")
@@ -38,19 +38,19 @@ clr.AddReference(r"C:\Users\JYTW\.nuget\packages\nlog.extensions.logging\5.0.4\l
 
 
 
-from MATSys import *
-from MATSys.Commands import *
-from MATSys.Factories import *
-from MATSys.Plugins import *
-from MATSys.Hosting import *
+#from MATSys import *
+#from MATSys.Commands import *
+#from MATSys.Factories import *
+#from MATSys.Plugins import *
+#from MATSys.Hosting import *
 from Microsoft.Extensions.Configuration import *
 from Microsoft.Extensions.Hosting import *
 
 
-a = RecorderFactory.CreateNew[EmptyRecorder](None);
+#a = RecorderFactory.CreateNew[EmptyRecorder](None);
 
 builder = Host.CreateDefaultBuilder()
-builder=MATSysExtension.UseMATSys(builder)
+#builder=MATSysExtension.UseMATSys(builder)
 
 #cb = ConfigurationBuilder()
 #s=FileConfigurationExtensions.SetBasePath(cb,Directory.GetCurrentDirectory())

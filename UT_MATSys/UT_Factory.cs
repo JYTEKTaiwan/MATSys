@@ -11,7 +11,7 @@ public class UT_DataReocrderFactory
     [Category("Recorder")]
     public void CreateFromFile()
     {
-        var jsonStr = File.ReadAllText("appsettings_UTFactory.json");
+        var jsonStr = File.ReadAllText("appsettings_UT_Factory.json");
         var ms = new MemoryStream(Encoding.ASCII.GetBytes(jsonStr));
         ConfigurationBuilder cb = new ConfigurationBuilder();
         var config = cb.AddJsonStream(ms).Build();

@@ -1,5 +1,4 @@
-﻿using MATSys;
-using MATSys.Commands;
+﻿using MATSys.Commands;
 using Microsoft.Extensions.Configuration;
 
 namespace MATSys.Modules

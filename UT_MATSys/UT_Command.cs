@@ -50,7 +50,7 @@ public class UT_Command
     public void SerDesTestWithWrongType()
     {
 
-        Assert.Catch<Exception>(() =>
+        Assert.Catch<System.Text.Json.JsonException>(() =>
         {
             var cmd = CommandBase.Create("Test", "");
             var str = cmd.Serialize();

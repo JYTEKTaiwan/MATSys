@@ -1,12 +1,9 @@
 ﻿using MATSys.Factories;
 using MATSys.Hosting.Scripting;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog;
-using System.Reflection;
-using static MATSys.DependencyLoader;
 
 namespace MATSys.Hosting
 {
@@ -128,8 +125,8 @@ namespace MATSys.Hosting
             }
         }
 
-        
-        
+
+
 
     }
 
