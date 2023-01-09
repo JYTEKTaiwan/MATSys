@@ -12,20 +12,16 @@ When MATSys is embedded into the .Net generic host, it will automatically read t
 In the MATSys section , user can assign the following information:
 
 - Reference assembly paths
-- Transceiver information for MATSys background service
 - Modules information
-- Plugins information
-- Scripts information
+- Runner information
 
 
 The hierachy may look like this
 <pre>
   "MATSys": {    
-    "ScriptMode": true,
-    "Transceiver": {          },
     "Modules": [          ],
     "References": {    },
-    "Scripts": {    }
+    "Runner": {    }
   } 
 </pre>
 
@@ -91,19 +87,26 @@ If there are some unique congifuation setting for custom Module, user can add to
 
 
 ### Scripts information
-MATSys supports automation testing using scripts, user can easily achieve the feature by 2 steps
+MATSys implements two modes: ManualRunner(default) and ScriptRunner. User can implement their own runner instance also.
 
-1. Enable the script mode using </b>ScriptMode</b> in appsettings.json
-1. Add script for 3 different groups.
+ManualRunner:
+- Execute json-formatted command manually
+
+ScriptRunner:
+- Take script file from assigned path and run the content
+- Separated into Setup/Test/Teardown groups
+
 
 The configuration will be like following snippet
 <pre>
     "MATSys": {
-        "ScriptMode": true,
-        "Scripts": {
-            "Setup": [ "Dev1:Test,\"Hello\"" ],
-            "Test": [],
-            "Teardown": []
+      "Runner": {
+        "Type": "ScriptRunner",
+        "RootDirectory": ".\\scripts",
+        "Setup": [ {"Script": ""} ],
+        "Test": [ { "Executer": { "_modName": { "_methodName": [] } } } ],
+        "Teardown": []
+        }
     }
   
 </pre>
@@ -205,29 +208,20 @@ If disable system will load the NLog.config in the bin folder.
   # Example of appsetting.json 
   <pre>
   {
-  "MATSys": {
-    "EnableNLogInJsonFile": true,
-    "ScriptMode": true,
-    "Transceiver": {
-    },
+  "MATSys": {    
     "Modules": [
       {
-        "Alias": "Dev1",
-        "Type": "TestDevice",
+        "Alias": "Tester",
+        "Type": "Tester",
         "Recorder": {
           "Type": ""
         },
         "Notifier": {
-          "Type": "netmq",
-          "Address": "127.0.0.1:12345",
-          "Protocal": "inproc",
-          "Topic": "AA",
+          "Type": "",
           "DisableEvent": true
         },
         "Transceiver": {
-          "Type": "netmq",
-          "LocalIP": "tcp://127.0.0.1",
-          "Port": 1234
+          "Type": ""
         }
       }
     ],
@@ -235,11 +229,15 @@ If disable system will load the NLog.config in the bin folder.
       "Modules": [],
       "Recorders": [ ".\\modules\\CSVRecorder.dll" ],
       "Notifiers": [ ".\\modules\\NetMQNotifier.dll" ],
-      "Transceivers": [ ".\\modules\\NetMQTransceiver.dll" ]
+      "Transceivers": [ ".\\modules\\NetMQTransceiver.dll" ],
+      "Runners": [],
+      "Analyzers": []
     },
-    "Scripts": {
-      "Setup": [ "Dev1:Test,\"Hello\"" ],
-      "Test": [],
+    "Runner": {
+      "Type": "",
+      "RootDirectory": ".\\scripts",
+      "Setup": [ {"Script": ""} ],
+      "Test": [ { "Executer": { "_modName": { "_methodName": [] } } } ],
       "Teardown": []
     }
   }, 
