@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MATSys.Hosting.Scripting
 {
@@ -7,7 +8,10 @@ namespace MATSys.Hosting.Scripting
     /// </summary>
     public struct TestItemResult
     {
-
+        public string ItemName { get; set; }
+        public string ItemParameter { get; set; }
+        public string Condition { get; set; }
+        public string ConditionParameter { get; set; }
         /// <summary>
         /// DateTime information
         /// </summary>
@@ -34,10 +38,14 @@ namespace MATSys.Hosting.Scripting
         /// <param name="value">Raw value</param>
         /// <param name="attributes">Custom attributes</param>
         /// <returns>Instance of TestItemResult</returns>
-        public static TestItemResult Create(TestResultType result = TestResultType.Skip, string value = null, object? attributes = null)
+        public static TestItemResult Create(TestItem item,TestResultType result = TestResultType.Skip, string value = null, object? attributes = null)
         {
             return new TestItemResult()
             {
+                ItemName = item.Executer.Value.CommandString.AsObject().First().Key,
+                ItemParameter = item.Executer.Value.CommandString.AsObject().First().Value.ToJsonString(),
+                Condition = item.Analyzer==null?"":item.Analyzer.Name,
+                ConditionParameter = item.Analyzer == null ? "":JsonSerializer.Serialize(item.AnalyzerParameter.Skip(1)),
                 Timestamp = DateTime.Now,
                 Result = result,
                 Value = value,

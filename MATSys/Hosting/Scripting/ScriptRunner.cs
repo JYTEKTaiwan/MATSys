@@ -195,11 +195,11 @@ namespace MATSys.Hosting.Scripting
                 item.AnalyzerParameter[0] = AnalyzingData.Create(execValue);
                 valid = (bool)item.Analyzer.Invoke(item.AnalyzerParameter);
                 var testResult = valid ? TestResultType.Pass : TestResultType.Fail;
-                result = TestItemResult.Create(testResult, execValue, attributesToWrite);
+                result = TestItemResult.Create(item,testResult, execValue, attributesToWrite);
             }
             else
             {
-                result = TestItemResult.Create(TestResultType.Skip, execValue, attributesToWrite);
+                result = TestItemResult.Create(item,TestResultType.Skip, execValue, attributesToWrite);
             }
             var element = JsonSerializer.SerializeToNode(result, typeof(TestItemResult), options);
             return (valid, element);
