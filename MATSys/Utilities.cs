@@ -51,7 +51,7 @@ public class DependencyLoader
     {
         private AssemblyDependencyResolver resolver;
 
-        public PluginLoader(string? name, bool isCollectible = true) : base(name, isCollectible)
+        public PluginLoader(string? name, bool isCollectible = false) : base(name, isCollectible)
         {
             resolver = new AssemblyDependencyResolver(name!);
         }
