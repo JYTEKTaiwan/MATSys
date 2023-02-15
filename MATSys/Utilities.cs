@@ -4,6 +4,7 @@ using System.Reflection;
 #if NET6_0_OR_GREATER
 
 using System.Runtime.Loader;
+using System.Runtime.Versioning;
 
 #endif
 
@@ -20,29 +21,52 @@ public class DependencyLoader
     /// <param name="plugins">assembly paths</param>
     public static void LoadPluginAssemblies(string[] plugins)
     {
+#if NET6_0_OR_GREATER
         var assemblyPaths = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic).Select(x => x.Location);
         foreach (var item in plugins)
         {
             var p = Path.GetFullPath(item);
             if (File.Exists(p) && !assemblyPaths.Any(x => x == p))
             {
-#if NET6_0_OR_GREATER
-
 
                 var loader = new PluginLoader(p);
                 var assem = loader.LoadFromAssemblyPath(p);
 
-#endif
-#if NETSTANDARD2_0_OR_GREATER
-                var assem = Assembly.LoadFile(p);
-
-#endif              
-
-
             }
 
         }
+
+#endif
+#if NETFRAMEWORK
+        
+        var assemblyPaths = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic).Select(x => x.Location);
+        foreach (var item in plugins)
+        {
+            var p = Path.GetFullPath(item);
+            if (File.Exists(p) )
+            {            
+                var assem = Assembly.LoadFrom(p);
+                
+            }
+
+        }
+#endif
+#if NETSTANDARD
+        
+        var assemblyPaths = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic).Select(x => x.Location);
+        foreach (var item in plugins)
+        {
+            var p = Path.GetFullPath(item);
+            if (File.Exists(p) )
+            {            
+                var assem = Assembly.LoadFrom(p);
+                
+            }
+
+        }
+#endif
     }
+
 #if NET6_0_OR_GREATER
     /// <summary>
     /// Plugin class for .net6
