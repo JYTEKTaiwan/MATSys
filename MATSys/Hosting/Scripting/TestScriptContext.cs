@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
+using System.Data;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -91,13 +93,21 @@ namespace MATSys.Hosting.Scripting
                 List<TestItem> list = new List<TestItem>();
                 foreach (var item in array)
                 {
-                    if (item["Executer"] != null)
+                    var enumerator=item.AsObject().AsEnumerable().GetEnumerator();
+                    var current=enumerator.Current;
+                    enumerator.MoveNext();
+                    current=enumerator.Current;
+                    if (current.Key=="Script")
+                    {
+                        list.AddRange(ParseScriptsTestItems(item));
+                    }
+                    else if (current.Value.GetType()==typeof(JsonObject))
                     {
                         list.AddRange(ParseExecuterTestItems(item));
                     }
-                    else if (item["Script"] != null)
+                    else
                     {
-                        list.AddRange(ParseScriptsTestItems(item));
+
                     }
                 }
                 return list;
@@ -209,48 +219,31 @@ namespace MATSys.Hosting.Scripting
                 throw ex;
             }
 
-
             foreach (var item in content.AsArray())
             {
-                if (item.AsObject().ContainsKey("Executer"))
+                var enumerator = item.AsObject().AsEnumerable().GetEnumerator();
+                var current = enumerator.Current;
+                enumerator.MoveNext();
+                current = enumerator.Current;
+                if (current.Key == "Script")
                 {
-                    if (item.AsObject().ContainsKey("Repeat"))
+                    foreach (var subitem in ParseScriptsTestItems(item))
                     {
-                        var repeat = item["Repeat"].GetValue<int>();
-                        for (int i = 0; i < repeat; i++)
-                        {
-                            yield return TestItem.Parse(item);
-                        }
+                        yield return subitem;
                     }
-                    else
+                }
+                else if (current.Value.GetType() == typeof(JsonObject))
+                {
+                    foreach (var subitem in ParseExecuterTestItems(item))
                     {
-                        yield return TestItem.Parse(item);
-                    }
+                        yield return subitem;
+                    } ;
+                }
+                else
+                {
 
                 }
-                else if (item.AsObject().ContainsKey("Script"))
-                {
-                    var subPath = item["Script"].GetValue<string>();
-                    if (item.AsObject().ContainsKey("Repeat"))
-                    {
-                        var repeat = item["Repeat"].GetValue<int>();
-                        for (int i = 0; i < repeat; i++)
-                        {
-                            foreach (var subItem in ReadFromScriptFile(subPath))
-                            {
-                                yield return subItem;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (var subItem in ReadFromScriptFile(subPath))
-                        {
-                            yield return subItem;
-                        }
-                    }
 
-                }
             }
         }
         private static IEnumerable<MethodInfo> GetExtensionMethods<T>(Assembly assembly)

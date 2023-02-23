@@ -24,7 +24,7 @@ runner.AfterScriptStops += (res) =>
         //Console.WriteLine(item.ToJsonString());
     }
 };
-runner.RunTest(1);
+var a=runner.RunTest(1);
 
 Console.WriteLine("PRESS ANY KEY TO EXIT");
 

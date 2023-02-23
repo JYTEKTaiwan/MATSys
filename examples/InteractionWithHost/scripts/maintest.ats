@@ -1,11 +1,14 @@
 [
-  { "Executer": { "Dev1": { "Method": [ "TEST1" ] } } },
-  { "Executer": { "Dev1": { "Method": [ "TEST2" ] } } },
-  { "Executer": { "Dev1": { "Method": [ "TEST3" ] } } },
-  { "Executer": { "Dev1": { "Method": [ "TEST4" ] } } },
-  { "Executer": { "Dev1": { "Method": [ "TEST5" ] } } },
-  { "Executer": { "Dev1": { "Method": [ "TEST6" ] } } },
-  { "Executer": { "Dev1": { "Method": [ "TEST7" ] } } },
-  { "Executer": { "Dev1": { "Method": [ "TEST8" ] } } },
-  { "Executer": { "Dev1": { "Method": [ "TEST9" ] } } }
+  { "Dev1": { "Method": [ "TEST1" ] } },
+  { "Dev1": { "Method": [ "TEST2" ] } },
+  { "Dev1": { "Method": [ "TEST3" ] } },
+  { "Dev1": { "Method": [ "TEST4" ] } },
+  { "Dev1": { "Method": [ "TEST5" ] } },
+  { "Dev1": { "Method": [ "TEST6" ] } },
+  { "Dev1": { "Method": [ "TEST7" ] } },
+  { "Dev1": { "Method": [ "TEST8" ] } },
+  {
+    "Script": "arg.ats",
+    "Repeat": 2
+  }
 ]

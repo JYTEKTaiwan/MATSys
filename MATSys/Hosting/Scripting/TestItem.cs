@@ -61,26 +61,36 @@ namespace MATSys.Hosting.Scripting
         {
             UID = this.GetHashCode();
             _ctxt = node;
-            if (node.AsObject().ContainsKey(LoopProperty))
+
+            //executer command must lies in 1st line
+            //analyzer command must lies in 2nd line(optional)
+            //retry/loop/repeat property is searchable (optional)
+            //options property is searchale (optional)
+            var enumerator=node.AsObject().AsEnumerable().GetEnumerator();
+            var pair = enumerator.Current;
+
+            //Executer section (check if jsonvalue type is jsonobject. if not, meaning executer section is not existed or in wrong format
+            enumerator.MoveNext();
+            pair= enumerator.Current;
+            if (pair.Value.GetType()==typeof(JsonObject))
             {
-                //Loop property
-                Loop = node[LoopProperty].Deserialize<int>();
-            }
-            if (node.AsObject().ContainsKey(RetryProperty))
-            {
-                //Retry property
-                Retry = node[RetryProperty].Deserialize<int>();
-            }
-            if (node.AsObject().ContainsKey(ExecuterSection))
-            {
-                //Executer property
+                //executer seciton exists
                 Executer = new HubCommand()
                 {
-                    ModuleName = node.AsObject()[ExecuterSection]!.AsObject().First().Key,
-                    CommandString = node.AsObject()[ExecuterSection]!.AsObject().First().Value!
+                    ModuleName = pair.Key,
+                    CommandString = pair.Value!
                 };
             }
-            if (node.AsObject().ContainsKey(AnalyzerSection))
+            else
+            {
+                //executer section is not exists
+                throw new FormatException("Executer command does not exist or in wrong format");
+            }
+
+            //Analyzer section (check if jsonvalue type is jsonarray. if not, Set empty analyzer)
+            enumerator.MoveNext();
+            pair = enumerator.Current;
+            if (pair.Value.GetType()==typeof(JsonArray))
             {
                 //Analyzer property
                 var name = node.AsObject()[AnalyzerSection]!.AsObject().First().Key;
@@ -97,6 +107,18 @@ namespace MATSys.Hosting.Scripting
                     }
                 }
 
+            }
+
+            //Retry/Loop property configuration
+            if (node.AsObject().ContainsKey(LoopProperty))
+            {
+                //Loop property
+                Loop = node[LoopProperty].Deserialize<int>();
+            }
+            if (node.AsObject().ContainsKey(RetryProperty))
+            {
+                //Retry property
+                Retry = node[RetryProperty].Deserialize<int>();
             }
         }
         /// <summary>
