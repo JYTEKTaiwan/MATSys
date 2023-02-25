@@ -66,13 +66,13 @@ namespace MATSys.Hosting.Scripting
             //analyzer command must lies in 2nd line(optional)
             //retry/loop/repeat property is searchable (optional)
             //options property is searchale (optional)
-            var enumerator=node.AsObject().AsEnumerable().GetEnumerator();
+            var enumerator = node.AsObject().AsEnumerable().GetEnumerator();
             var pair = enumerator.Current;
 
             //Executer section (check if jsonvalue type is jsonobject. if not, meaning executer section is not existed or in wrong format
             enumerator.MoveNext();
-            pair= enumerator.Current;
-            if (pair.Value.GetType()==typeof(JsonObject))
+            pair = enumerator.Current;
+            if (pair.Value.GetType() == typeof(JsonObject))
             {
                 //executer seciton exists
                 Executer = new HubCommand()
@@ -90,7 +90,7 @@ namespace MATSys.Hosting.Scripting
             //Analyzer section (check if jsonvalue type is jsonarray. if not, Set empty analyzer)
             enumerator.MoveNext();
             pair = enumerator.Current;
-            if (pair.Value.GetType()==typeof(JsonArray))
+            if (pair.Value.GetType() == typeof(JsonArray))
             {
                 //Analyzer property
                 var name = node.AsObject()[AnalyzerSection]!.AsObject().First().Key;

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -93,15 +92,15 @@ namespace MATSys.Hosting.Scripting
                 List<TestItem> list = new List<TestItem>();
                 foreach (var item in array)
                 {
-                    var enumerator=item.AsObject().AsEnumerable().GetEnumerator();
-                    var current=enumerator.Current;
+                    var enumerator = item.AsObject().AsEnumerable().GetEnumerator();
+                    var current = enumerator.Current;
                     enumerator.MoveNext();
-                    current=enumerator.Current;
-                    if (current.Key=="Script")
+                    current = enumerator.Current;
+                    if (current.Key == "Script")
                     {
                         list.AddRange(ParseScriptsTestItems(item));
                     }
-                    else if (current.Value.GetType()==typeof(JsonObject))
+                    else if (current.Value.GetType() == typeof(JsonObject))
                     {
                         list.AddRange(ParseExecuterTestItems(item));
                     }
@@ -237,7 +236,7 @@ namespace MATSys.Hosting.Scripting
                     foreach (var subitem in ParseExecuterTestItems(item))
                     {
                         yield return subitem;
-                    } ;
+                    };
                 }
                 else
                 {
