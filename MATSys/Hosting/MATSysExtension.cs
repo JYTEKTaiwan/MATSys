@@ -35,7 +35,7 @@ namespace MATSys.Hosting
             .ConfigureAppConfiguration(ctxt =>
             {
                 ctxt.Sources.Clear();
-                ctxt.SetBasePath(Directory.GetCurrentDirectory());
+                ctxt.SetBasePath(AppDomain.CurrentDomain.BaseDirectory);
                 ctxt.AddJsonFile("appsettings.json");
             }
 
