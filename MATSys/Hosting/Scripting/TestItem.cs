@@ -93,8 +93,8 @@ namespace MATSys.Hosting.Scripting
             if (pair.Value.GetType() == typeof(JsonArray))
             {
                 //Analyzer property
-                var name = node.AsObject()[AnalyzerSection]!.AsObject().First().Key;
-                var param = node.AsObject()[AnalyzerSection]!.AsObject().First().Value!.AsArray();
+                var name = pair.Key;
+                var param = pair.Value.AsArray();
                 var mi = TestScriptContext.AnalyzerExtMethods.FirstOrDefault(x => x.Name == name);
                 Analyzer = MethodInvoker.Create(mi);
                 var types = mi.GetParameters().Select(x => x.ParameterType).ToArray();
