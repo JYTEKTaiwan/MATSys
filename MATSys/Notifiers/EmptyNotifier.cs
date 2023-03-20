@@ -12,7 +12,7 @@ namespace MATSys.Plugins
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
 
 
-        public string Name => nameof(EmptyNotifier);
+        public string Alias => nameof(EmptyNotifier);
 
 
         public event INotifier.NotifyEvent? OnNotify;

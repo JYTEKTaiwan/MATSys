@@ -11,7 +11,7 @@ namespace MATSys.Plugins
     public sealed class EmptyTransceiver : ITransceiver
     {
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
-        public string Name => nameof(EmptyTransceiver);
+        public string Alias => nameof(EmptyTransceiver);
 
         public event ITransceiver.RequestFiredEvent? OnNewRequest;
 

@@ -28,7 +28,7 @@ public class UT_ModuleBase
     public void ManuallyCreateWithTransceiver()
     {
         IModule dev = new NormalDevice(transceiver: new EmptyTransceiver());
-        Assert.IsTrue(dev.Transceiver.Name == nameof(EmptyTransceiver));
+        Assert.IsTrue(dev.Transceiver.Alias == nameof(EmptyTransceiver));
     }
 
     [Test]
@@ -36,7 +36,7 @@ public class UT_ModuleBase
     public void ManuallyCreateWithNotifier()
     {
         IModule dev = new NormalDevice(notifier: new EmptyNotifier());
-        Assert.IsTrue(dev.Notifier.Name == nameof(EmptyNotifier));
+        Assert.IsTrue(dev.Notifier.Alias == nameof(EmptyNotifier));
     }
 
     [Test]
@@ -44,7 +44,7 @@ public class UT_ModuleBase
     public void ManuallyCreateWithRecorder()
     {
         IModule dev = new NormalDevice(recorder: new EmptyRecorder());
-        Assert.IsTrue(dev.Recorder.Name == nameof(EmptyRecorder));
+        Assert.IsTrue(dev.Recorder.Alias == nameof(EmptyRecorder));
     }
     [Test]
     [Category("StartStop")]

@@ -17,20 +17,20 @@ namespace MATSys
         /// <summary>
         /// Internal features injected
         /// </summary>
-        private readonly ILogger? _logger;
-        private readonly ITransceiver _transceiver;
-        private readonly IRecorder _recorder;
-        private readonly INotifier _notifier;
+        private ILogger? _logger;
+        private ITransceiver _transceiver = new EmptyTransceiver();
+        private IRecorder _recorder=new EmptyRecorder();
+        private INotifier _notifier = new EmptyNotifier();
 
         /// <summary>
         /// private field to use
         /// </summary>
         private volatile bool _isRunning = false;
-        private readonly Dictionary<string, MATSysCommandAttribute> cmds;
+        private Dictionary<string, MATSysCommandAttribute> cmds;
         private object? _config;
-        private IServiceProvider _provider;
         #endregion
 
+        #region Public Properties
         /// <summary>
         /// Running status of ModuleBase instance
         /// </summary>
@@ -38,7 +38,7 @@ namespace MATSys
         /// <summary>
         /// Name of the ModuleBase instance
         /// </summary>
-        public string Name { get; }
+        public string Alias { get; set; }
         /// <summary>
         /// Instance of current ModuleBase instance
         /// </summary>
@@ -47,7 +47,7 @@ namespace MATSys
         /// <summary>
         /// Collection of IModules created by ModuleHubBackgroundService
         /// </summary>
-        public Dictionary<string, IModule> LocalPeers { get; set; } = new Dictionary<string, IModule>();
+        public Dictionary<string, IModule> Peers { get; set; } = new Dictionary<string, IModule>();
 
         /// <summary>
         /// ILogger instance
@@ -68,37 +68,16 @@ namespace MATSys
         /// INotifier instance
         /// </summary>
         INotifier IModule.Notifier => _notifier;
-
-        IServiceProvider IModule.Provider { get; set; }
         /// <summary>
         /// Event when new data is generated inside ModuleBase instance
         /// </summary>
         public event IModule.NewDataReady? OnDataReady;
 
-        /// <summary>
-        /// ctor of ModuleBase class. 
-        /// </summary>
-        /// <param name="configuration">configuration object</param>
-        /// <param name="transceiver">transceiver instance</param>
-        /// <param name="notifier">notifier instance</param>
-        /// <param name="recorder">recorder instance</param>
-        /// <param name="aliasName">alias name</param>
-        public ModuleBase(object? configuration, ITransceiver? transceiver, INotifier? notifier, IRecorder? recorder, string aliasName = "")
-        {
-            Name = string.IsNullOrEmpty(aliasName) ? $"{GetType().Name}_{GetHashCode().ToString("X2")}" : aliasName;
-            if (LogManager.Configuration != null)
-            {
-                _logger = LogManager.GetLogger(Name);
-            }
-            _config = configuration;
-            LoadAndSetup(configuration);
-            _recorder = InjectRecorder(recorder);
-            _notifier = InjectNotifier(notifier);
-            _transceiver = InjectTransceiver(transceiver);
-            cmds = ListMATSysCommands();
-            _logger?.Info($"{Name} base class initialization is completed");
-        }
+        #endregion
 
+
+
+        #region Public Methods
         /// <summary>
         /// Load condfiguration from IConfigurationSection instance
         /// </summary>
@@ -128,11 +107,11 @@ namespace MATSys
             {
                 try
                 {
-                    _logger?.Trace($"Starts the {_recorder.Name}");
+                    _logger?.Trace($"Starts the {_recorder.Alias}");
                     _recorder.StartService(token);
-                    _logger?.Trace($"Starts the {_notifier.Name}");
+                    _logger?.Trace($"Starts the {_notifier.Alias}");
                     _notifier.StartService(token);
-                    _logger?.Trace($"Starts the {_transceiver.Name}");
+                    _logger?.Trace($"Starts the {_transceiver.Alias}");
                     _transceiver.StartService(token);
                     _isRunning = true;
                     _logger?.Info("Starts service");
@@ -153,13 +132,13 @@ namespace MATSys
             {
                 if (_isRunning)
                 {
-                    _logger?.Trace($"Stops the {_transceiver.Name}");
+                    _logger?.Trace($"Stops the {_transceiver.Alias}");
                     _transceiver.StopService();
 
-                    _logger?.Trace($"Stops the {_recorder.Name}");
+                    _logger?.Trace($"Stops the {_recorder.Alias}");
                     _recorder.StopService();
 
-                    _logger?.Trace($"Stops the {_notifier.Name}");
+                    _logger?.Trace($"Stops the {_notifier.Alias}");
                     _notifier.StopService();
                     _isRunning = false;
                     _logger?.Info("Stops service");
@@ -246,7 +225,7 @@ namespace MATSys
         {
             var setting = _config as IConfigurationSection;
             JsonObject jObj = setting == null ? new JsonObject() : JsonObject.Parse(setting.Value).AsObject();
-            jObj.Add("Name", Name);
+            jObj.Add("Name", Alias);
             jObj.Add("Type", this.GetType().Name);
             var node = new JsonObject();
             node = _recorder.Export();
@@ -277,6 +256,42 @@ namespace MATSys
             return Export().ToJsonString(new System.Text.Json.JsonSerializerOptions() { WriteIndented = indented });
         }
 
+        public void Configure(object? option)
+        {
+            if (option != null)
+            {
+                if (typeof(IConfigurationSection).IsAssignableFrom(option.GetType()))
+                {
+                    Load((IConfigurationSection)option);
+                }
+                else
+                    Load(option);
+
+                cmds = ListMATSysCommands();
+                _logger = LogManager.GetCurrentClassLogger();
+
+            }
+        }
+        public void InjectRecorder(IRecorder? recorder)
+        {
+            _recorder = recorder;
+        }
+        public void InjectTransceiver(ITransceiver? transceiver)
+        {
+            _transceiver = transceiver;
+
+
+        }
+        public void InjectNotifier(INotifier? notifier)
+        {
+            _notifier = notifier;
+
+        }
+
+        #endregion
+
+
+
         #region Private methods
 
         private Dictionary<string, MATSysCommandAttribute> ListMATSysCommands()
@@ -296,89 +311,6 @@ namespace MATSys
                 }).ToDictionary(x => x.Alias);
         }
 
-
-        /// <summary>
-        /// load the configuration object
-        /// </summary>
-        /// <param name="option">parameter object</param>
-        /// <returns>configuration instance (null if <paramref name="option"/> is null</returns>
-        private void LoadAndSetup(object? option)
-        {
-            if (option != null)
-            {
-                if (typeof(IConfigurationSection).IsAssignableFrom(option.GetType()))
-                {
-                    Load((IConfigurationSection)option);
-                }
-                else
-                    Load(option);
-            }
-        }
-        /// <summary>
-        /// Inject the IRecorder instance
-        /// </summary>
-        /// <param name="recorder">recorder instance</param>
-        /// <returns>IRecorder instance (return EmptyRecorder if <paramref name="recorder"/> is null</returns>
-        private IRecorder InjectRecorder(IRecorder? recorder)
-        {
-            if (recorder == null)
-            {
-                var _recorder = new EmptyRecorder();
-                _logger?.Info($"Null reference is detected, {_recorder.Name} is injected");
-                return _recorder;
-            }
-            else
-            {
-                _logger?.Info($"{recorder.Name} is injected");
-                return recorder;
-            }
-
-        }
-        /// <summary>
-        /// Inject the ITransceiver instance
-        /// </summary>
-        /// <param name="transceiver">ITransceiver instance</param>
-        /// <returns>ITransceiver instance (return EmptyTransceiver if <paramref name="transceiver"/> is null</returns>
-        private ITransceiver InjectTransceiver(ITransceiver? transceiver)
-        {
-            if (transceiver == null)
-            {
-                var _transceiver = new EmptyTransceiver();
-                _transceiver.OnNewRequest += OnRequestReceived;
-                _logger?.Info($"Null reference is detected, {_transceiver.Name} is injected");
-                return _transceiver;
-            }
-            else
-            {
-                transceiver.OnNewRequest += OnRequestReceived;
-                _logger?.Info($"{transceiver.Name} is injected");
-                return transceiver;
-            }
-
-
-        }
-        /// <summary>
-        /// Inject the INotifier instance
-        /// </summary>
-        /// <param name="notifier">INotifier instance</param>
-        /// <returns>INotifier instance (return EmptyNotifier if <paramref name="notifier"/> is null</returns>
-        private INotifier InjectNotifier(INotifier? notifier)
-        {
-            if (notifier == null)
-            {
-                var _notifier = new EmptyNotifier();
-                _notifier.OnNotify += OnNewDateGenerated;
-                _logger?.Info($"Null reference is detected, {_notifier.Name} is injected");
-                return _notifier;
-            }
-            else
-            {
-                notifier.OnNotify += OnNewDateGenerated;
-                _logger?.Info($"{notifier.Name} is injected");
-                return notifier;
-            }
-
-        }
         /// <summary>
         /// Event when new data is generated from ModuleBase internally
         /// </summary>

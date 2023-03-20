@@ -18,7 +18,7 @@ namespace MATSys.Plugins
         private CancellationTokenSource _localCts = new CancellationTokenSource();
         private Task _task = Task.CompletedTask;
 
-        public string Name => nameof(CSVRecorder);
+        public string Alias => nameof(CSVRecorder);
 
         public static CSVRecorder Create(CSVRecorderConfiguration option)
         {

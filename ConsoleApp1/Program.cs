@@ -1,18 +1,30 @@
-using MATSys.Commands;
+﻿// See https://aka.ms/new-console-template for more information
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Reflection;
-
-#if NET6_0_OR_GREATER
-
 using System.Runtime.Loader;
-using System.Runtime.Versioning;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
-#endif
+Console.WriteLine("Hello, World!");
 
-namespace MATSys;
 
-/// <summary>
-/// Utility that dynamically load the assemblies into current appdomain
-/// </summary>
+var assem = DependencyLoader.LoadPluginAssemblies(new string[] {
+ "C:\\Users\\Way-Develop\\source\\repos\\MATSys\\ConsoleApp1\\bin\\Debug\\net6.0\\Recorders\\Mod1\\ClassLibrary1.dll" ,
+ "C:\\Users\\Way-Develop\\source\\repos\\MATSys\\ConsoleApp1\\bin\\Debug\\net6.0\\Recorders\\Mod2\\ClassLibrary1.dll" }).ToArray();
+
+var t = assem[0].GetType("ClassLibrary1.Class1");
+var obj = Activator.CreateInstance(t);
+obj.GetType().GetMethod("DoCSV").Invoke(obj,new object[] { });
+
+var t2 = assem[1].GetType("ClassLibrary1.Class1");
+var obj2 = Activator.CreateInstance(t2);
+obj2.GetType().GetMethod("DoCSV").Invoke(obj2, new object[] { });
+
+
+Console.ReadLine();
+
+
 public class DependencyLoader
 {
     /// <summary>
@@ -105,48 +117,9 @@ public class DependencyLoader
 
 }
 
-/// <summary>
-/// Exception handle class for MATSys
-/// </summary>
-public class ExceptionHandler
+
+public class ParamType
 {
-    /// <summary>
-    /// Prefix string when command is not found
-    /// </summary>
-    public const string cmd_notFound = "ERR_NOTFOUND";
-    /// <summary>
-    /// Prefix string when command reports error during execution
-    /// </summary>
-    public const string cmd_execError = "ERR_EXEC";
-    /// <summary>
-    /// Prefix string when command reports error during serialize/deserialize process
-    /// </summary>
-    public const string cmd_serDesError = "ERR_SerDes";
-
-    /// <summary>
-    /// Pring the error message
-    /// </summary>
-    /// <param name="prefix">Prefix string</param>
-    /// <param name="ex">Excption instance</param>
-    /// <param name="commandString">ICommand in string format</param>
-    /// <returns></returns>
-    public static string PrintMessage(string prefix, Exception ex, string commandString)
-    {
-        return $"[{prefix}] {ex.Message} - {commandString}";
-    }
-    /// <summary>
-    /// Pring the error message
-    /// </summary>
-    /// <param name="prefix">Prefix string</param>
-    /// <param name="ex">Excption instance</param>
-    /// <param name="command">ICommand instance</param>
-    /// <returns></returns>
-    public static string PrintMessage(string prefix, Exception ex, ICommand command)
-    {
-        return $"[{prefix}] {ex.Message} - {command.Serialize()}";
-    }
-
+    public string A { get; set; }
+    public int B { get; set; }
 }
-
-
-

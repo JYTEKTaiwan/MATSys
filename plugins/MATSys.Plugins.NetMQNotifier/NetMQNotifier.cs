@@ -18,7 +18,7 @@ namespace MATSys.Plugins
         private NetMQNotifierConfiguration? _config;
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
 
-        public string Name => nameof(NetMQNotifier);
+        public string Alias => nameof(NetMQNotifier);
 
         public event INotifier.NotifyEvent? OnNotify;
 

@@ -6,7 +6,7 @@ namespace MATSys
     /// </summary>
     public interface IModule : IService
     {
-        IServiceProvider Provider { get; set; }
+        string Alias { get; set; }
         /// <summary>
         /// Indicate new data is generated from module
         /// </summary>
@@ -40,6 +40,16 @@ namespace MATSys
         /// Indicate whether instance is running
         /// </summary>
         bool IsRunning { get; }
+        /// <summary>
+        /// Self instance
+        /// </summary>
+        IModule Base { get; }
+
+        /// <summary>
+        /// Collection of IModule instances created from ModuleHubBackgroundService. Null if Module is manually created.
+        /// </summary>
+        Dictionary<string, IModule> Peers { get; set; }
+
 
         /// <summary>
         /// Execute the assigned command
@@ -53,22 +63,14 @@ namespace MATSys
         /// <param name="cmd">Command string</param>
         /// <returns>Response</returns>
         string Execute(string cmdInJson);
-
+        void Configure(object? config);
+        void InjectRecorder(IRecorder recorder);
+        void InjectTransceiver(ITransceiver transceiver);
+        void InjectNotifier(INotifier notifier);
         /// <summary>
         /// Print all commands that is marked with MATSysCommandAttribute
         /// </summary>
         /// <returns>Collection of string</returns>
         IEnumerable<string> PrintCommands();
-
-        /// <summary>
-        /// Self instance
-        /// </summary>
-        IModule Base { get; }
-
-        /// <summary>
-        /// Collection of IModule instances created from ModuleHubBackgroundService. Null if Module is manually created.
-        /// </summary>
-        Dictionary<string, IModule> LocalPeers { get; set; }
-
     }
 }

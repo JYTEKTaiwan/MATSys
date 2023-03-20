@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using NLog;
 using System.Reflection;
 using System.Text.Json;
+using static System.Collections.Specialized.BitVector32;
 
 namespace MATSys.Factories
 {
@@ -12,36 +13,9 @@ namespace MATSys.Factories
     public sealed class RecorderFactory : IRecorderFactory
     {
 
-        /// <summary>
-        /// searching prefix string
-        /// </summary>
-        private const string prefix = "Recorder";
-        /// <summary>
-        /// section key for recorder assembly reference paths
-        /// </summary>
-        private const string sectionKey = "MATSys:References:Recorders";
         private readonly static Type DefaultType = typeof(EmptyRecorder);
-        private static Lazy<IRecorder> _default = new Lazy<IRecorder>(() => new EmptyRecorder());
-        private static IRecorder DefaultInstance => _default.Value;
-        private readonly NLog.ILogger _logger;
+        private readonly NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
 
-        /// <summary>
-        /// ctor of recorder factory (dynamically load the assemblies and dependencies from the specified path)
-        /// </summary>
-        /// <param name="config">configuration instance</param>
-        public RecorderFactory(IConfiguration config)
-        {
-            _logger = LogManager.GetCurrentClassLogger();
-
-            // list the Recorder reference paths in the json file
-            var plugins = config.GetSection(sectionKey).AsEnumerable(true).Select(x => x.Value).ToArray();
-            _logger.Debug($"External references: {JsonSerializer.Serialize(plugins)}");
-
-            //Load plugin assemblies into memoery
-            DependencyLoader.LoadPluginAssemblies(plugins);
-            _logger.Info($"{plugins.Length} External references is/are loaded");
-
-        }
         /// <summary>
         /// Create new IRecorder instance using specified section of configuration
         /// </summary>
@@ -51,55 +25,19 @@ namespace MATSys.Factories
         {
             try
             {
-                _logger.Trace($"Path: {section.Path}");
-
                 Type t = DefaultType;
-                //check if section in the json configuration exits
                 if (section.Exists())
                 {
-                    string type = section.GetValue<string>("Type");
-                    if (!string.IsNullOrEmpty(type))
-                    {
-                        if (type.Contains("."))
-                        {
-                            //look up in the GAC
-                            var dummy = Type.GetType(Assembly.CreateQualifiedName(type, type));
-                            if (dummy != null)
-                            {
-                                t = dummy;
-                            }
-                        }
-                        else
-                        {
-                            //look up in the loaded assemblies
-                            var assems = AppDomain.CurrentDomain.GetAssemblies();
-                            foreach (var assem in assems)
-                            {
-                                try
-                                {
+                    _logger.Trace($"Path: {section.Path}");
 
-                                    var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{type}{prefix}".ToLower());
-                                    if (dummy == null)
-                                    {
-                                        continue;
-                                    }
-                                    else
-                                    {
-                                        t = dummy;
-                                        break;
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
+                    string type = section.GetValue<string>("Type"); //Get the type string of Type in json section
+                    string extAssemblyPath = section.GetValue<string>("AssemblyPath"); //Get the assemblypath string of Type in json section
 
-                                    throw;
-                                }
+                    _logger.Trace($"Searching for the type named \"{type}\"");
 
-                            }
+                     t = SearchType(type, extAssemblyPath);
 
-                        }
-                    }
-                }
+                }                
                 _logger.Debug($"{t.Name} is used");
 
                 return CreateRecorder(t, section);
@@ -109,23 +47,132 @@ namespace MATSys.Factories
                 throw ex;
             }
         }
+
+        private Type SearchType(string type, string extAssemPath)
+        {
+            if (!string.IsNullOrEmpty(type)) // return EmptyRecorder if type is empty or null
+            {
+                // 1.  Look up the existed assemlies in GAC
+                // 1.y if existed, get the type directly and overrider the variable t
+                // 1.n if not, dynamically load the assembly from the section "AssemblyPath" and search for the type
+
+                var typeName = Assembly.CreateQualifiedName(type, type).Split(',')[0];
+                _logger.Trace($"Searching the entry assemblies");
+                Type dummy;
+                if (Assembly.GetEntryAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName) != null)
+                {
+                    dummy = Assembly.GetEntryAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
+                    _logger.Debug($"Found \"{dummy.Name}\"");
+                    return dummy;
+                }
+                else if (Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName) != null)
+                {
+                    dummy = Assembly.GetEntryAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
+                    _logger.Debug($"Found \"{dummy.Name}\"");
+                    return dummy;
+                }
+                else if (Assembly.GetCallingAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName) != null)
+                {
+                    dummy = Assembly.GetEntryAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
+                    _logger.Debug($"Found \"{dummy.Name}\"");
+                    return dummy;
+
+                }
+                else
+                {
+
+                    _logger.Trace($"Searching the external path \"{extAssemPath}\"");
+
+                    //load the assembly from external path
+                    var assem = DependencyLoader.LoadPluginAssemblies(new string[] { extAssemPath }).First();
+
+                    dummy = assem.GetType(type);
+                    if (dummy != null)
+                    {
+
+                        _logger.Debug($"Found \"{dummy.Name}\"");
+                        return dummy;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+
+
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+        private static Type StaticSearchType(string type, string extAssemPath)
+        {
+            Type t = DefaultType;
+
+            if (!string.IsNullOrEmpty(type)) // return EmptyRecorder if type is empty or null
+            {
+                // 1.  Look up the existed assemlies in GAC
+                // 1.y if existed, get the type directly and overrider the variable t
+                // 1.n if not, dynamically load the assembly from the section "AssemblyPath" and search for the type
+
+                var dummy = Type.GetType(Assembly.CreateQualifiedName(type, type));
+                if (dummy != null)
+                {
+                    t = dummy;
+                }
+                else
+                {
+
+
+                    //load the assembly from external path
+                    var assem = DependencyLoader.LoadPluginAssemblies(new string[] { extAssemPath }).First();
+
+                    dummy = assem.GetType(type);
+                    if (dummy != null)
+                    {
+                        t = dummy;
+                    }
+
+                }
+            }
+            return t;
+        }
+
         /// <summary>
-        /// Create new IRecorder instance (return DefaultInstance if <paramref name="defaultType"/> is not inherited from IRecorder)
+        /// Create new IRecorder instance (return DefaultInstance if <paramref name="type"/> is not inherited from IRecorder)
         /// </summary>
-        /// <param name="defaultType">type of instance</param>
+        /// <param name="type">type of instance</param>
         /// <param name="section">section of configuration</param>
         /// <returns>IRecorder instance</returns>
-        private IRecorder CreateRecorder(Type defaultType, IConfigurationSection section)
+        private IRecorder CreateRecorder(Type type, IConfigurationSection section)
         {
-            if (typeof(IRecorder).IsAssignableFrom(defaultType))
+            _logger.Trace($"Creating instance of {type.Name}");
+            if (typeof(IRecorder).IsAssignableFrom(type))
             {
-                var obj = (IRecorder)Activator.CreateInstance(defaultType)!;
+                var obj = (IRecorder)Activator.CreateInstance(type)!;
+                _logger.Debug($"Instance is created [{obj.GetHashCode()}]{type.Name}");
+                _logger.Trace($"Loading the configuration from {section.Path}");
                 obj.Load(section);
                 return obj;
             }
             else
-                return DefaultInstance;
+                return CreateRecorder(DefaultType, section);
         }
+
+        private static IRecorder CreateRecorder(Type type, object args)
+        {
+            if (typeof(IRecorder).IsAssignableFrom(type))
+            {
+                var obj = (IRecorder)Activator.CreateInstance(type)!;
+                obj.Load(args);
+                return obj;
+            }
+            else
+                return CreateRecorder(DefaultType, args);
+        }
+
         /// <summary>
         /// Create new IRecorder instance by loaded from file (return Default if type is not found) 
         /// </summary>
@@ -135,49 +182,10 @@ namespace MATSys.Factories
         /// <returns>IRecorder instance</returns>
         public static IRecorder CreateNew(string assemblyPath, string typeString, object args)
         {
-            var assems = AppDomain.CurrentDomain.GetAssemblies();
-            var assembly = Assembly.LoadFile(Path.GetFullPath(assemblyPath));
-            if (assems.FirstOrDefault(x => x.FullName == assembly.FullName) != null)
-            {
-                //exists
-            }
-            else
-            {
-                DependencyLoader.LoadPluginAssemblies(new string[] { assemblyPath });
-            }
-            try
-            {
 
-                assems = AppDomain.CurrentDomain.GetAssemblies();
-
-                Type t = DefaultType;
-                //check if section in the json configuration exits
-
-                if (!string.IsNullOrEmpty(typeString))
-                {
-                    //if key has value, search the type with the default class name. eg. xxx=>xxxRecorder
-                    foreach (var assem in assems)
-                    {
-                        var dummy = assem.GetTypes().FirstOrDefault(x => x.Name.ToLower() == $"{typeString}{prefix}".ToLower());
-                        if (dummy == null)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            t = dummy;
-                            break;
-                        }
-                    }
-                }
-                var obj = (IRecorder)Activator.CreateInstance(t)!;
-                obj.Load(args);
-                return obj;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            Type t = StaticSearchType(typeString, assemblyPath);
+            
+            return CreateRecorder(t,args);
         }
         /// <summary>
         /// Create <typeparamref name="T"/> instance statically
@@ -186,10 +194,8 @@ namespace MATSys.Factories
         /// <typeparam name="T">type inherited from IRecorder</typeparam>
         /// <returns><typeparamref name="T"/> instance</returns>
         public static T CreateNew<T>(object args) where T : IRecorder
-        {
-            var obj = (T)Activator.CreateInstance(typeof(T))!;
-            obj?.Load(args);
-            return obj!;
+        {            
+            return (T)CreateRecorder(typeof(T), args)!;
         }
         /// <summary>
         /// Create IRecorder instance statically (return Default instance if <paramref name="T"/> is not inherited from IRecorder)
@@ -201,13 +207,11 @@ namespace MATSys.Factories
         {
             if (typeof(IRecorder).IsAssignableFrom(t))
             {
-                var obj = Activator.CreateInstance(t) as IRecorder;
-                obj?.Load(args);
-                return obj!;
+                return CreateRecorder(t, args);
             }
             else
 
-                return DefaultInstance;
+                return CreateRecorder(DefaultType, args);
         }
 
     }

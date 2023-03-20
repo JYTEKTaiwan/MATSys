@@ -48,8 +48,7 @@ namespace MATSys.Hosting
                 foreach (var item in Modules)
                 {
                     //Assign the LocalPeers properties (Modules can access each other instance locally)
-                    item.Value.LocalPeers = Modules;
-                    item.Value.Provider = services;
+                    item.Value.Peers = Modules;
                 }
                 _runner = _runnerFactory.CreateRunner();
                 _runner.InjectModules(Modules);

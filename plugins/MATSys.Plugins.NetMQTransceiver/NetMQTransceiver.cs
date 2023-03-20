@@ -18,7 +18,7 @@ namespace MATSys.Plugins
 
         private CancellationTokenSource _localCts = new CancellationTokenSource();
 
-        public string Name => nameof(NetMQTransceiver);
+        public string Alias => nameof(NetMQTransceiver);
 
         public void StartService(CancellationToken token)
         {

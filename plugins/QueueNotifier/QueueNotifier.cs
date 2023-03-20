@@ -11,7 +11,7 @@ namespace MATSys.Plugins
         private Channel<string>? _ch;
         private QueueNotifierConfiguration? _config;
 
-        public string Name => nameof(QueueNotifier);
+        public string Alias => nameof(QueueNotifier);
 
         public event INotifier.NotifyEvent? OnNotify;
 
