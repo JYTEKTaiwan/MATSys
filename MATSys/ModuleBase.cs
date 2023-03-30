@@ -76,7 +76,6 @@ namespace MATSys
         #endregion
 
 
-
         #region Public Methods
         /// <summary>
         /// Load condfiguration from IConfigurationSection instance

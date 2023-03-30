@@ -10,19 +10,15 @@ namespace MATSys.Hosting
     /// <summary>
     /// A service class that handles all modules in the background, including the ability to run in script mode.
     /// </summary>
-    public sealed class ModuleHubBackgroundService : BackgroundService
+    public sealed class MATSysBackgroundService : BackgroundService
     {
         private readonly IModuleFactory _moduleFactory;
         private readonly IRunnerFactory _runnerFactory;
+        private readonly TestPackageFactory _packageFactory;
         private readonly IConfigurationSection _config;
         private readonly ILogger _logger;
         private readonly IRunner _runner;
-        private readonly bool _scriptMode = false;
 
-        /// <summary>
-        /// Collection for all modules created the background servie
-        /// </summary>
-        public Dictionary<string, IModule> Modules { get; } = new Dictionary<string, IModule>();
 
         /// <summary>
         /// Constructor for the background service
@@ -31,28 +27,14 @@ namespace MATSys.Hosting
         /// <exception> throw <see cref="KeyNotFoundException"/>throw if MATSys section is not existed in json file</exception>
         /// <exception> throw <see cref="InvalidDataException"/>throw if type of module is not found</exception>
         /// <exception> throw <see cref="Exception"/>for all unhandled exception</exception>
-        public ModuleHubBackgroundService(IServiceProvider services)
+        public MATSysBackgroundService(IServiceProvider services)
         {
             try
             {
                 _logger = LogManager.GetCurrentClassLogger();
                 _config = GetMATSysSection(services);
-                _scriptMode = _config.GetValue<bool>("ScriptMode");
-                _moduleFactory = services.GetRequiredService<IModuleFactory>();
-                _runnerFactory = services.GetRequiredService<IRunnerFactory>();
-                var runnerSection = _config.GetSection("Runner");
-                foreach (var item in _config.GetSection("Modules").GetChildren())
-                {
-                    Modules.Add(item.GetValue<string>("Alias"), _moduleFactory.CreateModule(item));
-                }
-                foreach (var item in Modules)
-                {
-                    //Assign the LocalPeers properties (Modules can access each other instance locally)
-                    item.Value.Peers = Modules;
-                }
-                _runner = _runnerFactory.CreateRunner();
-                _runner.InjectModules(Modules);
-                services.GetRequiredService<AnalyzerLoader>();
+                _runner = services.GetRequiredService<IRunner>();
+
             }
             catch (KeyNotFoundException ex)
             {
@@ -79,18 +61,10 @@ namespace MATSys.Hosting
 
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-            foreach (var mod in Modules)
-            {
-                mod.Value.StartService(cancellationToken);
-            }
             return base.StartAsync(cancellationToken);
         }
         public override Task StopAsync(CancellationToken cancellationToken)
         {
-            foreach (var mod in Modules)
-            {
-                mod.Value.StopService();
-            }
             return base.StopAsync(cancellationToken);
         }
         /// <summary>

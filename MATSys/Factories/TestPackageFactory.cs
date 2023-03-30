@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MATSys.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
 using System.Reflection;
@@ -9,39 +10,21 @@ namespace MATSys.Factories
     /// <summary>
     /// Factory used to create module 
     /// </summary>
-    public sealed class ModuleFactory : IModuleFactory
+    public sealed class TestPackageFactory
     {
 
-        /// <summary>
-        /// section key for recorder in specific section of module
-        /// </summary>
-        private const string key_recorder = "Recorder";
-
-        /// <summary>
-        /// section key for notifier in specific section of module
-        /// </summary>
-        private const string key_notifier = "Notifier";
-        /// <summary>
-        /// section key for transceiver in specific section of module
-        /// </summary>
-        private const string key_transceiver = "Transceiver";
-
-        private readonly ITransceiverFactory _transceiverFactory;
-        private readonly INotifierFactory _notifierFactory;
-        private readonly IRecorderFactory _recorderFactory;
+        private readonly IServiceProvider _serviceProvider;
         private readonly NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
-        public ModuleFactory(IServiceProvider provider)
+        public TestPackageFactory(IServiceProvider provider)
         {
-            _transceiverFactory = provider.GetService<ITransceiverFactory>();
-            _notifierFactory = provider.GetService<INotifierFactory>();
-            _recorderFactory = provider.GetService<IRecorderFactory>();
+            _serviceProvider = provider;
         }
         /// <summary>
         /// Create IModule instance using specific section in json file
         /// </summary>
         /// <param name="section">specific section in json file</param>
         /// <returns>IModule instance</returns>
-        public IModule CreateModule(IConfigurationSection section)
+        public ITestPackage CreateTestPackage(IConfigurationSection section)
         {
             try
             {
@@ -61,20 +44,11 @@ namespace MATSys.Factories
                 }
                 _logger.Debug($"{t.FullName} is found");
 
-                //Create Transceiver, Notifier, and Recorder
-                var trans = _transceiverFactory.CreateTransceiver(section.GetSection(key_transceiver));
-                var noti = _notifierFactory.CreateNotifier(section.GetSection(key_notifier));
-                var rec = _recorderFactory.CreateRecorder(section.GetSection(key_recorder));
-                _logger.Debug($"[{alias}]{typeString} is created with {trans.Alias},{noti.Alias},{rec.Alias}");
                 
                 //Create instance and return 
-                var obj = (IModule)Activator.CreateInstance(t);
-
+                var obj = (ITestPackage)Activator.CreateInstance(t);
                 obj.Alias = alias;
-                obj.Configure(section);
-                obj.InjectRecorder(rec);
-                obj.InjectNotifier(noti);
-                obj.InjectTransceiver(trans);
+                obj.InjectServiceProvider(_serviceProvider);
                 return obj;
             }
             catch (Exception ex)
@@ -85,6 +59,15 @@ namespace MATSys.Factories
 
         }
 
+        public IEnumerable<ITestPackage> LoadTestPackagesFromSetting()
+        {
+            var config = _serviceProvider.GetRequiredService<IConfiguration>();
+            foreach (var item in config.GetSection("MATSys:TestPackages").GetChildren())
+            {
+                yield return CreateTestPackage(item);
+            }
+
+        }
 
         private Type SearchType(string type, string extAssemPath)
         {

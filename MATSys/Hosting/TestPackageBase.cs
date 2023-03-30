@@ -12,62 +12,45 @@ using System.Threading.Tasks;
 
 namespace MATSys.Hosting
 {
-    public abstract class TestPackageBase:ITestPackage
-    {        
-        private readonly string _rootDirectory;
-        private readonly IServiceProvider _provider;
+    public abstract class TestPackageBase : ITestPackage
+    {
 
+        private IServiceProvider _serviceProvider = null;
+        private Dictionary<string, MethodInvoker> cmds;
+
+
+        public event EventHandler TestPackageLoaded;
         public event EventHandler TestItemBegins;
         public event EventHandler TestItemSubLoopBegins;
         public event EventHandler TestItemSubLoopCompleted;
         public event EventHandler TestItemCompleted;
+        public event EventHandler TestPackageClosed;
 
-        public TestPackageBase(IServiceProvider provider=null)
+        public IServiceProvider Provider => _serviceProvider;
+
+        public string Alias { get; set; }
+        public TestPackageBase()
         {
-            if (provider!=null)
+            cmds=GetType().GetMethods()
+                .Where(x => x.GetCustomAttributes<TestItemParameterAttribute>(false).Count() > 0)
+                .Select(x =>MethodInvoker.Create(this, x)).ToDictionary(x => x.Name);
+        }
+        public JsonNode Execute(string testItemName, JsonNode parameter)
+        {
+            try
             {
-                //load the configuration 
-                _rootDirectory = Assembly.GetExecutingAssembly().Location;
-                _provider = provider;
-                //
+                return (JsonNode)cmds[testItemName].Invoke(parameter);
             }
-            else
+            catch (KeyNotFoundException ex)
             {
-
+                throw ex;
             }
+            
         }
-
-        [TestItemParameter(typeof(ParamType))]
-        [MATSysCommand]
-        public abstract JsonNode Initialize(JsonNode param);
-
-        [MATSysCommand]
-        public abstract JsonNode Close();
-    }
-    public class ParamType
-    {
-        public string A { get; set; }
-        public int B { get; set; }
-    }
-    public class A : TestPackageBase
-    {
-        public A(IServiceProvider provider) : base(provider)
+        public void InjectServiceProvider(IServiceProvider serviceProvider)
         {
+            this._serviceProvider = serviceProvider;
         }
 
-        [MATSysCommand]
-        public override JsonNode Close()
-        {
-            throw new NotImplementedException();
-        }
-
-        [TestItemParameter(typeof(ParamType))]
-        [MATSysCommand]
-        public override JsonNode Initialize(JsonNode param)
-        {
-            var a=Attribute.GetCustomAttribute(MethodBase.GetCurrentMethod(), typeof(TestItemParameterAttribute)) as TestItemParameterAttribute;
-            var aa=param.Deserialize(typeof(ParamType));
-            throw new NotImplementedException();
-        }
     }
 }

@@ -1,13 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;netstandard2.0;net472</TargetFrameworks>
+		<TargetFrameworks>net6.0</TargetFrameworks>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<LangVersion>10.0</LangVersion>
 		<Nullable>enable</Nullable>
-		<BaseOutputPath>..\..\bin\</BaseOutputPath>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>Way Lin</Authors>
 		<Company>JYTEK TAIWAN CORP.</Company>
@@ -33,8 +32,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\MATSys\MATSys.csproj">
-		</ProjectReference>
+	  <ProjectReference Include="..\..\MATSys\MATSys.csproj" />
 	</ItemGroup>
 
 </Project>

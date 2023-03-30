@@ -5,9 +5,6 @@ namespace MATSys.Modules
 {
     public class TestDevice : ModuleBase
     {
-        public TestDevice(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "") : base(configuration, server, bus, recorder, configurationKey)
-        {
-        }
 
         public override void Load(IConfigurationSection section)
         {
@@ -34,6 +31,7 @@ namespace MATSys.Modules
         [MATSysCommand]
         public string Method(string c)
         {
+            Base.Recorder.Write(new Data() {Date=DateTime.Now.ToLongDateString(),Number=Random.Shared.NextDouble() });
             return c;
         }
 

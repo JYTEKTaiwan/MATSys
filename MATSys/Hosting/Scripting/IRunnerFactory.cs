@@ -1,4 +1,6 @@
-﻿namespace MATSys.Hosting.Scripting
+﻿using Microsoft.Extensions.Configuration;
+
+namespace MATSys.Hosting.Scripting
 {
     /// <summary>
     /// Interface of factory that used to create runner
@@ -9,7 +11,7 @@
         /// Create Runner instance
         /// </summary>
         /// <returns><see cref="IRunner"/> instance</returns>
-        IRunner CreateRunner();
+        IRunner CreateRunner(IConfigurationSection section);
 
     }
 }

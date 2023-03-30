@@ -1,4 +1,5 @@
 ﻿using MATSys.Commands;
+using Microsoft.Extensions.Configuration;
 using System.Text.Json.Nodes;
 
 namespace MATSys.Hosting.Scripting
@@ -8,25 +9,8 @@ namespace MATSys.Hosting.Scripting
     /// </summary>
     public interface IRunner
     {
-
-        /// <summary>
-        /// Test Script context
-        /// </summary>
-        TestScriptContext TestScript { get; internal set; }
-        /// <summary>
-        /// Execute command to specific module
-        /// </summary>
-        /// <param name="modName">Name of the Module</param>
-        /// <param name="cmdInJson">Command in json string </param>
-        /// <returns>Response from Module</returns>
-        string Execute(string modName, string cmdInJson);
-        /// <summary>
-        /// Execute command to specific module
-        /// </summary>
-        /// <param name="modName">Name of the Module</param>
-        /// <param name="cmd">ICommand instance for command</param>
-        /// <returns>Response from Module</returns>
-        string Execute(string modName, ICommand cmd);
+        Dictionary<string, ITestPackage> TestPackages { get; set; }
+        object TestScript { get; internal set; }
 
         /// <summary>
         /// Run the script execution
@@ -45,18 +29,8 @@ namespace MATSys.Hosting.Scripting
         /// <returns>answer in JsonArray format</returns>        
         Task<JsonArray> RunTestAsync(int iteration = 1);
 
-        /// <summary>
-        /// Load configuration and test script context
-        /// </summary>
-        /// <param name="section"></param>
-        /// <param name="ts"></param>
-        void Load(JsonNode section);
 
-        /// <summary>
-        /// Inject the modules that created from Hub
-        /// </summary>
-        /// <param name="mods"></param>
-        void InjectModules(Dictionary<string, IModule> mods);
+
 
         delegate void ReadyToExecuteScriptEvent(TestScriptContext script);
         delegate void ReadyToExecuteTestItemEvent(TestItem item);

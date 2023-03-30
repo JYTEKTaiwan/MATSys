@@ -2,8 +2,13 @@
 using MATSys;
 using MATSys.Commands;
 using MATSys.Hosting;
+using MATSys.Hosting.Scripting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Text.Json.Nodes;
+using System.Text.Json;
+using MATSys.Factories;
 
 namespace InteractionWithHost
 {
@@ -30,7 +35,10 @@ namespace InteractionWithHost
                 }
             };
             var a = runner.RunTest(1);
-
+            foreach (var item in a.ToArray())
+            {
+                Console.WriteLine(item.ToJsonString());
+            }
             Console.WriteLine("PRESS ANY KEY TO EXIT");
 
             Console.ReadKey();
@@ -55,7 +63,60 @@ namespace InteractionWithHost
             return c;
         }
     }
+    internal class MyTestPackage : TestPackageBase
+    {
+        IModule mod;
 
+        [TestItemParameter(typeof(WhoAreYouArgs))]
+        public JsonNode WhoAreYou(JsonNode node)
+        {
+            var args = node.Deserialize<WhoAreYouArgs>();
+            args.Age++;
+            return JsonSerializer.SerializeToNode(args);
+        }
+
+        [TestItemParameter(typeof(InitializeArgs))]
+        public JsonNode Initialize(JsonNode node)
+        {
+            var args = node.Deserialize<InitializeArgs>();
+            var modFactory = this.Provider.GetRequiredService<IModuleFactory>();
+            var modsinfo = this.Provider.GetAllModuleInfos();
+            mod = modFactory.CreateModule(modsinfo["Dev11"]);
+            return JsonSerializer.SerializeToNode(args);
+        }
+
+        [TestItemParameter(typeof(CloseArgs))]
+        public JsonNode Close(JsonNode node)
+        {
+            var args = node.Deserialize<CloseArgs>();
+            return JsonSerializer.SerializeToNode(args);
+        }
+
+        [TestItemParameter(typeof(DoArgs))]
+        public JsonNode Do(JsonNode node)
+        {
+            var str=mod.Execute(CommandBase.Create("Method", "HELLO"));
+            return JsonNode.Parse(str);
+        }
+        internal class InitializeArgs
+        {
+
+        }
+        internal class CloseArgs
+        {
+
+        }
+        internal class DoArgs
+        {
+
+        }
+
+        internal class WhoAreYouArgs
+        {
+            public string Name { get; set; }
+            public int Age { get; set; }
+        }
+    }
 }
 
 

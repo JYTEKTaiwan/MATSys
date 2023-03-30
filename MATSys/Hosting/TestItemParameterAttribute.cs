@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MATSys.Hosting
 {
-    internal class TestItemParameterAttribute:Attribute
+    [AttributeUsage(AttributeTargets.Method)]
+    public sealed class TestItemParameterAttribute:Attribute
     {
         public Type Type { get; }
-        public TestItemParameterAttribute(Type type)
+        public string Name { get; }
+        public TestItemParameterAttribute(Type type,[CallerMemberName] string name = "")
         {
-            Type = type;
+            this.Name = name;
+            this.Type = type;
         }
     }
 }
