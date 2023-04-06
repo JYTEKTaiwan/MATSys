@@ -13,11 +13,11 @@ namespace MATSys.Plugins
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
 
         public string Alias => nameof(EmptyRecorder);
-        public void StopService()
+        public void StopPluginService()
         {
         }
 
-        public void StartService(CancellationToken token)
+        public void StartPluginService(CancellationToken token)
         {
         }
 

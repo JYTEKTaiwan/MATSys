@@ -1,19 +1,23 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using MATSys;
 using MATSys.Hosting;
+using MATSys.Hosting.Scripting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Reflection;
 using System.Runtime.Loader;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
-var host=Host.CreateDefaultBuilder().ConfigureServices(s =>
-s.AddSingleton<ITestPackage, MyTestPackage>()).Build();
+var host = Host.CreateDefaultBuilder().UseMATSys().Build();
 host.StartAsync().Wait(500);
-var tp=host.Services.GetRequiredService<ITestPackage>();
-var res=tp.Execute("WhoAreYou", JsonSerializer.SerializeToNode(new MyTestPackage.WhoAreYouArgs()));
-Console.WriteLine(res.ToJsonString());
+var runner = host.GetMATSysRunner();
+var a=runner.RunTest();
+foreach (var item in a)
+{
+    Console.WriteLine(item.ToJsonString());
+}
 Console.ReadLine();
 host.StopAsync();
 

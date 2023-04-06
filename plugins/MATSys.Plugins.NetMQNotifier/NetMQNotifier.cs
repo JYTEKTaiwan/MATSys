@@ -39,7 +39,7 @@ namespace MATSys.Plugins
             }
         }
 
-        public void StartService(CancellationToken token)
+        public void StartPluginService(CancellationToken token)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace MATSys.Plugins
             }
         }
 
-        public void StopService()
+        public void StopPluginService()
         {
             if (isConnected)
             {

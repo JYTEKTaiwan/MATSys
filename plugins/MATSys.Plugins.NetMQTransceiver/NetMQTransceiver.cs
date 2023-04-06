@@ -20,7 +20,7 @@ namespace MATSys.Plugins
 
         public string Alias => nameof(NetMQTransceiver);
 
-        public void StartService(CancellationToken token)
+        public void StartPluginService(CancellationToken token)
         {
             _localCts = new CancellationTokenSource();
             var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
@@ -68,7 +68,7 @@ namespace MATSys.Plugins
             });
         }
 
-        public void StopService()
+        public void StopPluginService()
         {
             _localCts.Cancel();
             _logger.Info("Stop service");

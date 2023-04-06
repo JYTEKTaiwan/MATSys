@@ -18,8 +18,8 @@ public class UT_DataReocrderFactory
         ms.Close();
         var fac = new RecorderFactory(config.GetSection("MATSys:Modules:0"));
         var recorder = fac.CreateRecorder(config.GetSection("Dev1:Recorder"));
-        recorder.StartService(new CancellationToken());
-        recorder.StopService();
+        recorder.StartPluginService(new CancellationToken());
+        recorder.StopPluginService();
     }
 
     [Test]

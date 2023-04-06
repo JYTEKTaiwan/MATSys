@@ -5,8 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using NLog.Extensions.Logging;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.Json.Nodes;
 
 namespace MATSys.Hosting
 {
@@ -23,8 +21,7 @@ namespace MATSys.Hosting
         public static IHostBuilder UseMATSys(this IHostBuilder hostBuilder)
         {
             return hostBuilder.ConfigureServices(service =>
-            service.AddHostedService<MATSysBackgroundService>()
-                    .AddSingleton<IModuleFactory, ModuleFactory>()
+            service.AddSingleton<IModuleFactory, ModuleFactory>()
                     .AddSingleton<IRecorderFactory, RecorderFactory>()
                     .AddSingleton<INotifierFactory, NotifierFactory>()
                     .AddSingleton<ITransceiverFactory, TransceiverFactory>()
@@ -49,31 +46,30 @@ namespace MATSys.Hosting
         {
             return hostBuilder.ConfigureServices(x =>
             x.RemoveAll<IRunner>()
-            .AddSingleton(typeof(IRunner),typeof(T))
+            .AddSingleton(typeof(IRunner), typeof(T))
             );
         }
 
-
-        public static IRunner GetRunner(this IServiceProvider provider)
+        public static IRunner GetMATSysRunner(this IHost host)
         {
-            return provider.GetServices<IHostedService>().OfType<MATSysBackgroundService>().FirstOrDefault().GetRunner();
+            return host.Services.GetService<IRunner>();
         }
 
         public static IConfiguration GetConfigurationRoot(this IServiceProvider provider)
         {
             return provider.GetRequiredService<IConfiguration>();
         }
-        public static IConfiguration GetConfigurationSection(this IServiceProvider provider,string sectionKey)
+        public static IConfigurationSection GetConfigurationSection(this IServiceProvider provider, string sectionKey)
         {
-            return provider.GetRequiredService<IConfiguration>().GetSection(sectionKey) ;
+            return provider.GetRequiredService<IConfiguration>().GetSection(sectionKey);
         }
-        public static Dictionary<string,IConfigurationSection> GetAllModuleInfos(this IServiceProvider provider)
+        public static Dictionary<string, IConfigurationSection> GetAllModuleInfos(this IServiceProvider provider)
         {
             return provider.GetConfigurationSection("MATSys:Modules").GetChildren().ToDictionary(x => x["Alias"]);
         }
-        public static Dictionary<string,IConfigurationSection> GetAllTestPackageInfos(this IServiceProvider provider)
+        public static IConfigurationSection GetRunnerInfo(this IServiceProvider provider)
         {
-            return provider.GetConfigurationSection("MATSys:TestPackages").GetChildren().ToDictionary(x => x["Alias"]);
+            return provider.GetConfigurationSection("MATSys:Runner");
         }
 
     }

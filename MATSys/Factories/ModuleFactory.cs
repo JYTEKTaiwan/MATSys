@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
 using System.Reflection;
-using System.Text.Json;
 
 namespace MATSys.Factories
 {
@@ -29,7 +28,7 @@ namespace MATSys.Factories
         private readonly ITransceiverFactory _transceiverFactory;
         private readonly INotifierFactory _notifierFactory;
         private readonly IRecorderFactory _recorderFactory;
-        private readonly NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
+        private readonly static NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
         public ModuleFactory(IServiceProvider provider)
         {
             _transceiverFactory = provider.GetService<ITransceiverFactory>();
@@ -66,7 +65,7 @@ namespace MATSys.Factories
                 var noti = _notifierFactory.CreateNotifier(section.GetSection(key_notifier));
                 var rec = _recorderFactory.CreateRecorder(section.GetSection(key_recorder));
                 _logger.Debug($"[{alias}]{typeString} is created with {trans.Alias},{noti.Alias},{rec.Alias}");
-                
+
                 //Create instance and return 
                 var obj = (IModule)Activator.CreateInstance(t);
 
@@ -84,9 +83,7 @@ namespace MATSys.Factories
             }
 
         }
-
-
-        private Type SearchType(string type, string extAssemPath)
+        private static Type SearchType(string type, string extAssemPath)
         {
             if (!string.IsNullOrEmpty(type)) // return EmptyRecorder if type is empty or null
             {
@@ -141,6 +138,14 @@ namespace MATSys.Factories
                 return null;
             }
 
+        }
+        public static IModule CreateNew(string assemblyPath, string typeName, object args)
+        {
+            var t = SearchType(typeName, assemblyPath);
+            //Create instance and return 
+            var obj = (IModule)Activator.CreateInstance(t);
+            obj.Configure(args);
+            return obj;
         }
     }
 }

@@ -2,8 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using NLog;
 using System.Reflection;
-using System.Text.Json;
-using static System.Collections.Specialized.BitVector32;
 
 namespace MATSys.Factories
 {
@@ -14,7 +12,7 @@ namespace MATSys.Factories
     {
 
         private readonly static Type DefaultType = typeof(EmptyRecorder);
-        private readonly NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
+        private static NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Create new IRecorder instance using specified section of configuration
@@ -35,9 +33,9 @@ namespace MATSys.Factories
 
                     _logger.Trace($"Searching for the type named \"{type}\"");
 
-                     t = SearchType(type, extAssemblyPath);
+                    t = SearchType(type, extAssemblyPath);
 
-                }                
+                }
                 _logger.Debug($"{t.Name} is used");
 
                 return CreateRecorder(t, section);
@@ -48,7 +46,7 @@ namespace MATSys.Factories
             }
         }
 
-        private Type SearchType(string type, string extAssemPath)
+        private static Type SearchType(string type, string extAssemPath)
         {
             if (!string.IsNullOrEmpty(type)) // return EmptyRecorder if type is empty or null
             {
@@ -107,38 +105,6 @@ namespace MATSys.Factories
             }
 
         }
-        private static Type StaticSearchType(string type, string extAssemPath)
-        {
-            Type t = DefaultType;
-
-            if (!string.IsNullOrEmpty(type)) // return EmptyRecorder if type is empty or null
-            {
-                // 1.  Look up the existed assemlies in GAC
-                // 1.y if existed, get the type directly and overrider the variable t
-                // 1.n if not, dynamically load the assembly from the section "AssemblyPath" and search for the type
-
-                var dummy = Type.GetType(Assembly.CreateQualifiedName(type, type));
-                if (dummy != null)
-                {
-                    t = dummy;
-                }
-                else
-                {
-
-
-                    //load the assembly from external path
-                    var assem = DependencyLoader.LoadPluginAssemblies(new string[] { extAssemPath }).First();
-
-                    dummy = assem.GetType(type);
-                    if (dummy != null)
-                    {
-                        t = dummy;
-                    }
-
-                }
-            }
-            return t;
-        }
 
         /// <summary>
         /// Create new IRecorder instance (return DefaultInstance if <paramref name="type"/> is not inherited from IRecorder)
@@ -183,9 +149,9 @@ namespace MATSys.Factories
         public static IRecorder CreateNew(string assemblyPath, string typeString, object args)
         {
 
-            Type t = StaticSearchType(typeString, assemblyPath);
-            
-            return CreateRecorder(t,args);
+            Type t = SearchType(typeString, assemblyPath);
+
+            return CreateRecorder(t, args);
         }
         /// <summary>
         /// Create <typeparamref name="T"/> instance statically
@@ -194,7 +160,7 @@ namespace MATSys.Factories
         /// <typeparam name="T">type inherited from IRecorder</typeparam>
         /// <returns><typeparamref name="T"/> instance</returns>
         public static T CreateNew<T>(object args) where T : IRecorder
-        {            
+        {
             return (T)CreateRecorder(typeof(T), args)!;
         }
         /// <summary>

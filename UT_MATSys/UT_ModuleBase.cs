@@ -51,7 +51,7 @@ public class UT_ModuleBase
     public void StopBeforeStart()
     {
         IModule dev = new NormalDevice();
-        dev.StopService();
+        dev.StopPluginService();
         Assert.IsTrue(!dev.IsRunning);
     }
 
@@ -61,8 +61,8 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartService(cts.Token);
-        dev.StartService(cts.Token);
+        dev.StartPluginService(cts.Token);
+        dev.StartPluginService(cts.Token);
         Assert.IsTrue(dev.IsRunning);
     }
 
@@ -72,9 +72,9 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartService(cts.Token);
-        dev.StopService();
-        dev.StopService();
+        dev.StartPluginService(cts.Token);
+        dev.StopPluginService();
+        dev.StopPluginService();
         Assert.IsTrue(!dev.IsRunning);
     }
 
@@ -84,9 +84,9 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartService(cts.Token);
+        dev.StartPluginService(cts.Token);
         var res = dev.Execute(CommandBase.Create("Hi").Serialize());
-        dev.StopService();
+        dev.StopPluginService();
         Assert.IsTrue(res == System.Text.Json.JsonSerializer.Serialize("WORLD"));
     }
 
@@ -96,9 +96,9 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartService(cts.Token);
+        dev.StartPluginService(cts.Token);
         var res = dev.Execute(CommandBase.Create("Hi"));
-        dev.StopService();
+        dev.StopPluginService();
         Assert.IsTrue(res == System.Text.Json.JsonSerializer.Serialize("WORLD"));
     }
 
@@ -108,9 +108,9 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartService(cts.Token);
+        dev.StartPluginService(cts.Token);
         var res = dev.Execute(CommandBase.Create("HO"));
-        dev.StopService();
+        dev.StopPluginService();
         Assert.IsTrue(res.Contains(ExceptionHandler.cmd_notFound));
     }
 
@@ -120,9 +120,9 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice(null!, null!, null!, null!);
-        dev.StartService(cts.Token);
+        dev.StartPluginService(cts.Token);
         var res = dev.Execute(CommandBase.Create("HO").Serialize());
-        dev.StopService();
+        dev.StopPluginService();
         Assert.IsTrue(res.Contains(ExceptionHandler.cmd_notFound));
     }
 
@@ -132,9 +132,9 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartService(cts.Token);
+        dev.StartPluginService(cts.Token);
         var res = dev.Execute(CommandBase.Create("Exception"));
-        dev.StopService();
+        dev.StopPluginService();
         Assert.IsTrue(res.Contains(ExceptionHandler.cmd_execError));
     }
 
@@ -144,9 +144,9 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartService(cts.Token);
+        dev.StartPluginService(cts.Token);
         var res = dev.Execute(CommandBase.Create("WrongArgs", 1.5).Serialize());
-        dev.StopService();
+        dev.StopPluginService();
         Assert.IsTrue(res.Contains(ExceptionHandler.cmd_serDesError));
     }
     [Test]
@@ -155,10 +155,10 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartService(cts.Token);
+        dev.StartPluginService(cts.Token);
 
         var res = dev.Execute(CommandBase.Create("WrongSerDes", 8.8).Serialize());
-        dev.StopService();
+        dev.StopPluginService();
         Assert.IsTrue(res.Contains(ExceptionHandler.cmd_serDesError));
     }
 }

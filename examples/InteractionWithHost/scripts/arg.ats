@@ -1,7 +1,6 @@
 [
   {
     "ID": 1,
-    "Target": "tp1",
     "Method": "WhoAreYou",
     "Param": {
       "Name": "Way",
@@ -10,13 +9,11 @@
   },
   {
     "ID": 2,
-    "Target": "tp1",
     "Method": "Initialize",
     "Param": {}
   },
   {
     "ID": 3,
-    "Target": "tp1",
     "Method": "Do",
     "Param": {}
   }

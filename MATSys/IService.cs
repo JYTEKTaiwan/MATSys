@@ -27,7 +27,7 @@ namespace MATSys
         /// Start the service
         /// </summary>
         /// <param name="token">Stop token</param>
-        void StartService(CancellationToken token);
+        void StartPluginService(CancellationToken token);
 
         /// <summary>
         /// Export the service insatnce into JObject format
@@ -44,6 +44,6 @@ namespace MATSys
         /// <summary>
         /// Stop service
         /// </summary>
-        void StopService();
+        void StopPluginService();
     }
 }

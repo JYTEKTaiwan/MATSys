@@ -10,7 +10,7 @@ var opt = new NetMQTransceiverConfiguration() { LocalIP = "tcp://127.0.0.1", Por
 var n = TransceiverFactory.CreateNew<NetMQTransceiver>(opt);
 
 var a = ModuleFactory.CreateNew<TestModule>(null, n, null, null, "TEST");
-a.StartService(new CancellationToken());
+a.StartPluginService(new CancellationToken());
 
 //var response = a.Execute(CommandBase.Create("Method", "HELLO"));
 
@@ -24,7 +24,7 @@ var response = client.ReceiveFrameString();
 //var response = a.Execute("{\"Method\":[\"Hello\"]}");
 Console.WriteLine(response);
 
-a.StopService();
+a.StopPluginService();
 
 
 Console.ReadLine();

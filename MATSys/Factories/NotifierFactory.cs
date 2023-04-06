@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using NLog;
 using System.Reflection;
-using System.Text.Json;
 
 namespace MATSys.Factories
 {
@@ -13,7 +12,7 @@ namespace MATSys.Factories
     {
 
         private readonly static Type DefaultType = typeof(EmptyNotifier);
-        private readonly NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
         /// Create new INotifier instance using specified section of configuration
@@ -36,7 +35,7 @@ namespace MATSys.Factories
 
                     t = SearchType(type, extAssemblyPath);
                 }
-             
+
 
                 _logger.Debug($"{t.Name} is used");
 
@@ -48,7 +47,7 @@ namespace MATSys.Factories
             }
         }
 
-        private Type SearchType(string type, string extAssemPath)
+        private static Type SearchType(string type, string extAssemPath)
         {
             if (!string.IsNullOrEmpty(type)) // return EmptyRecorder if type is empty or null
             {
@@ -108,38 +107,6 @@ namespace MATSys.Factories
 
         }
 
-        private static Type StaticSearchType(string type, string extAssemPath)
-        {
-            Type t = DefaultType;
-
-            if (!string.IsNullOrEmpty(type)) // return EmptyNotifier if type is empty or null
-            {
-                // 1.  Look up the existed assemlies in GAC
-                // 1.y if existed, get the type directly and overrider the variable t
-                // 1.n if not, dynamically load the assembly from the section "AssemblyPath" and search for the type
-
-                var dummy = Type.GetType(Assembly.CreateQualifiedName(type, type));
-                if (dummy != null)
-                {
-                    t = dummy;
-                }
-                else
-                {
-
-                    //load the assembly from external path
-                    var assem = DependencyLoader.LoadPluginAssemblies(new string[] { extAssemPath }).First();
-
-                    dummy = assem.GetType(type);
-                    if (dummy != null)
-                    {
-                        t = dummy;
-                    }
-
-                }
-            }
-            return t;
-        }
-
         /// <summary>
         /// Create new INotifier instance (return DefaultInstance if <paramref name="type"/> is not inherited from INotifier)
         /// </summary>
@@ -183,7 +150,7 @@ namespace MATSys.Factories
         public static INotifier CreateNew(string assemblyPath, string typeString, object args)
         {
 
-            Type t = StaticSearchType(typeString, assemblyPath);
+            Type t = SearchType(typeString, assemblyPath);
 
             return CreateNotifier(t, args);
         }

@@ -45,12 +45,12 @@ namespace MATSys.Plugins
             }
         }
 
-        public void StartService(CancellationToken token)
+        public void StartPluginService(CancellationToken token)
         {
             _ch = Channel.CreateBounded<string>(new BoundedChannelOptions(_config!.QueueLength) { FullMode = _config.Mode });
         }
 
-        public void StopService()
+        public void StopPluginService()
         {
             _ch!.Writer.Complete();
         }

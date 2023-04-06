@@ -19,7 +19,7 @@ namespace MATSys
         /// </summary>
         private ILogger? _logger;
         private ITransceiver _transceiver = new EmptyTransceiver();
-        private IRecorder _recorder=new EmptyRecorder();
+        private IRecorder _recorder = new EmptyRecorder();
         private INotifier _notifier = new EmptyNotifier();
 
         /// <summary>
@@ -100,18 +100,18 @@ namespace MATSys
         /// Start the service
         /// </summary>
         /// <param name="token"></param>
-        public virtual void StartService(CancellationToken token)
+        public virtual void StartPluginService(CancellationToken token)
         {
             if (!_isRunning)
             {
                 try
                 {
                     _logger?.Trace($"Starts the {_recorder.Alias}");
-                    _recorder.StartService(token);
+                    _recorder.StartPluginService(token);
                     _logger?.Trace($"Starts the {_notifier.Alias}");
-                    _notifier.StartService(token);
+                    _notifier.StartPluginService(token);
                     _logger?.Trace($"Starts the {_transceiver.Alias}");
-                    _transceiver.StartService(token);
+                    _transceiver.StartPluginService(token);
                     _isRunning = true;
                     _logger?.Info("Starts service");
                 }
@@ -125,20 +125,20 @@ namespace MATSys
         /// <summary>
         /// Stop the service
         /// </summary>
-        public virtual void StopService()
+        public virtual void StopPluginService()
         {
             try
             {
                 if (_isRunning)
                 {
                     _logger?.Trace($"Stops the {_transceiver.Alias}");
-                    _transceiver.StopService();
+                    _transceiver.StopPluginService();
 
                     _logger?.Trace($"Stops the {_recorder.Alias}");
-                    _recorder.StopService();
+                    _recorder.StopPluginService();
 
                     _logger?.Trace($"Stops the {_notifier.Alias}");
-                    _notifier.StopService();
+                    _notifier.StopPluginService();
                     _isRunning = false;
                     _logger?.Info("Stops service");
                 }
@@ -265,11 +265,10 @@ namespace MATSys
                 }
                 else
                     Load(option);
-
-                cmds = ListMATSysCommands();
-                _logger = LogManager.GetCurrentClassLogger();
-
             }
+            cmds = ListMATSysCommands();
+            _logger = LogManager.GetCurrentClassLogger();
+
         }
         public void InjectRecorder(IRecorder? recorder)
         {

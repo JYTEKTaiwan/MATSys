@@ -81,7 +81,7 @@ namespace InteractionWithHost
             var args = node.Deserialize<InitializeArgs>();
             var modFactory = this.Provider.GetRequiredService<IModuleFactory>();
             var modsinfo = this.Provider.GetAllModuleInfos();
-            mod = modFactory.CreateModule(modsinfo["Dev11"]);
+            mod = modFactory.CreateModule(modsinfo["Dev1"]);
             return JsonSerializer.SerializeToNode(args);
         }
 

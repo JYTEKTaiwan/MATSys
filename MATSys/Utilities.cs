@@ -22,15 +22,22 @@ public class DependencyLoader
     public static IEnumerable<Assembly> LoadPluginAssemblies(string[] plugins)
     {
 #if NET6_0_OR_GREATER
-        var assemblyPaths = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic).Select(x => x.Location);
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic).ToDictionary(x => x.Location);
         foreach (var item in plugins)
         {
             var p = Path.GetFullPath(item);
-            if (File.Exists(p) && !assemblyPaths.Any(x => x == p))
+            if (File.Exists(p))
             {
-
-                var loader = new PluginLoader(p);
-                yield return loader.LoadFromAssemblyPath(p);
+                if (assemblies.Keys.Any(x => x == p))
+                {
+                    //if assemblies already existed, return it
+                    yield return assemblies[item];
+                }
+                else
+                {
+                    var loader = new PluginLoader(p);
+                    yield return loader.LoadFromAssemblyPath(p);
+                }
 
             }
 

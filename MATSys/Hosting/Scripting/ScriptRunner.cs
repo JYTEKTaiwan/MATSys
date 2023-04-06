@@ -1,5 +1,4 @@
-﻿using MATSys.Commands;
-using MATSys.Factories;
+﻿using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
@@ -22,38 +21,34 @@ namespace MATSys.Hosting.Scripting
         public event IRunner.ReadyToExecuteTestItemEvent? BeforeTestItemStarts;
         public event IRunner.ExecuteTestItemCompleteEvent? AfterTestItemStops;
         public event IRunner.ExecuteScriptCompleteEvent? AfterScriptStops;
-        public event IRunner.ExecuteSubTestItemCompleteEvent? AfterSubTestItemComplete;
-        public object TestScript { get; set; }
-        public Dictionary<string, ITestPackage> TestPackages { get;  set; } = new Dictionary<string, ITestPackage>();
-
+        public object Configuration { get; set; }
+        public ITestPackage TestPackage { get; }
+        public JsonNode TestItems { get; set; }
         public ScriptRunner(IServiceProvider provider)
         {
             _appsettings = provider.GetRequiredService<IConfiguration>();
             var runnerSection = _appsettings.GetSection("MATSys:Runner");
             _config = runnerSection.Get<ScriptConfiguration>();
-            TestScript = _config.TestItems;
+            Configuration = _config;
+            TestItems = _config.TestItems;
             var testPackageFactory = provider.GetRequiredService<TestPackageFactory>();
-            TestPackages = testPackageFactory.LoadTestPackagesFromSetting().ToDictionary(x=>x.Alias);
+            var tp = testPackageFactory.CreateTestPackage(runnerSection.GetSection("TestPackage"));
+            TestPackage = tp;
         }
-        public JsonArray RunTest(int iteration = 1)
+        public JsonArray RunTest(CancellationToken token = default)
         {
             _localCts = new CancellationTokenSource();
-            JsonArray arr = new JsonArray();
-            foreach (var item in _config.TestItems.AsArray())
-            {
-                var target = item["Target"].GetValue<string>();
-                var method = item["Method"].GetValue<string>();
-                var param = item["Param"];
-                arr.Add(TestPackages[target].Execute(method,param));
-
-            }
+            var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
+            BeforeScriptStarts?.Invoke(TestItems);
+            var arr = InternalItemExecution(TestItems.AsArray(), linkedTokenSource.Token);
+            AfterScriptStops?.Invoke(arr);
             return arr;
         }
-        public async Task<JsonArray> RunTestAsync(int iteration = 1)
+        public async Task<JsonArray> RunTestAsync(CancellationToken token = default)
         {
             return await Task.Run(() =>
             {
-                return RunTest(iteration);
+                return RunTest(token);
             });
         }
 
@@ -62,14 +57,83 @@ namespace MATSys.Hosting.Scripting
             _localCts.Cancel();
         }
 
+        public void Export(string scriptPath)
+        {
+            var runnerSection = _appsettings.GetSection("MATSys:Runner");
+            runnerSection["ScriptPath"] = scriptPath;
+            File.WriteAllText(Path.GetFullPath(scriptPath), JsonSerializer.Serialize(TestItems));
+        }
 
+        public void Dispose()
+        {
+            TestPackage.Dispose();
+        }
 
+        public JsonArray RunTest(JsonNode testItems, CancellationToken token = default)
+        {
+            _localCts = new CancellationTokenSource();
+            var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
+            BeforeScriptStarts?.Invoke(testItems);
+            var arr = InternalItemExecution(testItems, linkedTokenSource.Token);
+            AfterScriptStops?.Invoke(arr);
+            return arr;
+        }
+
+        public JsonArray RunTest(string scriptFilePath, CancellationToken token = default)
+        {
+            _localCts = new CancellationTokenSource();
+            JsonNode testItems = JsonArray.Parse(File.ReadAllText(scriptFilePath));
+
+            _localCts = new CancellationTokenSource();
+            var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
+            BeforeScriptStarts?.Invoke(testItems);
+            var arr = InternalItemExecution(testItems, linkedTokenSource.Token);
+            AfterScriptStops?.Invoke(arr);
+            return arr;
+        }
+        public async Task<JsonArray> RunTestAsync(JsonNode testItems, CancellationToken token = default)
+        {
+            return await Task.Run(() =>
+            {
+                return RunTest(testItems, token);
+            });
+        }
+        public async Task<JsonArray> RunTestAsync(string scriptFilePath, CancellationToken token = default)
+        {
+            return await Task.Run(() =>
+            {
+                return RunTest(scriptFilePath, token);
+            });
+        }
+
+        private JsonArray InternalItemExecution(JsonNode items, CancellationToken token)
+        {
+            JsonArray arr = new JsonArray();
+            foreach (var item in TestItems.AsArray())
+            {
+                if (token.IsCancellationRequested)
+                {
+                    return arr;
+                }
+                else
+                {
+                    var method = item["Method"].GetValue<string>();
+                    var param = item["Param"];
+                    BeforeTestItemStarts?.Invoke(item);
+                    var result = TestPackage.Execute(method, param);
+                    AfterTestItemStops?.Invoke(item, result);
+                    arr.Add(result);
+                }
+            }
+            return arr;
+
+        }
     }
 
 
     internal class ScriptConfiguration
     {
-        public string ScriptPath { get;  set; }
+        public string ScriptPath { get; set; }
 
         public JsonNode TestItems => JsonArray.Parse(File.ReadAllText(ScriptPath));
     }

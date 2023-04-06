@@ -43,11 +43,11 @@ namespace MATSys.Plugins
             OnNotify?.Invoke(json);
         }
 
-        public void StartService(CancellationToken token)
+        public void StartPluginService(CancellationToken token)
         {
         }
 
-        public void StopService()
+        public void StopPluginService()
         {
         }
         public JsonObject Export()

@@ -49,7 +49,7 @@ namespace MATSys.Plugins
             WriteAsync(data).Wait();
         }
 
-        public void StopService()
+        public void StopPluginService()
         {
             if (_config!.WaitForComplete)
             {
@@ -67,7 +67,7 @@ namespace MATSys.Plugins
             return t.Status == TaskStatus.RanToCompletion || t.Status == TaskStatus.Canceled || t.Status == TaskStatus.Faulted;
         }
 
-        public void StartService(CancellationToken token)
+        public void StartPluginService(CancellationToken token)
         {
             try
             {

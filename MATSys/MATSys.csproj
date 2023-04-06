@@ -12,7 +12,7 @@
 		<Company>JYTEK TAIWAN CORP.</Company>
 		<Copyright>Copyright © 2019-2023 JYTEK TAIWAN CORP.</Copyright>
 		<PackageIcon>JYTek.png</PackageIcon>
-		<VersionPrefix>2.0.1-alpha</VersionPrefix>
+		<VersionPrefix>2.0.2-beta</VersionPrefix>
 		<RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/</RepositoryUrl>
 
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -54,7 +54,7 @@
 		</None>
 	</ItemGroup>
 
-	<ItemGroup Condition = "'$(TargetFramework)' =='net6.0'">
+	<ItemGroup Condition="'$(TargetFramework)' =='net6.0'">
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.2" />
@@ -67,10 +67,10 @@
 		</PackageReference>
 		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
 		<PackageReference Include="System.Threading.Channels" Version="6.0.0" />
-		<PackageReference Include="System.Runtime.Loader" Version="4.3.0"/>
+		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
 	</ItemGroup>
 
-	<ItemGroup Condition = "'$(TargetFramework)' =='net472'">
+	<ItemGroup Condition="'$(TargetFramework)' =='net472'">
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.2" />
@@ -85,7 +85,7 @@
 		<PackageReference Include="System.Threading.Channels" Version="6.0.0" />		
 	</ItemGroup>
 
-	<ItemGroup Condition = "'$(TargetFramework)' =='netstandard2.0'">
+	<ItemGroup Condition="'$(TargetFramework)' =='netstandard2.0'">
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.2" />

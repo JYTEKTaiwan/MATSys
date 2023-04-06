@@ -1,41 +1,41 @@
-﻿using MATSys.Commands;
-using Microsoft.Extensions.Configuration;
-using System.Text.Json.Nodes;
+﻿using System.Text.Json.Nodes;
 
 namespace MATSys.Hosting.Scripting
 {
     /// <summary>
     /// Interface of Runner instance
     /// </summary>
-    public interface IRunner
+    public interface IRunner : IDisposable
     {
-        Dictionary<string, ITestPackage> TestPackages { get; set; }
-        object TestScript { get; internal set; }
+        ITestPackage TestPackage { get; }
+        object Configuration { get; internal set; }
+        JsonNode TestItems { get; set; }
 
         /// <summary>
         /// Run the script execution
         /// </summary>
         /// <param name="iteration">iteration of script</param>
         /// <returns>answer in JsonArray format</returns>
-        JsonArray RunTest(int iteration = 1);
+        JsonArray RunTest(CancellationToken token = default);
+
+        JsonArray RunTest(JsonNode testItems, CancellationToken token = default);
+
+        JsonArray RunTest(string scriptFilePath, CancellationToken token = default);
+
         /// <summary>
         /// Stop the script execution
         /// </summary>
         void StopTest();
-        /// <summary>
-        /// Run the script execution asynchronously
-        /// </summary>
-        /// <param name="iteration">iteration of script</param>
-        /// <returns>answer in JsonArray format</returns>        
-        Task<JsonArray> RunTestAsync(int iteration = 1);
+        Task<JsonArray> RunTestAsync(CancellationToken token = default);
+        Task<JsonArray> RunTestAsync(JsonNode testItems, CancellationToken token = default);
+        Task<JsonArray> RunTestAsync(string scriptFilePath, CancellationToken token = default);
 
 
 
 
-        delegate void ReadyToExecuteScriptEvent(TestScriptContext script);
-        delegate void ReadyToExecuteTestItemEvent(TestItem item);
-        delegate void ExecuteSubTestItemCompleteEvent(TestItem item, JsonNode result);
-        delegate void ExecuteTestItemCompleteEvent(TestItem item, JsonNode result);
+        delegate void ReadyToExecuteScriptEvent(JsonNode script);
+        delegate void ReadyToExecuteTestItemEvent(JsonNode item);
+        delegate void ExecuteTestItemCompleteEvent(JsonNode item, JsonNode result);
         delegate void ExecuteScriptCompleteEvent(JsonArray item);
 
         /// <summary>
@@ -47,10 +47,6 @@ namespace MATSys.Hosting.Scripting
         /// Event before the item starts
         /// </summary>
         event ReadyToExecuteTestItemEvent? BeforeTestItemStarts;
-        /// <summary>
-        /// Event when each sub test item completed
-        /// </summary>
-        event ExecuteSubTestItemCompleteEvent? AfterSubTestItemComplete;
 
         /// <summary>
         /// Event after the item stops
