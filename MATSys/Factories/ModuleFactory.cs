@@ -147,5 +147,15 @@ namespace MATSys.Factories
             obj.Configure(args);
             return obj;
         }
+
+        public static IModule CreateNew<T>(object args) where T:IModule
+        {
+            var t = typeof(T);
+            //Create instance and return 
+            var obj = (IModule)Activator.CreateInstance(t);
+            obj.Configure(args);
+            return obj;
+        }
+
     }
 }

@@ -15,7 +15,7 @@ namespace InteractionWithHost_net472
             IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
             host.RunAsync().Wait(1000); ;
 
-            var dev = host.Services.GetRunner();
+            var dev = host.GetMATSysRunner();
 
 
             dev.AfterTestItemStops += (item, res) => { Console.WriteLine($"{res.ToJsonString()}"); };
@@ -33,9 +33,6 @@ namespace InteractionWithHost_net472
     public class TestDevice : ModuleBase
     {
 
-        public TestDevice(object configuration, ITransceiver server, INotifier bus, IRecorder recorder, string configurationKey = "") : base(configuration, server, bus, recorder, configurationKey)
-        {
-        }
 
         public override void Load(IConfigurationSection section)
         {

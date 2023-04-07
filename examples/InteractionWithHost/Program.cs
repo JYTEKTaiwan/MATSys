@@ -17,10 +17,15 @@ namespace InteractionWithHost
         static void Main(string[] args)
         {
             IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
+            var fac = host.Services.GetRequiredService<IModuleFactory>();
+            var conf = host.Services.GetAllModuleInfos()["Dev1"];
+            var mod = fac.CreateModule(conf);
+
+
             host.RunAsync().Wait(1000); ;
 
 
-            var runner = host.Services.GetRunner();
+            var runner = host.GetMATSysRunner();
 
             runner.AfterTestItemStops += (item, res) =>
             {

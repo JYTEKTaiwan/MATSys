@@ -16,7 +16,7 @@ public class UT_DataReocrderFactory
         ConfigurationBuilder cb = new ConfigurationBuilder();
         var config = cb.AddJsonStream(ms).Build();
         ms.Close();
-        var fac = new RecorderFactory(config.GetSection("MATSys:Modules:0"));
+        var fac = new RecorderFactory();
         var recorder = fac.CreateRecorder(config.GetSection("Dev1:Recorder"));
         recorder.StartPluginService(new CancellationToken());
         recorder.StopPluginService();

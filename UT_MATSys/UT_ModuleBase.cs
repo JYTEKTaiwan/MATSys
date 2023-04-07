@@ -18,7 +18,7 @@ public class UT_ModuleBase
     [Category("Initialize")]
     public void ManuallyCreateWithConfiguration()
     {
-        IModule dev = new NormalDevice(configuration: new object());
+        IModule dev = new NormalDevice();
         Assert.IsTrue(dev != null);
     }
 
@@ -27,7 +27,7 @@ public class UT_ModuleBase
     [Category("Initialize")]
     public void ManuallyCreateWithTransceiver()
     {
-        IModule dev = new NormalDevice(transceiver: new EmptyTransceiver());
+        IModule dev = new NormalDevice();
         Assert.IsTrue(dev.Transceiver.Alias == nameof(EmptyTransceiver));
     }
 
@@ -35,7 +35,7 @@ public class UT_ModuleBase
     [Category("Initialize")]
     public void ManuallyCreateWithNotifier()
     {
-        IModule dev = new NormalDevice(notifier: new EmptyNotifier());
+        IModule dev = new NormalDevice();
         Assert.IsTrue(dev.Notifier.Alias == nameof(EmptyNotifier));
     }
 
@@ -43,7 +43,7 @@ public class UT_ModuleBase
     [Category("Initialize")]
     public void ManuallyCreateWithRecorder()
     {
-        IModule dev = new NormalDevice(recorder: new EmptyRecorder());
+        IModule dev = new NormalDevice();
         Assert.IsTrue(dev.Recorder.Alias == nameof(EmptyRecorder));
     }
     [Test]
@@ -119,7 +119,7 @@ public class UT_ModuleBase
     public void ExecuteWhenCommandNotFoundInString()
     {
         var cts = new CancellationTokenSource();
-        IModule dev = new NormalDevice(null!, null!, null!, null!);
+        IModule dev = new NormalDevice();
         dev.StartPluginService(cts.Token);
         var res = dev.Execute(CommandBase.Create("HO").Serialize());
         dev.StopPluginService();

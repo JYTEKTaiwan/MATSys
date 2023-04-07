@@ -5,10 +5,6 @@
         public string AssemblyPath { get; set; }
         public string Alias { get; set; }
         public string Type { get; set; }
-        public TestPackageContext()
-        {
-
-        }
         public TestPackageContext(string assemblyPath, string alias, string type)
         {
             AssemblyPath = assemblyPath;

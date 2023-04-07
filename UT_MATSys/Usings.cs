@@ -7,9 +7,6 @@ namespace UT_MATSys;
 
 public class NormalDevice : ModuleBase
 {
-    public NormalDevice(object? configuration = null, ITransceiver? transceiver = null, INotifier? notifier = null, IRecorder? recorder = null, string aliasName = "") : base(configuration, transceiver, notifier, recorder, aliasName)
-    {
-    }
 
     public override void Load(IConfigurationSection section)
     {

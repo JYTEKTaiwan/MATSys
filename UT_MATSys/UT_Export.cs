@@ -10,7 +10,7 @@ public class UT_Export
     {
         NetMQTransceiverConfiguration config = new NetMQTransceiverConfiguration();
         var tran = TransceiverFactory.CreateNew<NetMQTransceiver>(config);
-        var mod = ModuleFactory.CreateNew<NormalDevice>(null, tran);
+        var mod = ModuleFactory.CreateNew<NormalDevice>(null);
         var a = mod.Export(true);
     }
 

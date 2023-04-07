@@ -43,6 +43,7 @@ namespace MATSys.Factories
 
                 //Create instance and return 
                 var obj = (ITestPackage)Activator.CreateInstance(t);
+                obj.InjectServiceProvider(_serviceProvider);
                 return obj;
             }
             catch (Exception ex)

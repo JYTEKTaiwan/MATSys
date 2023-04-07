@@ -9,7 +9,7 @@ using NetMQ.Sockets;
 var opt = new NetMQTransceiverConfiguration() { LocalIP = "tcp://127.0.0.1", Port = 1234 };
 var n = TransceiverFactory.CreateNew<NetMQTransceiver>(opt);
 
-var a = ModuleFactory.CreateNew<TestModule>(null, n, null, null, "TEST");
+var a = ModuleFactory.CreateNew<TestModule>(null);
 a.StartPluginService(new CancellationToken());
 
 //var response = a.Execute(CommandBase.Create("Method", "HELLO"));
@@ -32,10 +32,6 @@ Console.ReadLine();
 
 public class TestModule : ModuleBase
 {
-    public TestModule(object? configuration, ITransceiver? transceiver, INotifier? notifier, IRecorder? recorder, string aliasName = "") : base(configuration, transceiver, notifier, recorder, aliasName)
-    {
-
-    }
 
     [MATSysCommand]
     public string Method(string c)
