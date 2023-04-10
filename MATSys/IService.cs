@@ -11,7 +11,7 @@ namespace MATSys
         /// <summary>
         /// Name of the Service
         /// </summary>
-        string Alias { get; }
+        string Alias { get; set; }
         /// <summary>
         /// Load the configuration from file
         /// </summary>
