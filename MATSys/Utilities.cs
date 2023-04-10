@@ -1,4 +1,5 @@
 using MATSys.Commands;
+using NLog;
 using System.Reflection;
 
 #if NET6_0_OR_GREATER
@@ -155,5 +156,110 @@ public class ExceptionHandler
 
 }
 
+/// <summary>
+/// Type parser tool
+/// </summary>
+public static class TypeParser
+{
+    private static Logger _logger = LogManager.GetCurrentClassLogger();
+    /// <summary>
+    /// Search the Type from entry, executing, calling  and external assemblies in sequence
+    /// </summary>
+    /// <param name="type">full name of the type</param>
+    /// <param name="extAssemPath">external assembly path</param>
+    /// <returns>Type instance</returns>
+    public static Type? SearchType(string type, string extAssemPath)
+    {
+        if (!string.IsNullOrEmpty(type)) // return EmptyRecorder if type is empty or null
+        {
+            // 1.  Look up the existed assemlies in GAC
+            // 1.y if existed, get the type directly and overrider the variable t
+            // 1.n if not, dynamically load the assembly from the section "AssemblyPath" and search for the type
 
+            var typeName = Assembly.CreateQualifiedName(type, type).Split(',')[0];
+            if (SearchTypeInEntryAssemblies(typeName) is Type t_entry && t_entry != null)
+            {
+                _logger.Debug($"Found \"{t_entry.Name}\" in entry Assemblies");
+                return t_entry;
+            }
+            else if (SearchTypeInExecutingAssemblies(typeName) is Type t_exec && t_exec != null)
+            {
+                _logger.Debug($"Found \"{t_exec.Name}\" in executing Assemblies");
+                return t_exec;
+            }
+            else if (SearchTypeInCallingAssemblies(typeName) is Type t_calling && t_calling != null)
+            {
+                _logger.Debug($"Found \"{t_calling.Name}\" in calling Assemblies");
+                return t_calling;
+
+            }
+            else
+            {
+
+                _logger.Trace($"Searching the external path \"{extAssemPath}\"");
+
+                //load the assembly from external path
+                var assem = DependencyLoader.LoadPluginAssemblies(new string[] { extAssemPath }).First();
+
+                var t_ext = assem.GetType(type);
+                if (t_ext != null)
+                {
+                    _logger.Debug($"Found \"{t_ext.Name}\"");
+                    return t_ext;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        else
+        {
+            return null;
+        }
+
+    }
+    private static Type? SearchTypeInEntryAssemblies(string typeName)
+    {
+        _logger.Trace($"Searching the entry assemblies");
+        if (Assembly.GetEntryAssembly() is var assems && assems != null)
+        {
+            return assems.GetTypes().FirstOrDefault(x => x.FullName == typeName);
+        }
+        else
+        {
+            return null!;
+        }
+
+    }
+    private static Type? SearchTypeInExecutingAssemblies(string typeName)
+    {
+        _logger.Trace($"Searching the executing assemblies");
+
+        if (Assembly.GetExecutingAssembly() is var assems && assems != null)
+        {
+            return assems.GetTypes().FirstOrDefault(x => x.FullName == typeName);
+        }
+        else
+        {
+            return null!;
+        }
+
+    }
+    private static Type? SearchTypeInCallingAssemblies(string typeName)
+    {
+        _logger.Trace($"Searching the calling assemblies");
+
+        if (Assembly.GetCallingAssembly() is var assems && assems != null)
+        {
+            return assems.GetTypes().FirstOrDefault(x => x.FullName == typeName);
+        }
+        else
+        {
+            return null!;
+        }
+
+    }
+
+}
 
