@@ -36,9 +36,9 @@ namespace MATSys
         JsonObject Export();
 
         /// <summary>
-        /// Export the service instance into string format
+        /// Export the service instance into json format
         /// </summary>
-        /// <param name="format">Format</param>
+        /// <param name="indented">In indented format</param>
         /// <returns>string</returns>
         string Export(bool indented = true);
         /// <summary>
