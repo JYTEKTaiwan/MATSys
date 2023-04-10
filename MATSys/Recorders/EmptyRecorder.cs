@@ -12,7 +12,7 @@ namespace MATSys.Plugins
     {
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
 
-        public string Alias => nameof(EmptyRecorder);
+        public string Alias { get; set; }= nameof(EmptyRecorder);
         public void StopPluginService()
         {
         }
