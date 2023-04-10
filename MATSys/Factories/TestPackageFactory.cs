@@ -13,10 +13,14 @@ namespace MATSys.Factories
     {
 
         private readonly IServiceProvider _serviceProvider;
+        private readonly INotifierFactory _notifierFactory;
+        private const string key_notifier = "Notifier";
         private static readonly NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
         public TestPackageFactory(IServiceProvider provider)
         {
             _serviceProvider = provider;
+            _notifierFactory = _serviceProvider.GetRequiredService<INotifierFactory>();
+
         }
         /// <summary>
         /// Create IModule instance using specific section in json file
@@ -40,10 +44,14 @@ namespace MATSys.Factories
                 }
                 _logger.Debug($"{t.FullName} is found");
 
+                //create notifier
+                var _noti = _notifierFactory.CreateNotifier(section.GetSection(key_notifier));
+
 
                 //Create instance and return 
                 var obj = (ITestPackage)Activator.CreateInstance(t);
                 obj.InjectServiceProvider(_serviceProvider);
+                obj.InjectNotifier(_noti);
                 return obj;
             }
             catch (Exception ex)

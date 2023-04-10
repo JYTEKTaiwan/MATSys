@@ -1,4 +1,5 @@
 ﻿using MATSys.Commands;
+using MATSys.Plugins;
 using System.Reflection;
 using System.Text.Json.Nodes;
 
@@ -9,8 +10,12 @@ namespace MATSys.Hosting
 
         private IServiceProvider _serviceProvider = null;
         private Dictionary<string, MethodInvoker> cmds;
+        private INotifier _notifier = new EmptyNotifier();
         public IServiceProvider Provider => _serviceProvider;
 
+        public ITestPackage Base => this;
+        INotifier ITestPackage.Notifier => _notifier;
+        public Type Type => this.GetType();
         public string Alias { get; set; }
         public TestPackageBase()
         {
@@ -34,7 +39,10 @@ namespace MATSys.Hosting
         {
             this._serviceProvider = serviceProvider;
         }
-
+        public void InjectNotifier(INotifier notifier)
+        {
+            this._notifier = notifier;
+        }
         public void Dispose()
         {
 
