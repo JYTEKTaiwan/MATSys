@@ -3,8 +3,12 @@ using MATSys;
 using MATSys.Commands;
 using MATSys.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Text.Json.Nodes;
+using System.Text.Json;
+using MATSys.Factories;
 
 namespace InteractionWithHost_net472
 {
@@ -13,15 +17,29 @@ namespace InteractionWithHost_net472
         static void Main(string[] args)
         {
             IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
-            host.RunAsync().Wait(1000); ;
 
-            var dev = host.GetMATSysRunner();
+            host.RunAsync().Wait(1000);
 
+            var runner = host.GetMATSysRunner();
+            runner.AfterTestItemStops += (item, res) =>
+            {
+                //event is fired after executeing test item;
+                Console.WriteLine($"{res.ToJsonString()}");
+            };
+            runner.AfterScriptStops += (res) =>
+            {
+                foreach (var item in res)
+                {
+                    //Console.WriteLine(item.ToJsonString());
+                }
+            };
+            runner.RunTestAsync();
 
-            dev.AfterTestItemStops += (item, res) => { Console.WriteLine($"{res.ToJsonString()}"); };
-            dev.RunTest();
-
-
+            //var a = runner.RunTest(1);
+            //foreach (var item in a.ToArray())
+            //{
+            //    Console.WriteLine(item.ToJsonString());
+            //}
             Console.WriteLine("PRESS ANY KEY TO EXIT");
 
             Console.ReadKey();
@@ -32,7 +50,6 @@ namespace InteractionWithHost_net472
 
     public class TestDevice : ModuleBase
     {
-
 
         public override void Load(IConfigurationSection section)
         {
@@ -47,6 +64,60 @@ namespace InteractionWithHost_net472
         public string Method(string c)
         {
             return c;
+        }
+    }
+    internal class MyTestPackage : TestPackageBase
+    {
+        IModule mod;
+
+        [TestItemParameter(typeof(WhoAreYouArgs))]
+        public JsonNode WhoAreYou(JsonNode node)
+        {
+            var args = node.Deserialize<WhoAreYouArgs>();
+            args.Age++;
+            return JsonSerializer.SerializeToNode(args);
+        }
+
+        [TestItemParameter(typeof(InitializeArgs))]
+        public JsonNode Initialize(JsonNode node)
+        {
+            var args = node.Deserialize<InitializeArgs>();
+            var modFactory = this.Provider.GetRequiredService<IModuleFactory>();
+            var modsinfo = this.Provider.GetAllModuleInfos();
+            mod = modFactory.CreateModule(modsinfo["Dev1"]);
+            return JsonSerializer.SerializeToNode(args);
+        }
+
+        [TestItemParameter(typeof(CloseArgs))]
+        public JsonNode Close(JsonNode node)
+        {
+            var args = node.Deserialize<CloseArgs>();
+            return JsonSerializer.SerializeToNode(args);
+        }
+
+        [TestItemParameter(typeof(DoArgs))]
+        public JsonNode Do(JsonNode node)
+        {
+            var str = mod.Execute(CommandBase.Create("Method", "HELLO"));
+            return JsonNode.Parse(str);
+        }
+        internal class InitializeArgs
+        {
+
+        }
+        internal class CloseArgs
+        {
+
+        }
+        internal class DoArgs
+        {
+
+        }
+
+        internal class WhoAreYouArgs
+        {
+            public string Name { get; set; }
+            public int Age { get; set; }
         }
     }
 }

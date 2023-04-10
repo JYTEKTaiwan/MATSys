@@ -17,16 +17,10 @@ namespace InteractionWithHost
         static void Main(string[] args)
         {
             IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
-            var fac = host.Services.GetRequiredService<IModuleFactory>();
-            var conf = host.Services.GetAllModuleInfos()["Dev1"];
-            var mod = fac.CreateModule(conf);
 
-
-            host.RunAsync().Wait(1000); ;
-
+            host.RunAsync().Wait(1000); 
 
             var runner = host.GetMATSysRunner();
-
             runner.AfterTestItemStops += (item, res) =>
             {
                 //event is fired after executeing test item;
@@ -39,11 +33,13 @@ namespace InteractionWithHost
                     //Console.WriteLine(item.ToJsonString());
                 }
             };
-            var a = runner.RunTest(1);
-            foreach (var item in a.ToArray())
-            {
-                Console.WriteLine(item.ToJsonString());
-            }
+            runner.RunTestAsync();
+
+            //var a = runner.RunTest(1);
+            //foreach (var item in a.ToArray())
+            //{
+            //    Console.WriteLine(item.ToJsonString());
+            //}
             Console.WriteLine("PRESS ANY KEY TO EXIT");
 
             Console.ReadKey();
