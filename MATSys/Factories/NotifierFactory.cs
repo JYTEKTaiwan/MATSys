@@ -1,7 +1,9 @@
 ﻿using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 using NLog;
+using System.Diagnostics;
 using System.Reflection;
+using static System.Collections.Specialized.BitVector32;
 
 namespace MATSys.Factories
 {
@@ -23,7 +25,6 @@ namespace MATSys.Factories
         {
             try
             {
-                var t = DefaultType;
                 if (section.Exists())
                 {
                     _logger.Trace($"Path: {section.Path}");
@@ -33,111 +34,70 @@ namespace MATSys.Factories
 
                     _logger.Trace($"Searching for the type named \"{type}\"");
 
-                    t = SearchType(type, extAssemblyPath);
-                }
+                    var t = TypeParser.SearchType(type, extAssemblyPath);
 
-
-                _logger.Debug($"{t.Name} is used");
-
-                return CreateNotifier(t, section);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        private static Type SearchType(string type, string extAssemPath)
-        {
-            if (!string.IsNullOrEmpty(type)) // return EmptyRecorder if type is empty or null
-            {
-                // 1.  Look up the existed assemlies in GAC
-                // 1.y if existed, get the type directly and overrider the variable t
-                // 1.n if not, dynamically load the assembly from the section "AssemblyPath" and search for the type
-
-                var typeName = Assembly.CreateQualifiedName(type, type).Split(',')[0];
-                _logger.Trace($"Searching the entry assemblies");
-                Type dummy;
-                if (Assembly.GetEntryAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName) != null)
-                {
-                    dummy = Assembly.GetEntryAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
-                    _logger.Debug($"Found \"{dummy.Name}\"");
-                    return dummy;
-                }
-                else if (Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName) != null)
-                {
-                    dummy = Assembly.GetEntryAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
-                    _logger.Debug($"Found \"{dummy.Name}\"");
-                    return dummy;
-                }
-                else if (Assembly.GetCallingAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName) != null)
-                {
-                    dummy = Assembly.GetEntryAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
-                    _logger.Debug($"Found \"{dummy.Name}\"");
-                    return dummy;
+                    return CreateNotifier(t, section);
 
                 }
                 else
                 {
+                    return CreateNotifier(DefaultType, section);
 
-                    _logger.Trace($"Searching the external path \"{extAssemPath}\"");
-
-                    //load the assembly from external path
-                    var assem = DependencyLoader.LoadPluginAssemblies(new string[] { extAssemPath }).First();
-
-                    dummy = assem.GetType(type);
-                    if (dummy != null)
-                    {
-
-                        _logger.Debug($"Found \"{dummy.Name}\"");
-                        return dummy;
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw ;
+            }
+        }
 
 
+        private INotifier CreateNotifier(Type? type, IConfigurationSection section)
+        {
+            if (type !=null)
+            {
+                var instance = Activator.CreateInstance(type);
+                if (instance != null)
+                {
+                    var obj = (INotifier)instance;                 
+                    obj.Load(section);                    
+                    return obj;
+                }
+                else
+                {
+                    _logger.Debug($"Cannot create instance from \"{type.Name}\", using \"{DefaultType}\" instead");
+                    return CreateNotifier(DefaultType, section);
                 }
             }
             else
             {
-                return null;
-            }
-
-        }
-
-        /// <summary>
-        /// Create new INotifier instance (return DefaultInstance if <paramref name="type"/> is not inherited from INotifier)
-        /// </summary>
-        /// <param name="type">type of instance</param>
-        /// <param name="section">section of configuration</param>
-        /// <returns>INotifier instance</returns>
-        private INotifier CreateNotifier(Type type, IConfigurationSection section)
-        {
-            _logger.Trace($"Creating instance of {type.Name}");
-            if (typeof(INotifier).IsAssignableFrom(type))
-            {
-                var obj = (INotifier)Activator.CreateInstance(type)!;
-                _logger.Debug($"Instance is created [{obj.GetHashCode()}]{type.Name}");
-                _logger.Trace($"Loading the configuration from {section.Path}");
-                obj.Load(section);
-                return obj;
-            }
-            else
+                _logger.Debug($"Type searching failed, using \"{DefaultType}\" instead");
                 return CreateNotifier(DefaultType, section);
+            }
         }
 
-        private static INotifier CreateNotifier(Type type, object args)
+        private static INotifier CreateNotifier(Type? type, object args)
         {
-            if (typeof(INotifier).IsAssignableFrom(type))
+            if (type != null)
             {
-                var obj = (INotifier)Activator.CreateInstance(type)!;
-                obj.Load(args);
-                return obj;
+                var instance = Activator.CreateInstance(type);
+                if (instance != null)
+                {
+                    var obj = (INotifier)instance;
+                    obj.Load(args);
+                    return obj;
+                }
+                else
+                {
+                    _logger.Debug($"Cannot create instance from \"{type.Name}\", using \"{DefaultType}\" instead");
+                    return CreateNotifier(DefaultType, args);
+                }
             }
             else
+            {
+                _logger.Debug($"Type searching failed, using \"{DefaultType}\" instead");
                 return CreateNotifier(DefaultType, args);
+            }
         }
 
         /// <summary>
@@ -150,7 +110,7 @@ namespace MATSys.Factories
         public static INotifier CreateNew(string assemblyPath, string typeString, object args)
         {
 
-            Type t = SearchType(typeString, assemblyPath);
+            var t = TypeParser.SearchType(typeString, assemblyPath);
 
             return CreateNotifier(t, args);
         }
@@ -165,7 +125,7 @@ namespace MATSys.Factories
             return (T)CreateNotifier(typeof(T), args)!;
         }
         /// <summary>
-        /// Create INotifier instance statically (return Default instance if <paramref name="T"/> is not inherited from INotifier)
+        /// Create INotifier instance statically (return Default instance if <paramref name="t"/> is not inherited from INotifier)
         /// </summary>
         /// <param name="t">type</param>
         /// <param name="args">parameter object</param>
