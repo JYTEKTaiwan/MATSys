@@ -25,7 +25,6 @@ namespace Benchmark
     [MemoryDiagnoser]
     public class MATSysInstance
     {
-        private IHost host;
         private IModule mod;
         private string cmd0 = CommandBase.Create("NoArgument").Serialize();
         private string cmd1 = CommandBase.Create("OneArgument", "HI").Serialize();
@@ -36,83 +35,57 @@ namespace Benchmark
         private string cmd6 = CommandBase.Create("SixArgument", 1, 1.0, "HI", true, DateTime.Now, new Object()).Serialize();
         private string cmd7 = CommandBase.Create("SevenArgument", 1, 1.0, "HI", true, DateTime.Now, new Object(), (decimal)10).Serialize();
 
-        public MATSysInstance()
-        {
-            host = Host.CreateDefaultBuilder().ConfigureLogging(log => log.ClearProviders()).UseMATSys().Build();
-            mod = host.Services.GetRequiredService<IModuleFactory>().CreateModule(host.Services.GetAllModuleInfos()["Dev1"]);
-        }
+        public MATSysInstance() => mod = ModuleFactory.CreateNew<TestDevice>(null);
 
         [Benchmark]
         public void Arg0Command()
         {
-            if (mod.Execute(cmd0).Contains('0'))
-            {
-                throw new Exception();
-            }
+            mod.Execute(cmd0);
         }
 
         [Benchmark]
         public void Arg1Command()
         {
-            if (mod.Execute(cmd1).Contains('1'))
-            {
-                throw new Exception();
-            }
+            mod.Execute(cmd1);
         }
         [Benchmark]
         public void Arg2Command()
         {
-            if (mod.Execute(cmd2).Contains('2'))
-            {
-                throw new Exception();
-            }
+            mod.Execute(cmd2);
+
         }
         [Benchmark]
         public void Arg3Command()
         {
-            if (mod.Execute(cmd3).Contains('3'))
-            {
-                throw new Exception();
-            }
+            mod.Execute(cmd3);
+
         }
         [Benchmark]
         public void Arg4Command()
         {
-            if (mod.Execute(cmd4).Contains('4'))
-            {
-                throw new Exception();
-            }
+            mod.Execute(cmd4);
+
         }
         [Benchmark]
         public void Arg5Command()
         {
-            if (mod.Execute(cmd5).Contains('5'))
-            {
-                throw new Exception();
-            }
+            mod.Execute(cmd5);
+
         }
         [Benchmark]
         public void Arg6Command()
         {
-            if (mod.Execute(cmd6).Contains('6'))
-            {
-                throw new Exception();
-            }
+            mod.Execute(cmd6);
+
         }
 
         [Benchmark]
         public void Arg7Command()
         {
-            if (mod.Execute(cmd7).Contains('7'))
-            {
-                throw new Exception();
-            }
+            mod.Execute(cmd7);
+
         }
 
-        ~MATSysInstance()
-        {
-            host.StopAsync();
-        }
     }
 
     public class TestDevice : ModuleBase
