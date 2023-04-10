@@ -1,7 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
+using System.Diagnostics;
 using System.Reflection;
+using static System.Collections.Specialized.BitVector32;
 
 namespace MATSys.Factories
 {
@@ -29,11 +31,16 @@ namespace MATSys.Factories
         private readonly INotifierFactory _notifierFactory;
         private readonly IRecorderFactory _recorderFactory;
         private readonly static NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
+
+        /// <summary>
+        /// Ctor
+        /// </summary>
+        /// <param name="provider">service provide from host</param>
         public ModuleFactory(IServiceProvider provider)
         {
-            _transceiverFactory = provider.GetService<ITransceiverFactory>();
-            _notifierFactory = provider.GetService<INotifierFactory>();
-            _recorderFactory = provider.GetService<IRecorderFactory>();
+            _transceiverFactory = provider.GetRequiredService<ITransceiverFactory>();
+            _notifierFactory = provider.GetRequiredService<INotifierFactory>();
+            _recorderFactory = provider.GetRequiredService<IRecorderFactory>();
         }
         /// <summary>
         /// Create IModule instance using specific section in json file
@@ -66,23 +73,78 @@ namespace MATSys.Factories
                 var rec = _recorderFactory.CreateRecorder(section.GetSection(key_recorder));
                 _logger.Debug($"[{alias}]{typeString} is created with {trans.Alias},{noti.Alias},{rec.Alias}");
 
-                //Create instance and return 
-                var obj = (IModule)Activator.CreateInstance(t);
-
-                obj.Alias = alias;
-                obj.Configure(section);
-                obj.InjectRecorder(rec);
-                obj.InjectNotifier(noti);
-                obj.InjectTransceiver(trans);
-                return obj;
+                //Create instance and return
+                var instance = Activator.CreateInstance(t);
+                if (instance != null)
+                {
+                    var obj = (IModule)instance;
+                    obj.Alias = alias;
+                    obj.Configure(section);
+                    obj.InjectRecorder(rec);
+                    obj.InjectNotifier(noti);
+                    obj.InjectTransceiver(trans);
+                    return obj;
+                }
+                else
+                {
+                    throw new NullReferenceException($"Cannot create instance from type '{t.Name}'");
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-
-                throw ex;
+                throw;
             }
 
         }
+
+        /// <summary>
+        /// Create new instance from external dll path
+        /// </summary>
+        /// <param name="assemblyPath">external dll path</param>
+        /// <param name="typeName">name of type</param>
+        /// <param name="args">configuration instance</param>
+        /// <returns>IModule instance</returns>
+        public static IModule CreateNew(string assemblyPath, string typeName, object args)
+        {
+            var t = SearchType(typeName, assemblyPath);
+            //Create instance and return
+            var instance = Activator.CreateInstance(t);
+            if (instance != null)
+            {
+                var obj = (IModule)instance;                
+                obj.Configure(args);             
+                return obj;
+            }
+            else
+            {
+                throw new NullReferenceException($"Cannot create instance from type '{t.Name}'");
+            }
+        }
+
+        /// <summary>
+        /// Create new instance from known type
+        /// </summary>
+        /// <typeparam name="T">Type of the IModule implementation</typeparam>
+        /// <param name="args">configuration instance</param>
+        /// <returns>IModule instance</returns>
+        public static IModule CreateNew<T>(object args) where T : IModule
+        {
+            var t = typeof(T);
+            //Create instance and return
+            var instance = Activator.CreateInstance(t);
+            if (instance != null)
+            {
+                var obj = (IModule)instance;
+                obj.Configure(args);
+                return obj;
+            }
+            else
+            {
+                throw new NullReferenceException($"Cannot create instance from type '{t.Name}'");
+            }
+        }
+
+
         private static Type SearchType(string type, string extAssemPath)
         {
             if (!string.IsNullOrEmpty(type)) // return EmptyRecorder if type is empty or null
@@ -92,25 +154,20 @@ namespace MATSys.Factories
                 // 1.n if not, dynamically load the assembly from the section "AssemblyPath" and search for the type
 
                 var typeName = Assembly.CreateQualifiedName(type, type).Split(',')[0];
-                _logger.Trace($"Searching the entry assemblies");
-                Type dummy;
-                if (Assembly.GetEntryAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName) != null)
+                if (SearchTypeInEntryAssemblies(typeName) is Type t_entry && t_entry != null)
                 {
-                    dummy = Assembly.GetEntryAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
-                    _logger.Debug($"Found \"{dummy.Name}\"");
-                    return dummy;
+                    _logger.Debug($"Found \"{t_entry.Name}\" in entry Assemblies");
+                    return t_entry;
                 }
-                else if (Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName) != null)
+                else if (SearchTypeInExecutingAssemblies(typeName) is Type t_exec && t_exec != null)
                 {
-                    dummy = Assembly.GetEntryAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
-                    _logger.Debug($"Found \"{dummy.Name}\"");
-                    return dummy;
+                    _logger.Debug($"Found \"{t_exec.Name}\" in executing Assemblies");
+                    return t_exec;
                 }
-                else if (Assembly.GetCallingAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName) != null)
+                else if (SearchTypeInCallingAssemblies(typeName) is Type t_calling && t_calling != null)
                 {
-                    dummy = Assembly.GetEntryAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
-                    _logger.Debug($"Found \"{dummy.Name}\"");
-                    return dummy;
+                    _logger.Debug($"Found \"{t_calling.Name}\" in calling Assemblies");
+                    return t_calling;
 
                 }
                 else
@@ -121,40 +178,64 @@ namespace MATSys.Factories
                     //load the assembly from external path
                     var assem = DependencyLoader.LoadPluginAssemblies(new string[] { extAssemPath }).First();
 
-                    dummy = assem.GetType(type);
-                    if (dummy != null)
+                    var t_ext = assem.GetType(type);
+                    if (t_ext != null)
                     {
-                        _logger.Debug($"Found \"{dummy.Name}\"");
-                        return dummy;
+                        _logger.Debug($"Found \"{t_ext.Name}\"");
+                        return t_ext;
                     }
                     else
                     {
-                        return null;
+                        return null!;
                     }
                 }
             }
             else
             {
-                return null;
+                return null!;
             }
 
         }
-        public static IModule CreateNew(string assemblyPath, string typeName, object args)
+        private static Type? SearchTypeInEntryAssemblies(string typeName)
         {
-            var t = SearchType(typeName, assemblyPath);
-            //Create instance and return 
-            var obj = (IModule)Activator.CreateInstance(t);
-            obj.Configure(args);
-            return obj;
-        }
+            _logger.Trace($"Searching the entry assemblies");
+            if (Assembly.GetEntryAssembly() is var assems && assems != null)
+            {
+                return assems.GetTypes().FirstOrDefault(x => x.FullName == typeName);
+            }
+            else
+            {
+                return null!;
+            }
 
-        public static IModule CreateNew<T>(object args) where T:IModule
+        }
+        private static Type? SearchTypeInExecutingAssemblies(string typeName)
         {
-            var t = typeof(T);
-            //Create instance and return 
-            var obj = (IModule)Activator.CreateInstance(t);
-            obj.Configure(args);
-            return obj;
+            _logger.Trace($"Searching the executing assemblies");
+
+            if (Assembly.GetExecutingAssembly() is var assems && assems != null)
+            {
+                return assems.GetTypes().FirstOrDefault(x => x.FullName == typeName);
+            }
+            else
+            {
+                return null!;
+            }
+
+        }
+        private static Type? SearchTypeInCallingAssemblies(string typeName)
+        {
+            _logger.Trace($"Searching the calling assemblies");
+
+            if (Assembly.GetCallingAssembly() is var assems && assems != null)
+            {
+                return assems.GetTypes().FirstOrDefault(x => x.FullName == typeName);
+            }
+            else
+            {
+                return null!;
+            }
+
         }
 
     }
