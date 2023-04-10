@@ -6,7 +6,6 @@ namespace MATSys
     /// </summary>
     public interface IModule : IService
     {
-        string Alias { get; set; }
         /// <summary>
         /// Indicate new data is generated from module
         /// </summary>
@@ -60,7 +59,7 @@ namespace MATSys
         /// <summary>
         /// Execute the assigned command
         /// </summary>
-        /// <param name="cmd">Command string</param>
+        /// <param name="cmdInJson">Command string</param>
         /// <returns>Response</returns>
         string Execute(string cmdInJson);
         void Configure(object? config);
