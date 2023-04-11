@@ -14,20 +14,12 @@ namespace MATSys
     public abstract class ModuleBase : IModule
     {
         #region Private Fields
-        /// <summary>
-        /// Internal features injected
-        /// </summary>
         private ILogger? _logger;
         private ITransceiver _transceiver = new EmptyTransceiver();
         private IRecorder _recorder = new EmptyRecorder();
         private INotifier _notifier = new EmptyNotifier();
-
-        /// <summary>
-        /// private field to use
-        /// </summary>
         private volatile bool _isRunning = false;
-        private Dictionary<string, MATSysCommandAttribute> cmds;
-        private object? _config;
+        private Dictionary<string, MATSysCommandAttribute> cmds = new Dictionary<string, MATSysCommandAttribute>();
         #endregion
 
         #region Public Properties
@@ -38,7 +30,7 @@ namespace MATSys
         /// <summary>
         /// Name of the ModuleBase instance
         /// </summary>
-        public string Alias { get; set; }
+        public string Alias { get; set; } = "";
         /// <summary>
         /// Instance of current ModuleBase instance
         /// </summary>
@@ -203,7 +195,7 @@ namespace MATSys
         {
             foreach (var item in cmds.Values)
             {
-                var args = item.CommandType.GenericTypeArguments;
+                var args = item.CommandType!.GenericTypeArguments;
                 JsonArray arr = new JsonArray();
                 for (int i = 0; i < args.Length; i++)
                 {
@@ -222,8 +214,8 @@ namespace MATSys
         /// <returns></returns>
         public JsonObject Export()
         {
-            var setting = _config as IConfigurationSection;
-            JsonObject jObj = setting == null ? new JsonObject() : JsonObject.Parse(setting.Value).AsObject();
+            JsonObject jObj = new JsonObject();
+
             jObj.Add("Name", Alias);
             jObj.Add("Type", this.GetType().Name);
             var node = new JsonObject();
@@ -254,7 +246,10 @@ namespace MATSys
         {
             return Export().ToJsonString(new System.Text.Json.JsonSerializerOptions() { WriteIndented = indented });
         }
-
+        /// <summary>
+        /// Configurae IModule instance with object 
+        /// </summary>
+        /// <param name="option">configuration object</param>
         public void Configure(object? option)
         {
             if (option != null)
@@ -270,19 +265,31 @@ namespace MATSys
             _logger = LogManager.GetCurrentClassLogger();
 
         }
+        /// <summary>
+        /// Inject the IRecorder instance into IModule instance
+        /// </summary>
+        /// <param name="recorder">IRecorder instance</param>
         public void InjectRecorder(IRecorder? recorder)
         {
-            _recorder = recorder;
+            _recorder = recorder!;
         }
+        /// <summary>
+        /// Inject the ITransceiver instance into IModule instance
+        /// </summary>
+        /// <param name="transceiver">ITransceiver instance</param>
         public void InjectTransceiver(ITransceiver? transceiver)
         {
-            _transceiver = transceiver;
+            _transceiver = transceiver!;
 
 
         }
+        /// <summary>
+        /// Inject the INotifier instance into IModule instance
+        /// </summary>
+        /// <param name="notifier">INotifier instance </param>
         public void InjectNotifier(INotifier? notifier)
         {
-            _notifier = notifier;
+            _notifier = notifier!;
 
         }
 

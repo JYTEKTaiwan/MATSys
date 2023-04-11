@@ -10,7 +10,7 @@ namespace MATSys.Factories
         /// <summary>
         /// Create Recorder from configuration file
         /// </summary>
-        /// <param name="info">Section of the configuration file</param>
+        /// <param name="section">Section of the configuration file</param>
         /// <returns>IRecorder instance</returns>
         IRecorder CreateRecorder(IConfigurationSection section);
     }

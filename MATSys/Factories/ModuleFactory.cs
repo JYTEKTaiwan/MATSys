@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
-using System.Diagnostics;
-using System.Reflection;
-using static System.Collections.Specialized.BitVector32;
 
 namespace MATSys.Factories
 {
@@ -126,7 +123,7 @@ namespace MATSys.Factories
             {
                 throw new NullReferenceException($"\"{typeName}\" is not found");
             }
-            
+
         }
 
         /// <summary>

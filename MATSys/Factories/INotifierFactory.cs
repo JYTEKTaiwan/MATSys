@@ -10,7 +10,7 @@ namespace MATSys.Factories
         /// <summary>
         /// Create Notifier from configuration file
         /// </summary>
-        /// <param name="info">Section of the configuration file</param>
+        /// <param name="section">Section of the configuration file</param>
         /// <returns>INotifier instance</returns>
         INotifier CreateNotifier(IConfigurationSection section);
     }

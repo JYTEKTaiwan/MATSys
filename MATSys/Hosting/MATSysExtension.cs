@@ -42,6 +42,12 @@ namespace MATSys.Hosting
 
         }
 
+        /// <summary>
+        /// Replace the IRunner service when configurating the Host
+        /// </summary>
+        /// <typeparam name="T">Type of the IRnner </typeparam>
+        /// <param name="hostBuilder">host builder instance</param>
+        /// <returns>IHostBuilder</returns>
         public static IHostBuilder ReplaceRunnerService<T>(this IHostBuilder hostBuilder) where T : IRunner
         {
             return hostBuilder.ConfigureServices(x =>
@@ -50,27 +56,45 @@ namespace MATSys.Hosting
             );
         }
 
+        /// <summary>
+        /// Get the IRunner insatnce
+        /// </summary>
+        /// <param name="host"></param>
+        /// <returns></returns>
         public static IRunner GetMATSysRunner(this IHost host)
         {
-            return host.Services.GetService<IRunner>();
+            return host.Services.GetRequiredService<IRunner>();
         }
 
+        /// <summary>
+        /// Get the Root of the configuration in the host
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <returns></returns>
         public static IConfiguration GetConfigurationRoot(this IServiceProvider provider)
         {
             return provider.GetRequiredService<IConfiguration>();
         }
+        /// <summary>
+        /// Get the specified section of the configuration in the host
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <param name="sectionKey"></param>
+        /// <returns></returns>
         public static IConfigurationSection GetConfigurationSection(this IServiceProvider provider, string sectionKey)
         {
             return provider.GetRequiredService<IConfiguration>().GetSection(sectionKey);
         }
+        /// <summary>
+        /// Get the collection of information for Module in the host
+        /// </summary>
+        /// <param name="provider"></param>
+        /// <returns></returns>
         public static Dictionary<string, IConfigurationSection> GetAllModuleInfos(this IServiceProvider provider)
         {
             return provider.GetConfigurationSection("MATSys:Modules").GetChildren().ToDictionary(x => x["Alias"]);
         }
-        public static IConfigurationSection GetRunnerInfo(this IServiceProvider provider)
-        {
-            return provider.GetConfigurationSection("MATSys:Runner");
-        }
+
 
     }
 }

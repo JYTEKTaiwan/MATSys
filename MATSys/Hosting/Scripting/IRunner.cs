@@ -7,36 +7,86 @@ namespace MATSys.Hosting.Scripting
     /// </summary>
     public interface IRunner : IDisposable
     {
-        ITestPackage TestPackage { get; }
-        object Configuration { get; internal set; }
-        JsonNode TestItems { get; set; }
-
         /// <summary>
-        /// Run the script execution
+        /// TestPackage that embedded in this instance
         /// </summary>
-        /// <param name="iteration">iteration of script</param>
-        /// <returns>answer in JsonArray format</returns>
+        ITestPackage TestPackage { get; }
+        /// <summary>
+        /// Configuration instance loaded from settings
+        /// </summary>
+        object Configuration { get; internal set; }
+        /// <summary>
+        /// Test item collection
+        /// </summary>
+        JsonNode TestItems { get; set; }
+        /// <summary>
+        /// Execute the test
+        /// </summary>
+        /// <param name="token">Cancelation token</param>
+        /// <returns>The collection of result returned from each test item</returns>
         JsonArray RunTest(CancellationToken token = default);
 
+        /// <summary>
+        /// Execute the test
+        /// </summary>
+        /// <param name="testItems">Collection of test items</param>
+        /// <param name="token">Cancelation token</param>
+        /// <returns>The collection of result returned from each test item</returns>
         JsonArray RunTest(JsonNode testItems, CancellationToken token = default);
 
-        JsonArray RunTest(string scriptFilePath, CancellationToken token = default);
-
         /// <summary>
-        /// Stop the script execution
+        /// Execute the test
+        /// </summary>
+        /// <param name="scriptFilePath">File of the test items located</param>
+        /// <param name="token">Cancelation token</param>
+        /// <returns>The collection of result returned from each test item</returns>
+        JsonArray RunTest(string scriptFilePath, CancellationToken token = default);
+        /// <summary>
+        /// Stop the test
         /// </summary>
         void StopTest();
+        /// <summary>
+        /// Execute the test asynchronously
+        /// </summary>
+        /// <param name="token">Cancelation token</param>
+        /// <returns>The collection of result returned from each test item</returns>
         Task<JsonArray> RunTestAsync(CancellationToken token = default);
+        /// <summary>
+        /// Execute the test asynchronously
+        /// </summary>
+        /// <param name="testItems">Collection of test items</param>
+        /// <param name="token">Cancelation token</param>
+        /// <returns>The collection of result returned from each test item</returns>
         Task<JsonArray> RunTestAsync(JsonNode testItems, CancellationToken token = default);
+        /// <summary>
+        /// Execute the test asynchronously
+        /// </summary>
+        /// <param name="scriptFilePath">File of the test items located</param>
+        /// <param name="token">Cancelation token</param>
+        /// <returns>The collection of result returned from each test item</returns>
         Task<JsonArray> RunTestAsync(string scriptFilePath, CancellationToken token = default);
 
-
-
-
-        delegate void ReadyToExecuteScriptEvent(JsonNode script);
-        delegate void ReadyToExecuteTestItemEvent(JsonNode item);
-        delegate void ExecuteTestItemCompleteEvent(JsonNode item, JsonNode result);
-        delegate void ExecuteScriptCompleteEvent(JsonArray item);
+        /// <summary>
+        /// ReadyToExecuteScriptEvent
+        /// </summary>
+        /// <param name="script">script content</param>
+        delegate void ReadyToExecuteScriptEvent(JsonNode? script);
+        /// <summary>
+        /// ReadyToExecuteTestItemEvent
+        /// </summary>
+        /// <param name="item">single test item</param>
+        delegate void ReadyToExecuteTestItemEvent(JsonNode? item);
+        /// <summary>
+        /// ExecuteTestItemCompleteEvent
+        /// </summary>
+        /// <param name="item">Single test item</param>
+        /// <param name="result">Result after execution</param>
+        delegate void ExecuteTestItemCompleteEvent(JsonNode? item, JsonNode? result);
+        /// <summary>
+        /// ExecuteScriptCompleteEvent
+        /// </summary>
+        /// <param name="result">Result</param>
+        delegate void ExecuteScriptCompleteEvent(JsonArray? result);
 
         /// <summary>
         /// Event before the script starts

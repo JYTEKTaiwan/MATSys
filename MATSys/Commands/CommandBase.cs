@@ -9,6 +9,9 @@ namespace MATSys.Commands
     public abstract class CommandBase : ICommand
     {
         internal const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
+        /// <summary>
+        /// json serializer options
+        /// </summary>
         protected static JsonSerializerOptions opt = new JsonSerializerOptions()
         {
             WriteIndented = false,

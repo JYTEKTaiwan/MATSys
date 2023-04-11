@@ -1,9 +1,6 @@
 ﻿using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 using NLog;
-using System.Diagnostics;
-using System.Reflection;
-using static System.Collections.Specialized.BitVector32;
 
 namespace MATSys.Factories
 {
@@ -47,20 +44,20 @@ namespace MATSys.Factories
             }
             catch (Exception)
             {
-                throw ;
+                throw;
             }
         }
 
 
         private INotifier CreateNotifier(Type? type, IConfigurationSection section)
         {
-            if (type !=null)
+            if (type != null)
             {
                 var instance = Activator.CreateInstance(type);
                 if (instance != null)
                 {
-                    var obj = (INotifier)instance;                 
-                    obj.Load(section);                    
+                    var obj = (INotifier)instance;
+                    obj.Load(section);
                     return obj;
                 }
                 else
