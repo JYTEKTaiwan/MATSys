@@ -185,7 +185,7 @@ namespace MATSys.Hosting.Scripting
         private JsonArray InternalItemExecution(JsonNode items, CancellationToken token)
         {
             JsonArray arr = new JsonArray();
-            foreach (var item in TestItems.AsArray())
+            foreach (var item in items.AsArray())
             {
                 if (token.IsCancellationRequested)
                 {
