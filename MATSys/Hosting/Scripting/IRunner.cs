@@ -45,6 +45,17 @@ namespace MATSys.Hosting.Scripting
         /// Stop the test
         /// </summary>
         void StopTest();
+
+        /// <summary>
+        /// Pause the execution
+        /// </summary>
+        void Pause();
+
+        /// <summary>
+        /// Resume the execution
+        /// </summary>
+        void Resume();
+
         /// <summary>
         /// Execute the test asynchronously
         /// </summary>
@@ -107,5 +118,15 @@ namespace MATSys.Hosting.Scripting
         /// Event after the script stopts
         /// </summary>
         event ExecuteScriptCompleteEvent? AfterScriptStops;
+
+        /// <summary>
+        /// Event when Pause is called during the execution
+        /// </summary>
+        event EventHandler OnPause;
+
+        /// <summary>
+        /// Event when Resume is called during the execution
+        /// </summary>
+        event EventHandler OnResume;
     }
 }

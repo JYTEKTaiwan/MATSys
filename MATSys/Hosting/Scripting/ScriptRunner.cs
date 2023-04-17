@@ -1,8 +1,10 @@
 ﻿using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Threading.Channels;
 
 namespace MATSys.Hosting.Scripting
 {
@@ -14,6 +16,8 @@ namespace MATSys.Hosting.Scripting
 
         private readonly IConfiguration _appsettings;
         private readonly ScriptConfiguration _config;
+        private volatile bool isPaused = false;
+        private volatile bool isRunning = false;
         private CancellationTokenSource _localCts = new CancellationTokenSource();
 
         /// <summary>
@@ -42,6 +46,15 @@ namespace MATSys.Hosting.Scripting
         /// After the script completed Event
         /// </summary>
         public event IRunner.ExecuteScriptCompleteEvent? AfterScriptStops;
+        /// <summary>
+        /// Event when Pause is called during the execution
+        /// </summary>
+        public event EventHandler OnPause;
+
+        /// <summary>
+        /// Event when Resume is called during the execution
+        /// </summary>
+        public event EventHandler OnResume;
 
         /// <summary>
         /// Configuration instance loaded from settings
@@ -80,10 +93,7 @@ namespace MATSys.Hosting.Scripting
         {
             _localCts = new CancellationTokenSource();
             var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
-            BeforeScriptStarts?.Invoke(TestItems);
-            var arr = InternalItemExecution(TestItems.AsArray(), linkedTokenSource.Token);
-            AfterScriptStops?.Invoke(arr);
-            return arr;
+            return ExecutionLoop(TestItems, token);
         }
         /// <summary>
         /// Execute the test asynchronously
@@ -133,10 +143,7 @@ namespace MATSys.Hosting.Scripting
         {
             _localCts = new CancellationTokenSource();
             var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
-            BeforeScriptStarts?.Invoke(testItems);
-            var arr = InternalItemExecution(testItems, linkedTokenSource.Token);
-            AfterScriptStops?.Invoke(arr);
-            return arr;
+            return ExecutionLoop(testItems, token);
         }
         /// <summary>
         /// Execute the test
@@ -146,15 +153,8 @@ namespace MATSys.Hosting.Scripting
         /// <returns>The collection of result returned from each test item</returns>
         public JsonArray RunTest(string scriptFilePath, CancellationToken token = default)
         {
-            _localCts = new CancellationTokenSource();
             JsonNode testItems = JsonArray.Parse(File.ReadAllText(scriptFilePath))!;
-
-            _localCts = new CancellationTokenSource();
-            var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
-            BeforeScriptStarts?.Invoke(testItems);
-            var arr = InternalItemExecution(testItems, linkedTokenSource.Token);
-            AfterScriptStops?.Invoke(arr);
-            return arr;
+            return ExecutionLoop(testItems, token);
         }
         /// <summary>
         /// Execute the test asynchronously
@@ -182,17 +182,25 @@ namespace MATSys.Hosting.Scripting
                 return RunTest(scriptFilePath, token);
             });
         }
-        private JsonArray InternalItemExecution(JsonNode items, CancellationToken token)
+        private JsonArray ExecutionLoop(JsonNode items, CancellationToken token)
         {
             JsonArray arr = new JsonArray();
-            foreach (var item in items.AsArray())
+            var itemEnumerator = items.AsArray().GetEnumerator();
+            itemEnumerator.Reset();
+            _localCts = new CancellationTokenSource();
+            var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
+            isRunning = true;
+            isPaused = false;
+            BeforeScriptStarts?.Invoke(items);
+            while (!linkedTokenSource.IsCancellationRequested)
             {
-                if (token.IsCancellationRequested)
+                if (isPaused)
                 {
-                    return arr;
+                    //paused
                 }
-                else
+                else if (itemEnumerator.MoveNext())
                 {
+                    var item = itemEnumerator.Current;
                     var method = item!["Method"]!.GetValue<string>();
                     var param = item["Param"]!;
                     BeforeTestItemStarts?.Invoke(item);
@@ -200,9 +208,36 @@ namespace MATSys.Hosting.Scripting
                     AfterTestItemStops?.Invoke(item, result);
                     arr.Add(result);
                 }
+                else
+                {
+                    //end of test items
+                    linkedTokenSource.Cancel();
+                }
+                Thread.Sleep(1);
             }
+            AfterScriptStops?.Invoke(arr);
+            isRunning = false;
             return arr;
+        }
 
+        public void Pause()
+        {
+            if (isRunning)
+            {
+                isPaused = true;
+                OnPause?.Invoke(this, null);
+            }
+            
+        }
+
+        public void Resume()
+        {
+            if (isRunning) 
+            {
+                isPaused = false;
+                OnResume?.Invoke(this, null);
+            }
+            
         }
     }
 
