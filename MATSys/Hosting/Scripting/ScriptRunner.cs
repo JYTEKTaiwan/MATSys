@@ -77,12 +77,24 @@ namespace MATSys.Hosting.Scripting
         {
             _appsettings = provider.GetRequiredService<IConfiguration>();
             var runnerSection = _appsettings.GetSection("MATSys:Runner");
-            _config = runnerSection.Get<ScriptConfiguration>();
-            Configuration = _config;
-            TestItems = _config.TestItems!;
-            var testPackageFactory = provider.GetRequiredService<TestPackageFactory>();
-            var tp = testPackageFactory.CreateTestPackage(runnerSection.GetSection("TestPackage"));
-            TestPackage = tp;
+            if (runnerSection.Exists())
+            {
+                _config = runnerSection.Get<ScriptConfiguration>();
+                Configuration = _config;
+                TestItems = _config.LoadTestItems()!;
+                var testpackageSection = runnerSection.GetSection("TestPackage");
+                var testPackageFactory = provider.GetRequiredService<TestPackageFactory>();
+                TestPackage = testpackageSection.Exists() ? 
+                    testPackageFactory.CreateTestPackage(testpackageSection) 
+                    : new EmptyTestPackage();
+            }
+            else
+            {
+                //create empty testpackage and configuration 
+                Configuration = new ScriptConfiguration();
+                TestPackage= new EmptyTestPackage();
+            }
+
         }
         /// <summary>
         /// Execute the test
@@ -244,15 +256,37 @@ namespace MATSys.Hosting.Scripting
 
     internal class ScriptConfiguration
     {
+        private JsonNode items;
         /// <summary>
         /// Path of the script
         /// </summary>
         public string ScriptPath { get; set; } = "";
 
         /// <summary>
-        /// Collection of the test items
+        /// Get collection of the test items
         /// </summary>
-        public JsonNode? TestItems => JsonArray.Parse(File.ReadAllText(ScriptPath));
+        public JsonNode? LoadTestItems  ()  
+        {
+            if (File.Exists(ScriptPath))
+            {
+                try
+                {
+                    return JsonArray.Parse(File.ReadAllText(ScriptPath));
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                
+            }
+            else
+            {
+                return new JsonObject();
+            }
+            
+        }
+
+
     }
 
 }

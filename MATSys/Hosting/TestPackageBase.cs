@@ -103,4 +103,12 @@ namespace MATSys.Hosting
 
         }
     }
+
+    /// <summary>
+    /// Empty TestPackage, used when Runner section or TestPackage section in appsettings.json is empty
+    /// </summary>
+    public class EmptyTestPackage:TestPackageBase
+    {
+        
+    }
 }
