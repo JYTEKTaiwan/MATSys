@@ -33,7 +33,7 @@ namespace MATSys.Hosting
         /// <param name="testItemName">method name</param>
         /// <param name="parameter">parameter in jsonnode format</param>
         /// <returns></returns>
-        JsonNode Execute(string testItemName, JsonNode parameter);
+        IResult Execute(string testItemName, JsonNode parameter);
 
         /// <summary>
         /// Inject the service provider of Host into the TestPackage

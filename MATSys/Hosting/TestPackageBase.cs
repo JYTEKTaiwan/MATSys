@@ -51,22 +51,27 @@ namespace MATSys.Hosting
         /// <param name="testItemName">method name</param>
         /// <param name="parameter">parameter in jsonnode format</param>
         /// <returns></returns>
-        public JsonNode Execute(string testItemName, JsonNode parameter)
+        public IResult Execute(string testItemName, JsonNode parameter)
         {
             try
             {
-                if (cmds[testItemName].Invoke(parameter) is object response && response != null)
+                var result=cmds[testItemName].Invoke(parameter);
+                if (result != null)
                 {
-                    return (JsonNode)response;
+                    return (IResult)result;
                 }
                 else
                 {
-                    return new JsonObject();
+                    return new TestResult() { Status = ResultStatus.Skip };
                 }
             }
             catch (KeyNotFoundException ex)
             {
                 throw ex;
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
         }
@@ -98,11 +103,12 @@ namespace MATSys.Hosting
         /// <summary>
         /// Dispose
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
 
         }
     }
+
 
     /// <summary>
     /// Empty TestPackage, used when Runner section or TestPackage section in appsettings.json is empty

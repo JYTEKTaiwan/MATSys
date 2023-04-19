@@ -84,15 +84,15 @@ namespace MATSys.Hosting.Scripting
                 TestItems = _config.LoadTestItems()!;
                 var testpackageSection = runnerSection.GetSection("TestPackage");
                 var testPackageFactory = provider.GetRequiredService<TestPackageFactory>();
-                TestPackage = testpackageSection.Exists() ? 
-                    testPackageFactory.CreateTestPackage(testpackageSection) 
+                TestPackage = testpackageSection.Exists() ?
+                    testPackageFactory.CreateTestPackage(testpackageSection)
                     : new EmptyTestPackage();
             }
             else
             {
                 //create empty testpackage and configuration 
                 Configuration = new ScriptConfiguration();
-                TestPackage= new EmptyTestPackage();
+                TestPackage = new EmptyTestPackage();
             }
 
         }
@@ -217,8 +217,9 @@ namespace MATSys.Hosting.Scripting
                     var param = item["Param"]!;
                     BeforeTestItemStarts?.Invoke(item);
                     var result = TestPackage.Execute(method, param);
-                    AfterTestItemStops?.Invoke(item, result);
-                    arr.Add(result);
+                    var node = JsonSerializer.SerializeToNode(result, result.GetType());
+                    AfterTestItemStops?.Invoke(item, node);
+                    arr.Add(node);
                 }
                 else
                 {
@@ -239,17 +240,17 @@ namespace MATSys.Hosting.Scripting
                 isPaused = true;
                 OnPause?.Invoke(this, null);
             }
-            
+
         }
 
         public void Resume()
         {
-            if (isRunning) 
+            if (isRunning)
             {
                 isPaused = false;
                 OnResume?.Invoke(this, null);
             }
-            
+
         }
     }
 
@@ -265,7 +266,7 @@ namespace MATSys.Hosting.Scripting
         /// <summary>
         /// Get collection of the test items
         /// </summary>
-        public JsonNode? LoadTestItems  ()  
+        public JsonNode? LoadTestItems()
         {
             if (File.Exists(ScriptPath))
             {
@@ -277,13 +278,13 @@ namespace MATSys.Hosting.Scripting
                 {
                     throw;
                 }
-                
+
             }
             else
             {
                 return new JsonObject();
             }
-            
+
         }
 
 
