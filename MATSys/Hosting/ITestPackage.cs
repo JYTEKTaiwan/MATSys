@@ -7,6 +7,9 @@ namespace MATSys.Hosting
     /// </summary>
     public interface ITestPackage : IDisposable
     {
+
+        CancellationToken ExecutionToken { get; set; }
+
         /// <summary>
         /// Alias of the TeatPacakge
         /// </summary>
@@ -51,5 +54,8 @@ namespace MATSys.Hosting
         /// </summary>
         /// <param name="recorder">IRecorder instance</param>
         void InjectRecorder(IRecorder recorder);
+
+        void Setup();
+        void Teardown();
     }
 }

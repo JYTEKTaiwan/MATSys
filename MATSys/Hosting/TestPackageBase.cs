@@ -1,6 +1,7 @@
 ﻿using MATSys.Commands;
 using MATSys.Plugins;
 using System.Reflection;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.Json.Nodes;
 
 namespace MATSys.Hosting
@@ -21,6 +22,7 @@ namespace MATSys.Hosting
         /// </summary>
         public IServiceProvider? Provider => _serviceProvider;
 
+        public CancellationToken ExecutionToken { get; set; } = CancellationToken.None;
         /// <summary>
         /// Base object instance
         /// </summary>
@@ -55,7 +57,7 @@ namespace MATSys.Hosting
         {
             try
             {
-                var result=cmds[testItemName].Invoke(parameter);
+                var result = cmds[testItemName].Invoke(parameter);
                 if (result != null)
                 {
                     return (IResult)result;
@@ -75,6 +77,9 @@ namespace MATSys.Hosting
             }
 
         }
+
+
+
         /// <summary>
         /// Inject the service provider of Host into the TestPackage
         /// </summary>
@@ -107,14 +112,18 @@ namespace MATSys.Hosting
         {
 
         }
+
+        public virtual void Setup() { }
+
+        public virtual void Teardown() { }
     }
 
 
     /// <summary>
     /// Empty TestPackage, used when Runner section or TestPackage section in appsettings.json is empty
     /// </summary>
-    public class EmptyTestPackage:TestPackageBase
+    public class EmptyTestPackage : TestPackageBase
     {
-        
+
     }
 }

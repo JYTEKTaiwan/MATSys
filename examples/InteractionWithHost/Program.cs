@@ -14,34 +14,42 @@ namespace InteractionWithHost
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             IHost host = Host.CreateDefaultBuilder().UseMATSys().Build();
 
             host.RunAsync().Wait(1000); 
 
             var runner = host.GetMATSysRunner();
+            runner.BeforeScriptStarts += (script) => 
+            {
+                foreach (var item in script.AsArray())
+                {
+                    Console.WriteLine($"[BeforeScript]{item.ToJsonString()}");
+                }
+            };
+            runner.BeforeTestItemStarts += (item) => 
+            {
+                Console.WriteLine($"[BeforeItem]{runner.CurrentItem.ToJsonString()}");
+            };
             runner.AfterTestItemStops += (item, res) =>
             {
                 //event is fired after executeing test item;
-                Console.WriteLine($"{res.ToJsonString()}");
+                Console.WriteLine($"[AfterItem-{item.ToJsonString()}]{res.ToJsonString()}");
             };
-            runner.AfterScriptStops += (res) =>
+            runner.AfterScriptStops += (res,status) =>
             {
                 foreach (var item in res)
                 {
-                    //Console.WriteLine(item.ToJsonString());
+                    Console.WriteLine($"[AfterScript]{item.ToJsonString()}");
                 }
             };
-            runner.RunTestAsync();
-
-            //var a = runner.RunTest(1);
-            //foreach (var item in a.ToArray())
-            //{
-            //    Console.WriteLine(item.ToJsonString());
-            //}
+            var t=runner.RunTestAsync();
+            Thread.Sleep(1500);
+            runner.StopTest();
+            Console.WriteLine(runner.Status);
             Console.WriteLine("PRESS ANY KEY TO EXIT");
-
+            //var result=await t;
             Console.ReadKey();
             host.StopAsync();
         }
@@ -69,35 +77,37 @@ namespace InteractionWithHost
         IModule mod;
 
         [TestItemParameter(typeof(WhoAreYouArgs))]
-        public JsonNode WhoAreYou(JsonNode node)
+        public IResult WhoAreYou(JsonNode node)
         {
             var args = node.Deserialize<WhoAreYouArgs>();
             args.Age++;
-            return JsonSerializer.SerializeToNode(args);
+            return new Result() { Message = JsonSerializer.Serialize(args) } ;
         }
 
         [TestItemParameter(typeof(InitializeArgs))]
-        public JsonNode Initialize(JsonNode node)
+        public IResult Initialize(JsonNode node)
         {
+            
+            Thread.Sleep(5000);
             var args = node.Deserialize<InitializeArgs>();
             var modFactory = this.Provider.GetRequiredService<IModuleFactory>();
             var modsinfo = this.Provider.GetAllModuleInfos();
             mod = modFactory.CreateModule(modsinfo["Dev1"]);
-            return JsonSerializer.SerializeToNode(args);
+            return new Result() { Message = $"Dev1" };
         }
 
         [TestItemParameter(typeof(CloseArgs))]
-        public JsonNode Close(JsonNode node)
+        public IResult Close(JsonNode node)
         {
             var args = node.Deserialize<CloseArgs>();
-            return JsonSerializer.SerializeToNode(args);
+            return new TestResult();
         }
 
         [TestItemParameter(typeof(DoArgs))]
-        public JsonNode Do(JsonNode node)
+        public IResult Do(JsonNode node)
         {
             var str=mod.Execute(CommandBase.Create("Method", "HELLO"));
-            return JsonNode.Parse(str);
+            return new Result() { Message = str };
         }
         internal class InitializeArgs
         {
@@ -116,6 +126,14 @@ namespace InteractionWithHost
         {
             public string Name { get; set; }
             public int Age { get; set; }
+        }
+
+        public class Result : IResult
+        {
+            public DateTime TimeStamp { get; set; } = DateTime.Now;
+            public ResultStatus Status { get; set; } = ResultStatus.Skip;
+
+            public string Message { get; set; }
         }
     }
 }

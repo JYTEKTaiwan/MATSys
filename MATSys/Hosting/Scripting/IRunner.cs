@@ -14,33 +14,16 @@ namespace MATSys.Hosting.Scripting
         /// <summary>
         /// Configuration instance loaded from settings
         /// </summary>
-        object Configuration { get; internal set; }
+        object Configuration { get; set; }
         /// <summary>
         /// Test item collection
         /// </summary>
         JsonNode TestItems { get; set; }
-        /// <summary>
-        /// Execute the test
-        /// </summary>
-        /// <param name="token">Cancelation token</param>
-        /// <returns>The collection of result returned from each test item</returns>
-        JsonArray RunTest(CancellationToken token = default);
+        TaskStatus Status { get; }
+        JsonNode CurrentItem { get; set; }
 
-        /// <summary>
-        /// Execute the test
-        /// </summary>
-        /// <param name="testItems">Collection of test items</param>
-        /// <param name="token">Cancelation token</param>
-        /// <returns>The collection of result returned from each test item</returns>
-        JsonArray RunTest(JsonNode testItems, CancellationToken token = default);
+        JsonArray TestResults { get; set; }
 
-        /// <summary>
-        /// Execute the test
-        /// </summary>
-        /// <param name="scriptFilePath">File of the test items located</param>
-        /// <param name="token">Cancelation token</param>
-        /// <returns>The collection of result returned from each test item</returns>
-        JsonArray RunTest(string scriptFilePath, CancellationToken token = default);
         /// <summary>
         /// Stop the test
         /// </summary>
@@ -56,6 +39,8 @@ namespace MATSys.Hosting.Scripting
         /// </summary>
         void Resume();
 
+        void ResetStatus();
+        
         /// <summary>
         /// Execute the test asynchronously
         /// </summary>
@@ -97,7 +82,7 @@ namespace MATSys.Hosting.Scripting
         /// ExecuteScriptCompleteEvent
         /// </summary>
         /// <param name="result">Result</param>
-        delegate void ExecuteScriptCompleteEvent(JsonArray? result);
+        delegate void ExecuteScriptCompleteEvent(JsonArray? result, TaskStatus status);
 
         /// <summary>
         /// Event before the script starts

@@ -27,7 +27,8 @@ namespace MATSys.Hosting
     {
         Pass,
         Fail,
-        Skip
+        Skip,
+        Cancel,
     }
 
 }

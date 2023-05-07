@@ -1,6 +1,7 @@
 ﻿using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -13,7 +14,7 @@ namespace MATSys.Hosting.Scripting
     /// </summary>
     public class ScriptRunner : IRunner
     {
-
+        private Task<JsonArray> _task=Task.FromResult(new JsonArray());
         private readonly IConfiguration _appsettings;
         private readonly ScriptConfiguration _config;
         private volatile bool isPaused = false;
@@ -61,6 +62,10 @@ namespace MATSys.Hosting.Scripting
         /// </summary>
         public object Configuration { get; set; }
 
+        public TaskStatus Status => _task.Status;
+        public JsonArray TestResults { get; set; }
+
+        public JsonNode CurrentItem { get; set; }
         /// <summary>
         /// TestPackage that embedded in this instance
         /// </summary>
@@ -97,29 +102,6 @@ namespace MATSys.Hosting.Scripting
 
         }
         /// <summary>
-        /// Execute the test
-        /// </summary>
-        /// <param name="token">Cancelation token</param>
-        /// <returns>The collection of result returned from each test item</returns>
-        public JsonArray RunTest(CancellationToken token = default)
-        {
-            _localCts = new CancellationTokenSource();
-            var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
-            return ExecutionLoop(TestItems, token);
-        }
-        /// <summary>
-        /// Execute the test asynchronously
-        /// </summary>
-        /// <param name="token">Cancelation token</param>
-        /// <returns>The collection of result returned from each test item</returns>
-        public async Task<JsonArray> RunTestAsync(CancellationToken token = default)
-        {
-            return await Task.Run(() =>
-            {
-                return RunTest(token);
-            });
-        }
-        /// <summary>
         /// Stop the test
         /// </summary>
         public void StopTest()
@@ -146,40 +128,25 @@ namespace MATSys.Hosting.Scripting
             TestPackage.Dispose();
         }
         /// <summary>
-        /// Execute the test
+        /// Execute the test asynchronously
         /// </summary>
-        /// <param name="testItems">Collection of test items</param>
         /// <param name="token">Cancelation token</param>
         /// <returns>The collection of result returned from each test item</returns>
-        public JsonArray RunTest(JsonNode testItems, CancellationToken token = default)
+        public virtual async Task<JsonArray> RunTestAsync(CancellationToken token = default)
         {
-            _localCts = new CancellationTokenSource();
-            var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
-            return ExecutionLoop(testItems, token);
+            return await ExecuteScriptAsync(token);
         }
-        /// <summary>
-        /// Execute the test
-        /// </summary>
-        /// <param name="scriptFilePath">File of the test items located</param>
-        /// <param name="token">Cancelation token</param>
-        /// <returns>The collection of result returned from each test item</returns>
-        public JsonArray RunTest(string scriptFilePath, CancellationToken token = default)
-        {
-            JsonNode testItems = JsonArray.Parse(File.ReadAllText(scriptFilePath))!;
-            return ExecutionLoop(testItems, token);
-        }
+
         /// <summary>
         /// Execute the test asynchronously
         /// </summary>
         /// <param name="testItems">Collection of test items</param>
         /// <param name="token">Cancelation token</param>
         /// <returns>The collection of result returned from each test item</returns>
-        public async Task<JsonArray> RunTestAsync(JsonNode testItems, CancellationToken token = default)
+        public virtual async Task<JsonArray> RunTestAsync(JsonNode testItems, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                return RunTest(testItems, token);
-            });
+            TestItems = testItems;
+            return await ExecuteScriptAsync(token);
         }
         /// <summary>
         /// Execute the test asynchronously
@@ -187,50 +154,86 @@ namespace MATSys.Hosting.Scripting
         /// <param name="scriptFilePath">File of the test items located</param>
         /// <param name="token">Cancelation token</param>
         /// <returns>The collection of result returned from each test item</returns>
-        public async Task<JsonArray> RunTestAsync(string scriptFilePath, CancellationToken token = default)
+        public virtual async Task<JsonArray> RunTestAsync(string scriptFilePath, CancellationToken token = default)
         {
-            return await Task.Run(() =>
-            {
-                return RunTest(scriptFilePath, token);
-            });
+            var TestItems = JsonArray.Parse(File.ReadAllText(scriptFilePath))!;
+            return await ExecuteScriptAsync(token);
         }
-        private JsonArray ExecutionLoop(JsonNode items, CancellationToken token)
+        protected virtual async Task<JsonArray> ExecuteScriptAsync(CancellationToken token = default)
         {
-            JsonArray arr = new JsonArray();
-            var itemEnumerator = items.AsArray().GetEnumerator();
-            itemEnumerator.Reset();
             _localCts = new CancellationTokenSource();
             var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
-            isRunning = true;
-            isPaused = false;
+            var items = TestItems.AsArray();
             BeforeScriptStarts?.Invoke(items);
-            while (!linkedTokenSource.IsCancellationRequested)
+            _task = Task.Run(() =>
             {
-                if (isPaused)
+                TestPackage.ExecutionToken = linkedTokenSource.Token;
+                TestResults = new JsonArray();
+                return TestResults;
+            });
+            foreach (var item in TestItems.AsArray())
+            {
+                var method = item!["Method"]!.GetValue<string>();
+                var param = item["Param"]!;
+                var node = new JsonObject() as JsonNode;
+                _task = _task.ContinueWith(task =>
                 {
-                    //paused
-                }
-                else if (itemEnumerator.MoveNext())
-                {
-                    var item = itemEnumerator.Current;
-                    var method = item!["Method"]!.GetValue<string>();
-                    var param = item["Param"]!;
+                    CurrentItem = item;
                     BeforeTestItemStarts?.Invoke(item);
-                    var result = TestPackage.Execute(method, param);
-                    var node = JsonSerializer.SerializeToNode(result, result.GetType());
-                    AfterTestItemStops?.Invoke(item, node);
-                    arr.Add(node);
-                }
-                else
+                    return TestResults;
+                }, linkedTokenSource.Token);
+
+                _task = _task.ContinueWith((task) =>
                 {
-                    //end of test items
-                    linkedTokenSource.Cancel();
-                }
-                Thread.Sleep(1);
+                    var result = TestPackage.Execute(method, param);
+                    node = JsonSerializer.SerializeToNode(result, result.GetType());
+                    TestResults.Add(node);
+                    return TestResults;
+                }, linkedTokenSource.Token);
+
+                _task = _task.ContinueWith(task =>
+                {
+                    AfterTestItemStops?.Invoke(item, node);
+                    return TestResults;
+                }, linkedTokenSource.Token);
+
+
             }
-            AfterScriptStops?.Invoke(arr);
-            isRunning = false;
-            return arr;
+            /*
+            for (int i = 0; i < items.Count; i++)
+            {
+                CurrentItem = items[i];
+                var method = CurrentItem!["Method"]!.GetValue<string>();
+                var param = CurrentItem["Param"]!;
+                var node = new JsonObject() as JsonNode;
+                _task = _task.ContinueWith(task =>
+                {
+                    BeforeTestItemStarts?.Invoke(i);
+                    return TestResults;
+                }, linkedTokenSource.Token);
+
+                _task = _task.ContinueWith((task) =>
+                {
+                    var result =  TestPackage.Execute(method, param);
+                    node = JsonSerializer.SerializeToNode(result, result.GetType());
+                    TestResults.Add(node);
+                    return TestResults;
+                }, linkedTokenSource.Token);
+                
+                _task = _task.ContinueWith(task =>
+                {
+                    AfterTestItemStops?.Invoke(i, node);
+                    return TestResults;
+                }, linkedTokenSource.Token);
+
+            }
+            */
+            _=_task.ContinueWith(task =>
+            {
+                AfterScriptStops?.Invoke(TestResults, task.Status);
+                return TestResults;
+            });
+            return await _task;
         }
 
         public void Pause()
@@ -251,6 +254,11 @@ namespace MATSys.Hosting.Scripting
                 OnResume?.Invoke(this, null);
             }
 
+        }
+
+        public void ResetStatus()
+        {
+            _task = Task.FromResult(new JsonArray());
         }
     }
 
