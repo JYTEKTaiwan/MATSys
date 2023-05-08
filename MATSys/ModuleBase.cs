@@ -317,14 +317,6 @@ namespace MATSys
         }
 
         /// <summary>
-        /// Event when new data is generated from ModuleBase internally
-        /// </summary>
-        /// <param name="dataInJson"></param>
-        private void OnNewDateGenerated(string dataInJson)
-        {
-            OnDataReady?.Invoke(dataInJson);
-        }
-        /// <summary>
         /// Event when new request is received
         /// </summary>
         /// <param name="sender"></param>
