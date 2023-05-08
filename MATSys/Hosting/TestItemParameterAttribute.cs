@@ -16,16 +16,22 @@ namespace MATSys.Hosting
         /// Name 
         /// </summary>
         public string Name { get; }
+        /// <summary>
+        /// Category 
+        /// </summary>
+        public string Category { get; }
 
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="type"></param>
+        /// <param name="cat"></param>
         /// <param name="name"></param>
-        public TestItemParameterAttribute(Type type, [CallerMemberName] string name = "")
+        public TestItemParameterAttribute(Type type, string cat="Default",[CallerMemberName] string name = "")
         {
             this.Name = name;
             this.Type = type;
+            this.Category = cat;
         }
     }
 }
