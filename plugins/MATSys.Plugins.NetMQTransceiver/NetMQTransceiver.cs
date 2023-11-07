@@ -20,6 +20,8 @@ namespace MATSys.Plugins
 
         public string Alias => nameof(NetMQTransceiver);
 
+        string IService.Alias { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public void StartPluginService(CancellationToken token)
         {
             _localCts = new CancellationTokenSource();
@@ -99,6 +101,10 @@ namespace MATSys.Plugins
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     /// <summary>

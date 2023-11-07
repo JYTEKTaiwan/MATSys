@@ -13,6 +13,8 @@ namespace MATSys.Plugins
 
         public string Alias => nameof(QueueNotifier);
 
+        string IService.Alias { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public event INotifier.NotifyEvent? OnNotify;
 
         public object? GetData(int timeoutInMilliseconds = 1000)
@@ -64,7 +66,10 @@ namespace MATSys.Plugins
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
 
-
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     internal sealed class QueueNotifierConfiguration : IMATSysConfiguration

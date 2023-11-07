@@ -20,6 +20,8 @@ namespace MATSys.Plugins
 
         public string Alias => nameof(CSVRecorder);
 
+        string IService.Alias { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public static CSVRecorder Create(CSVRecorderConfiguration option)
         {
             var recorder = new CSVRecorder();
@@ -123,6 +125,10 @@ namespace MATSys.Plugins
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
     /// <summary>
     /// Configuration definition for CSVRecorder

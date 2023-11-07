@@ -20,6 +20,8 @@ namespace MATSys.Plugins
 
         public string Alias => nameof(NetMQNotifier);
 
+        string IService.Alias { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         public event INotifier.NotifyEvent? OnNotify;
 
         public void Publish(object data)
@@ -92,6 +94,10 @@ namespace MATSys.Plugins
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented = indented });
         }
 
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
 
         ~NetMQNotifier()
         {
