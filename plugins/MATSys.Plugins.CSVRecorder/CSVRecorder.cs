@@ -46,11 +46,7 @@ namespace MATSys.Plugins
         }
 
         public void Write(object data)
-        {
-            if (!_isRunning)
-            {
-                _task = StartBackgroundRecording(_localCts.Token);
-            }
+        {           
 
             WriteAsync(data).Wait();
         }
@@ -66,32 +62,34 @@ namespace MATSys.Plugins
             }
             _localCts.Cancel();
             _logger.Info("Stop service");
+            _isRunning=false;
         }
 
-        public Task StartBackgroundRecording(CancellationToken token)
+        public Task StartBackgroundRecording()
         {
 
             _logger.Trace("Prepare to run");
             _localCts = new CancellationTokenSource();
             string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
             var filename = Path.Combine(baseFolder, DateTime.Now.ToString("HHmmssfff") + ".csv");
-            var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
+            
             object? data;
             StreamWriter streamWriter = new StreamWriter(filename);
             CsvWriter writer = new CsvWriter(streamWriter, System.Globalization.CultureInfo.InvariantCulture);
             return Task.Run(() =>
             {
-                while (!_linkedCts.IsCancellationRequested)
+                _isRunning=true;
+                while (!_localCts.IsCancellationRequested)
                 {
                     if (_queue!.Reader.TryRead(out data))
-                    {
+                    {                        
                         writer.WriteRecord(data);
                         writer.NextRecord();
                         writer.Flush();
                         streamWriter.Flush();
                         _logger.Debug($"Data is written to file, elements in queue:{_queue.Reader.Count}");
                     }
-                    SpinWait.SpinUntil(() => token.IsCancellationRequested, 1);
+                    SpinWait.SpinUntil(() => _localCts.IsCancellationRequested, 1);
                 }
                 _queue!.Writer.Complete();
                 streamWriter.Close();
@@ -105,9 +103,13 @@ namespace MATSys.Plugins
         {
             await Task.Run(() =>
             {
+                if (!_isRunning)
+            {
+                _task = StartBackgroundRecording();
+            }
                 _logger.Debug(JsonSerializer.Serialize(data));
                 _queue!.Writer.TryWrite(data);
-                _logger.Info("Data is queued to filestream");
+                _logger.Info("Data is queued to filestream");                
             });
         }
         public JsonObject Export()

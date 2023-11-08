@@ -23,7 +23,7 @@ namespace MATSys.Plugins
         public Task StartListening()
         {
             _localCts = new CancellationTokenSource();
-            
+
             var address = $"{_config?.LocalIP}:{_config?.Port}";
             _logger.Trace("Prepare to run");
             _logger.Debug($"Binds to {address}");
@@ -37,6 +37,7 @@ namespace MATSys.Plugins
             {
                 try
                 {
+                    _isRunning = true;
                     while (!_localCts.IsCancellationRequested)
                     {
                         if (_routerSocket.TryReceiveRoutingKey(TimeSpan.FromSeconds(1), ref key))
@@ -71,6 +72,7 @@ namespace MATSys.Plugins
         {
             _localCts.Cancel();
             _logger.Info("Stop service");
+            _isRunning=false;
         }
 
         public void Load(IConfigurationSection section)
