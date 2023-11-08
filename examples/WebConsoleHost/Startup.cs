@@ -1,6 +1,8 @@
 
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using MATSys.Hosting;
+using WebConsoleHost;
+using ProtoBuf.Grpc.Server;
 
 public class Startup
 {
@@ -26,22 +28,19 @@ public class Startup
                 listenOptions.Protocols = HttpProtocols.Http2;
             });
         });
-
         builder.Configuration.AddConfigurationInMATSys();
         builder.Logging.AddNlogInMATSys();
 
     }
     public void ConfigureServices(IServiceCollection services)
     {
-        // services.AddCodeFirstGrpc();
-        // services.AddSingleton<MyService>();
-
+        services.AddCodeFirstGrpc();
+        services.AddSingleton<GreeterService>();
         services.AddMATSysService();
     }
     public void Configure(WebApplication app, IWebHostEnvironment env)
     {
-        // app.MapGrpcService<GreeterService>();
-
+        app.MapGrpcService<GreeterService>();
         app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
     }
