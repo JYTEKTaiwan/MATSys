@@ -7,6 +7,7 @@ using NLog;
 using System.Data;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json.Nodes;
 
 namespace MATSys
@@ -119,8 +120,8 @@ namespace MATSys
         public virtual void Load(object configuration)
         {
             //do nothing(let user to assign the logic)
-        }       
-        
+        }
+
 
         /// <summary>
         /// Execute the incoming command object
@@ -131,31 +132,45 @@ namespace MATSys
         {
             try
             {
-                _logger?.Trace($"Command is ready to executed {cmd.MethodName}");
-                var invoker = cmds[cmd.MethodName].Invoker;
-                if (invoker == null)
-                {
-                    throw new NullReferenceException("invoker is null");
-                }
-                var result = invoker.Invoke(cmd.GetParameters());
-                var response = cmd.ConvertResultToString(result)!;
-                _logger?.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
-                _logger?.Info($"Command [{cmd.MethodName}] is executed successfully");
-                return response;
+                return ExecuteAsync(cmd).Result;
             }
-            catch (KeyNotFoundException ex)
-            {
-                _logger?.Warn(ex);
-                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, cmd);
-
-            }
-            catch (Exception ex)
-            {
-                _logger?.Warn(ex);
+            catch (AggregateException ex)
+            {                
+                _logger?.Warn(ex.Message);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
             }
         }
+        public async Task<string> ExecuteAsync(ICommand cmd)
+        {
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    _logger?.Trace($"Command is ready to executed {cmd.MethodName}");
+                    var invoker = cmds[cmd.MethodName].Invoker;
+                    if (invoker == null)
+                    {
+                        throw new NullReferenceException("invoker is null");
+                    }
+                    var result = await invoker.InvokeAsync(cmd.GetParameters());
+                    var response = cmd.ConvertResultToString(result)!;
+                    _logger?.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
+                    _logger?.Info($"Command [{cmd.MethodName}] is executed successfully");
+                    return response;
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    _logger?.Warn(ex);
+                    return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, cmd);
 
+                }
+                catch (Exception ex)
+                {
+                    _logger?.Warn(ex);
+                    return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
+                }
+            });
+        }
         /// <summary>
         /// Execute the incoming command object in string format
         /// </summary>
@@ -335,7 +350,7 @@ namespace MATSys
             _transceiver.Dispose();
             _recorder.Dispose();
             _isRunning = false;
-            IsDisposed?.Invoke(this,null);
+            IsDisposed?.Invoke(this, null);
             GC.Collect();
         }
 
