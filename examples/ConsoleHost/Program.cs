@@ -2,6 +2,7 @@
 using MATSys;
 using MATSys.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using MATSys.Commands;
 
 namespace ConsoleHost
 {
@@ -12,7 +13,7 @@ namespace ConsoleHost
 
             Console.WriteLine("Hello, World!");
             var b = Host.CreateDefaultBuilder();
-            b.ConfigureAppConfiguration(app=>app.AddConfigurationInMATSys());
+            b.ConfigureAppConfiguration(app => app.AddConfigurationInMATSys());
             b.ConfigureLogging(log => log.AddNlogInMATSys());
             b.ConfigureServices(s => s.AddMATSysService());
 
@@ -21,9 +22,12 @@ namespace ConsoleHost
 
             Thread.Sleep(1000);
 
-            var a = host.Services.GetRequiredService<IModule>();
-
+            var a = host.Services.GetRequiredService<ModuleActivator>().Create("Dev1");
+            a.Execute(CommandBase.Create("Delay", 3000));
+            a.Execute(CommandBase.Create("Delay", 1000));
             Console.WriteLine(a.Alias);
+
+            Thread.Sleep(5000);
             host.StopAsync();
 
             Console.WriteLine("DONE");
@@ -36,11 +40,15 @@ namespace ConsoleHost
     }
     internal class TestDevice : ModuleBase
     {
-
-        [ID("Dev1")]
-        public TestDevice(IServiceProvider provider) : base(provider)
+        [MATSysCommand]
+        public void Delay(int a)
         {
+            Console.WriteLine($"[{DateTime.Now}]Start - {a}");
+            Thread.Sleep(a);
+            Console.WriteLine($"[{DateTime.Now}]Done - {a}");
         }
+
+
     }
 
 }

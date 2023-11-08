@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MATSys.Commands;
+using Microsoft.Extensions.Configuration;
 
 
 namespace MATSys
@@ -56,6 +57,8 @@ namespace MATSys
         /// <param name="cmd">ICommand instance</param>
         /// <returns>Response</returns>
         string Execute(Commands.ICommand cmd);
+
+        Task<string> ExecuteAsync(Commands.ICommand cmd);
         /// <summary>
         /// Execute the assigned command
         /// </summary>
