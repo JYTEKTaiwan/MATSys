@@ -78,28 +78,28 @@ namespace MATSys
         /// Event when new data is generated inside ModuleBase instance
         /// </summary>
         public event IModule.NewDataReady? OnDataReady;
+        public event EventHandler IsDisposed;
 
         #endregion
 
         #region Constructor
-        public ModuleBase(IServiceProvider provider)
-        {
-            
-            Alias = this.GetType().GetConstructors().Where(x=>x.GetCustomAttribute<IDAttribute>()!=null).FirstOrDefault().GetCustomAttribute<IDAttribute>().ID;
-            var _transceiverFactory = provider.GetRequiredService<ITransceiverFactory>();
-            var _notifierFactory = provider.GetRequiredService<INotifierFactory>();
-            var _recorderFactory = provider.GetRequiredService<IRecorderFactory>();
+        // public ModuleBase(IServiceProvider provider)
+        // {            
+        //     Alias = this.GetType().GetConstructors().Where(x=>x.GetCustomAttribute<IDAttribute>()!=null).FirstOrDefault().GetCustomAttribute<IDAttribute>().ID;
+        //     var _transceiverFactory = provider.GetRequiredService<ITransceiverFactory>();
+        //     var _notifierFactory = provider.GetRequiredService<INotifierFactory>();
+        //     var _recorderFactory = provider.GetRequiredService<IRecorderFactory>();
 
-            Configuration = provider.GetRequiredService<IConfiguration>().GetSection("MATSys:Modules").GetChildren().First(x => x["Alias"] == Alias);
-            // var typeString = Configuration.GetValue<string>("Type");
-            // string extAssemblyPath = Configuration.GetValue<string>("AssemblyPath"); //Get the assemblypath string of Type in json section
-            // var t = TypeParser.SearchType(typeString, extAssemblyPath);
+        //     Configuration = provider.GetRequiredService<IConfiguration>().GetSection("MATSys:Modules").GetChildren().First(x => x["Alias"] == Alias);
+        //     // var typeString = Configuration.GetValue<string>("Type");
+        //     // string extAssemblyPath = Configuration.GetValue<string>("AssemblyPath"); //Get the assemblypath string of Type in json section
+        //     // var t = TypeParser.SearchType(typeString, extAssemblyPath);
 
-            _transceiver = _transceiverFactory.CreateTransceiver(Configuration.GetSection(key_transceiver));
-            _notifier = _notifierFactory.CreateNotifier(Configuration.GetSection(key_notifier));
-            _recorder = _recorderFactory.CreateRecorder(Configuration.GetSection(key_recorder));
-        }
-        private ModuleBase() { }
+        //     _transceiver = _transceiverFactory.CreateTransceiver(Configuration.GetSection(key_transceiver));
+        //     _notifier = _notifierFactory.CreateNotifier(Configuration.GetSection(key_notifier));
+        //     _recorder = _recorderFactory.CreateRecorder(Configuration.GetSection(key_recorder));
+        //     cmds = ListMATSysCommands();
+        // }
         #endregion
 
         #region Public Methods
@@ -389,6 +389,7 @@ namespace MATSys
             _transceiver.Dispose();
             _recorder.Dispose();
             _isRunning = false;
+            IsDisposed?.Invoke(this,null);
             GC.Collect();
         }
 
