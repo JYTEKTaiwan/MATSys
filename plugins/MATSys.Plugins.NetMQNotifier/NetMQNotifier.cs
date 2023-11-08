@@ -18,14 +18,16 @@ namespace MATSys.Plugins
         private NetMQNotifierConfiguration? _config;
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
 
-        public string Alias => nameof(NetMQNotifier);
-
-        string IService.Alias { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Alias { get; set; } = nameof(NetMQNotifier);
 
         public event INotifier.NotifyEvent? OnNotify;
 
         public void Publish(object data)
         {
+            if (!isConnected)
+            {
+                Bind();
+            }
             var json = JsonSerializer.Serialize(data);
             latestString = json;
             _logger.Trace("Ready to publish message");
@@ -41,7 +43,7 @@ namespace MATSys.Plugins
             }
         }
 
-        public void StartPluginService(CancellationToken token)
+        public void Bind()
         {
             try
             {
@@ -55,7 +57,7 @@ namespace MATSys.Plugins
             }
         }
 
-        public void StopPluginService()
+        public void Unbind()
         {
             if (isConnected)
             {
@@ -96,7 +98,7 @@ namespace MATSys.Plugins
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Unbind();
         }
 
         ~NetMQNotifier()
@@ -108,7 +110,7 @@ namespace MATSys.Plugins
     /// <summary>
     /// Configuration definition for NetMQNotifier
     /// </summary>
-    public class NetMQNotifierConfiguration : IMATSysConfiguration
+    public class NetMQNotifierConfiguration 
     {
         public string Type { get; set; } = "netmq";
         public bool EnableLogging { get; set; } = false;

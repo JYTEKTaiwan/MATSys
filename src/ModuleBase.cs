@@ -119,62 +119,8 @@ namespace MATSys
         public virtual void Load(object configuration)
         {
             //do nothing(let user to assign the logic)
-        }
-
-
-        /// <summary>
-        /// Start the service
-        /// </summary>
-        /// <param name="token"></param>
-        public virtual void StartPluginService(CancellationToken token)
-        {
-            if (!_isRunning)
-            {
-                try
-                {
-                    _logger?.Trace($"Starts the {_recorder.Alias}");
-                    _recorder.StartPluginService(token);
-                    _logger?.Trace($"Starts the {_notifier.Alias}");
-                    _notifier.StartPluginService(token);
-                    _logger?.Trace($"Starts the {_transceiver.Alias}");
-                    _transceiver.StartPluginService(token);
-                    _isRunning = true;
-                    _logger?.Info("Starts service");
-                }
-                catch (Exception ex)
-                {
-                    _logger?.Error(ex);
-                    throw new Exception($"RunAsync failed", ex);
-                }
-            }
-        }
-        /// <summary>
-        /// Stop the service
-        /// </summary>
-        public virtual void StopPluginService()
-        {
-            try
-            {
-                if (_isRunning)
-                {
-                    _logger?.Trace($"Stops the {_transceiver.Alias}");
-                    _transceiver.StopPluginService();
-
-                    _logger?.Trace($"Stops the {_recorder.Alias}");
-                    _recorder.StopPluginService();
-
-                    _logger?.Trace($"Stops the {_notifier.Alias}");
-                    _notifier.StopPluginService();
-                    _isRunning = false;
-                    _logger?.Info("Stops service");
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger?.Error(ex);
-                throw new Exception("Stop failed", ex);
-            }
-        }
+        }       
+        
 
         /// <summary>
         /// Execute the incoming command object

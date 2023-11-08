@@ -13,20 +13,17 @@ namespace MATSys.Plugins
         private NetMQ.Sockets.RouterSocket _routerSocket = new NetMQ.Sockets.RouterSocket();
         private NetMQTransceiverConfiguration? _config;
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
-
+        private bool _isRunning = false;
         public event ITransceiver.RequestFiredEvent? OnNewRequest;
 
         private CancellationTokenSource _localCts = new CancellationTokenSource();
 
-        public string Alias => nameof(NetMQTransceiver);
+        public string Alias { get; set; } = nameof(NetMQTransceiver);
 
-        string IService.Alias { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-        public void StartPluginService(CancellationToken token)
+        public Task StartListening()
         {
             _localCts = new CancellationTokenSource();
-            var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
-
+            
             var address = $"{_config?.LocalIP}:{_config?.Port}";
             _logger.Trace("Prepare to run");
             _logger.Debug($"Binds to {address}");
@@ -36,11 +33,11 @@ namespace MATSys.Plugins
             RoutingKey key = new RoutingKey();
 
             //Errors happened in the internal loop were clarified as Fatal error
-            Task.Run(() =>
+            return Task.Run(() =>
             {
                 try
                 {
-                    while (!_linkedCts.IsCancellationRequested)
+                    while (!_localCts.IsCancellationRequested)
                     {
                         if (_routerSocket.TryReceiveRoutingKey(TimeSpan.FromSeconds(1), ref key))
                         {
@@ -70,7 +67,7 @@ namespace MATSys.Plugins
             });
         }
 
-        public void StopPluginService()
+        public void StopListening()
         {
             _localCts.Cancel();
             _logger.Info("Stop service");
@@ -79,6 +76,10 @@ namespace MATSys.Plugins
         public void Load(IConfigurationSection section)
         {
             _config = section.Get<NetMQTransceiverConfiguration>();
+            if (!_isRunning)
+            {
+                StartListening();
+            }
             _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
 
             _logger.Info("NetMQTransceiver is initiated");
@@ -87,6 +88,10 @@ namespace MATSys.Plugins
         public void Load(object configuration)
         {
             _config = (NetMQTransceiverConfiguration)configuration;
+            if (!_isRunning)
+            {
+                StartListening();
+            }
             _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
 
             _logger.Info("NetMQTransceiver is initiated");
@@ -103,14 +108,14 @@ namespace MATSys.Plugins
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            StopListening();
         }
     }
 
     /// <summary>
     /// Configuration definition for NetMQTransceiver
     /// </summary>
-    public class NetMQTransceiverConfiguration : IMATSysConfiguration
+    public class NetMQTransceiverConfiguration
     {
         public string Type { get; set; } = "netmq";
         public bool EnableLogging { get; set; } = false;

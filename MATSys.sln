@@ -11,6 +11,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{F3
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebConsoleHost", "examples\WebConsoleHost\WebConsoleHost.csproj", "{A2C9BE5B-812F-4CF6-B30B-327CA1C6F1D9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{EBA21F9B-B2BD-48C9-AB42-FF02CF19B03F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MATSys.Plugins.CSVRecorder", "plugins\MATSys.Plugins.CSVRecorder\MATSys.Plugins.CSVRecorder.csproj", "{7D5AE1D9-9614-4D05-908E-32B2D2F5B6E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MATSys.Plugins.NetMQNotifier", "plugins\MATSys.Plugins.NetMQNotifier\MATSys.Plugins.NetMQNotifier.csproj", "{CE46C476-5434-4FAB-89EF-2E92EBCC5556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MATSys.Plugins.NetMQTransceiver", "plugins\MATSys.Plugins.NetMQTransceiver\MATSys.Plugins.NetMQTransceiver.csproj", "{AA78E106-6231-4C01-93D2-FC177FFA1D7B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,11 +37,26 @@ Global
 		{A2C9BE5B-812F-4CF6-B30B-327CA1C6F1D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2C9BE5B-812F-4CF6-B30B-327CA1C6F1D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2C9BE5B-812F-4CF6-B30B-327CA1C6F1D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D5AE1D9-9614-4D05-908E-32B2D2F5B6E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D5AE1D9-9614-4D05-908E-32B2D2F5B6E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D5AE1D9-9614-4D05-908E-32B2D2F5B6E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D5AE1D9-9614-4D05-908E-32B2D2F5B6E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE46C476-5434-4FAB-89EF-2E92EBCC5556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE46C476-5434-4FAB-89EF-2E92EBCC5556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE46C476-5434-4FAB-89EF-2E92EBCC5556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE46C476-5434-4FAB-89EF-2E92EBCC5556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA78E106-6231-4C01-93D2-FC177FFA1D7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA78E106-6231-4C01-93D2-FC177FFA1D7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA78E106-6231-4C01-93D2-FC177FFA1D7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA78E106-6231-4C01-93D2-FC177FFA1D7B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A2C9BE5B-812F-4CF6-B30B-327CA1C6F1D9} = {F30E7361-76E1-497C-9FAF-FA77F645C94E}
+		{7D5AE1D9-9614-4D05-908E-32B2D2F5B6E6} = {EBA21F9B-B2BD-48C9-AB42-FF02CF19B03F}
+		{CE46C476-5434-4FAB-89EF-2E92EBCC5556} = {EBA21F9B-B2BD-48C9-AB42-FF02CF19B03F}
+		{AA78E106-6231-4C01-93D2-FC177FFA1D7B} = {EBA21F9B-B2BD-48C9-AB42-FF02CF19B03F}
 	EndGlobalSection
 EndGlobal

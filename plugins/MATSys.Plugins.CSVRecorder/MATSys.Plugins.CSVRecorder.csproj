@@ -12,12 +12,8 @@
 		<Company>JYTEK TAIWAN CORP.</Company>
 		<PackageIcon>JYTek.png</PackageIcon>
 		<Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
-
 		<VersionPrefix>1.0.2</VersionPrefix>
-		
-
-
-
+		<EnableDynamicLoading>true</EnableDynamicLoading>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -25,14 +21,15 @@
 			<PackagePath>\</PackagePath>
 			<Pack>True</Pack>
 		</None>
+		<ProjectReference Include="..\..\src\MATSys.csproj">
+		<Private>false</Private>
+        <ExcludeAssets>runtime</ExcludeAssets>
+		</ProjectReference>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="CsvHelper" Version="30.0.1" />
+	  <PackageReference Include="Csvhelper" Version="30.0.1" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\..\MATSys\MATSys.csproj" />
-	</ItemGroup>
 
 </Project>

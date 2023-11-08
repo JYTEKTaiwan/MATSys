@@ -23,11 +23,7 @@ namespace MATSys
         /// </summary>
         /// <param name="configuration">configuration object</param>
         void Load(object configuration);
-        /// <summary>
-        /// Start the service
-        /// </summary>
-        /// <param name="token">Stop token</param>
-        void StartPluginService(CancellationToken token);
+
 
         /// <summary>
         /// Export the service insatnce into JObject format
@@ -41,9 +37,6 @@ namespace MATSys
         /// <param name="indented">In indented format</param>
         /// <returns>string</returns>
         string Export(bool indented = true);
-        /// <summary>
-        /// Stop service
-        /// </summary>
-        void StopPluginService();
+
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Channels;
+using MATSys;
 
 namespace MATSys.Plugins
 {
@@ -16,11 +17,9 @@ namespace MATSys.Plugins
         private Channel<object>? _queue;
         private CSVRecorderConfiguration? _config;
         private CancellationTokenSource _localCts = new CancellationTokenSource();
+        private bool _isRunning = false;
         private Task _task = Task.CompletedTask;
-
-        public string Alias => nameof(CSVRecorder);
-
-        string IService.Alias { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Alias { get; set; } = nameof(CSVRecorder);
 
         public static CSVRecorder Create(CSVRecorderConfiguration option)
         {
@@ -48,10 +47,15 @@ namespace MATSys.Plugins
 
         public void Write(object data)
         {
+            if (!_isRunning)
+            {
+                _task = StartBackgroundRecording(_localCts.Token);
+            }
+
             WriteAsync(data).Wait();
         }
 
-        public void StopPluginService()
+        public void StopBackgroundRecording()
         {
             if (_config!.WaitForComplete)
             {
@@ -64,47 +68,37 @@ namespace MATSys.Plugins
             _logger.Info("Stop service");
         }
 
-        private bool TaskStatusCheck(Task t)
+        public Task StartBackgroundRecording(CancellationToken token)
         {
-            return t.Status == TaskStatus.RanToCompletion || t.Status == TaskStatus.Canceled || t.Status == TaskStatus.Faulted;
-        }
 
-        public void StartPluginService(CancellationToken token)
-        {
-            try
+            _logger.Trace("Prepare to run");
+            _localCts = new CancellationTokenSource();
+            string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
+            var filename = Path.Combine(baseFolder, DateTime.Now.ToString("HHmmssfff") + ".csv");
+            var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
+            object? data;
+            StreamWriter streamWriter = new StreamWriter(filename);
+            CsvWriter writer = new CsvWriter(streamWriter, System.Globalization.CultureInfo.InvariantCulture);
+            return Task.Run(() =>
             {
-                _logger.Trace("Prepare to run");
-                _localCts = new CancellationTokenSource();
-                string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
-                var filename = Path.Combine(baseFolder, DateTime.Now.ToString("HHmmssfff") + ".csv");
-                var _linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_localCts.Token, token);
-                object? data;
-                StreamWriter streamWriter = new StreamWriter(filename);
-                CsvWriter writer = new CsvWriter(streamWriter, System.Globalization.CultureInfo.InvariantCulture);
-                Task.Run(() =>
+                while (!_linkedCts.IsCancellationRequested)
                 {
-                    while (!_linkedCts.IsCancellationRequested)
+                    if (_queue!.Reader.TryRead(out data))
                     {
-                        if (_queue!.Reader.TryRead(out data))
-                        {
-                            writer.WriteRecord(data);
-                            writer.NextRecord();
-                            writer.Flush();
-                            streamWriter.Flush();
-                            _logger.Debug($"Data is written to file, elements in queue:{_queue.Reader.Count}");
-                        }
-                        SpinWait.SpinUntil(() => token.IsCancellationRequested, 1);
+                        writer.WriteRecord(data);
+                        writer.NextRecord();
+                        writer.Flush();
+                        streamWriter.Flush();
+                        _logger.Debug($"Data is written to file, elements in queue:{_queue.Reader.Count}");
                     }
-                    _queue!.Writer.Complete();
-                    streamWriter.Close();
-                    _logger.Debug("File stream and queue are closed");
-                    _localCts.Dispose();
-                });
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                    SpinWait.SpinUntil(() => token.IsCancellationRequested, 1);
+                }
+                _queue!.Writer.Complete();
+                streamWriter.Close();
+                _logger.Debug("File stream and queue are closed");
+                _localCts.Dispose();
+            });
+
         }
 
         public async Task WriteAsync(object data)
@@ -127,13 +121,13 @@ namespace MATSys.Plugins
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            StopBackgroundRecording();
         }
     }
     /// <summary>
     /// Configuration definition for CSVRecorder
     /// </summary>
-    public class CSVRecorderConfiguration : IMATSysConfiguration
+    public class CSVRecorderConfiguration
     {
         public string Type { get; set; } = "csv";
         public bool EnableLogging { get; set; } = false;

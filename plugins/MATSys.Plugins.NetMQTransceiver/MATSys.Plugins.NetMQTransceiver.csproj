@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;netstandard2.0;net472</TargetFrameworks>
+		<TargetFrameworks>net6.0</TargetFrameworks>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
@@ -14,7 +14,7 @@
 		<PackageIcon>JYTek.png</PackageIcon>
 		<Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
 		<VersionPrefix>1.0.2</VersionPrefix>
-
+	<EnableDynamicLoading>true</EnableDynamicLoading>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -26,10 +26,12 @@
 
 	<ItemGroup>
 	  <PackageReference Include="NetMQ" Version="4.0.1.10" />
+	  		<ProjectReference Include="..\..\src\MATSys.csproj">
+		<Private>false</Private>
+        <ExcludeAssets>runtime</ExcludeAssets>
+		</ProjectReference>
 	</ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\..\MATSys\MATSys.csproj" />
-	</ItemGroup>
+
 
 </Project>
