@@ -43,14 +43,16 @@ namespace MATSys.Hosting
         {
             services.AddSingleton<IRecorderFactory, RecorderFactory>()
                        .AddSingleton<INotifierFactory, NotifierFactory>()
-                       .AddSingleton<ITransceiverFactory, TransceiverFactory>();
-            foreach (var section in Configuration.GetSection("MATSys:Modules").GetChildren())
-            {
-                string typeString = section.GetValue<string>("Type"); //Get the type string of Type in json section
-                string extAssemblyPath = section.GetValue<string>("AssemblyPath"); //Get the assemblypath string of Type in json section
-                var t = TypeParser.SearchType(typeString, extAssemblyPath);
-                services.AddSingleton(typeof(IModule), t);
-            }
+                       .AddSingleton<ITransceiverFactory, TransceiverFactory>()
+                        .AddSingleton<IModuleFactory,ModuleFactory>()
+                        .AddSingleton<ModuleActivator>();
+            // foreach (var section in Configuration.GetSection("MATSys:Modules").GetChildren())
+            // {
+            //     string typeString = section.GetValue<string>("Type"); //Get the type string of Type in json section
+            //     string extAssemblyPath = section.GetValue<string>("AssemblyPath"); //Get the assemblypath string of Type in json section
+            //     var t = TypeParser.SearchType(typeString, extAssemblyPath);
+            //     services.AddSingleton(typeof(IModule), t);
+            // }
             return services;
         }
         public static ILoggingBuilder AddNlogInMATSys(this ILoggingBuilder loggingBuilder) => loggingBuilder.AddNLog();
