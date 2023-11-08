@@ -128,4 +128,25 @@ namespace MATSys.Commands
         }
 
     }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public sealed class MATSysCommandContractAttribute : Attribute
+    {
+        public string MethodName { get; }
+        public MATSysCommandContractAttribute(string name)
+        {
+            
+            MethodName = name;
+        }
+    }
+     [AttributeUsage(AttributeTargets.Property)]
+    public sealed class MATSysCommandOrderAttribute : Attribute
+    {
+        public int Order{get;}
+        public MATSysCommandOrderAttribute(int order)
+        {
+            Order=order;
+        }
+    }
+
 }
