@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace MATSys.Commands
 {
@@ -18,6 +19,10 @@ namespace MATSys.Commands
         /// <returns>return from delegation</returns>
         public abstract object? Invoke(params object[]? parameter);
 
+        public virtual async Task<object?> InvokeAsync(params object[]? parameters)
+        {
+            return await Task.Run(() => Invoke(parameters));
+        }
 
         /// <summary>
         /// Create new Invoker instance 
@@ -192,6 +197,8 @@ namespace MATSys.Commands
             _invoker?.Invoke();
             return null;
         }
+
+
     }
     internal class Invoker<T1> : MethodInvoker
     {
