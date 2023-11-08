@@ -22,12 +22,13 @@ public class GreeterService : IGreeterService
 
     }
   
-    public Task<HelloReply> SayHelloAsync(HelloRequest request, CallContext context)
+    public async Task<HelloReply> SayHelloAsync(HelloRequest request, CallContext context)
     {
-        return Task.Run(() =>
+        return await Task.Run(async () =>
         {
             var a = _provider.GetRequiredService<ModuleActivator>().Create("Dev1");
-            var reply=new HelloReply() { Message = a.Execute(request.ConvertToCommand()) };        
+            var cmd=CommandConverter.Convert(request);
+            var reply=new HelloReply() { Message = await a.ExecuteAsync(cmd) };        
             return reply;
         });
         // return Task.FromResult(new HelloReply(){Message="A"});
@@ -45,15 +46,13 @@ public class HelloReply
 }
 
 [ProtoContract]
-public class HelloRequest:ICommandConvertable
+[MATSysCommandContract("Hello")]
+public class HelloRequest
 {
     [ProtoMember(1, Name = @"name")]
+    [MATSysCommandOrder(0)]
     public string Name { get; set; }
 
-    public ICommand ConvertToCommand()
-    {
-        return CommandBase.Create("Hello",Name);
-    }
 }
 
 [ServiceContract(Name = @"greet.Greeter")]
