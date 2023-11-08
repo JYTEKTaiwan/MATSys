@@ -108,7 +108,10 @@ namespace MATSys.Commands
         /// Serialize the command instance into simplified string format
         /// </summary>
         /// <returns>simplified string</returns>
-        public abstract string Serialize();
+        public virtual string Serialize()
+        {
+            return JsonSerializer.Serialize(this,opt);
+        }
 
         /// <summary>
         /// Create command object with 1 parameter assigned
@@ -259,15 +262,7 @@ namespace MATSys.Commands
         {
             return new object[0];
         }
-        /// <summary>
-        /// Serialize the command instance into simplified string format
-        /// </summary>
-        /// <returns>simplified string</returns>
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
-
+        
     }
 
     /// <summary>
@@ -300,15 +295,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1! };
         }
-        /// <summary>
-        /// Serialize the command instance into simplified string format
-        /// </summary>
-        /// <returns>simplified string</returns>
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
-
+        
     }
 
     /// <summary>
@@ -347,15 +334,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2! };
         }
-        /// <summary>
-        /// Serialize the command instance into simplified string format
-        /// </summary>
-        /// <returns>simplified string</returns>
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
-
+        
     }
 
     /// <summary>
@@ -402,15 +381,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3! };
         }
-        /// <summary>
-        /// Serialize the command instance into simplified string format
-        /// </summary>
-        /// <returns>simplified string</returns>
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
-
+        
     }
 
     /// <summary>
@@ -464,15 +435,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4! };
         }
-        /// <summary>
-        /// Serialize the command instance into simplified string format
-        /// </summary>
-        /// <returns>simplified string</returns>
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
-
+        
     }
 
     /// <summary>
@@ -532,15 +495,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4!, Item5! };
         }
-        /// <summary>
-        /// Serialize the command instance into simplified string format
-        /// </summary>
-        /// <returns>simplified string</returns>
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
-
+        
     }
 
     /// <summary>
@@ -605,14 +560,6 @@ namespace MATSys.Commands
         public override object[]? GetParameters()
         {
             return new object[] { Item1!, Item2!, Item3!, Item4!, Item5!, Item6! };
-        }
-        /// <summary>
-        /// Serialize the command instance into simplified string format
-        /// </summary>
-        /// <returns>simplified string</returns>
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
         }
 
     }
@@ -689,19 +636,12 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4!, Item5!, Item6!, Item7! };
         }
-        /// <summary>
+     
         /// Serialize the cmd object into string
         /// </summary>
         /// <returns>command string</returns>
 
-        /// <summary>
-        /// Serialize the command instance into simplified string format
-        /// </summary>
-        /// <returns>simplified string</returns>
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
+     
 
     }
 }
