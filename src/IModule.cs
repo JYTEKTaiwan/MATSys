@@ -19,6 +19,8 @@ namespace MATSys
         /// </summary>
         event NewDataReady? OnDataReady;
 
+        event EventHandler IsDisposed;
+
         IConfigurationSection Configuration{get;}
 
         /// <summary>
