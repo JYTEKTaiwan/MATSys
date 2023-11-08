@@ -1,9 +1,11 @@
-﻿using System.Text.Json;
+﻿using System.Reflection;
+using System.Text.Json;
 using System.Text.Json.Serialization;
+using NLog.LayoutRenderers;
 
 namespace MATSys.Commands
 {
-    internal sealed class CommandBaseConverter : JsonConverterFactory
+    internal sealed class CommandBaseJsonConverter : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
         {
