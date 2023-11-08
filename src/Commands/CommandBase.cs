@@ -108,10 +108,7 @@ namespace MATSys.Commands
         /// Serialize the command instance into simplified string format
         /// </summary>
         /// <returns>simplified string</returns>
-        public virtual string Serialize()
-        {
-            return JsonSerializer.Serialize(this,opt);
-        }
+        public abstract string Serialize();
 
         /// <summary>
         /// Create command object with 1 parameter assigned
@@ -243,7 +240,7 @@ namespace MATSys.Commands
     /// <summary>
     /// Command object without any parameter
     /// </summary>
-    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
     public sealed class Command : CommandBase
     {
         /// <summary>
@@ -262,14 +259,17 @@ namespace MATSys.Commands
         {
             return new object[0];
         }
-        
+        public override string Serialize()
+        {
+            return JsonSerializer.Serialize(this, opt);
+        }
     }
 
     /// <summary>
     /// Command object with 1 parameter
     /// </summary>
     /// <typeparam name="T1"></typeparam>
-    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
     public sealed class Command<T1> : CommandBase
     {
         /// <summary>
@@ -295,7 +295,10 @@ namespace MATSys.Commands
         {
             return new object[] { Item1! };
         }
-        
+        public override string Serialize()
+        {
+            return JsonSerializer.Serialize(this, opt);
+        }
     }
 
     /// <summary>
@@ -303,7 +306,7 @@ namespace MATSys.Commands
     /// </summary>
     /// <typeparam name="T1"></typeparam>
     /// <typeparam name="T2"></typeparam>
-    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
     public sealed class Command<T1, T2> : CommandBase
     {
         /// <summary>
@@ -334,7 +337,10 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2! };
         }
-        
+        public override string Serialize()
+        {
+            return JsonSerializer.Serialize(this, opt);
+        }
     }
 
     /// <summary>
@@ -343,7 +349,7 @@ namespace MATSys.Commands
     /// <typeparam name="T1"></typeparam>
     /// <typeparam name="T2"></typeparam>
     /// <typeparam name="T3"></typeparam>
-    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
     public sealed class Command<T1, T2, T3> : CommandBase
     {
         /// <summary>
@@ -381,7 +387,10 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3! };
         }
-        
+        public override string Serialize()
+        {
+            return JsonSerializer.Serialize(this, opt);
+        }
     }
 
     /// <summary>
@@ -391,7 +400,7 @@ namespace MATSys.Commands
     /// <typeparam name="T2"></typeparam>
     /// <typeparam name="T3"></typeparam>
     /// <typeparam name="T4"></typeparam>
-    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
     public sealed class Command<T1, T2, T3, T4> : CommandBase
     {
         /// <summary>
@@ -435,7 +444,10 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4! };
         }
-        
+        public override string Serialize()
+        {
+            return JsonSerializer.Serialize(this, opt);
+        }
     }
 
     /// <summary>
@@ -446,7 +458,7 @@ namespace MATSys.Commands
     /// <typeparam name="T3"></typeparam>
     /// <typeparam name="T4"></typeparam>
     /// <typeparam name="T5"></typeparam>
-    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
     public sealed class Command<T1, T2, T3, T4, T5> : CommandBase
     {
         /// <summary>
@@ -495,7 +507,10 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4!, Item5! };
         }
-        
+        public override string Serialize()
+        {
+            return JsonSerializer.Serialize(this, opt);
+        }
     }
 
     /// <summary>
@@ -507,7 +522,7 @@ namespace MATSys.Commands
     /// <typeparam name="T4"></typeparam>
     /// <typeparam name="T5"></typeparam>
     /// <typeparam name="T6"></typeparam>
-    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
     public sealed class Command<T1, T2, T3, T4, T5, T6> : CommandBase
     {
         /// <summary>
@@ -561,7 +576,10 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4!, Item5!, Item6! };
         }
-
+        public override string Serialize()
+        {
+            return JsonSerializer.Serialize(this, opt);
+        }
     }
 
     /// <summary>
@@ -574,7 +592,7 @@ namespace MATSys.Commands
     /// <typeparam name="T5"></typeparam>
     /// <typeparam name="T6"></typeparam>
     /// <typeparam name="T7"></typeparam>
-    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseConverter))]
+    [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
     public sealed class Command<T1, T2, T3, T4, T5, T6, T7> : CommandBase
     {
         /// <summary>
@@ -636,12 +654,12 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4!, Item5!, Item6!, Item7! };
         }
-     
-        /// Serialize the cmd object into string
-        /// </summary>
-        /// <returns>command string</returns>
 
-     
+
+        public override string Serialize()
+        {
+            return JsonSerializer.Serialize(this, opt);
+        }
 
     }
 }
