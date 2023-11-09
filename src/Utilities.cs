@@ -22,14 +22,14 @@ public class DependencyLoader
     /// Load assemblies into current appdomain
     /// </summary>
     /// <param name="plugins">assembly paths</param>
-    public static IEnumerable<Assembly> LoadPluginAssemblies(string[] plugins)
+    public static IEnumerable<Assembly> LoadPluginAssemblies(params string[] plugins)
     {
         //check parameter
-        if (plugins==null)
+        if (plugins == null)
         {
             throw new ArgumentNullException("parameter is null");
         }
-        if (plugins.Any(x=>!File.Exists(x)))
+        if (plugins.Any(x => !File.Exists(x)))
         {
             throw new ArgumentException("path is not existed");
         }
@@ -197,18 +197,26 @@ public static class TypeParser
                 _logger.Trace($"Searching the external path \"{extAssemPath}\"");
 
                 //load the assembly from external path
-                var assem = DependencyLoader.LoadPluginAssemblies(new string[] { extAssemPath }).First();
-
-                var t_ext = assem.GetType(type);
-                if (t_ext != null)
+                var assem = DependencyLoader.LoadPluginAssemblies(extAssemPath).First();
+                try
                 {
-                    _logger.Debug($"Found \"{t_ext.Name}\"");
-                    return t_ext;
+                    var t_ext = assem.GetType(type);
+                    if (t_ext != null)
+                    {
+                        _logger.Debug($"Found \"{t_ext.Name}\"");
+                        return t_ext;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
-                else
+                catch (System.Exception ex)
                 {
+                    _logger.Warn($"Exception occured when loading... \"{ex.Message}\"");
                     return null;
                 }
+
             }
         }
         else
