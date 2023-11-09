@@ -79,7 +79,7 @@ namespace MATSys.Hosting
         /// <returns></returns>
         public static Dictionary<string, IConfigurationSection> GetAllModuleInfos(this IServiceProvider provider)
         {
-            return provider.GetConfigurationSection("MATSys:Modules").GetChildren().ToDictionary(x => x["Alias"]);
+            return provider.GetConfigurationSection("MATSys:Modules").GetChildren().ToDictionary(x => x["Alias"]!);
         }
 
 
