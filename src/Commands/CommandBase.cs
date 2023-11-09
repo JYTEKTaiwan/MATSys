@@ -108,7 +108,10 @@ namespace MATSys.Commands
         /// Serialize the command instance into simplified string format
         /// </summary>
         /// <returns>simplified string</returns>
-        public abstract string Serialize();
+        public virtual string Serialize()
+        {
+            return JsonSerializer.Serialize(this,this.GetType(),opt);
+        }
 
         /// <summary>
         /// Create command object with 1 parameter assigned
@@ -259,10 +262,7 @@ namespace MATSys.Commands
         {
             return new object[0];
         }
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
+        
     }
 
     /// <summary>
@@ -295,10 +295,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1! };
         }
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
+        
     }
 
     /// <summary>
@@ -337,10 +334,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2! };
         }
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
+        
     }
 
     /// <summary>
@@ -387,10 +381,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3! };
         }
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
+        
     }
 
     /// <summary>
@@ -444,10 +435,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4! };
         }
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
+        
     }
 
     /// <summary>
@@ -507,10 +495,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4!, Item5! };
         }
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
+        
     }
 
     /// <summary>
@@ -576,10 +561,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4!, Item5!, Item6! };
         }
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
-        }
+       
     }
 
     /// <summary>
@@ -653,12 +635,6 @@ namespace MATSys.Commands
         public override object[]? GetParameters()
         {
             return new object[] { Item1!, Item2!, Item3!, Item4!, Item5!, Item6!, Item7! };
-        }
-
-
-        public override string Serialize()
-        {
-            return JsonSerializer.Serialize(this, opt);
         }
 
     }
