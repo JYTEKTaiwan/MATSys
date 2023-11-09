@@ -1,50 +1,30 @@
 ﻿using MATSys.Factories;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NLog.Extensions.Logging;
+
 
 namespace MATSys.Hosting
 {
     /// <summary>
-    /// Extension class for IHostBuilder
+    /// Extension class for builder and app 
     /// </summary>
     public static class MATSysExtension
     {
+
         private static IConfiguration Configuration { get; } = new ConfigurationBuilder()
                //.AddEnvironmentVariables()
                .AddJsonFile("appsettings.json", optional: true)
                .Build();
 
-        /*
         /// <summary>
-        /// Insert MATSys and its related libraies into IHostBuilder
+        /// Inject the neccesary services into Host services
         /// </summary>
-        /// <param name="hostBuilder">instance of IHostBuilder</param>
-        /// <returns></returns>
-        public static IHostBuilder UseMATSys(this IHostBuilder hostBuilder)
-        {
-
-            return hostBuilder.ConfigureServices(service =>
-                service.AddMATSysService())
-            .ConfigureLogging(logging =>
-                logging.AddNLog())
-            .ConfigureAppConfiguration(ctxt =>
-            {
-                ctxt.Sources.Clear();
-                ctxt.AddConfiguration(Configuration);
-            });
-
-        }
-        */
+        /// <param name="services">service collection from host builder</param>
+        /// <returns>IServiceCollection</returns>
         public static IServiceCollection AddMATSysService(this IServiceCollection services)
         {
             services.AddSingleton<IRecorderFactory, RecorderFactory>()
                        .AddSingleton<INotifierFactory, NotifierFactory>()
                        .AddSingleton<ITransceiverFactory, TransceiverFactory>()
-                        .AddSingleton<IModuleFactory,ModuleFactory>()
+                        .AddSingleton<IModuleFactory, ModuleFactory>()
                         .AddSingleton<ModuleActivator>();
             // foreach (var section in Configuration.GetSection("MATSys:Modules").GetChildren())
             // {
@@ -55,7 +35,18 @@ namespace MATSys.Hosting
             // }
             return services;
         }
+        /// <summary>
+        /// Inject NLog service into logger builder in host
+        /// </summary>
+        /// <param name="loggingBuilder">log builder service</param>
+        /// <returns>ILoggingBuilder</returns>
         public static ILoggingBuilder AddNlogInMATSys(this ILoggingBuilder loggingBuilder) => loggingBuilder.AddNLog();
+        
+        /// <summary>
+        /// Inject configuration serrvice into configurationbuilder 
+        /// </summary>
+        /// <param name="configBuilder">configuration builder </param>
+        /// <returns>IConfigurationBuilder</returns>
         public static IConfigurationBuilder AddConfigurationInMATSys(this IConfigurationBuilder configBuilder)
         {
             configBuilder.Sources.Clear();
