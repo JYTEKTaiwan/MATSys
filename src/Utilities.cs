@@ -1,6 +1,8 @@
 using MATSys.Commands;
 using NLog;
 using System.Reflection;
+using System.Reflection.Metadata;
+
 
 #if NET6_0_OR_GREATER
 
@@ -22,6 +24,16 @@ public class DependencyLoader
     /// <param name="plugins">assembly paths</param>
     public static IEnumerable<Assembly> LoadPluginAssemblies(string[] plugins)
     {
+        //check parameter
+        if (plugins==null)
+        {
+            throw new ArgumentNullException("parameter is null");
+        }
+        if (plugins.Any(x=>!File.Exists(x)))
+        {
+            throw new ArgumentException("path is not existed");
+        }
+
 #if NET6_0_OR_GREATER
         var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic).ToDictionary(x => x.Location);
         foreach (var item in plugins)
@@ -46,9 +58,8 @@ public class DependencyLoader
 
 #endif
 
-#if NETSTANDARD
-        
-        var assemblyPaths = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic).Select(x => x.Location);
+#if NETSTANDARD      
+       
         foreach (var item in plugins)
         {
             var p = Path.GetFullPath(item);
