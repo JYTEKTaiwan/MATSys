@@ -160,11 +160,11 @@ public class ExceptionHandler
 public static class TypeParser
 {    
     /// <summary>
-    /// Search the Type from entry, executing, calling  and external assemblies in sequence
+    /// Search the Type from entry, executing, calling  and external assemblies in sequence. 
     /// </summary>
     /// <param name="type">full name of the type</param>
     /// <param name="extAssemPath">external assembly path</param>
-    /// <returns>Type instance</returns>
+    /// <returns>Type instance, will be null if <see cref="type"/> is empty or null, or if Type cannot be found </returns>
     public static Type? SearchType(string type, string extAssemPath)
     {
         // return EmptyRecorder if type is empty or null
