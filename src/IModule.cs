@@ -18,7 +18,7 @@
         /// <summary>
         /// Event when object is disposed
         /// </summary>
-        event EventHandler IsDisposed;
+        event EventHandler? IsDisposed;
 
         /// <summary>
         /// Notifier instance
