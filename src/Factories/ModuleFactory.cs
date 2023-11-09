@@ -1,9 +1,4 @@
-﻿using System.Data;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using NLog;
-
-namespace MATSys.Factories
+﻿namespace MATSys.Factories
 {
     /// <summary>
     /// Factory used to create module 

@@ -1,7 +1,4 @@
-﻿using System.Data;
-using MATSys.Plugins;
-using Microsoft.Extensions.Configuration;
-using NLog;
+﻿using MATSys.Plugins;
 
 namespace MATSys.Factories
 {
