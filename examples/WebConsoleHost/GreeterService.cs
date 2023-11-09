@@ -41,8 +41,6 @@ public class HelloReply
 {
     [ProtoMember(1, Name = @"message")]
     public string Message { get; set; }
-
-    
 }
 
 [ProtoContract]

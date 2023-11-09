@@ -10,7 +10,8 @@ Console.WriteLine("Hello, World!");
 
 var obj = new A();
 
-CommandConverter.Convert(obj);
+var b=CommandConverter.Convert(obj);
+Console.WriteLine(b.Serialize());
 var sw = new Stopwatch();
 sw.Restart();
 for (int i = 0; i < 1000; i++)
@@ -30,4 +31,17 @@ Console.WriteLine();
 [MATSysCommandContract("HI")]
 public class A
 {
+    
+    [MATSysCommandOrder(20)]
+    public DateTime Dt{get;set;}=DateTime.Now;
+    [MATSysCommandOrder(0)]
+    public int Number{get;set;}
+    [MATSysCommandOrder(-1)]
+    public CustomData Float{get;set;}=new CustomData();
+}
+
+public class CustomData
+{
+    public int A{get;set;}=-1;
+    public bool  B{get;set;}=true;
 }
