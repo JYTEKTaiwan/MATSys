@@ -21,11 +21,6 @@
         event EventHandler IsDisposed;
 
         /// <summary>
-        /// Configuration section in the setting file 
-        /// </summary>        
-        IConfigurationSection Configuration { get; }
-
-        /// <summary>
         /// Notifier instance
         /// </summary>
         INotifier Notifier { get; }

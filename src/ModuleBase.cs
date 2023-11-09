@@ -29,6 +29,8 @@ namespace MATSys
         private INotifier _notifier = new EmptyNotifier();
         private volatile bool _isRunning = false;
         private Dictionary<string, MATSysCommandAttribute> cmds = new Dictionary<string, MATSysCommandAttribute>();
+
+        private IConfigurationSection? _config;
         #endregion
 
         #region Public Properties
@@ -41,7 +43,6 @@ namespace MATSys
         /// </summary>
         public string Alias { get; set; } = "";
 
-        public IConfigurationSection Configuration { get; }
         /// <summary>
         /// Instance of current ModuleBase instance
         /// </summary>
@@ -70,7 +71,11 @@ namespace MATSys
         /// Event when new data is generated inside ModuleBase instance
         /// </summary>
         public event IModule.NewDataReady? OnDataReady;
-        public event EventHandler IsDisposed;
+
+        /// <summary>
+        /// Event when object is disposed
+        /// </summary>
+        public event EventHandler? IsDisposed;
 
         #endregion
 
@@ -126,11 +131,16 @@ namespace MATSys
                 return ExecuteAsync(cmd).Result;
             }
             catch (AggregateException ex)
-            {                
+            {
                 _logger?.Warn(ex.Message);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
             }
         }
+        /// <summary>
+        /// Asynchronously execute the assigned command
+        /// </summary>
+        /// <param name="cmd">ICommand instance</param>
+        /// <returns>Serialized response</returns>
         public async Task<string> ExecuteAsync(ICommand cmd)
         {
             return await Task.Run(async () =>
@@ -242,7 +252,8 @@ namespace MATSys
             {
                 if (typeof(IConfigurationSection).IsAssignableFrom(option.GetType()))
                 {
-                    Load((IConfigurationSection)option);
+                    _config=(IConfigurationSection)option;
+                    Load(_config);
                 }
                 else
                     Load(option);
@@ -334,29 +345,19 @@ namespace MATSys
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, commandObjectInJson);
             }
         }
-
+        /// <summary>
+        /// Dispose the instance and call GC
+        /// </summary>
         public void Dispose()
         {
             _notifier.Dispose();
             _transceiver.Dispose();
             _recorder.Dispose();
             _isRunning = false;
-            IsDisposed?.Invoke(this, null);
+            IsDisposed?.Invoke(this, null!);
             GC.Collect();
         }
 
         #endregion
-    }
-
-
-    [AttributeUsage(AttributeTargets.Constructor)]
-    public class IDAttribute : Attribute
-    {
-        public string ID { get; }
-        public IDAttribute(string id)
-        {
-            ID = id;
-        }
-
     }
 }
