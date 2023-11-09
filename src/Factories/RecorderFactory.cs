@@ -12,7 +12,7 @@ namespace MATSys.Factories
         private static NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// Create new IRecorder instance using specified section of configuration
+        /// Create new IRecorder instance using specified section of configuration. Will return EmptyRecorder if any exception occured or not type is found
         /// </summary>
         /// <param name="section">section of configuration object</param>
         /// <returns>IRecorder instance</returns>
@@ -20,27 +20,22 @@ namespace MATSys.Factories
         {
             try
             {
-                if (section.Exists())
-                {
-                    _logger.Trace($"Path: {section.Path}");
+                if (!section.Exists()) return CreateRecorder(DefaultType, section);
 
-                    string typeString = section.GetValue<string>("Type")!; //Get the type string of Type in json section
-                    string extAssemblyPath = section.GetValue<string>("AssemblyPath")!; //Get the assemblypath string of Type in json section
+                _logger.Trace($"Path: {section.Path}");
 
-                    _logger.Trace($"Searching for the type named \"{typeString}\"");
+                string typeString = section.GetValue<string>("Type")!; //Get the type string of Type in json section
+                string extAssemblyPath = section.GetValue<string>("AssemblyPath")!; //Get the assemblypath string of Type in json section
 
-                    var t = TypeParser.SearchType(typeString, extAssemblyPath);
-                    return CreateRecorder(t==null?DefaultType:t, section);
-                }
-                else
-                {
-                    return CreateRecorder(DefaultType, section);
+                _logger.Trace($"Searching for the type named \"{typeString}\"");
 
-                }
+                var t = TypeParser.SearchType(typeString, extAssemblyPath);
+                return CreateRecorder(t == null ? DefaultType : t, section);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.Warn($"Exception occured when creating recorder. Use EmptyRecorder instead.\"{ex.Message}\"");
+                return CreateRecorder(DefaultType, section);
             }
         }
 

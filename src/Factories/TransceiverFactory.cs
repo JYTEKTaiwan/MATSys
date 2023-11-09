@@ -12,7 +12,7 @@ namespace MATSys.Factories
         private static readonly NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// Create new ITransceiver instance using specified section of configuration
+        /// Create new ITransceiver instance using specified section of configuration. Will return EmptyTransceiver if any exception occured or not type is found
         /// </summary>
         /// <param name="section">section of configuration object</param>
         /// <returns>ITransceiver instance</returns>
@@ -20,30 +20,24 @@ namespace MATSys.Factories
         {
             try
             {
-                if (section.Exists())
-                {
-                    _logger.Trace($"Path: {section.Path}");
+                if (!section.Exists()) return CreateTransceiver(DefaultType, section);
 
-                    string typeString = section.GetValue<string>("Type")!; //Get the type string of Type in json section                  
+                _logger.Trace($"Path: {section.Path}");
 
-                    string extAssemblyPath = section.GetValue<string>("AssemblyPath")!; //Get the assemblypath string of Type in json section
+                string typeString = section.GetValue<string>("Type")!; //Get the type string of Type in json section                  
 
-                    _logger.Trace($"Searching for the type named \"{typeString}\"");
+                string extAssemblyPath = section.GetValue<string>("AssemblyPath")!; //Get the assemblypath string of Type in json section
 
-                    var t = TypeParser.SearchType(typeString, extAssemblyPath);                   
+                _logger.Trace($"Searching for the type named \"{typeString}\"");
 
-                    return CreateTransceiver(t==null?DefaultType:t, section);
+                var t = TypeParser.SearchType(typeString, extAssemblyPath);
 
-                }
-                else
-                {
-                    return CreateTransceiver(DefaultType, section);
-
-                }
+                return CreateTransceiver(t == null ? DefaultType : t, section);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _logger.Warn($"Exception occured when creating recorder. Use EmptyRecorder instead.\"{ex.Message}\"");
+                return CreateTransceiver(DefaultType, section);
             }
         }
 
