@@ -93,10 +93,12 @@ namespace MATSys.Plugins
         {
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
-
+        /// <summary>
+        /// Dispose the object
+        /// </summary>
         public void Dispose()
         {
-            
+            GC.Collect();
         }
     }
 }

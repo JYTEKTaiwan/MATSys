@@ -1,8 +1,4 @@
-﻿using MATSys.Commands;
-using Microsoft.Extensions.Configuration;
-
-
-namespace MATSys
+﻿namespace MATSys
 {
     /// <summary>
     /// Interface for Module
@@ -16,13 +12,18 @@ namespace MATSys
         delegate void NewDataReady(string jsonString);
 
         /// <summary>
-        /// Event the new data is generated
+        /// Event when new data is received from transceiver
         /// </summary>
         event NewDataReady? OnDataReady;
-
+        /// <summary>
+        /// Event when object is disposed
+        /// </summary>
         event EventHandler IsDisposed;
 
-        IConfigurationSection Configuration{get;}
+        /// <summary>
+        /// Configuration section in the setting file 
+        /// </summary>        
+        IConfigurationSection Configuration { get; }
 
         /// <summary>
         /// Notifier instance
@@ -55,9 +56,13 @@ namespace MATSys
         /// Execute the assigned command
         /// </summary>
         /// <param name="cmd">ICommand instance</param>
-        /// <returns>Response</returns>
+        /// <returns>Serialized response</returns>
         string Execute(Commands.ICommand cmd);
-
+        /// <summary>
+        /// Asynchronously execute the assigned command
+        /// </summary>
+        /// <param name="cmd">ICommand instance</param>
+        /// <returns>Serialized response</returns>
         Task<string> ExecuteAsync(Commands.ICommand cmd);
         /// <summary>
         /// Execute the assigned command

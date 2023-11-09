@@ -1,14 +1,5 @@
 ﻿using MATSys.Commands;
-using MATSys.Factories;
 using MATSys.Plugins;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using NLog;
-using System.Data;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.Json.Nodes;
 
 namespace MATSys
 {
@@ -32,7 +23,7 @@ namespace MATSys
         /// section key for transceiver in specific section of module
         /// </summary>
         private const string key_transceiver = "Transceiver";
-        private ILogger? _logger;
+        private NLog.ILogger? _logger;
         private ITransceiver _transceiver = new EmptyTransceiver();
         private IRecorder _recorder = new EmptyRecorder();
         private INotifier _notifier = new EmptyNotifier();
@@ -59,7 +50,7 @@ namespace MATSys
         /// <summary>
         /// ILogger instance
         /// </summary>
-        ILogger? IModule.Logger => _logger;
+        NLog.ILogger? IModule.Logger => _logger;
 
         /// <summary>
         /// IRecorder instance
