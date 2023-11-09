@@ -51,9 +51,9 @@ namespace MATSys.Plugins
                 isConnected = true;
                 _logger.Info("Starts service");
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                throw ex;
+                throw ;
             }
         }
 
@@ -70,7 +70,7 @@ namespace MATSys.Plugins
         public void Load(IConfigurationSection section)
         {
             _config = section.Get<NetMQNotifierConfiguration>();
-            _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
+            _logger = _config!.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
 
             _logger.Info("NetMQNotifier is initiated");
         }
@@ -88,12 +88,12 @@ namespace MATSys.Plugins
         }
         public JsonObject Export()
         {
-            return JsonObject.Parse(JsonSerializer.Serialize(_config)).AsObject();
+            return JsonObject.Parse(JsonSerializer.Serialize(_config))!.AsObject();
 
         }
         public string Export(bool indented = true)
         {
-            return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented = indented });
+            return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
 
         public void Dispose()

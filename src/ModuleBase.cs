@@ -67,10 +67,7 @@ namespace MATSys
         /// INotifier instance
         /// </summary>
         INotifier IModule.Notifier => _notifier;
-        /// <summary>
-        /// Event when new data is generated inside ModuleBase instance
-        /// </summary>
-        public event IModule.NewDataReady? OnDataReady;
+
 
         /// <summary>
         /// Event when object is disposed

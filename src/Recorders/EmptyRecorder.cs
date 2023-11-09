@@ -16,21 +16,7 @@ namespace MATSys.Plugins
         /// </summary>
 
         public string Alias { get; set; } = nameof(EmptyRecorder);
-        /// <summary>
-        /// Stop service
-        /// </summary>
 
-        public void StopPluginService()
-        {
-        }
-        /// <summary>
-        /// Start the service
-        /// </summary>
-        /// <param name="token">Stop token</param>
-
-        public void StartPluginService(CancellationToken token)
-        {
-        }
         /// <summary>
         /// Write data to the instance
         /// </summary>
@@ -86,9 +72,12 @@ namespace MATSys.Plugins
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
 
+        /// <summary>
+        /// Dispose the instance
+        /// </summary>
         public void Dispose()
         {
-           
+            GC.Collect();
         }
     }
 }

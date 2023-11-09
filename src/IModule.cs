@@ -12,10 +12,6 @@
         delegate void NewDataReady(string jsonString);
 
         /// <summary>
-        /// Event when new data is received from transceiver
-        /// </summary>
-        event NewDataReady? OnDataReady;
-        /// <summary>
         /// Event when object is disposed
         /// </summary>
         event EventHandler? IsDisposed;

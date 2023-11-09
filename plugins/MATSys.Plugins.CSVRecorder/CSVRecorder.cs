@@ -114,7 +114,7 @@ namespace MATSys.Plugins
         }
         public JsonObject Export()
         {
-            return JsonObject.Parse(JsonSerializer.Serialize(_config)).AsObject();
+            return JsonObject.Parse(JsonSerializer.Serialize(_config))!.AsObject();
         }
         public string Export(bool indented = true)
         {

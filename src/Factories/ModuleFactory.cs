@@ -74,9 +74,9 @@
                     throw new NullReferenceException($"Cannot create instance from type '{t.Name}'");
                 }
             }
-            catch (Exception ex)
+            catch (Exception )
             {
-                throw ex;
+                throw;
             }
 
         }
