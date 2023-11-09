@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Data;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
 
@@ -9,19 +10,8 @@ namespace MATSys.Factories
     /// </summary>
     public sealed class ModuleFactory : IModuleFactory
     {
-
-        /// <summary>
-        /// section key for recorder in specific section of module
-        /// </summary>
         private const string key_recorder = "Recorder";
-
-        /// <summary>
-        /// section key for notifier in specific section of module
-        /// </summary>
         private const string key_notifier = "Notifier";
-        /// <summary>
-        /// section key for transceiver in specific section of module
-        /// </summary>
         private const string key_transceiver = "Transceiver";
 
         private readonly ITransceiverFactory _transceiverFactory;
@@ -50,18 +40,20 @@ namespace MATSys.Factories
             {
                 _logger.Trace($"Path: {section.Path}");
 
-                string alias = section.GetValue<string>("Alias"); //Get the alias string in json section
-                string typeString = section.GetValue<string>("Type"); //Get the type string of Type in json section
-                string extAssemblyPath = section.GetValue<string>("AssemblyPath"); //Get the assemblypath string of Type in json section
+                string alias = section.GetValue<string>("Alias")!; //Get the alias string in json section
+                if (alias == null) throw new NoNullAllowedException("Alias property cannot be null in configuration section");
+
+                string typeString = section.GetValue<string>("Type")!; //Get the type string of Type in json section
+                if (typeString == null) throw new NoNullAllowedException("Type property cannot be null in configuration section");
+
+                string extAssemblyPath = section.GetValue<string>("AssemblyPath")!; //Get the assemblypath string of Type in json section
+
 
                 _logger.Trace($"Searching for the type named \"{typeString}\"");
 
                 var t = TypeParser.SearchType(typeString, extAssemblyPath);
+                if (t == null) throw new InvalidDataException($"Cannot find type {typeString}");
 
-                if (t == null)
-                {
-                    throw new InvalidDataException($"Cannot find type {typeString}");
-                }
                 _logger.Debug($"{t.FullName} is found");
 
                 //Create Transceiver, Notifier, and Recorder
