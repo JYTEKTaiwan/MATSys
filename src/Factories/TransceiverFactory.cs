@@ -1,4 +1,5 @@
-﻿using MATSys.Plugins;
+﻿using System.Data;
+using MATSys.Plugins;
 using Microsoft.Extensions.Configuration;
 using NLog;
 
@@ -26,12 +27,15 @@ namespace MATSys.Factories
                 {
                     _logger.Trace($"Path: {section.Path}");
 
-                    string type = section.GetValue<string>("Type"); //Get the type string of Type in json section
-                    string extAssemblyPath = section.GetValue<string>("AssemblyPath"); //Get the assemblypath string of Type in json section
+                    string typeString = section.GetValue<string>("Type")!; //Get the type string of Type in json section
+                    if (typeString == null) throw new NoNullAllowedException("Type property cannot be null in configuration section");
 
-                    _logger.Trace($"Searching for the type named \"{type}\"");
+                    string extAssemblyPath = section.GetValue<string>("AssemblyPath")!; //Get the assemblypath string of Type in json section
 
-                    var t = TypeParser.SearchType(type, extAssemblyPath);
+                    _logger.Trace($"Searching for the type named \"{typeString}\"");
+
+                    var t = TypeParser.SearchType(typeString, extAssemblyPath);
+                    if (t == null) throw new InvalidDataException($"Cannot find type {typeString}");
 
                     return CreateTransceiver(t, section);
 
