@@ -9,17 +9,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleHost", "examples\Con
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{F30E7361-76E1-497C-9FAF-FA77F645C94E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebConsoleHost", "examples\WebConsoleHost\WebConsoleHost.csproj", "{A2C9BE5B-812F-4CF6-B30B-327CA1C6F1D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebConsoleHost", "examples\WebConsoleHost\WebConsoleHost.csproj", "{A2C9BE5B-812F-4CF6-B30B-327CA1C6F1D9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{EBA21F9B-B2BD-48C9-AB42-FF02CF19B03F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MATSys.Plugins.CSVRecorder", "plugins\MATSys.Plugins.CSVRecorder\MATSys.Plugins.CSVRecorder.csproj", "{7D5AE1D9-9614-4D05-908E-32B2D2F5B6E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Plugins.CSVRecorder", "plugins\MATSys.Plugins.CSVRecorder\MATSys.Plugins.CSVRecorder.csproj", "{7D5AE1D9-9614-4D05-908E-32B2D2F5B6E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MATSys.Plugins.NetMQNotifier", "plugins\MATSys.Plugins.NetMQNotifier\MATSys.Plugins.NetMQNotifier.csproj", "{CE46C476-5434-4FAB-89EF-2E92EBCC5556}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Plugins.NetMQNotifier", "plugins\MATSys.Plugins.NetMQNotifier\MATSys.Plugins.NetMQNotifier.csproj", "{CE46C476-5434-4FAB-89EF-2E92EBCC5556}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MATSys.Plugins.NetMQTransceiver", "plugins\MATSys.Plugins.NetMQTransceiver\MATSys.Plugins.NetMQTransceiver.csproj", "{AA78E106-6231-4C01-93D2-FC177FFA1D7B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Plugins.NetMQTransceiver", "plugins\MATSys.Plugins.NetMQTransceiver\MATSys.Plugins.NetMQTransceiver.csproj", "{AA78E106-6231-4C01-93D2-FC177FFA1D7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{FE4A6E87-B269-44CC-86A0-B224D9AD6100}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{FE4A6E87-B269-44CC-86A0-B224D9AD6100}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +60,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{E5CC5406-18E2-4BA8-85E3-DC93104CEEBB} = {F30E7361-76E1-497C-9FAF-FA77F645C94E}
 		{A2C9BE5B-812F-4CF6-B30B-327CA1C6F1D9} = {F30E7361-76E1-497C-9FAF-FA77F645C94E}
 		{7D5AE1D9-9614-4D05-908E-32B2D2F5B6E6} = {EBA21F9B-B2BD-48C9-AB42-FF02CF19B03F}
 		{CE46C476-5434-4FAB-89EF-2E92EBCC5556} = {EBA21F9B-B2BD-48C9-AB42-FF02CF19B03F}

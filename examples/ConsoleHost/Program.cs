@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Hosting;
-using MATSys;
+﻿using MATSys;
+using MATSys.Commands;
 using MATSys.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using MATSys.Commands;
+using Microsoft.Extensions.Hosting;
 
 namespace ConsoleHost
 {

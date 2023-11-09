@@ -249,7 +249,7 @@ namespace MATSys
             {
                 if (typeof(IConfigurationSection).IsAssignableFrom(option.GetType()))
                 {
-                    _config=(IConfigurationSection)option;
+                    _config = (IConfigurationSection)option;
                     Load(_config);
                 }
                 else

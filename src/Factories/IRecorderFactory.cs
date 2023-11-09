@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
-namespace MATSys.Factories
+﻿namespace MATSys.Factories
 {
     /// <summary>
     /// Interface for RecorderFactory

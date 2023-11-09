@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Channels;
-using MATSys;
 
 namespace MATSys.Plugins
 {
@@ -46,7 +45,7 @@ namespace MATSys.Plugins
         }
 
         public void Write(object data)
-        {           
+        {
 
             WriteAsync(data).Wait();
         }
@@ -62,7 +61,7 @@ namespace MATSys.Plugins
             }
             _localCts.Cancel();
             _logger.Info("Stop service");
-            _isRunning=false;
+            _isRunning = false;
         }
 
         public Task StartBackgroundRecording()
@@ -72,17 +71,17 @@ namespace MATSys.Plugins
             _localCts = new CancellationTokenSource();
             string baseFolder = AppDomain.CurrentDomain.BaseDirectory;
             var filename = Path.Combine(baseFolder, DateTime.Now.ToString("HHmmssfff") + ".csv");
-            
+
             object? data;
             StreamWriter streamWriter = new StreamWriter(filename);
             CsvWriter writer = new CsvWriter(streamWriter, System.Globalization.CultureInfo.InvariantCulture);
             return Task.Run(() =>
             {
-                _isRunning=true;
+                _isRunning = true;
                 while (!_localCts.IsCancellationRequested)
                 {
                     if (_queue!.Reader.TryRead(out data))
-                    {                        
+                    {
                         writer.WriteRecord(data);
                         writer.NextRecord();
                         writer.Flush();
@@ -104,12 +103,12 @@ namespace MATSys.Plugins
             await Task.Run(() =>
             {
                 if (!_isRunning)
-            {
-                _task = StartBackgroundRecording();
-            }
+                {
+                    _task = StartBackgroundRecording();
+                }
                 _logger.Debug(JsonSerializer.Serialize(data));
                 _queue!.Writer.TryWrite(data);
-                _logger.Info("Data is queued to filestream");                
+                _logger.Info("Data is queued to filestream");
             });
         }
         public JsonObject Export()

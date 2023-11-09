@@ -51,9 +51,9 @@ namespace MATSys.Plugins
                 isConnected = true;
                 _logger.Info("Starts service");
             }
-            catch (Exception )
+            catch (Exception)
             {
-                throw ;
+                throw;
             }
         }
 
@@ -110,7 +110,7 @@ namespace MATSys.Plugins
     /// <summary>
     /// Configuration definition for NetMQNotifier
     /// </summary>
-    public class NetMQNotifierConfiguration 
+    public class NetMQNotifierConfiguration
     {
         public string Type { get; set; } = "netmq";
         public bool EnableLogging { get; set; } = false;

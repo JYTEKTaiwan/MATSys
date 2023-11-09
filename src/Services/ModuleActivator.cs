@@ -21,7 +21,7 @@ public class ModuleActivator
     public ModuleActivator(IServiceProvider provider)
     {
         _provider = provider;
-        var modSection=provider.GetRequiredService<IConfiguration>().GetSection("MATSys:Modules");
+        var modSection = provider.GetRequiredService<IConfiguration>().GetSection("MATSys:Modules");
         if (!modSection.Exists()) throw new ArgumentNullException("MATSys:Modules seciton is not existed in the configuration file");
         _modConfigurations = modSection.GetChildren().ToDictionary(x => x["Alias"]!);
         _moduleFactory = _provider.GetRequiredService<IModuleFactory>();

@@ -1,12 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
-using System.Text.Json.Nodes;
-
-namespace MATSys
+﻿namespace MATSys
 {
     /// <summary>
     /// Interface of Service
     /// </summary>
-    public interface IService:IDisposable
+    public interface IService : IDisposable
     {
         /// <summary>
         /// Name of the Service

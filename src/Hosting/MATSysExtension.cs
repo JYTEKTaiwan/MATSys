@@ -41,7 +41,7 @@ namespace MATSys.Hosting
         /// <param name="loggingBuilder">log builder service</param>
         /// <returns>ILoggingBuilder</returns>
         public static ILoggingBuilder AddNlogInMATSys(this ILoggingBuilder loggingBuilder) => loggingBuilder.AddNLog();
-        
+
         /// <summary>
         /// Inject configuration serrvice into configurationbuilder 
         /// </summary>

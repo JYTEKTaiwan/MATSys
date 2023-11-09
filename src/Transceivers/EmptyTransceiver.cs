@@ -1,7 +1,4 @@
-﻿
-using Microsoft.Extensions.Configuration;
-using System.Text.Json;
-using System.Text.Json.Nodes;
+﻿using System.Text.Json;
 
 namespace MATSys.Plugins
 {
@@ -15,7 +12,7 @@ namespace MATSys.Plugins
         /// <summary>
         /// Event for the new coming request
         /// </summary>
-        public event ITransceiver.RequestFiredEvent? OnNewRequest{ add{} remove{} }
+        public event ITransceiver.RequestFiredEvent? OnNewRequest { add { } remove { } }
 
         /// <summary>
         /// Name of the Service

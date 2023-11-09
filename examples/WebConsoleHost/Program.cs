@@ -1,7 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using MATSys;
+﻿using MATSys;
 using MATSys.Commands;
-using MATSys.Hosting;
 
 namespace WebConsoleHost
 {
@@ -32,7 +30,7 @@ namespace WebConsoleHost
     }
 
     internal class TestDevice : ModuleBase
-    {        
+    {
 
         [MATSysCommand]
         public string Hello(string input)

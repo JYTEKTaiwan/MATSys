@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace MATSys.Commands
 {
@@ -110,7 +109,7 @@ namespace MATSys.Commands
         /// <returns>simplified string</returns>
         public virtual string Serialize()
         {
-            return JsonSerializer.Serialize(this,this.GetType(),opt);
+            return JsonSerializer.Serialize(this, this.GetType(), opt);
         }
 
         /// <summary>
@@ -262,7 +261,7 @@ namespace MATSys.Commands
         {
             return new object[0];
         }
-        
+
     }
 
     /// <summary>
@@ -295,7 +294,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1! };
         }
-        
+
     }
 
     /// <summary>
@@ -334,7 +333,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2! };
         }
-        
+
     }
 
     /// <summary>
@@ -381,7 +380,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3! };
         }
-        
+
     }
 
     /// <summary>
@@ -435,7 +434,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4! };
         }
-        
+
     }
 
     /// <summary>
@@ -495,7 +494,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4!, Item5! };
         }
-        
+
     }
 
     /// <summary>
@@ -561,7 +560,7 @@ namespace MATSys.Commands
         {
             return new object[] { Item1!, Item2!, Item3!, Item4!, Item5!, Item6! };
         }
-       
+
     }
 
     /// <summary>

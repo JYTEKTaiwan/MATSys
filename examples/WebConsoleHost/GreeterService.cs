@@ -1,13 +1,7 @@
-using System.Diagnostics;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using Grpc.Core;
-using MATSys;
 using MATSys.Commands;
-using MATSys.Factories;
-using Microsoft.VisualBasic;
 using ProtoBuf;
 using ProtoBuf.Grpc;
+using System.ServiceModel;
 
 namespace WebConsoleHost;
 
@@ -21,14 +15,14 @@ public class GreeterService : IGreeterService
         _provider = provider;
 
     }
-  
+
     public async Task<HelloReply> SayHelloAsync(HelloRequest request, CallContext context)
     {
         return await Task.Run(async () =>
         {
             var a = _provider.GetRequiredService<ModuleActivator>().Create("Dev1");
-            var cmd=CommandConverter.Convert(request);
-            var reply=new HelloReply() { Message = await a.ExecuteAsync(cmd) };        
+            var cmd = CommandConverter.Convert(request);
+            var reply = new HelloReply() { Message = await a.ExecuteAsync(cmd) };
             return reply;
         });
         // return Task.FromResult(new HelloReply(){Message="A"});
@@ -40,7 +34,7 @@ public class GreeterService : IGreeterService
 public class HelloReply
 {
     [ProtoMember(1, Name = @"message")]
-    public string Message { get; set; }
+    public string Message { get; set; } = "";
 }
 
 [ProtoContract]
@@ -49,7 +43,7 @@ public class HelloRequest
 {
     [ProtoMember(1, Name = @"name")]
     [MATSysCommandOrder(0)]
-    public string Name { get; set; }
+    public string Name { get; set; } = "";
 
 }
 

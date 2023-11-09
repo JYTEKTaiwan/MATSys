@@ -72,7 +72,7 @@ namespace MATSys.Plugins
         {
             _localCts.Cancel();
             _logger.Info("Stop service");
-            _isRunning=false;
+            _isRunning = false;
         }
 
         public void Load(IConfigurationSection section)

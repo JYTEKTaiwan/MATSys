@@ -1,13 +1,9 @@
 using MATSys.Commands;
-using NLog;
-using System.Reflection;
-using System.Reflection.Metadata;
 
 
 #if NET6_0_OR_GREATER
 
 using System.Runtime.Loader;
-using System.Runtime.Versioning;
 
 #endif
 
@@ -158,7 +154,7 @@ public class ExceptionHandler
 /// Type parser tool
 /// </summary>
 public static class TypeParser
-{    
+{
     /// <summary>
     /// Search the Type from entry, executing, calling  and external assemblies in sequence. 
     /// </summary>
@@ -195,5 +191,5 @@ public static class TypeParser
             throw new InvalidOperationException($"Failed to find type named {type}. Message:{ex.Message}");
         }
     }
-    
+
 }

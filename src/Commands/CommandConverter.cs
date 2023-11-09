@@ -1,5 +1,5 @@
-using System.Reflection;
 using MATSys.Commands;
+
 
 /// <summary>
 /// Tool used to convert any instance marked with <see cref="MATSysCommandContractAttribute"/> and <see cref="MATSysCommandOrderAttribute"/> into ICommand instance
@@ -28,16 +28,16 @@ public sealed class CommandConverter
         CheckContract(t);
 
         var name_attr = t.GetCustomAttribute<MATSysCommandContractAttribute>()!;
-        if (name_attr==null) throw new NoNullAllowedException("MATSysCommandContractAttribute is not exited in the input");
-        var name=name_attr.MethodName;
-        
+        if (name_attr == null) throw new NoNullAllowedException("MATSysCommandContractAttribute is not exited in the input");
+        var name = name_attr.MethodName;
+
         var props = t.GetProperties()
         .Where(x => x.GetCustomAttributes<MATSysCommandOrderAttribute>().Count() != 0)
         .OrderBy(x => x.GetCustomAttribute<MATSysCommandOrderAttribute>()!.Order).ToList();
 
         object[] p_name = new object[] { name };
         var mi = m_infos.First(x => x.GetGenericArguments().Count() == props.Count());
-        if (props.Count == 0) return  (mi.Invoke(null, p_name) as ICommand)!;
+        if (props.Count == 0) return (mi.Invoke(null, p_name) as ICommand)!;
         else
         {
             Type[] types = props.Select(x => x.PropertyType).ToArray();

@@ -1,8 +1,8 @@
 
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using MATSys.Hosting;
-using WebConsoleHost;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using ProtoBuf.Grpc.Server;
+using WebConsoleHost;
 
 public class Startup
 {
