@@ -18,7 +18,11 @@ namespace MATSys.Commands
         /// <param name="parameter">parameters</param>
         /// <returns>return from delegation</returns>
         public abstract object? Invoke(params object[]? parameter);
-
+        /// <summary>
+        /// Asynchronously invoke the delegated method with parameters
+        /// </summary>
+        /// <param name="parameters"></param>
+        /// <returns>object returned by the delegate method</returns>
         public virtual async Task<object?> InvokeAsync(params object[]? parameters)
         {
             return await Task.Run(() => Invoke(parameters));
