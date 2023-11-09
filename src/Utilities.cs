@@ -158,8 +158,7 @@ public class ExceptionHandler
 /// Type parser tool
 /// </summary>
 public static class TypeParser
-{
-    private static Logger _logger = LogManager.GetCurrentClassLogger();
+{    
     /// <summary>
     /// Search the Type from entry, executing, calling  and external assemblies in sequence
     /// </summary>
@@ -168,103 +167,33 @@ public static class TypeParser
     /// <returns>Type instance</returns>
     public static Type? SearchType(string type, string extAssemPath)
     {
-        if (!string.IsNullOrEmpty(type)) // return EmptyRecorder if type is empty or null
+        // return EmptyRecorder if type is empty or null
+        if (string.IsNullOrEmpty(type)) return null;
+
+        try
         {
             // 1.  Look up the existed assemlies in GAC
             // 1.y if existed, get the type directly and overrider the variable t
             // 1.n if not, dynamically load the assembly from the section "AssemblyPath" and search for the type
-
             var typeName = Assembly.CreateQualifiedName(type, type).Split(',')[0];
-            if (SearchTypeInEntryAssemblies(typeName) is Type t_entry && t_entry != null)
-            {
-                _logger.Debug($"Found \"{t_entry.Name}\" in entry Assemblies");
-                return t_entry;
-            }
-            else if (SearchTypeInExecutingAssemblies(typeName) is Type t_exec && t_exec != null)
-            {
-                _logger.Debug($"Found \"{t_exec.Name}\" in executing Assemblies");
-                return t_exec;
-            }
-            else if (SearchTypeInCallingAssemblies(typeName) is Type t_calling && t_calling != null)
-            {
-                _logger.Debug($"Found \"{t_calling.Name}\" in calling Assemblies");
-                return t_calling;
+            //search entry assembly
+            var t = Assembly.GetEntryAssembly()!.GetTypes().FirstOrDefault(x => x.FullName == typeName);
+            if (t != null) return t;
+            //search executing assembly
+            t = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
+            if (t != null) return t;
+            //search calling assembly
+            t = Assembly.GetCallingAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
+            if (t != null) return t;
+            //search external assembly (from file)
+            t = DependencyLoader.LoadPluginAssemblies(extAssemPath).First().GetType(type);
+            return t;
 
-            }
-            else
-            {
-
-                _logger.Trace($"Searching the external path \"{extAssemPath}\"");
-
-                //load the assembly from external path
-                var assem = DependencyLoader.LoadPluginAssemblies(extAssemPath).First();
-                try
-                {
-                    var t_ext = assem.GetType(type);
-                    if (t_ext != null)
-                    {
-                        _logger.Debug($"Found \"{t_ext.Name}\"");
-                        return t_ext;
-                    }
-                    else
-                    {
-                        return null;
-                    }
-                }
-                catch (System.Exception ex)
-                {
-                    _logger.Warn($"Exception occured when loading... \"{ex.Message}\"");
-                    return null;
-                }
-
-            }
         }
-        else
+        catch (System.Exception ex)
         {
-            return null;
+            throw new InvalidOperationException($"Failed to find type named {type}. Message:{ex.Message}");
         }
-
     }
-    private static Type? SearchTypeInEntryAssemblies(string typeName)
-    {
-        _logger.Trace($"Searching the entry assemblies");
-        if (Assembly.GetEntryAssembly() is var assems && assems != null)
-        {
-            return assems.GetTypes().FirstOrDefault(x => x.FullName == typeName);
-        }
-        else
-        {
-            return null!;
-        }
-
-    }
-    private static Type? SearchTypeInExecutingAssemblies(string typeName)
-    {
-        _logger.Trace($"Searching the executing assemblies");
-
-        if (Assembly.GetExecutingAssembly() is var assems && assems != null)
-        {
-            return assems.GetTypes().FirstOrDefault(x => x.FullName == typeName);
-        }
-        else
-        {
-            return null!;
-        }
-
-    }
-    private static Type? SearchTypeInCallingAssemblies(string typeName)
-    {
-        _logger.Trace($"Searching the calling assemblies");
-
-        if (Assembly.GetCallingAssembly() is var assems && assems != null)
-        {
-            return assems.GetTypes().FirstOrDefault(x => x.FullName == typeName);
-        }
-        else
-        {
-            return null!;
-        }
-
-    }
-
+    
 }
