@@ -1,12 +1,13 @@
 using MATSys;
 using MATSys.Factories;
+using MATSys.Hosting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 /// <summary>
 /// Handler for the modules in the host
 /// </summary>
 public class ModuleActivator
 {
-    private readonly IServiceProvider _provider;
     private readonly Dictionary<string, IConfigurationSection> _modConfigurations;
     private readonly IModuleFactory _moduleFactory;
     private Dictionary<string, IModule> _modules = new Dictionary<string, IModule>();
@@ -20,18 +21,15 @@ public class ModuleActivator
     /// <param name="provider">service provider from host</param>
     public ModuleActivator(IServiceProvider provider)
     {
-        _provider = provider;
-        var modSection = provider.GetRequiredService<IConfiguration>().GetSection("MATSys:Modules");
-        if (!modSection.Exists()) throw new ArgumentNullException("MATSys:Modules seciton is not existed in the configuration file");
-        _modConfigurations = modSection.GetChildren().ToDictionary(x => x["Alias"]!);
-        _moduleFactory = _provider.GetRequiredService<IModuleFactory>();
+        _modConfigurations = provider.GetAllModuleInfos();
+        _moduleFactory = provider.GetRequiredService<IModuleFactory>();
     }
     /// <summary>
     /// Create new instance using key specified in the configuration file
     /// </summary>
     /// <param name="key">Alias property in the configuration file</param>
     /// <returns>IModule instance</returns>
-    public IModule Create(string key)
+    public IModule GetModule(string key)
     {
         if (_modules.ContainsKey(key))
         {
@@ -45,11 +43,10 @@ public class ModuleActivator
             return mod;
         }
     }
-
     private void ModuleDisposed(object? sender, EventArgs e)
     {
         if (sender != null) _modules.Remove(((IModule)sender).Alias);
     }
 
-
 }
+
