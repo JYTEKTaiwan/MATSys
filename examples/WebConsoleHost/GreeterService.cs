@@ -1,3 +1,4 @@
+using MATSys.Hosting;
 using MATSys.Commands;
 using ProtoBuf;
 using ProtoBuf.Grpc;
