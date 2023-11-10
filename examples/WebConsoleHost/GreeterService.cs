@@ -20,7 +20,7 @@ public class GreeterService : IGreeterService
     {
         return await Task.Run(async () =>
         {
-            var a = _provider.GetRequiredService<ModuleActivator>().Create("Dev1");
+            var a = _provider.GetModule("Dev1");
             var cmd = CommandConverter.Convert(request);
             var reply = new HelloReply() { Message = await a.ExecuteAsync(cmd) };
             return reply;

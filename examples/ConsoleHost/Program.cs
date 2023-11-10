@@ -22,7 +22,7 @@ namespace ConsoleHost
 
             Thread.Sleep(1000);
 
-            var a = host.Services.GetRequiredService<ModuleActivator>().Create("Dev1");
+            var a = host.Services.GetModule("Dev1");
             a.Execute(CommandBase.Create("Delay", 3000));
             a.Execute(CommandBase.Create("Delay", 1000));
             Console.WriteLine(a.Alias);
