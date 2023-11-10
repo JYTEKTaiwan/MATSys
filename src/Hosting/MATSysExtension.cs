@@ -82,7 +82,13 @@ namespace MATSys.Hosting
             return provider.GetConfigurationSection("MATSys:Modules").GetChildren().ToDictionary(x => x["Alias"]!);
         }
 
-        public static IModule GetModule(this IServiceProvider provider, string key) => provider.GetRequiredService<ModuleActivator>().GetModule(key);
+        /// <summary>
+        /// Get the module from the host using alias name 
+        /// </summary>
+        /// <param name="provider">service provider</param>
+        /// <param name="alias">alias name</param>        
+        /// <returns>IModule implementation</returns>
+        public static IModule GetModule(this IServiceProvider provider, string alias) => provider.GetRequiredService<ModuleActivator>().GetModule(alias);
 
 
     }
