@@ -28,7 +28,7 @@ namespace MATSys
         private IRecorder _recorder = new EmptyRecorder();
         private INotifier _notifier = new EmptyNotifier();
         private volatile bool _isRunning = false;
-        private Dictionary<string, MATSysCommandAttribute> cmds = new Dictionary<string, MATSysCommandAttribute>();
+        private Dictionary<string, MATSysContext> cmds = new Dictionary<string, MATSysContext>();
 
         private IConfigurationSection? _config;
         #endregion
@@ -195,7 +195,7 @@ namespace MATSys
                     arr.Add(args[i].Name);
                 }
                 JsonObject jobj = new JsonObject();
-                jobj.Add(item.Alias, arr);
+                jobj.Add(item.MethodName, arr);
                 yield return jobj.ToJsonString();
             }
 
@@ -291,21 +291,17 @@ namespace MATSys
 
         #region Private methods
 
-        private Dictionary<string, MATSysCommandAttribute> ListMATSysCommands()
+        private Dictionary<string, MATSysContext> ListMATSysCommands()
         {
+            
             return GetType().GetMethods()
                 .Where(x => x.GetCustomAttributes<MATSysCommandAttribute>(false).Count() > 0)
                 .Select(x =>
                 {
-                    var cmd = x.GetCustomAttribute<MATSysCommandAttribute>()!;
+                    return MATSysContext.Create(this, x);
+                }).ToDictionary(x => x.MethodName);
 
-                    //configure CommandType
-                    cmd.ConfigureCommandType(x);
-
-                    //configure MethodInvoker property
-                    cmd.Invoker = MethodInvoker.Create(this, x);
-                    return cmd;
-                }).ToDictionary(x => x.Alias);
+            ;
         }
 
         /// <summary>
