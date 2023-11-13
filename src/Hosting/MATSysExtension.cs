@@ -25,7 +25,7 @@ namespace MATSys.Hosting
                        .AddSingleton<INotifierFactory, NotifierFactory>()
                        .AddSingleton<ITransceiverFactory, TransceiverFactory>()
                         .AddSingleton<IModuleFactory, ModuleFactory>()
-                        .AddSingleton<ModuleActivator>();
+                        .AddSingleton<ModuleActivatorService>();
             // foreach (var section in Configuration.GetSection("MATSys:Modules").GetChildren())
             // {
             //     string typeString = section.GetValue<string>("Type"); //Get the type string of Type in json section
@@ -88,7 +88,7 @@ namespace MATSys.Hosting
         /// <param name="provider">service provider</param>
         /// <param name="alias">alias name</param>        
         /// <returns>IModule implementation</returns>
-        public static IModule GetModule(this IServiceProvider provider, string alias) => provider.GetRequiredService<ModuleActivator>().GetModule(alias);
+        public static IModule GetModule(this IServiceProvider provider, string alias) => provider.GetRequiredService<ModuleActivatorService>().GetModule(alias);
 
 
     }
