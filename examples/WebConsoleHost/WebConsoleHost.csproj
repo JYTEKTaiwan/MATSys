@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>   
-    <ProjectReference Include="..\..\src\MATSys.csproj" />
+    <ProjectReference Include="..\..\MATSys\MATSys.csproj" />
   </ItemGroup>
 <ItemGroup>
     <None Update="appsettings.json">

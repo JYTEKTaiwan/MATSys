@@ -21,7 +21,7 @@
 			<PackagePath>\</PackagePath>
 			<Pack>True</Pack>
 		</None>
-		<ProjectReference Include="..\..\src\MATSys.csproj">
+		<ProjectReference Include="..\..\MATSyc\MATSys.csproj">
 		<Private>false</Private>
         <ExcludeAssets>runtime</ExcludeAssets>
 		</ProjectReference>

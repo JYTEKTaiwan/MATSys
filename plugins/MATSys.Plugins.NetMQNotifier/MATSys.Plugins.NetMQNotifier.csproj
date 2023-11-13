@@ -27,7 +27,7 @@
   <ItemGroup>
     <PackageReference Include="NetMQ" Version="4.0.1.10" />
     
-		<ProjectReference Include="..\..\src\MATSys.csproj">
+		<ProjectReference Include="..\..\MATSyc\MATSys.csproj">
 		<Private>false</Private>
         <ExcludeAssets>runtime</ExcludeAssets>
 		</ProjectReference>
