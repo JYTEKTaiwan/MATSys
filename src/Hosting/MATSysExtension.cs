@@ -9,11 +9,6 @@ namespace MATSys.Hosting
     public static class MATSysExtension
     {
 
-        private static IConfiguration Configuration { get; } = new ConfigurationBuilder()
-               //.AddEnvironmentVariables()
-               .AddJsonFile("appsettings.json", optional: true)
-               .Build();
-
         /// <summary>
         /// Inject the neccesary services into Host services
         /// </summary>
@@ -26,13 +21,7 @@ namespace MATSys.Hosting
                        .AddSingleton<ITransceiverFactory, TransceiverFactory>()
                         .AddSingleton<IModuleFactory, ModuleFactory>()
                         .AddSingleton<ModuleActivatorService>();
-            // foreach (var section in Configuration.GetSection("MATSys:Modules").GetChildren())
-            // {
-            //     string typeString = section.GetValue<string>("Type"); //Get the type string of Type in json section
-            //     string extAssemblyPath = section.GetValue<string>("AssemblyPath"); //Get the assemblypath string of Type in json section
-            //     var t = TypeParser.SearchType(typeString, extAssemblyPath);
-            //     services.AddSingleton(typeof(IModule), t);
-            // }
+
             return services;
         }
         /// <summary>
@@ -49,8 +38,12 @@ namespace MATSys.Hosting
         /// <returns>IConfigurationBuilder</returns>
         public static IConfigurationBuilder AddConfigurationInMATSys(this IConfigurationBuilder configBuilder)
         {
+            var config = new ConfigurationBuilder()
+            //.AddEnvironmentVariables()
+            .AddJsonFile("appsettings.json", optional: true)
+            .Build();
             configBuilder.Sources.Clear();
-            configBuilder.AddConfiguration(Configuration);
+            configBuilder.AddConfiguration(config);
             return configBuilder;
         }
         /// <summary>
@@ -89,6 +82,7 @@ namespace MATSys.Hosting
         /// <param name="alias">alias name</param>        
         /// <returns>IModule implementation</returns>
         public static IModule GetModule(this IServiceProvider provider, string alias) => provider.GetRequiredService<ModuleActivatorService>().GetModule(alias);
+
 
 
     }
