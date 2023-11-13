@@ -7,7 +7,7 @@ using MATSys.Commands;
 public sealed class CommandConverter
 {
     //All generic method from CommandBase.Create
-    private static IEnumerable<MethodInfo> m_infos => typeof(CommandBase).GetMethods().Where(x => x.Name == "Create");
+    private static Lazy<IEnumerable<MethodInfo>> m_infos =>new Lazy<IEnumerable<MethodInfo>>(()=>typeof(CommandBase).GetMethods().Where(x => x.Name == "Create")); 
     private static MATSysCommandContractAttribute GetContractAttribute(Type t)
     {
         var attr = t.GetCustomAttribute<MATSysCommandContractAttribute>();
@@ -42,7 +42,7 @@ public sealed class CommandConverter
             .OrderBy(x => x.GetCustomAttribute<MATSysCommandOrderAttribute>()!.Order).ToList();
 
             //Get the method that matches the count of properties
-            var mi = m_infos.First(x => x.GetGenericArguments().Count() == props.Count());
+            var mi = m_infos.Value.First(x => x.GetGenericArguments().Count() == props.Count());
 
             //first argument will be the name of method
             object[] p_name = new object[] { name };
