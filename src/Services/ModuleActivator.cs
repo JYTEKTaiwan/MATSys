@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 /// <summary>
 /// Handler for the modules in the host
 /// </summary>
-public class ModuleActivator
+public class ModuleActivatorService
 {
     private readonly Dictionary<string, IConfigurationSection> _modConfigurations;
     private readonly IModuleFactory _moduleFactory;
@@ -19,7 +19,7 @@ public class ModuleActivator
     /// ctor
     /// </summary>
     /// <param name="provider">service provider from host</param>
-    public ModuleActivator(IServiceProvider provider)
+    public ModuleActivatorService(IServiceProvider provider)
     {
         _modConfigurations = provider.GetAllModuleInfos();
         _moduleFactory = provider.GetRequiredService<IModuleFactory>();
