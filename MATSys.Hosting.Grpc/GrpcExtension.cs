@@ -44,7 +44,7 @@ public static class GrpcExtension
         else
         {
           var port = config.Port > 0 ? config.Port : 5000;
-          IPAddress ip;
+          IPAddress? ip=IPAddress.None;
           if (IPAddress.TryParse(config.IPAddress, out ip))
           {
             serverOptions.Listen(ip, port, listenOptions =>
