@@ -1,9 +1,9 @@
-﻿#define use_UDS
-using MATSys;
+﻿using MATSys;
 using MATSys.Commands;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using MATSys.Hosting;
 using ProtoBuf.Grpc.Server;
+using MATSys.Hosting.Grpc;
 
 namespace WebConsoleHost
 {
@@ -15,46 +15,15 @@ namespace WebConsoleHost
 
             var builder = WebApplication.CreateBuilder(args);
 
-            //setup configuration
             builder.Configuration.AddConfigurationInMATSys();
-
-            //setup logging
             builder.Logging.AddNlogInMATSys();
-
-            //setup gRPC socket
-
-#if use_UDS
-            File.Delete(Path.Combine(Path.GetTempPath(), "socket.tmp"));
-            var socketPath = Path.Combine(Path.GetTempPath(), "socket.tmp");
-            // Additional configuration is required to successfully run gRPC on macOS.
-            // For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
-            builder.WebHost.ConfigureKestrel(serverOptions =>
-            {
-                serverOptions.ListenUnixSocket(socketPath, listenOptions =>
-                {
-                    listenOptions.Protocols = HttpProtocols.Http2;
-                });
-            });
-#endif
-
-            //setup services
-#if use_UDS
-            builder.Services.AddCodeFirstGrpc();
-
-#else
-            builder.Services.AddGrpc();
-#endif
-
-            builder.Services.AddSingleton<GreeterService>();
             builder.Services.AddMATSysService();
+            builder.AddGrpcService();
 
             //build
             var app = builder.Build();
-
-            //mapping grpcServices
-            app.MapGrpcService<GreeterService>();
+            app.MapGrpcServices();
             app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
-
             //run
             app.Run();
 

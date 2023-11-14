@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>   
-    <ProjectReference Include="..\..\MATSys\MATSys.csproj" />
-  </ItemGroup>
+    <ProjectReference Include="..\..\MATSys\MATSys.csproj" />   
+    <ProjectReference Include="..\..\MATSys.Hosting.Grpc\MATSys.Hosting.Grpc.csproj" />   
+    </ItemGroup>
 <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
