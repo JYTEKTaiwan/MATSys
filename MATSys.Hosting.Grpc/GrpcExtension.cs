@@ -2,6 +2,7 @@
 using MATSys.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,13 +38,30 @@ public static class GrpcExtension
           serverOptions.ListenUnixSocket(socketPath, listenOptions =>
           {
             listenOptions.Protocols = HttpProtocols.Http2;
+
           });
         }
         else
         {
-          var ip = string.IsNullOrEmpty(config.IPAddress) ? "localhost" : config.IPAddress;
           var port = config.Port > 0 ? config.Port : 5000;
-          serverOptions.Listen(IPAddress.Parse(ip), port);
+          IPAddress ip;
+          if (IPAddress.TryParse(config.IPAddress, out ip))
+          {
+            serverOptions.Listen(ip, port, listenOptions =>
+            {
+              listenOptions.Protocols = HttpProtocols.Http2;
+            });
+          }
+          else
+          {
+            serverOptions.ListenLocalhost(port, listenOptions =>
+            {
+              listenOptions.Protocols = HttpProtocols.Http2;
+              listenOptions.UseHttps();
+            });
+          }
+
+
         }
 
       });
@@ -53,7 +71,7 @@ public static class GrpcExtension
     foreach (var item in config.Services)
     {
       var t = TypeParser.SearchType(item.Type, item.AssemblyPath);
-      if (t!=null&&item.Singleton)
+      if (t != null && item.Singleton)
       {
         builder.Services.AddSingleton(t);
       }
