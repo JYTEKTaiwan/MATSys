@@ -1,4 +1,6 @@
-﻿namespace MATSys.Factories
+﻿using MATSys.Utilities;
+
+namespace MATSys.Factories
 {
     /// <summary>
     /// Factory used to create module 
