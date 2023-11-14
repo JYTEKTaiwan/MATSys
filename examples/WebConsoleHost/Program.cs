@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using MATSys.Hosting;
 using ProtoBuf.Grpc.Server;
 using MATSys.Hosting.Grpc;
+using ProtoBuf;
 
 namespace WebConsoleHost
 {
@@ -12,8 +13,9 @@ namespace WebConsoleHost
         internal static void Main(params string[] args)
         {
             #region For Webapplicatio usage
-
+            
             var builder = WebApplication.CreateBuilder(args);
+            
 
             builder.Configuration.AddConfigurationInMATSys();
             builder.Logging.AddNlogInMATSys();
