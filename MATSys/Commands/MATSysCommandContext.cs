@@ -12,23 +12,10 @@ internal class MATSysContext
 
     internal MATSysContext(object target, MethodInfo mi)
     {
-        var cmd = mi.GetCustomAttribute<MATSysCommandAttribute>()!;
-        MethodName = cmd.Alias;
+        var attr = mi.GetCustomAttribute<MATSysCommandAttribute>()!;
+        MethodName = attr.Alias;
         Invoker = MATSys.Utilities.MethodInvoker.Create(target,mi);
-
-
-        var types = mi.GetParameters().Select(x => x.ParameterType).ToArray();
-        Type t = GetGenericCommandType(types.Length);
-        if (t.IsGenericType)
-        {
-            CommandType = t.MakeGenericType(types);
-        }
-        else
-        {
-            CommandType = t;
-        }
-
-
+        CommandType=GetCommandTypeFromMethodInfo(mi);
     }
 
     public static MATSysContext Create(object target, MethodInfo mi)
@@ -36,26 +23,27 @@ internal class MATSysContext
         return new MATSysContext(target, mi);
     }
 
-    private Type GetGenericCommandType(int count)
+    private Type GetCommandTypeFromMethodInfo(MethodInfo mi)
     {
-        switch (count)
+        var types=mi.GetParameters().Select(x => x.ParameterType).ToArray();
+        switch (types.Length)
         {
             case 0:
                 return typeof(Command);
             case 1:
-                return typeof(Command<>);
+                return typeof(Command<>).MakeGenericType(types);
             case 2:
-                return typeof(Command<,>);
+                return typeof(Command<,>).MakeGenericType(types);
             case 3:
-                return typeof(Command<,,>);
+                return typeof(Command<,,>).MakeGenericType(types);
             case 4:
-                return typeof(Command<,,,>);
+                return typeof(Command<,,,>).MakeGenericType(types);
             case 5:
-                return typeof(Command<,,,,>);
+                return typeof(Command<,,,,>).MakeGenericType(types);
             case 6:
-                return typeof(Command<,,,,,>);
+                return typeof(Command<,,,,,>).MakeGenericType(types);
             case 7:
-                return typeof(Command<,,,,,,>);
+                return typeof(Command<,,,,,,>).MakeGenericType(types);
             default:
                 return typeof(Command);
         }
