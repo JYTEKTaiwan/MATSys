@@ -4,7 +4,7 @@ using MATSys.Utilities;
 
 namespace MATSys;
 
-internal class MATSysContext
+internal record MATSysContext
 {
     public string MethodName { get; }
     public MATSys.Utilities.MethodInvoker Invoker { get; }
@@ -14,8 +14,8 @@ internal class MATSysContext
     {
         var attr = mi.GetCustomAttribute<MATSysCommandAttribute>()!;
         MethodName = attr.Alias;
-        Invoker = MATSys.Utilities.MethodInvoker.Create(target,mi);
-        CommandType=GetCommandTypeFromMethodInfo(mi);
+        Invoker = MATSys.Utilities.MethodInvoker.Create(target, mi);
+        CommandType = GetCommandTypeFromMethodInfo(mi);
     }
 
     public static MATSysContext Create(object target, MethodInfo mi)
@@ -25,7 +25,7 @@ internal class MATSysContext
 
     private Type GetCommandTypeFromMethodInfo(MethodInfo mi)
     {
-        var types=mi.GetParameters().Select(x => x.ParameterType).ToArray();
+        var types = mi.GetParameters().Select(x => x.ParameterType).ToArray();
         switch (types.Length)
         {
             case 0:
