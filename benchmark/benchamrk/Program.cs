@@ -1,18 +1,16 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using System.Reflection.Metadata;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using MATSys;
 using MATSys.Commands;
 using MATSys.Factories;
 using MATSys.Utilities;
-using Microsoft.Diagnostics.Tracing.Parsers.JSDumpHeap;
 
-BenchmarkRunner.Run<ModuleAccessBenchmark>();
+BenchmarkRunner.Run<CommandSerdesBenchmark>();
 
 
 [MemoryDiagnoser]
-[SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net80)]
+[SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net80,baseline:true)]
 [SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net70)]
 [SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net60)]
 public class TypeParserBenchmark
@@ -33,10 +31,10 @@ public class TypeParserBenchmark
 }
 
 [MemoryDiagnoser]
-[SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net80)]
+[SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net80,baseline:true)]
 [SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net70)]
 [SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net60)]
-public class CommandBenchmark
+public class CommandSerdesBenchmark
 {
     private ICommand cmd0 = CommandBase.Create("NoArgument");
     private ICommand cmd1 = CommandBase.Create("OneArgument", "HI");
