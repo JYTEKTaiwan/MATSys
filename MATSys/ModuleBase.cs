@@ -34,9 +34,9 @@ namespace MATSys
         private INotifier _notifier = new EmptyNotifier();
         private volatile bool _isRunning = false;
         #if NET8_0_OR_GREATER
-        private FrozenDictionary<string, MATSysContext> cmds=null;
+        private FrozenDictionary<string, MATSysContext> cmds=null!;
         #else
-        private ReadOnlyDictionary<string, MATSysContext> cmds=null;
+        private ReadOnlyDictionary<string, MATSysContext> cmds=null!;
         #endif
         
         private IConfigurationSection? _config;
