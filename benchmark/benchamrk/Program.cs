@@ -2,10 +2,13 @@
 using System.Reflection.Metadata;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
+using MATSys;
 using MATSys.Commands;
+using MATSys.Factories;
 using MATSys.Utilities;
+using Microsoft.Diagnostics.Tracing.Parsers.JSDumpHeap;
 
-BenchmarkRunner.Run<CommandBenchmark>();
+BenchmarkRunner.Run<ModuleAccessBenchmark>();
 
 
 [MemoryDiagnoser]
@@ -59,7 +62,7 @@ public class CommandBenchmark
     [Benchmark]
     public void Arg0_Deserialize()
     {
-        CommandBase.Deserialize(cmd0_str,cmd0.GetType());
+        CommandBase.Deserialize(cmd0_str, cmd0.GetType());
     }
     [Benchmark]
     public void Arg7_Serialize()
@@ -69,7 +72,68 @@ public class CommandBenchmark
     [Benchmark]
     public void Arg7_Deserialize()
     {
-        CommandBase.Deserialize(cmd7_str,cmd7.GetType());
+        CommandBase.Deserialize(cmd7_str, cmd7.GetType());
     }
 
+}
+
+[MemoryDiagnoser]
+[SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net80, baseline: true)]
+[SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net70)]
+[SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net60)]
+public class ModuleAccessBenchmark
+{
+    private IModule mod;
+    private string cmd0_str;
+    private ICommand cmd0;
+    private string cmd7_str;
+    private ICommand cmd7;
+    [GlobalSetup]
+    public void Init()
+    {
+
+        mod =ModuleFactory.CreateNew<Module>(null);
+        cmd0 = CommandBase.Create("Hello0");
+        mod.Execute(cmd0);
+        cmd0_str = cmd0.Serialize();
+        mod.Execute(cmd0_str);
+        cmd7 = CommandBase.Create("Hello7", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+        cmd7_str = cmd7.Serialize();
+    }
+
+    [Benchmark]
+    public void ExecuteCommand_Argument0()
+    {
+        mod.Execute(cmd0);
+    }
+    [Benchmark]
+    public void ExecuteCommandInString_Argument0()
+    {
+        var b=mod.Execute(cmd0_str);
+    }
+    [Benchmark]
+    public void ExecuteCommandInString_Argument7()
+    {
+        mod.Execute(cmd7_str);
+    }
+    [Benchmark]
+    public void ExecuteCommand_Argument7()
+    {
+        mod.Execute(cmd7);
+    }
+
+    internal class Module : ModuleBase
+    {
+        [MATSysCommand]
+        public string Hello0()
+        {
+            return "world0";
+        }
+
+        [MATSysCommand]
+        public string Hello7(double a, double b, double c, double d, double e, double f, double g)
+        {
+            return "world7";
+        }
+    }
 }
