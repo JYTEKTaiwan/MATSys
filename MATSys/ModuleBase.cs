@@ -1,4 +1,9 @@
-﻿using MATSys.Commands;
+﻿#if NET8_0_OR_GREATER
+using System.Collections.Frozen;
+#else
+using System.Collections.ObjectModel;
+#endif
+using MATSys.Commands;
 using MATSys.Plugins;
 
 namespace MATSys
@@ -28,8 +33,12 @@ namespace MATSys
         private IRecorder _recorder = new EmptyRecorder();
         private INotifier _notifier = new EmptyNotifier();
         private volatile bool _isRunning = false;
-        private Dictionary<string, MATSysContext> cmds = new Dictionary<string, MATSysContext>();
-
+        #if NET8_0_OR_GREATER
+        private FrozenDictionary<string, MATSysContext> cmds=null;
+        #else
+        private ReadOnlyDictionary<string, MATSysContext> cmds=null;
+        #endif
+        
         private IConfigurationSection? _config;
         #endregion
 
@@ -255,7 +264,11 @@ namespace MATSys
                 else
                     Load(option);
             }
-            cmds = ListMATSysCommands();
+            #if NET8_0_OR_GREATER
+            cmds=ListMATSysCommands().ToFrozenDictionary();
+            #else
+            cmds =new ReadOnlyDictionary<string, MATSysContext>( ListMATSysCommands());
+            #endif
             _logger = LogManager.GetCurrentClassLogger();
 
         }
