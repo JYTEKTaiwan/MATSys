@@ -7,14 +7,14 @@ namespace MATSys;
 internal class MATSysContext
 {
     public string MethodName { get; }
-    public MethodInvoker Invoker { get; }
+    public MATSys.Utilities.MethodInvoker Invoker { get; }
     public Type CommandType { get; }
 
     internal MATSysContext(object target, MethodInfo mi)
     {
         var cmd = mi.GetCustomAttribute<MATSysCommandAttribute>()!;
         MethodName = cmd.Alias;
-        Invoker = MethodInvoker.Create(target,mi);
+        Invoker = MATSys.Utilities.MethodInvoker.Create(target,mi);
 
 
         var types = mi.GetParameters().Select(x => x.ParameterType).ToArray();
