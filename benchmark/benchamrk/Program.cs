@@ -6,7 +6,7 @@ using MATSys.Commands;
 using MATSys.Factories;
 using MATSys.Utilities;
 
-BenchmarkRunner.Run<CommandSerdesBenchmark>();
+BenchmarkRunner.Run<ModuleAccessBenchmark>();
 
 
 [MemoryDiagnoser]
