@@ -83,6 +83,12 @@ namespace MATSys.Hosting
         /// <returns>IModule implementation</returns>
         public static IModule GetModule(this IServiceProvider provider, string alias) => provider.GetRequiredService<ModuleActivatorService>().GetModule(alias);
 
+        /// <summary>
+        /// List all the active modules in the memory
+        /// </summary>                
+        /// <returns>Collection of <see cref="IModule"/> </returns>
+        public static IModule[] GetModules(this IServiceProvider provider) => provider.GetRequiredService<ModuleActivatorService>().ActiveModules;
+
 
 
     }
