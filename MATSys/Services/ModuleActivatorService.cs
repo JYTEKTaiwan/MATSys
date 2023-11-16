@@ -15,6 +15,11 @@ public class ModuleActivatorService
     /// Count of the created modules
     /// </summary>
     public int Count => _modules.Count;
+
+    /// <summary>
+    /// Active modules in the memory
+    /// </summary>
+    public IModule[] ActiveModules => _modules.Values.ToArray();
     /// <summary>
     /// ctor
     /// </summary>
