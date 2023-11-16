@@ -2,6 +2,8 @@
 using System.Collections.Frozen;
 #else
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
+
 #endif
 using MATSys.Commands;
 using MATSys.Plugins;
