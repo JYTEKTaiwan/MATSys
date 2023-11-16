@@ -5,7 +5,7 @@ namespace MATSys.Commands
     /// <summary>
     /// base class to generate command and convert the result.
     /// </summary>
-    public abstract class CommandBase : ICommand
+    public abstract record CommandBase : ICommand
     {
         internal const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
         /// <summary>
@@ -243,7 +243,7 @@ namespace MATSys.Commands
     /// Command object without any parameter
     /// </summary>
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed class Command : CommandBase
+    public sealed record Command : CommandBase
     {
         /// <summary>
         /// Constructor
@@ -269,7 +269,7 @@ namespace MATSys.Commands
     /// </summary>
     /// <typeparam name="T1"></typeparam>
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed class Command<T1> : CommandBase
+    public sealed record Command<T1> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
@@ -303,7 +303,7 @@ namespace MATSys.Commands
     /// <typeparam name="T1"></typeparam>
     /// <typeparam name="T2"></typeparam>
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed class Command<T1, T2> : CommandBase
+    public sealed record Command<T1, T2> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
@@ -343,7 +343,7 @@ namespace MATSys.Commands
     /// <typeparam name="T2"></typeparam>
     /// <typeparam name="T3"></typeparam>
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed class Command<T1, T2, T3> : CommandBase
+    public sealed record Command<T1, T2, T3> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
@@ -391,7 +391,7 @@ namespace MATSys.Commands
     /// <typeparam name="T3"></typeparam>
     /// <typeparam name="T4"></typeparam>
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed class Command<T1, T2, T3, T4> : CommandBase
+    public sealed record Command<T1, T2, T3, T4> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
@@ -446,7 +446,7 @@ namespace MATSys.Commands
     /// <typeparam name="T4"></typeparam>
     /// <typeparam name="T5"></typeparam>
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed class Command<T1, T2, T3, T4, T5> : CommandBase
+    public sealed record Command<T1, T2, T3, T4, T5> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
@@ -507,7 +507,7 @@ namespace MATSys.Commands
     /// <typeparam name="T5"></typeparam>
     /// <typeparam name="T6"></typeparam>
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed class Command<T1, T2, T3, T4, T5, T6> : CommandBase
+    public sealed record Command<T1, T2, T3, T4, T5, T6> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
@@ -574,7 +574,7 @@ namespace MATSys.Commands
     /// <typeparam name="T6"></typeparam>
     /// <typeparam name="T7"></typeparam>
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed class Command<T1, T2, T3, T4, T5, T6, T7> : CommandBase
+    public sealed record Command<T1, T2, T3, T4, T5, T6, T7> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
