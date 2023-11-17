@@ -1,16 +1,69 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.Reflection;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using MATSys;
 using MATSys.Commands;
 using MATSys.Factories;
 using MATSys.Utilities;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-BenchmarkRunner.Run<ModuleAccessBenchmark>();
-
+BenchmarkRunner.Run<InvokerBenchmark>();
 
 [MemoryDiagnoser]
-[SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net80,baseline:true)]
+[SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net80, baseline: true)]
+public class InvokerBenchmark
+{
+
+    private Data data = new Data();
+    private const string name = "test";
+    private MethodInfo mi;
+    private Func<string, string> func;
+#if NET8_0_OR_GREATER
+[UnsafeAccessor(UnsafeAccessorKind.Method, Name = "Hello")]
+    extern static string SayHello(Data data,string name);
+#endif
+    [GlobalSetup]
+    public void Init()
+    {
+        mi = data.GetType().GetMethod("Hello");
+        func = System.Delegate.CreateDelegate(typeof(Func<string, string>), data, "Hello") as Func<string, string>;
+    }
+    [Benchmark]
+    public void Direct()
+    {
+        data.Hello(name);
+    }
+    [Benchmark]
+    public void Reflection()
+    {
+        mi.Invoke(data, new object[] { name });
+
+    }
+    [Benchmark]
+    public void Delegate()
+    {
+        func.Invoke(name);
+    }
+    [Benchmark]
+    public void UnsafeAccessor()
+    {
+#if NET8_0_OR_GREATER
+SayHello(name);
+#endif
+    }
+
+    internal class Data
+    {
+        public string Hello(string name)
+        {
+            return $"World:{name}";
+        }
+    }
+}
+
+[MemoryDiagnoser]
+[SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net80, baseline: true)]
 [SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net70)]
 [SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net60)]
 public class TypeParserBenchmark
@@ -31,7 +84,7 @@ public class TypeParserBenchmark
 }
 
 [MemoryDiagnoser]
-[SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net80,baseline:true)]
+[SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net80, baseline: true)]
 [SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net70)]
 [SimpleJob(BenchmarkDotNet.Jobs.RuntimeMoniker.Net60)]
 public class CommandSerdesBenchmark
@@ -90,7 +143,7 @@ public class ModuleAccessBenchmark
     public void Init()
     {
 
-        mod =ModuleFactory.CreateNew<Module>(null);
+        mod = ModuleFactory.CreateNew<Module>(null);
         cmd0 = CommandBase.Create("Hello0");
         mod.Execute(cmd0);
         cmd0_str = cmd0.Serialize();
@@ -107,7 +160,7 @@ public class ModuleAccessBenchmark
     [Benchmark]
     public void ExecuteCommandInString_Argument0()
     {
-        var b=mod.Execute(cmd0_str);
+        var b = mod.Execute(cmd0_str);
     }
     [Benchmark]
     public void ExecuteCommandInString_Argument7()
