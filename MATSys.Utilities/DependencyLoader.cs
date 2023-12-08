@@ -9,7 +9,7 @@ namespace MATSys.Utilities;
 /// <summary>
 /// Load the assembly dynamically from external file
 /// </summary>
-public class DependencyLoader
+internal class DynamicLibraryLoader
 {
     /// <summary>
     /// Load assemblies into current appdomain
