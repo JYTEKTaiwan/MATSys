@@ -11,10 +11,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
     <PackageReference Include="grpc.aspnetcore" Version="2.58.0" />
-    <PackageReference Include="protobuf-net.grpc.aspnetcore" Version="1.1.1" />
+    <PackageReference Include="protobuf-net.grpc.aspnetcore" Version="1.1.1" />    
   </ItemGroup>
 
   <ItemGroup>    
     <ProjectReference Include="..\MATSys.Utilities\MATSys.Utilities.csproj" />
+    <ProjectReference Include="..\MATSys\MATSys.csproj" />
   </ItemGroup>
 </Project>

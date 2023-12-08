@@ -1,6 +1,8 @@
+using System.Reflection;
 using MATSys.Commands;
 
 
+namespace MATSys.Hosting.Grpc;
 /// <summary>
 /// Tool used to convert any instance marked with <see cref="MATSysCommandContractAttribute"/> and <see cref="MATSysCommandOrderAttribute"/> into ICommand instance
 /// </summary>
