@@ -31,7 +31,7 @@ public static class TypeParser
             t = Assembly.GetCallingAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
             if (t != null) return t;
             //search external assembly (from file)
-            t = DependencyLoader.LoadPluginAssemblies(extAssemPath).First().GetType(type);
+            t = DynamicLibraryLoader.LoadPluginAssemblies(extAssemPath).First().GetType(type);
             return t;
 
         }
