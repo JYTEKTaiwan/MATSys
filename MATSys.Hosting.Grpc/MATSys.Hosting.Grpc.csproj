@@ -14,8 +14,7 @@
     <PackageReference Include="protobuf-net.grpc.aspnetcore" Version="1.1.1" />    
   </ItemGroup>
 
-  <ItemGroup>    
-    <ProjectReference Include="..\MATSys.Utilities\MATSys.Utilities.csproj" />
+  <ItemGroup>        
     <ProjectReference Include="..\MATSys\MATSys.csproj" />
   </ItemGroup>
 </Project>
