@@ -1,10 +1,27 @@
 ﻿
 
-using System.Reflection;
+using BenchmarkDotNet.Attributes;
+
+/* Unmerged change from project 'InvokerBenchmark (net8.0)'
+Before:
 using System.Runtime.CompilerServices;
 using BenchmarkDotNet.Attributes;
+After:
 using BenchmarkDotNet.Running;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+*/
+
+/* Unmerged change from project 'InvokerBenchmark (net6.0)'
+Before:
+using System.Runtime.CompilerServices;
+using BenchmarkDotNet.Attributes;
+After:
+using BenchmarkDotNet.Running;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+*/
+using BenchmarkDotNet.Running;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 BenchmarkRunner.Run<InvokerBenchmark>();
 
@@ -21,8 +38,8 @@ public class InvokerBenchmark
     private MethodInfo mi;
     private Func<string, string> func;
 #if NET8_0_OR_GREATER
-[UnsafeAccessor(UnsafeAccessorKind.Method, Name = "Hello")]
-    extern static string SayHello(Data @this,string name);
+    [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "Hello")]
+    extern static string SayHello(Data @this, string name);
 #endif
     [GlobalSetup]
     public void Init()
@@ -54,7 +71,7 @@ public class InvokerBenchmark
     public void UnsafeAccessor()//4.5958ns (1% overhead)
     {
 #if NET8_0_OR_GREATER
-SayHello(data,name);
+        SayHello(data, name);
 #endif
     }
 

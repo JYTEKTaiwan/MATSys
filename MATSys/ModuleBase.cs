@@ -2,8 +2,6 @@
 using System.Collections.Frozen;
 #else
 using System.Collections.ObjectModel;
-using System.Text.Json.Serialization;
-
 #endif
 using MATSys.Commands;
 using MATSys.Plugins;
@@ -35,12 +33,15 @@ namespace MATSys
         private IRecorder _recorder = new EmptyRecorder();
         private INotifier _notifier = new EmptyNotifier();
         private volatile bool _isRunning = false;
-        #if NET8_0_OR_GREATER
-        private FrozenDictionary<string, MATSysContext> cmds=null!;
-        #else
-        private ReadOnlyDictionary<string, MATSysContext> cmds=null!;
-        #endif
-        
+
+#if NET8_0_OR_GREATER
+        private FrozenDictionary<string, MATSysContext> cmds = null!;
+#elif NET6_0_OR_GREATER || NETSTANDARD2_0
+        private ReadOnlyDictionary<string, MATSysContext> cmds = null!;
+#else
+        private Dictionary<string, MATSysContext> cmds = null!;
+#endif
+
         private IConfigurationSection? _config;
         #endregion
 
@@ -107,15 +108,18 @@ namespace MATSys
         // }
         #endregion
 
+
+        /* Unmerged change from project 'MATSys (net35)'
+        Before:
+                #region Public Methods
+
+                /// <summary>
+        After:
+                #region Public Methods
+
+                /// <summary>
+        */
         #region Public Methods
-        /// <summary>
-        /// Load condfiguration from IConfigurationSection instance
-        /// </summary>
-        /// <param name="section"></param>
-        public virtual void Load(IConfigurationSection section)
-        {
-            //do nothing(let user to assign the logic)
-        }
 
         /// <summary>
         /// Load condfiguration from custom instance
@@ -127,23 +131,8 @@ namespace MATSys
         }
 
 
-        /// <summary>
-        /// Execute the incoming command object
-        /// </summary>
-        /// <param name="cmd">ICommand instance</param>
-        /// <returns>reponse after executing the commnad</returns>
-        public string Execute(ICommand cmd)
-        {
-            try
-            {
-                return ExecuteAsync(cmd).Result;
-            }
-            catch (AggregateException ex)
-            {
-                _logger?.Warn(ex.Message);
-                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
-            }
-        }
+
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
         /// <summary>
         /// Asynchronously execute the assigned command
         /// </summary>
@@ -171,7 +160,11 @@ namespace MATSys
                 {
                     _logger?.Warn(ex);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, cmd);
-
+                }
+                catch (System.Text.Json.JsonException ex)
+                {
+                    _logger?.Warn(ex);
+                    return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_serDesError, ex, cmd);
                 }
                 catch (Exception ex)
                 {
@@ -180,6 +173,58 @@ namespace MATSys
                 }
             });
         }
+        /// <summary>
+        /// Execute the incoming command object
+        /// </summary>
+        /// <param name="cmd">ICommand instance</param>
+        /// <returns>reponse after executing the commnad</returns>
+        public string Execute(ICommand cmd)
+        {
+            try
+            {
+                return ExecuteAsync(cmd).Result;
+            }
+            catch (AggregateException ex)
+            {
+                _logger?.Warn(ex.Message);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
+            }
+        }
+#elif NET35
+
+        /// <summary>
+        /// Execute the incoming command object
+        /// </summary>
+        /// <param name="cmd">ICommand instance</param>
+        /// <returns>reponse after executing the commnad</returns>
+        public string Execute(ICommand cmd)
+        {
+            try
+            {
+                _logger?.Trace($"Command is ready to executed {cmd.MethodName}");
+                var invoker = cmds[cmd.MethodName].Invoker;
+                if (invoker == null)
+                {
+                    throw new NullReferenceException("invoker is null");
+                }
+                var result = invoker.Invoke(cmd.GetParameters());
+                var response = cmd.ConvertResultToString(result)!;
+                _logger?.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
+                _logger?.Info($"Command [{cmd.MethodName}] is executed successfully");
+                return response;
+            }
+            catch (KeyNotFoundException ex)
+            {
+                _logger?.Warn(ex);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, cmd);
+            }
+            catch (Exception ex)
+            {
+                _logger?.Warn(ex);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
+            }
+        }
+#endif
         /// <summary>
         /// Execute the incoming command object in string format
         /// </summary>
@@ -197,32 +242,47 @@ namespace MATSys
         /// <returns>collection of string</returns>
         public virtual IEnumerable<string> PrintCommands()
         {
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
             foreach (var item in cmds.Values)
             {
                 var args = item.CommandType!.GenericTypeArguments;
-                JsonArray arr = new JsonArray();
+                System.Text.Json.Nodes.JsonArray arr = new System.Text.Json.Nodes.JsonArray();
                 for (int i = 0; i < args.Length; i++)
                 {
                     arr.Add(args[i].Name);
                 }
-                JsonObject jobj = new JsonObject();
+                System.Text.Json.Nodes.JsonObject jobj = new System.Text.Json.Nodes.JsonObject();
                 jobj.Add(item.MethodName, arr);
                 yield return jobj.ToJsonString();
             }
+#elif NET35
+            foreach (var item in cmds.Values)
+            {
+                var args = item.CommandType!.GetGenericArguments();
+                Newtonsoft.Json.Linq.JArray arr = new Newtonsoft.Json.Linq.JArray();
+                for (int i = 0; i < args.Length; i++)
+                {
+                    arr.Add(args[i].Name);
+                }
+                Newtonsoft.Json.Linq.JObject jobj = new Newtonsoft.Json.Linq.JObject();
+                jobj.Add(item.MethodName, arr);
+                yield return jobj.ToString();
+            }
+#endif
 
         }
-
+#if NET6_0_OR_GREATER||NETSTANDARD2_0
         /// <summary>
         /// Export the ModuleBase instance to json context
         /// </summary>
         /// <returns></returns>
-        public JsonObject Export()
+        public System.Text.Json.Nodes.JsonObject Export()
         {
-            JsonObject jObj = new JsonObject();
+            System.Text.Json.Nodes.JsonObject jObj = new System.Text.Json.Nodes.JsonObject();
 
             jObj.Add("Name", Alias);
             jObj.Add("Type", this.GetType().Name);
-            var node = new JsonObject();
+            var node = new System.Text.Json.Nodes.JsonObject();
             node = _recorder.Export();
             if (node.Count > 0)
             {
@@ -241,6 +301,37 @@ namespace MATSys
             return jObj;
         }
 
+#elif NET35
+        /// <summary>
+        /// Export the ModuleBase instance to json context
+        /// </summary>
+        /// <returns></returns>
+        public Newtonsoft.Json.Linq.JObject Export()
+        {
+            Newtonsoft.Json.Linq.JObject jObj = new Newtonsoft.Json.Linq.JObject();
+
+            jObj.Add("Name", Alias);
+            jObj.Add("Type", this.GetType().Name);
+            var node = new Newtonsoft.Json.Linq.JObject();
+            node = _recorder.Export();
+            if (node.Count > 0)
+            {
+                jObj.Add("Recorder", _recorder.Export());
+            }
+            node = _notifier.Export();
+            if (node.Count > 0)
+            {
+                jObj.Add("Notifier", _notifier.Export());
+            }
+            node = _transceiver.Export();
+            if (node.Count > 0)
+            {
+                jObj.Add("Transceiver", _transceiver.Export());
+            }
+            return jObj;
+        }
+
+#endif
         /// <summary>
         /// Export ModuleBase instance to json string format
         /// </summary>
@@ -248,7 +339,14 @@ namespace MATSys
         /// <returns></returns>
         public string Export(bool indented = true)
         {
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
             return Export().ToJsonString(new System.Text.Json.JsonSerializerOptions() { WriteIndented = indented });
+#elif NET35
+            if (indented) return Export().ToString(Newtonsoft.Json.Formatting.Indented);
+            else return Export().ToString(Newtonsoft.Json.Formatting.None);
+
+#else
+#endif
         }
         /// <summary>
         /// Configurae IModule instance with object 
@@ -266,11 +364,13 @@ namespace MATSys
                 else
                     Load(option);
             }
-            #if NET8_0_OR_GREATER
-            cmds=ListMATSysCommands().ToFrozenDictionary();
-            #else
-            cmds =new ReadOnlyDictionary<string, MATSysContext>( ListMATSysCommands());
-            #endif
+#if NET8_0_OR_GREATER
+            cmds = ListMATSysCommands().ToFrozenDictionary();
+#elif NET6_0_OR_GREATER || NETSTANDARD2_0
+            cmds = new ReadOnlyDictionary<string, MATSysContext>(ListMATSysCommands());
+#else
+            cmds = new Dictionary<string, MATSysContext>(ListMATSysCommands());
+#endif
             _logger = LogManager.GetCurrentClassLogger();
 
         }
@@ -308,17 +408,27 @@ namespace MATSys
 
         private Dictionary<string, MATSysContext> ListMATSysCommands()
         {
-            
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
             return GetType().GetMethods()
-                .Where(x => x.GetCustomAttributes<MATSysCommandAttribute>(false).Count() > 0)
-                .Select(x =>
-                {
-                    return MATSysContext.Create(this, x);
-                }).ToDictionary(x => x.MethodName);
+               .Where(x => x.GetCustomAttributes<MATSysCommandAttribute>().Count() > 0)
+               .Select(x =>
+               {
+                   return MATSysContext.Create(this, x);
+               }).ToDictionary(x => x.MethodName);
+
+#elif NET35
+            return GetType().GetMethods()
+                           .Where(x => x.GetCustomAttributes(typeof(MATSysCommandAttribute), false).Count() > 0)
+                           .Select(x =>
+                           {
+                               return MATSysContext.Create(this, x);
+                           }).ToDictionary(x => x.MethodName);
+
+#endif
 
             ;
         }
-
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
         /// <summary>
         /// Event when new request is received
         /// </summary>
@@ -342,10 +452,49 @@ namespace MATSys
                 _logger?.Warn(ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, commandObjectInJson);
             }
-            catch (System.Text.Json.JsonException ex)
+            catch (Exception ex)
+            {
+                _logger?.Error(ex);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, commandObjectInJson);
+            }
+        }
+        /// <summary>
+        /// Dispose the instance and call GC
+        /// </summary>
+        public void Dispose()
+        {
+            _notifier.Dispose();
+            _transceiver.Dispose();
+            _recorder.Dispose();
+            _isRunning = false;
+            IsDisposed?.Invoke(this, null!);
+            GC.Collect();
+        }
+
+
+#elif NET35
+        /// <summary>
+        /// Event when new request is received
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="commandObjectInJson"></param>
+        /// <returns></returns>
+        private string OnRequestReceived(object sender, string commandObjectInJson)
+        {
+            try
+            {
+                _logger?.Trace($"Command received: {commandObjectInJson}");
+                var sp = commandObjectInJson;
+                var end = sp.IndexOf(':');
+                var start = sp.IndexOf('\"');
+                var item = cmds[sp.Substring(start + 1, end - start - 2).ToString()];
+                var cmd = CommandBase.Deserialize(commandObjectInJson, item.CommandType!);
+                return Execute(cmd);
+            }
+            catch (KeyNotFoundException ex)
             {
                 _logger?.Warn(ex);
-                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_serDesError, ex, commandObjectInJson);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, commandObjectInJson);
             }
             catch (Exception ex)
             {
@@ -366,6 +515,16 @@ namespace MATSys
             GC.Collect();
         }
 
+
+#endif
         #endregion
     }
+
+    internal interface IConfigurationSection
+    {
+    }
+}
+namespace System.Runtime.CompilerServices
+{
+    public class ExtensionAttribute : Attribute { }
 }

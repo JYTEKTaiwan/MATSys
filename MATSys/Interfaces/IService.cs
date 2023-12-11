@@ -9,11 +9,6 @@
         /// Name of the Service
         /// </summary>
         string Alias { get; set; }
-        /// <summary>
-        /// Load the configuration from file
-        /// </summary>
-        /// <param name="section">section of configuration filr</param>
-        void Load(IConfigurationSection section);
 
         /// <summary>
         /// load the configuration from object
@@ -22,12 +17,19 @@
         void Load(object configuration);
 
 
+#if NET6_0_OR_GREATER||NETSTANDARD2_0
         /// <summary>
         /// Export the service insatnce into JObject format
         /// </summary>
         /// <returns>JObject instance</returns>
-        JsonObject Export();
-
+        System.Text.Json.Nodes.JsonObject Export();
+#elif NET35
+        /// <summary>
+        /// Export the service insatnce into JObject format
+        /// </summary>
+        /// <returns>JObject instance</returns>
+        Newtonsoft.Json.Linq.JObject Export();
+#endif
         /// <summary>
         /// Export the service instance into json format
         /// </summary>

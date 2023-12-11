@@ -1,10 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using MATSys.Commands;
-using MATSys.Utilities;
+﻿using MATSys.Commands;
 
 namespace MATSys;
 
-internal record MATSysContext
+internal class MATSysContext
 {
     public string MethodName { get; }
     public MATSys.Utilities.MethodInvoker Invoker { get; }
@@ -12,7 +10,7 @@ internal record MATSysContext
 
     internal MATSysContext(object target, MethodInfo mi)
     {
-        var attr = mi.GetCustomAttribute<MATSysCommandAttribute>()!;
+        var attr = mi.GetCustomAttributes(false).Cast<MATSysCommandAttribute>().First()!;
         MethodName = attr.Alias;
         Invoker = MATSys.Utilities.MethodInvoker.Create(target, mi);
         CommandType = GetCommandTypeFromMethodInfo(mi);

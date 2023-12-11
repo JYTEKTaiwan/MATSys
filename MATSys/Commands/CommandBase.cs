@@ -1,11 +1,10 @@
-﻿using System.Text.Json;
-
+﻿
 namespace MATSys.Commands
 {
     /// <summary>
     /// base class to generate command and convert the result.
     /// </summary>
-    public abstract record CommandBase : ICommand
+    public abstract class CommandBase : ICommand
     {
         internal const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
 
@@ -234,9 +233,14 @@ namespace MATSys.Commands
     /// <summary>
     /// Command object without any parameter
     /// </summary>
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed record Command : CommandBase
+#elif NET35
+    [Newtonsoft.Json.JsonConverter(typeof(CommandBaseJsonConverter))]
+#endif
+    public sealed class Command : CommandBase
     {
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -260,8 +264,12 @@ namespace MATSys.Commands
     /// Command object with 1 parameter
     /// </summary>
     /// <typeparam name="T1"></typeparam>
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed record Command<T1> : CommandBase
+#elif NET35
+    [Newtonsoft.Json.JsonConverter(typeof(CommandBaseJsonConverter))]
+#endif
+    public sealed class Command<T1> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
@@ -294,8 +302,12 @@ namespace MATSys.Commands
     /// </summary>
     /// <typeparam name="T1"></typeparam>
     /// <typeparam name="T2"></typeparam>
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed record Command<T1, T2> : CommandBase
+#elif NET35
+    [Newtonsoft.Json.JsonConverter(typeof(CommandBaseJsonConverter))]
+#endif
+    public sealed class Command<T1, T2> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
@@ -334,8 +346,12 @@ namespace MATSys.Commands
     /// <typeparam name="T1"></typeparam>
     /// <typeparam name="T2"></typeparam>
     /// <typeparam name="T3"></typeparam>
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed record Command<T1, T2, T3> : CommandBase
+#elif NET35
+    [Newtonsoft.Json.JsonConverter(typeof(CommandBaseJsonConverter))]
+#endif
+    public sealed class Command<T1, T2, T3> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
@@ -382,8 +398,12 @@ namespace MATSys.Commands
     /// <typeparam name="T2"></typeparam>
     /// <typeparam name="T3"></typeparam>
     /// <typeparam name="T4"></typeparam>
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed record Command<T1, T2, T3, T4> : CommandBase
+#elif NET35
+    [Newtonsoft.Json.JsonConverter(typeof(CommandBaseJsonConverter))]
+#endif
+    public sealed class Command<T1, T2, T3, T4> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
@@ -437,8 +457,12 @@ namespace MATSys.Commands
     /// <typeparam name="T3"></typeparam>
     /// <typeparam name="T4"></typeparam>
     /// <typeparam name="T5"></typeparam>
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed record Command<T1, T2, T3, T4, T5> : CommandBase
+#elif NET35
+    [Newtonsoft.Json.JsonConverter(typeof(CommandBaseJsonConverter))]
+#endif
+    public sealed class Command<T1, T2, T3, T4, T5> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
@@ -498,8 +522,12 @@ namespace MATSys.Commands
     /// <typeparam name="T4"></typeparam>
     /// <typeparam name="T5"></typeparam>
     /// <typeparam name="T6"></typeparam>
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed record Command<T1, T2, T3, T4, T5, T6> : CommandBase
+#elif NET35
+    [Newtonsoft.Json.JsonConverter(typeof(CommandBaseJsonConverter))]
+#endif
+    public sealed class Command<T1, T2, T3, T4, T5, T6> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>
@@ -565,8 +593,12 @@ namespace MATSys.Commands
     /// <typeparam name="T5"></typeparam>
     /// <typeparam name="T6"></typeparam>
     /// <typeparam name="T7"></typeparam>
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
     [System.Text.Json.Serialization.JsonConverter(typeof(CommandBaseJsonConverter))]
-    public sealed record Command<T1, T2, T3, T4, T5, T6, T7> : CommandBase
+#elif NET35
+    [Newtonsoft.Json.JsonConverter(typeof(CommandBaseJsonConverter))]
+#endif
+    public sealed class Command<T1, T2, T3, T4, T5, T6, T7> : CommandBase
     {
         /// <summary>
         /// Parameter Type <typeparamref name="T1"/>

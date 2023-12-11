@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="NetMQ" Version="4.0.1.10" />
+    <ProjectReference Include="..\..\MATSys.Hosting\MATSys.Hosting.csproj" />
     
 		<ProjectReference Include="..\..\MATSys\MATSys.csproj">
 		<Private>false</Private>

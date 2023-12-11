@@ -1,4 +1,6 @@
-﻿namespace MATSys.Factories
+﻿using Microsoft.Extensions.Configuration;
+
+namespace MATSys.Factories
 {
     /// <summary>
     /// Interface for ModuleFactory

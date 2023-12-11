@@ -49,12 +49,16 @@
         /// <param name="cmd">ICommand instance</param>
         /// <returns>Serialized response</returns>
         string Execute(Commands.ICommand cmd);
+
+#if NET6_0_OR_GREATER||NETSTANDARD2_0
         /// <summary>
         /// Asynchronously execute the assigned command
         /// </summary>
         /// <param name="cmd">ICommand instance</param>
         /// <returns>Serialized response</returns>
         Task<string> ExecuteAsync(Commands.ICommand cmd);
+#endif
+
         /// <summary>
         /// Execute the assigned command
         /// </summary>

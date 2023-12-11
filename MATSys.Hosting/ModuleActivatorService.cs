@@ -1,7 +1,8 @@
 using MATSys;
 using MATSys.Factories;
 using MATSys.Hosting;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
 /// Handler for the modules in the host

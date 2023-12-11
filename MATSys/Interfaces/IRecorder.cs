@@ -11,11 +11,13 @@ namespace MATSys
         /// </summary>
         /// <param name="data">Data to be written</param>
         void Write(object data);
-
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
         /// <summary>
         /// Write data to the instance asynchronuously
         /// </summary>
         /// <param name="data">Data to be written</param>
         Task WriteAsync(object data);
+#endif
+
     }
 }

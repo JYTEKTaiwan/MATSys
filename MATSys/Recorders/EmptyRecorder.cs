@@ -1,5 +1,4 @@
-﻿using System.Text.Json;
-
+﻿
 namespace MATSys.Plugins
 {
     /// <summary>
@@ -22,6 +21,7 @@ namespace MATSys.Plugins
         public void Write(object data)
         {
         }
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
         /// <summary>
         /// Write data to the instance asynchronuously
         /// </summary>
@@ -31,15 +31,9 @@ namespace MATSys.Plugins
         {
             await Task.CompletedTask;
         }
-        /// <summary>
-        /// Load the configuration from file
-        /// </summary>
-        /// <param name="section">section of configuration filr</param>
+#endif
 
-        public void Load(IConfigurationSection section)
-        {
-            _logger.Info($"{nameof(EmptyRecorder)} is initiated");
-        }
+
         /// <summary>
         /// load the configuration from object
         /// </summary>
@@ -49,15 +43,25 @@ namespace MATSys.Plugins
         {
             _logger.Info($"{nameof(EmptyRecorder)} is initiated");
         }
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
         /// <summary>
         /// Export the service insatnce into JObject format
         /// </summary>
         /// <returns>JObject instance</returns>
-
-        public JsonObject Export()
+        public System.Text.Json.Nodes.JsonObject Export()
         {
-            return new JsonObject();
+            return new System.Text.Json.Nodes.JsonObject();
         }
+#elif NET35
+        /// <summary>
+        /// Export the service insatnce into JObject format
+        /// </summary>
+        /// <returns>JObject instance</returns>
+        public Newtonsoft.Json.Linq.JObject Export()
+        {
+            return new Newtonsoft.Json.Linq.JObject();
+        }
+#endif
         /// <summary>
         /// Export the service instance into json format
         /// </summary>
@@ -66,7 +70,15 @@ namespace MATSys.Plugins
 
         public string Export(bool indented = true)
         {
-            return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
+            return Export().ToJsonString(new System.Text.Json.JsonSerializerOptions() { WriteIndented = indented });
+#elif NET35            
+            if (indented) return Export().ToString(Newtonsoft.Json.Formatting.Indented);
+            else return Export().ToString(Newtonsoft.Json.Formatting.None);
+
+
+#else
+#endif
         }
 
         /// <summary>

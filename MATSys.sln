@@ -21,15 +21,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys", "MATSys\MATSys.csproj", "{48E00B53-ECD5-457E-8F06-2D63D1350762}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MATSys.Hosting.Grpc", "MATSys.Hosting.Grpc\MATSys.Hosting.Grpc.csproj", "{2189B7E9-6136-4C66-BD54-10AA5D0D024D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Hosting.Grpc", "MATSys.Hosting.Grpc\MATSys.Hosting.Grpc.csproj", "{2189B7E9-6136-4C66-BD54-10AA5D0D024D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MATSys.Utilities", "MATSys.Utilities\MATSys.Utilities.csproj", "{4609BB0A-4724-467F-B88C-5B05D7A45F56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Utilities", "MATSys.Utilities\MATSys.Utilities.csproj", "{4609BB0A-4724-467F-B88C-5B05D7A45F56}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmark", "benchmark", "{713BC1D8-4FE3-4DBD-80C9-1E39576FB4FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "benchamrk", "benchmark\benchamrk\benchamrk.csproj", "{D8D562C0-5131-4541-B2F3-71207D5AA47E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "benchamrk", "benchmark\benchamrk\benchamrk.csproj", "{D8D562C0-5131-4541-B2F3-71207D5AA47E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvokerBenchmark", "benchmark\InvokerBenchmark\InvokerBenchmark.csproj", "{30206596-9F0A-4546-B7C0-3664E611B36C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvokerBenchmark", "benchmark\InvokerBenchmark\InvokerBenchmark.csproj", "{30206596-9F0A-4546-B7C0-3664E611B36C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Hosting", "MATSys.Hosting\MATSys.Hosting.csproj", "{0693E8A8-AC63-4E6E-9D2C-4F53FEA64556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "net35TestConsole", "net35TestConsole\net35TestConsole.csproj", "{C3DC78D3-7D02-40C6-916D-29CDE731864F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +85,14 @@ Global
 		{30206596-9F0A-4546-B7C0-3664E611B36C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30206596-9F0A-4546-B7C0-3664E611B36C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30206596-9F0A-4546-B7C0-3664E611B36C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0693E8A8-AC63-4E6E-9D2C-4F53FEA64556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0693E8A8-AC63-4E6E-9D2C-4F53FEA64556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0693E8A8-AC63-4E6E-9D2C-4F53FEA64556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0693E8A8-AC63-4E6E-9D2C-4F53FEA64556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3DC78D3-7D02-40C6-916D-29CDE731864F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3DC78D3-7D02-40C6-916D-29CDE731864F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3DC78D3-7D02-40C6-916D-29CDE731864F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3DC78D3-7D02-40C6-916D-29CDE731864F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

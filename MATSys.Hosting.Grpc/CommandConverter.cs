@@ -1,5 +1,5 @@
-using System.Reflection;
 using MATSys.Commands;
+using System.Reflection;
 
 
 namespace MATSys.Hosting.Grpc;
@@ -9,7 +9,7 @@ namespace MATSys.Hosting.Grpc;
 public sealed class CommandConverter
 {
     //All generic method from CommandBase.Create
-    private static Lazy<IEnumerable<MethodInfo>> m_infos =>new Lazy<IEnumerable<MethodInfo>>(()=>typeof(CommandBase).GetMethods().Where(x => x.Name == "Create")); 
+    private static Lazy<IEnumerable<MethodInfo>> m_infos => new Lazy<IEnumerable<MethodInfo>>(() => typeof(CommandBase).GetMethods().Where(x => x.Name == "Create"));
     private static MATSysCommandContractAttribute GetContractAttribute(Type t)
     {
         var attr = t.GetCustomAttribute<MATSysCommandContractAttribute>();

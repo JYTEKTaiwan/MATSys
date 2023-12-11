@@ -1,12 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using System.Reflection;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using MATSys;
 using MATSys.Commands;
-using MATSys.Factories;
 using MATSys.Utilities;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Reflection;
 
 BenchmarkRunner.Run<InvokerBenchmark>();
 
@@ -20,8 +18,8 @@ public class InvokerBenchmark
     private MethodInfo mi;
     private Func<string, string> func;
 #if NET8_0_OR_GREATER
-[UnsafeAccessor(UnsafeAccessorKind.Method, Name = "Hello")]
-    extern static string SayHello(Data data,string name);
+    [UnsafeAccessor(UnsafeAccessorKind.Method, Name = "Hello")]
+    extern static string SayHello(Data data, string name);
 #endif
     [GlobalSetup]
     public void Init()
@@ -49,7 +47,7 @@ public class InvokerBenchmark
     public void UnsafeAccessor()
     {
 #if NET8_0_OR_GREATER
-SayHello(name);
+        SayHello(name);
 #endif
     }
 
