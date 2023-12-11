@@ -51,15 +51,14 @@ internal class DynamicLibraryLoader
 
 #endif
 
-#if NETSTANDARD      
+#if NETSTANDARD2_0||NET35      
        
         foreach (var item in plugins)
         {
             var p = Path.GetFullPath(item);
             if (File.Exists(p) )
             {            
-                yield return Assembly.LoadFrom(p);
-                
+                yield return Assembly.LoadFrom(p);                
             }
 
         }

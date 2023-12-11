@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-
 namespace MATSys.Utilities
 {
     /// <summary>
@@ -17,16 +16,17 @@ namespace MATSys.Utilities
         /// <param name="parameter">parameters</param>
         /// <returns>return from delegation</returns>
         public abstract object? Invoke(params object[]? parameter);
+#if NET6_0_OR_GREATER||NETSTANDARD2_0
         /// <summary>
         /// Asynchronously invoke the delegated method with parameters
         /// </summary>
         /// <param name="parameters"></param>
         /// <returns>object returned by the delegate method</returns>
-        public virtual async Task<object?> InvokeAsync(params object[]? parameters)
+        public virtual async System.Threading.Tasks.Task<object?> InvokeAsync(params object[]? parameters)
         {
             return await Task.Run(() => Invoke(parameters));
         }
-
+#endif
         /// <summary>
         /// Create new Invoker instance 
         /// </summary>
@@ -96,82 +96,35 @@ namespace MATSys.Utilities
         {
             var isNullReturn = mi.ReturnType.FullName == "System.Void";
             var parameters = mi.GetParameters().Select(x => x.ParameterType).ToArray();
-            var returnType = mi.ReturnType;
+            parameters = isNullReturn ? parameters : parameters.Concat(new Type[] { mi.ReturnType }).ToArray();
             switch (parameters.Length)
             {
                 case 0:
-                    if (isNullReturn)
-                    {
-                        return typeof(Invoker);
-                    }
-                    else
-                    {
-                        return typeof(InvokerWithReturn<>).MakeGenericType(returnType);
-                    }
+                    if (isNullReturn) return typeof(Invoker);
+                    else return typeof(InvokerWithReturn<>).MakeGenericType(parameters);
                 case 1:
-                    if (isNullReturn)
-                    {
-                        return typeof(Invoker<>).MakeGenericType(parameters);
-                    }
-                    else
-                    {
-                        return typeof(InvokerWithReturn<,>).MakeGenericType(parameters.Append(returnType).ToArray());
-                    }
+                    if (isNullReturn) return typeof(Invoker<>).MakeGenericType(parameters);
+                    else return typeof(InvokerWithReturn<,>).MakeGenericType(parameters);
                 case 2:
-                    if (isNullReturn)
-                    {
-                        return typeof(Invoker<,>).MakeGenericType(parameters);
-                    }
-                    else
-                    {
-                        return typeof(InvokerWithReturn<,,>).MakeGenericType(parameters.Append(returnType).ToArray());
-                    }
+                    if (isNullReturn) return typeof(Invoker<,>).MakeGenericType(parameters);
+                    else return typeof(InvokerWithReturn<,,>).MakeGenericType(parameters);
                 case 3:
-                    if (isNullReturn)
-                    {
-                        return typeof(Invoker<,,>).MakeGenericType(parameters);
-                    }
-                    else
-                    {
-                        return typeof(InvokerWithReturn<,,,>).MakeGenericType(parameters.Append(returnType).ToArray());
-                    }
+                    if (isNullReturn) return typeof(Invoker<,,>).MakeGenericType(parameters);
+                    else return typeof(InvokerWithReturn<,,,>).MakeGenericType(parameters);
                 case 4:
-                    if (isNullReturn)
-                    {
-                        return typeof(Invoker<,,,>).MakeGenericType(parameters);
-                    }
-                    else
-                    {
-                        return typeof(InvokerWithReturn<,,,,>).MakeGenericType(parameters.Append(returnType).ToArray());
-                    }
+                    if (isNullReturn) return typeof(Invoker<,,,>).MakeGenericType(parameters);
+                    else return typeof(InvokerWithReturn<,,,,>).MakeGenericType(parameters);
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
                 case 5:
-                    if (isNullReturn)
-                    {
-                        return typeof(Invoker<,,,,>).MakeGenericType(parameters);
-                    }
-                    else
-                    {
-                        return typeof(InvokerWithReturn<,,,,,>).MakeGenericType(parameters.Append(returnType).ToArray());
-                    }
+                    if (isNullReturn) return typeof(Invoker<,,,,>).MakeGenericType(parameters);
+                    else return typeof(InvokerWithReturn<,,,,,>).MakeGenericType(parameters);
                 case 6:
-                    if (isNullReturn)
-                    {
-                        return typeof(Invoker<,,,,,>).MakeGenericType(parameters);
-                    }
-                    else
-                    {
-                        return typeof(InvokerWithReturn<,,,,,,>).MakeGenericType(parameters.Append(returnType).ToArray());
-                    }
+                    if (isNullReturn) return typeof(Invoker<,,,,,>).MakeGenericType(parameters);
+                    else return typeof(InvokerWithReturn<,,,,,,>).MakeGenericType(parameters);
                 case 7:
-                    if (isNullReturn)
-                    {
-                        return typeof(Invoker<,,,,,,>).MakeGenericType(parameters);
-                    }
-                    else
-                    {
-                        return typeof(InvokerWithReturn<,,,,,,,>).MakeGenericType(parameters.Append(returnType).ToArray());
-                    }
-
+                    if (isNullReturn) return typeof(Invoker<,,,,,,>).MakeGenericType(parameters);
+                    else return typeof(InvokerWithReturn<,,,,,,,>).MakeGenericType(parameters);
+#endif
                 default:
                     throw new ArgumentOutOfRangeException("Parameter length is incompatible");
             }
@@ -183,12 +136,12 @@ namespace MATSys.Utilities
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action), target, name) as Action;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public Invoker(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action), mi) as Action;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -209,12 +162,12 @@ namespace MATSys.Utilities
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1>), target, name) as Action<T1>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public Invoker(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1>), mi) as Action<T1>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -234,12 +187,12 @@ namespace MATSys.Utilities
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2>), target, name) as Action<T1, T2>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public Invoker(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2>), mi) as Action<T1, T2>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -258,12 +211,12 @@ namespace MATSys.Utilities
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3>), target, name) as Action<T1, T2, T3>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public Invoker(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3>), mi) as Action<T1, T2, T3>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -282,12 +235,12 @@ namespace MATSys.Utilities
         public Invoker(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4>), target, name) as Action<T1, T2, T3, T4>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public Invoker(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4>), mi) as Action<T1, T2, T3, T4>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -300,96 +253,6 @@ namespace MATSys.Utilities
             return null;
         }
     }
-    internal class Invoker<T1, T2, T3, T4, T5> : MethodInvoker
-    {
-        private readonly Action<T1, T2, T3, T4, T5>? _invoker;
-        public Invoker(object target, string name)
-        {
-            _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5>), target, name) as Action<T1, T2, T3, T4, T5>;
-            Name = _invoker!.GetMethodInfo().Name;
-        }
-        public Invoker(MethodInfo mi)
-        {
-            _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5>), mi) as Action<T1, T2, T3, T4, T5>;
-            Name = _invoker!.GetMethodInfo().Name;
-        }
-
-        public override object? Invoke(params object[]? parameter)
-        {
-            if (parameter == null || parameter.Length < 5)
-            {
-                throw new ArgumentOutOfRangeException("parameter too few");
-            }
-            _invoker?.Invoke(
-                (T1)parameter[0],
-                (T2)parameter[1],
-                (T3)parameter[2],
-                (T4)parameter[3],
-                (T5)parameter[4]);
-            return null;
-        }
-    }
-    internal class Invoker<T1, T2, T3, T4, T5, T6> : MethodInvoker
-    {
-        private readonly Action<T1, T2, T3, T4, T5, T6>? _invoker;
-        public Invoker(object target, string name)
-        {
-            _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5, T6>), target, name) as Action<T1, T2, T3, T4, T5, T6>;
-            Name = _invoker!.GetMethodInfo().Name;
-        }
-        public Invoker(MethodInfo mi)
-        {
-            _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5, T6>), mi) as Action<T1, T2, T3, T4, T5, T6>;
-            Name = _invoker!.GetMethodInfo().Name;
-        }
-
-        public override object? Invoke(params object[]? parameter)
-        {
-            if (parameter == null || parameter.Length < 6)
-            {
-                throw new ArgumentOutOfRangeException("parameter too few");
-            }
-            _invoker?.Invoke(
-                (T1)parameter[0],
-                (T2)parameter[1],
-                (T3)parameter[2],
-                (T4)parameter[3],
-                (T5)parameter[4],
-                (T6)parameter[5]);
-            return null;
-        }
-    }
-    internal class Invoker<T1, T2, T3, T4, T5, T6, T7> : MethodInvoker
-    {
-        private readonly Action<T1, T2, T3, T4, T5, T6, T7>? _invoker;
-        public Invoker(object target, string name)
-        {
-            _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5, T6, T7>), target, name) as Action<T1, T2, T3, T4, T5, T6, T7>;
-            Name = _invoker!.GetMethodInfo().Name;
-        }
-        public Invoker(MethodInfo mi)
-        {
-            _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5, T6, T7>), mi) as Action<T1, T2, T3, T4, T5, T6, T7>;
-            Name = _invoker!.GetMethodInfo().Name;
-        }
-
-        public override object? Invoke(params object[]? parameter)
-        {
-            if (parameter == null || parameter.Length < 7)
-            {
-                throw new ArgumentOutOfRangeException("parameter too few");
-            }
-            _invoker?.Invoke(
-                (T1)parameter[0],
-                (T2)parameter[1],
-                (T3)parameter[2],
-                (T4)parameter[3],
-                (T5)parameter[4],
-                (T6)parameter[5],
-                (T7)parameter[6]);
-            return null;
-        }
-    }
     internal class InvokerWithReturn<Tout> : MethodInvoker
     {
         private readonly Func<Tout>? _invoker;
@@ -397,12 +260,12 @@ namespace MATSys.Utilities
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<Tout>), target, name) as Func<Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public InvokerWithReturn(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<Tout>), mi) as Func<Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -425,12 +288,12 @@ namespace MATSys.Utilities
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, Tout>), target, name) as Func<T1, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public InvokerWithReturn(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, Tout>), mi) as Func<T1, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -453,12 +316,12 @@ namespace MATSys.Utilities
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, Tout>), target, name) as Func<T1, T2, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public InvokerWithReturn(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, Tout>), mi) as Func<T1, T2, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -483,12 +346,12 @@ namespace MATSys.Utilities
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, Tout>), target, name) as Func<T1, T2, T3, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public InvokerWithReturn(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, Tout>), mi) as Func<T1, T2, T3, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -514,12 +377,12 @@ namespace MATSys.Utilities
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, Tout>), target, name) as Func<T1, T2, T3, T4, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public InvokerWithReturn(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, Tout>), mi) as Func<T1, T2, T3, T4, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -539,6 +402,98 @@ namespace MATSys.Utilities
                 (T4)parameter[3]);
         }
     }
+
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
+    internal class Invoker<T1, T2, T3, T4, T5> : MethodInvoker
+    {
+        private readonly Action<T1, T2, T3, T4, T5>? _invoker;
+        public Invoker(object target, string name)
+        {
+            _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5>), target, name) as Action<T1, T2, T3, T4, T5>;
+            Name = _invoker!.Method.Name;
+        }
+        public Invoker(MethodInfo mi)
+        {
+            _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5>), mi) as Action<T1, T2, T3, T4, T5>;
+            Name = _invoker!.Method.Name;
+        }
+
+        public override object? Invoke(params object[]? parameter)
+        {
+            if (parameter == null || parameter.Length < 5)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
+            _invoker?.Invoke(
+                (T1)parameter[0],
+                (T2)parameter[1],
+                (T3)parameter[2],
+                (T4)parameter[3],
+                (T5)parameter[4]);
+            return null;
+        }
+    }
+    internal class Invoker<T1, T2, T3, T4, T5, T6> : MethodInvoker
+    {
+        private readonly Action<T1, T2, T3, T4, T5, T6>? _invoker;
+        public Invoker(object target, string name)
+        {
+            _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5, T6>), target, name) as Action<T1, T2, T3, T4, T5, T6>;
+            Name = _invoker!.Method.Name;
+        }
+        public Invoker(MethodInfo mi)
+        {
+            _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5, T6>), mi) as Action<T1, T2, T3, T4, T5, T6>;
+            Name = _invoker!.Method.Name;
+        }
+
+        public override object? Invoke(params object[]? parameter)
+        {
+            if (parameter == null || parameter.Length < 6)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
+            _invoker?.Invoke(
+                (T1)parameter[0],
+                (T2)parameter[1],
+                (T3)parameter[2],
+                (T4)parameter[3],
+                (T5)parameter[4],
+                (T6)parameter[5]);
+            return null;
+        }
+    }
+    internal class Invoker<T1, T2, T3, T4, T5, T6, T7> : MethodInvoker
+    {
+        private readonly Action<T1, T2, T3, T4, T5, T6, T7>? _invoker;
+        public Invoker(object target, string name)
+        {
+            _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5, T6, T7>), target, name) as Action<T1, T2, T3, T4, T5, T6, T7>;
+            Name = _invoker!.Method.Name;
+        }
+        public Invoker(MethodInfo mi)
+        {
+            _invoker = Delegate.CreateDelegate(typeof(Action<T1, T2, T3, T4, T5, T6, T7>), mi) as Action<T1, T2, T3, T4, T5, T6, T7>;
+            Name = _invoker!.Method.Name;
+        }
+
+        public override object? Invoke(params object[]? parameter)
+        {
+            if (parameter == null || parameter.Length < 7)
+            {
+                throw new ArgumentOutOfRangeException("parameter too few");
+            }
+            _invoker?.Invoke(
+                (T1)parameter[0],
+                (T2)parameter[1],
+                (T3)parameter[2],
+                (T4)parameter[3],
+                (T5)parameter[4],
+                (T6)parameter[5],
+                (T7)parameter[6]);
+            return null;
+        }
+    }
     internal class InvokerWithReturn<T1, T2, T3, T4, T5, Tout> : MethodInvoker
     {
         private readonly Func<T1, T2, T3, T4, T5, Tout>? _invoker;
@@ -546,12 +501,12 @@ namespace MATSys.Utilities
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, Tout>), target, name) as Func<T1, T2, T3, T4, T5, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public InvokerWithReturn(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, Tout>), mi) as Func<T1, T2, T3, T4, T5, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -579,12 +534,12 @@ namespace MATSys.Utilities
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, T6, Tout>), target, name) as Func<T1, T2, T3, T4, T5, T6, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public InvokerWithReturn(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, T6, Tout>), mi) as Func<T1, T2, T3, T4, T5, T6, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
         public override object? Invoke(params object[]? parameter)
@@ -613,12 +568,12 @@ namespace MATSys.Utilities
         public InvokerWithReturn(object target, string name)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, T6, T7, Tout>), target, name) as Func<T1, T2, T3, T4, T5, T6, T7, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
         public InvokerWithReturn(MethodInfo mi)
         {
             _invoker = Delegate.CreateDelegate(typeof(Func<T1, T2, T3, T4, T5, T6, T7, Tout>), mi) as Func<T1, T2, T3, T4, T5, T6, T7, Tout>;
-            Name = _invoker!.GetMethodInfo().Name;
+            Name = _invoker!.Method.Name;
         }
 
 
@@ -643,4 +598,5 @@ namespace MATSys.Utilities
         }
     }
 
+#endif
 }
