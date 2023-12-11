@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace MATSys.Commands
 {
+    #if NET6_0_OR_GREATER||NETSTANDARD2_0
     internal sealed class CommandBaseJsonConverter : JsonConverterFactory
     {
         public override bool CanConvert(Type typeToConvert)
@@ -553,4 +554,6 @@ namespace MATSys.Commands
 
 
     }
+#elif   NET35
+
 }

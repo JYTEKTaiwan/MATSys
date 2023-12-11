@@ -8,14 +8,6 @@ namespace MATSys.Commands
     public abstract record CommandBase : ICommand
     {
         internal const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
-        /// <summary>
-        /// json serializer options
-        /// </summary>
-        protected static JsonSerializerOptions opt = new JsonSerializerOptions()
-        {
-            WriteIndented = false,
-            Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-        };
 
         /// <summary>
         /// Name of the current command
@@ -46,7 +38,7 @@ namespace MATSys.Commands
             {
                 try
                 {
-                    return System.Text.Json.JsonSerializer.Serialize(obj, opt);
+                    return MATSys.Utilities.Serializer.Serialize(obj, false);
                 }
                 catch (Exception ex)
                 {
@@ -73,7 +65,7 @@ namespace MATSys.Commands
             {
                 if (typeof(ICommand).IsAssignableFrom(t))
                 {
-                    var cmd = JsonSerializer.Deserialize(rawString, t, opt) as ICommand;
+                    var cmd = MATSys.Utilities.Serializer.Deserialize(rawString, t) as ICommand;
                     if (cmd == null)
                     {
                         throw new NullReferenceException("command is null");
@@ -109,7 +101,7 @@ namespace MATSys.Commands
         /// <returns>simplified string</returns>
         public virtual string Serialize()
         {
-            return JsonSerializer.Serialize(this, this.GetType(), opt);
+            return MATSys.Utilities.Serializer.Serialize(this, this.GetType(), false);
         }
 
         /// <summary>
