@@ -5,6 +5,7 @@ using MATSys;
 using MATSys.Commands;
 using MATSys.Utilities;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 BenchmarkRunner.Run<InvokerBenchmark>();
 

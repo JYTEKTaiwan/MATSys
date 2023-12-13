@@ -9,8 +9,7 @@
 		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 		<Authors>Way Lin</Authors>
 		<Company>JYTEK TAIWAN CORP.</Company>
-		<Copyright>Copyright © 2019-2023 JYTEK TAIWAN CORP.</Copyright>
-		<PackageIcon>JYTek.png</PackageIcon>
+		<Copyright>Copyright © 2019-2023 JYTEK TAIWAN CORP.</Copyright>		
 		<VersionPrefix>2.0.18</VersionPrefix>
 		<RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/</RepositoryUrl>
 
