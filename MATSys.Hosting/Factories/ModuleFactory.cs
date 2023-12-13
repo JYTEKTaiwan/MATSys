@@ -70,7 +70,7 @@ namespace MATSys.Factories
                     var obj = (IModule)instance;
                     obj.Alias = alias;
                     obj.Configure(section);
-                    obj.InjectRecorder(rec);
+                    obj.InjectPlugin(rec);
                     obj.InjectNotifier(noti);
                     obj.InjectTransceiver(trans);
                     return obj;

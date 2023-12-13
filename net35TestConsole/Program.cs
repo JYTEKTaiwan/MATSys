@@ -24,10 +24,7 @@ namespace net35TestConsole
 
     internal class TestDevice : ModuleBase
     {
-        public TestDevice(int a=1)
-        {
 
-        }
         [MATSysCommand("Delay")]
         public void Delay(int a)
         {

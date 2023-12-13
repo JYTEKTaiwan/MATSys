@@ -74,17 +74,17 @@
         /// Inject the IRecorder instance into IModule instance
         /// </summary>
         /// <param name="recorder">IRecorder instance</param>
-        void InjectRecorder(IRecorder recorder);
+        void InjectPlugin(IRecorder recorder);
         /// <summary>
         /// Inject the ITransceiver instance into IModule instance
         /// </summary>
         /// <param name="transceiver">ITransceiver instance</param>
-        void InjectTransceiver(ITransceiver transceiver);
+        void InjectPlugin(ITransceiver transceiver);
         /// <summary>
         /// Inject the INotifier instance into IModule instance
         /// </summary>
         /// <param name="notifier">INotifier instance </param>
-        void InjectNotifier(INotifier notifier);
+        void InjectPlugin(INotifier notifier);
         /// <summary>
         /// Print all commands that is marked with MATSysCommandAttribute
         /// </summary>

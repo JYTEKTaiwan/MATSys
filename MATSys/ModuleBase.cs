@@ -389,7 +389,7 @@ namespace MATSys
         /// Inject the IRecorder instance into IModule instance
         /// </summary>
         /// <param name="recorder">IRecorder instance</param>
-        public void InjectRecorder(IRecorder? recorder)
+        public void InjectPlugin(IRecorder? recorder)
         {
             _recorder = recorder!;
         }
@@ -397,7 +397,7 @@ namespace MATSys
         /// Inject the ITransceiver instance into IModule instance
         /// </summary>
         /// <param name="transceiver">ITransceiver instance</param>
-        public void InjectTransceiver(ITransceiver? transceiver)
+        public void InjectPlugin(ITransceiver? transceiver)
         {
             _transceiver = transceiver!;
 
@@ -407,7 +407,7 @@ namespace MATSys
         /// Inject the INotifier instance into IModule instance
         /// </summary>
         /// <param name="notifier">INotifier instance </param>
-        public void InjectNotifier(INotifier? notifier)
+        public void InjectPlugin(INotifier? notifier)
         {
             _notifier = notifier!;
 
