@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using MATSys.Hosting.Grpc;
 using System.Diagnostics;
 
 Console.WriteLine("Hello, World!");

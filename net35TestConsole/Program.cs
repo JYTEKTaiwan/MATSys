@@ -12,7 +12,7 @@ namespace net35TestConsole
             
             var mod = new TestDevice();
             
-            var aa = mod.Execute("Delay",1000);
+            var aa = mod.ExecuteCommandString("{\"Delay\":[1000]}");
 
             Console.WriteLine(aa);
 

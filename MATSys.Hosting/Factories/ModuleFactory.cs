@@ -71,8 +71,8 @@ namespace MATSys.Factories
                     obj.Alias = alias;
                     obj.Configure(section);
                     obj.InjectPlugin(rec);
-                    obj.InjectNotifier(noti);
-                    obj.InjectTransceiver(trans);
+                    obj.InjectPlugin(noti);
+                    obj.InjectPlugin(trans);
                     return obj;
                 }
                 else

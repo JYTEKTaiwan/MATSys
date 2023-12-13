@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\MATSys.Hosting.Grpc\MATSys.Hosting.Grpc.csproj" />
+    <ProjectReference Include="..\MATSys.Hosting\MATSys.Hosting.csproj" />
     <ProjectReference Include="..\MATSys\MATSys.csproj" />
   </ItemGroup>
 

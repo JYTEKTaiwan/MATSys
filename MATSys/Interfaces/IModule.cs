@@ -50,6 +50,9 @@
         /// <returns>Serialized response</returns>
         string Execute(Commands.ICommand cmd);
 
+
+        string ExecuteCommandString(string cmdInJson);
+
 #if NET6_0_OR_GREATER||NETSTANDARD2_0
         /// <summary>
         /// Asynchronously execute the assigned command

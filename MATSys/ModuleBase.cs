@@ -262,7 +262,10 @@ namespace MATSys
 
 
 #endif
-
+        public string ExecuteCommandString(string cmdInJson)
+        {
+            return OnRequestReceived(this, cmdInJson);
+        }
 
 
         /// <summary>
@@ -469,18 +472,6 @@ namespace MATSys
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, commandObjectInJson);
             }
         }
-        /// <summary>
-        /// Dispose the instance and call GC
-        /// </summary>
-        public void Dispose()
-        {
-            _notifier.Dispose();
-            _transceiver.Dispose();
-            _recorder.Dispose();
-            _isRunning = false;
-            IsDisposed?.Invoke(this, null!);
-            GC.Collect();
-        }
 
 
 #elif NET35
@@ -513,6 +504,9 @@ namespace MATSys
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, commandObjectInJson);
             }
         }
+
+#endif
+
         /// <summary>
         /// Dispose the instance and call GC
         /// </summary>
@@ -526,8 +520,6 @@ namespace MATSys
             GC.Collect();
         }
 
-
-#endif
         #endregion
     }
 
