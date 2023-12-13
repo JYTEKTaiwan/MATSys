@@ -9,16 +9,14 @@ namespace net35TestConsole
     {
         static void Main(string[] args)
         {
-            var cmd = CommandBase.Create("Delay", 1000);
-
+            
             var mod = new TestDevice();
-            mod.Configure(null);
-
-            var aa = mod.Execute(cmd);
+            
+            var aa = mod.Execute("Delay",1000);
 
             Console.WriteLine(aa);
 
-            var o = MATSys.Utilities.Serializer.Deserialize(aa, cmd.GetType());
+            
             Console.ReadKey();
 
         }
@@ -26,6 +24,10 @@ namespace net35TestConsole
 
     internal class TestDevice : ModuleBase
     {
+        public TestDevice(int a=1)
+        {
+
+        }
         [MATSysCommand("Delay")]
         public void Delay(int a)
         {

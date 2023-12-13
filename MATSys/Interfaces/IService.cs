@@ -9,12 +9,7 @@
         /// Name of the Service
         /// </summary>
         string Alias { get; set; }
-
-        /// <summary>
-        /// load the configuration from object
-        /// </summary>
-        /// <param name="configuration">configuration object</param>
-        void Load(object configuration);
+        void Configure(object? config);
 
 
 #if NET6_0_OR_GREATER||NETSTANDARD2_0

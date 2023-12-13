@@ -35,7 +35,7 @@ namespace MATSys.Plugins
         /// </summary>
         /// <param name="configuration">configuration object</param>
 
-        public void Load(object configuration)
+        public void Configure(object configuration)
         {
             _logger.Info($"{nameof(EmptyNotifier)} is initiated");
         }

@@ -57,20 +57,19 @@
         /// <param name="cmd">ICommand instance</param>
         /// <returns>Serialized response</returns>
         Task<string> ExecuteAsync(Commands.ICommand cmd);
+
+        Task<string> ExecuteAsync(string methodName, params object[] parameters);
 #endif
 
-        /// <summary>
-        /// Execute the assigned command
-        /// </summary>
-        /// <param name="cmdInJson">Command string</param>
-        /// <returns>Response</returns>
-        string Execute(string cmdInJson);
+
+        string Execute(string methodName, params object[] parameters);
 
         /// <summary>
-        /// Configurae IModule instance with object 
+        /// Configurae instance with object 
         /// </summary>
         /// <param name="config">configuration object</param>
         void Configure(object? config);
+
         /// <summary>
         /// Inject the IRecorder instance into IModule instance
         /// </summary>

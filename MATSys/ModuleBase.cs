@@ -88,47 +88,21 @@ namespace MATSys
 
         #endregion
 
-        #region Constructor
-        // public ModuleBase(IServiceProvider provider)
-        // {            
-        //     Alias = this.GetType().GetConstructors().Where(x=>x.GetCustomAttribute<IDAttribute>()!=null).FirstOrDefault().GetCustomAttribute<IDAttribute>().ID;
-        //     var _transceiverFactory = provider.GetRequiredService<ITransceiverFactory>();
-        //     var _notifierFactory = provider.GetRequiredService<INotifierFactory>();
-        //     var _recorderFactory = provider.GetRequiredService<IRecorderFactory>();
+        protected ModuleBase()
+        {
+#if NET8_0_OR_GREATER
+            cmds = ListMATSysCommands().ToFrozenDictionary();
+#elif NET6_0_OR_GREATER || NETSTANDARD2_0
+            cmds = new ReadOnlyDictionary<string, MATSysContext>(ListMATSysCommands());
+#else
+            cmds = new Dictionary<string, MATSysContext>(ListMATSysCommands());
+#endif
+            _logger = LogManager.GetCurrentClassLogger();
 
-        //     Configuration = provider.GetRequiredService<IConfiguration>().GetSection("MATSys:Modules").GetChildren().First(x => x["Alias"] == Alias);
-        //     // var typeString = Configuration.GetValue<string>("Type");
-        //     // string extAssemblyPath = Configuration.GetValue<string>("AssemblyPath"); //Get the assemblypath string of Type in json section
-        //     // var t = TypeParser.SearchType(typeString, extAssemblyPath);
+        }
 
-        //     _transceiver = _transceiverFactory.CreateTransceiver(Configuration.GetSection(key_transceiver));
-        //     _notifier = _notifierFactory.CreateNotifier(Configuration.GetSection(key_notifier));
-        //     _recorder = _recorderFactory.CreateRecorder(Configuration.GetSection(key_recorder));
-        //     cmds = ListMATSysCommands();
-        // }
-        #endregion
-
-
-        /* Unmerged change from project 'MATSys (net35)'
-        Before:
-                #region Public Methods
-
-                /// <summary>
-        After:
-                #region Public Methods
-
-                /// <summary>
-        */
         #region Public Methods
 
-        /// <summary>
-        /// Load condfiguration from custom instance
-        /// </summary>
-        /// <param name="configuration"></param>
-        public virtual void Load(object configuration)
-        {
-            //do nothing(let user to assign the logic)
-        }
 
 
 
@@ -190,6 +164,54 @@ namespace MATSys
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
             }
         }
+        public async Task<string> ExecuteAsync(string methodName, params object[] parameters)
+        {
+            return await Task.Run(async () =>
+            {
+                try
+                {
+                    _logger?.Trace($"Command is ready to executed {methodName}");
+                    var invoker = cmds[methodName].Invoker;
+                    if (invoker == null)
+                    {
+                        throw new NullReferenceException("invoker is null");
+                    }
+                    var result = await invoker.InvokeAsync(parameters);
+                    var response = Utilities.Serializer.Serialize(result, false)!;
+                    _logger?.Debug($"Command [{methodName}] is executed with return value: {response}");
+                    _logger?.Info($"Command [{methodName}] is executed successfully");
+                    return response;
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    _logger?.Warn(ex);
+                    return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, methodName);
+                }
+                catch (System.Text.Json.JsonException ex)
+                {
+                    _logger?.Warn(ex);
+                    return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_serDesError, ex, methodName);
+                }
+                catch (Exception ex)
+                {
+                    _logger?.Warn(ex);
+                    return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, methodName);
+                }
+            });
+
+        }
+        public string Execute(string methodName, params object[] parameters)
+        {
+            try
+            {
+                return ExecuteAsync(methodName,parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                _logger?.Warn(ex.Message);
+                return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, methodName);
+            }
+        }
 #elif NET35
 
         /// <summary>
@@ -224,17 +246,24 @@ namespace MATSys
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
             }
         }
-#endif
-        /// <summary>
-        /// Execute the incoming command object in string format
-        /// </summary>
-        /// <param name="cmdInJson">command in string format</param>
-        /// <returns>reponse after executing the commnad</returns>
-        public string Execute(string cmdInJson)
+        
+        
+        public string Execute(string methodName, params object[] parameters)
         {
-            var result = OnRequestReceived(this, cmdInJson);
-            return result!;
+            var invoker = cmds[methodName].Invoker;
+            if (invoker == null)
+            {
+                throw new NullReferenceException("invoker is null");
+            }
+            var result = invoker.Invoke(parameters);
+            var response = Utilities.Serializer.Serialize(result, false)!;
+            return response!;
         }
+
+
+#endif
+
+
 
         /// <summary>
         /// List all methods in simplied string format 
@@ -352,27 +381,9 @@ namespace MATSys
         /// Configurae IModule instance with object 
         /// </summary>
         /// <param name="option">configuration object</param>
-        public void Configure(object? option)
+        public virtual void Configure(object? option)
         {
-            if (option != null)
-            {
-                if (typeof(IConfigurationSection).IsAssignableFrom(option.GetType()))
-                {
-                    _config = (IConfigurationSection)option;
-                    Load(_config);
-                }
-                else
-                    Load(option);
-            }
-#if NET8_0_OR_GREATER
-            cmds = ListMATSysCommands().ToFrozenDictionary();
-#elif NET6_0_OR_GREATER || NETSTANDARD2_0
-            cmds = new ReadOnlyDictionary<string, MATSysContext>(ListMATSysCommands());
-#else
-            cmds = new Dictionary<string, MATSysContext>(ListMATSysCommands());
-#endif
-            _logger = LogManager.GetCurrentClassLogger();
-
+            
         }
         /// <summary>
         /// Inject the IRecorder instance into IModule instance
