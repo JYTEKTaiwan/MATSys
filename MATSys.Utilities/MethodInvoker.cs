@@ -97,7 +97,7 @@ namespace MATSys.Utilities
             var isNullReturn = mi.ReturnType.FullName == "System.Void";
             var parameters = mi.GetParameters().Select(x => x.ParameterType).ToArray();
             parameters = isNullReturn ? parameters : parameters.Concat(new Type[] { mi.ReturnType }).ToArray();
-            switch (parameters.Length)
+            switch (parameters.Length-1)
             {
                 case 0:
                     if (isNullReturn) return typeof(Invoker);
