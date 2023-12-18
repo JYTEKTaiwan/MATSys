@@ -383,13 +383,23 @@ namespace MATSys
 #endif
         private Dictionary<string, MATSysContext> ListMATSysCommands()
         {
-
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
             return GetType().GetMethods()
-               .Where(x => x.GetCustomAttributes(typeof(MATSysCommandAttribute), false).Count() > 0)
+                           .Where(x => x.GetCustomAttributes<MATSysCommandAttribute>().Count() > 0)
+                           .Select(x =>
+                           {
+                               return MATSysContext.Create(this, x);
+                           }).ToDictionary(x => x.MethodName);
+
+#elif NET35
+            return GetType().GetMethods()
+               .Where(x => x.GetCustomAttributes(typeof(MATSysCommandAttribute),true).Count() > 0)
                .Select(x =>
                {
                    return MATSysContext.Create(this, x);
                }).ToDictionary(x => x.MethodName);
+        
+#endif
         }
         /// <summary>
         /// Event when new request is received

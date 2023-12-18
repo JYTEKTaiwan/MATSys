@@ -1,4 +1,7 @@
+using Grpc.Core;
+using MATSys.Hosting;
 using MATSys.Hosting.Grpc;
+using Microsoft.AspNetCore.Mvc;
 using ProtoBuf;
 using ProtoBuf.Grpc;
 using System.ServiceModel;
@@ -18,16 +21,25 @@ public class GreeterService : IGreeterService
 
     public async Task<HelloReply> SayHelloAsync(HelloRequest request, CallContext context)
     {
+
         return await Task.Run(async () =>
         {
             var a = _provider.GetModule("Dev1");
-            var cmd = CommandConverter.Convert(request);
+             var cmd = CommandConverter.Convert(request);
             var reply = new HelloReply() { Message = await a.ExecuteAsync(cmd) };
             return reply;
         });
         // return Task.FromResult(new HelloReply(){Message="A"});
     }
 
+    //public async Task SayHelloStreamAsync(HelloRequest request, IServerStreamWriter<HelloReply> responseStream, CallContext context = default)
+    //{
+    //    for (int i = 0; i < 5; i++)
+    //    {
+    //        await responseStream.WriteAsync(new HelloReply() { Message = i.ToString() });
+    //    }
+        
+    //}
 }
 
 [ProtoContract]
@@ -53,4 +65,12 @@ public partial interface IGreeterService
     [OperationContract]
     Task<HelloReply> SayHelloAsync(HelloRequest request,
         CallContext context = default);
+
+    //[OperationContract]
+    //Task SayHelloStreamAsync(HelloRequest request, IServerStreamWriter<HelloReply> responseStream,
+    //    CallContext context = default);
+
+
+
+
 }
