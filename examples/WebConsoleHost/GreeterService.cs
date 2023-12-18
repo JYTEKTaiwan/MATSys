@@ -4,6 +4,7 @@ using MATSys.Hosting.Grpc;
 using Microsoft.AspNetCore.Mvc;
 using ProtoBuf;
 using ProtoBuf.Grpc;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace WebConsoleHost;
@@ -29,17 +30,15 @@ public class GreeterService : IGreeterService
             var reply = new HelloReply() { Message = await a.ExecuteAsync(cmd) };
             return reply;
         });
-        // return Task.FromResult(new HelloReply(){Message="A"});
     }
 
-    //public async Task SayHelloStreamAsync(HelloRequest request, IServerStreamWriter<HelloReply> responseStream, CallContext context = default)
-    //{
-    //    for (int i = 0; i < 5; i++)
-    //    {
-    //        await responseStream.WriteAsync(new HelloReply() { Message = i.ToString() });
-    //    }
-        
-    //}
+    public async IAsyncEnumerable<HelloReply> StreamCall(HelloRequest request, CallContext context = default)
+    {
+        for (var i = 0;i<int.Parse(request.Name);i++)
+        {
+            yield return new HelloReply() { Message = i.ToString() };
+        }
+    }
 }
 
 [ProtoContract]
@@ -66,9 +65,9 @@ public partial interface IGreeterService
     Task<HelloReply> SayHelloAsync(HelloRequest request,
         CallContext context = default);
 
-    //[OperationContract]
-    //Task SayHelloStreamAsync(HelloRequest request, IServerStreamWriter<HelloReply> responseStream,
-    //    CallContext context = default);
+    [OperationContract]
+    IAsyncEnumerable<HelloReply> StreamCall(HelloRequest request,
+        CallContext context = default);
 
 
 
