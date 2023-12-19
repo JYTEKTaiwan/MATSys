@@ -37,12 +37,15 @@ public sealed class CommandConverter
             //check if input is MATSysCommandContractAttribute          
             var name_attr = GetContractAttribute(t);
             var name = name_attr.MethodName;
-
-            //get the properties marked with MATSysCommandOrderAttibutes, and re-order it
-            var props = t.GetProperties()
-            .Where(x => x.GetCustomAttributes<MATSysCommandOrderAttribute>().Count() != 0)
-            .OrderBy(x => x.GetCustomAttribute<MATSysCommandOrderAttribute>()!.Order).ToList();
-
+            var props = t.GetProperties();
+            var hasOrderAttr = props.Any(x => x.GetCustomAttributes<MATSysCommandOrderAttribute>().Count() > 0);
+            if (hasOrderAttr| !CheckIfRecordType(t))
+            {
+                props = props
+                    .Where(x => x.GetCustomAttributes<MATSysCommandOrderAttribute>().Count() != 0)
+                    .OrderBy(x => x.GetCustomAttribute<MATSysCommandOrderAttribute>()!.Order).ToArray();
+            }
+            
             //Get the method that matches the count of properties
             var mi = m_infos.Value.First(x => x.GetGenericArguments().Count() == props.Count());
 
@@ -50,7 +53,7 @@ public sealed class CommandConverter
             object[] p_name = new object[] { name };
 
             //return Command instance if no arguments is required
-            if (props.Count == 0) return (mi.Invoke(null, p_name) as ICommand)!;
+            if (props.Count() == 0) return (mi.Invoke(null, p_name) as ICommand)!;
             else
             {
                 // if arguments count is larger than 0, assign the generic method and dynamically create the Command
@@ -59,6 +62,8 @@ public sealed class CommandConverter
                 var param = p_name.Concat(p_rest).ToArray();
                 return (mi.MakeGenericMethod(types).Invoke(null, param) as ICommand)!;
             }
+
+
         }
         catch (Exception)
         {
@@ -67,4 +72,8 @@ public sealed class CommandConverter
 
 
     }
+
+    private static bool CheckIfRecordType(Type t)
+        => ((TypeInfo)t).DeclaredProperties.Any(x => x.Name == "EqualityContract");
+
 }
