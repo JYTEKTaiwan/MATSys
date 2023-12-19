@@ -11,9 +11,11 @@ namespace net35TestConsole
         {
             
             var mod = new TestDevice();
-            
-            var aa = mod.ExecuteCommandString("{\"Delay\":[1000]}");
 
+            //var aa = mod.ExecuteCommandString("{\"Delay\":[1000]}");
+
+            var aa = mod.Execute(CommandConverter.Convert(new CMD() { delay = 3000 }));
+            
             Console.WriteLine(aa);
 
             
@@ -22,6 +24,12 @@ namespace net35TestConsole
         }
     }
 
+    [MATSysCommandContract("Delay")]
+    public class CMD
+    {
+        [MATSysCommandOrder(0)]
+        public int delay { get; set; }
+    }
     internal class TestDevice : ModuleBase
     {
 

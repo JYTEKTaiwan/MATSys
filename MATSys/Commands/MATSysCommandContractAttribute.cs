@@ -1,4 +1,4 @@
-﻿namespace MATSys.Hosting.Grpc;
+﻿namespace MATSys.Commands;
 
 
 /// <summary>

@@ -2,6 +2,7 @@
 using MATSys.Hosting.Grpc;
 using System.Diagnostics;
 using System.Reflection;
+using MATSys.Commands;
 
 Console.WriteLine("Hello, World!");
 
@@ -9,6 +10,11 @@ var obj = new B(2.4,1 );
 var obj2 = new C(5,9.6);
 var b = CommandConverter.Convert(new A());
 Console.WriteLine(b.Serialize());
+b = CommandConverter.Convert(obj);
+Console.WriteLine(b.Serialize());
+b = CommandConverter.Convert(obj2);
+Console.WriteLine(b.Serialize());
+
 //var sw = new Stopwatch();
 //sw.Restart();
 //for (int i = 0; i < 1000; i++)
