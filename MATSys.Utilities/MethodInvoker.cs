@@ -95,35 +95,35 @@ namespace MATSys.Utilities
         private static Type GetInvokerType(MethodInfo mi)
         {
             var isNullReturn = mi.ReturnType.FullName == "System.Void";
-            var parameters = mi.GetParameters().Select(x => x.ParameterType).ToArray();
-            parameters = isNullReturn ? parameters : parameters.Concat(new Type[] { mi.ReturnType }).ToArray();
-            switch (parameters.Length-1)
-            {
-                case 0:
+            var param = mi.GetParameters().Select(x => x.ParameterType).ToArray();
+            var paramWithReturn = isNullReturn ? param : param.Concat(new Type[] { mi.ReturnType }).ToArray();
+            switch (param.Length)
+            {                
+                case 0:                    
                     if (isNullReturn) return typeof(Invoker);
-                    else return typeof(InvokerWithReturn<>).MakeGenericType(parameters);
+                    else return typeof(InvokerWithReturn<>).MakeGenericType(paramWithReturn);
                 case 1:
-                    if (isNullReturn) return typeof(Invoker<>).MakeGenericType(parameters);
-                    else return typeof(InvokerWithReturn<,>).MakeGenericType(parameters);
+                    if (isNullReturn) return typeof(Invoker<>).MakeGenericType(param);
+                    else return typeof(InvokerWithReturn<,>).MakeGenericType(paramWithReturn);
                 case 2:
-                    if (isNullReturn) return typeof(Invoker<,>).MakeGenericType(parameters);
-                    else return typeof(InvokerWithReturn<,,>).MakeGenericType(parameters);
+                    if (isNullReturn) return typeof(Invoker<,>).MakeGenericType(param);
+                    else return typeof(InvokerWithReturn<,,>).MakeGenericType(paramWithReturn);
                 case 3:
-                    if (isNullReturn) return typeof(Invoker<,,>).MakeGenericType(parameters);
-                    else return typeof(InvokerWithReturn<,,,>).MakeGenericType(parameters);
+                    if (isNullReturn) return typeof(Invoker<,,>).MakeGenericType(param);
+                    else return typeof(InvokerWithReturn<,,,>).MakeGenericType(paramWithReturn);
                 case 4:
-                    if (isNullReturn) return typeof(Invoker<,,,>).MakeGenericType(parameters);
-                    else return typeof(InvokerWithReturn<,,,,>).MakeGenericType(parameters);
+                    if (isNullReturn) return typeof(Invoker<,,,>).MakeGenericType(param);
+                    else return typeof(InvokerWithReturn<,,,,>).MakeGenericType(paramWithReturn);
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
                 case 5:
-                    if (isNullReturn) return typeof(Invoker<,,,,>).MakeGenericType(parameters);
-                    else return typeof(InvokerWithReturn<,,,,,>).MakeGenericType(parameters);
+                    if (isNullReturn) return typeof(Invoker<,,,,>).MakeGenericType(param);
+                    else return typeof(InvokerWithReturn<,,,,,>).MakeGenericType(paramWithReturn);
                 case 6:
-                    if (isNullReturn) return typeof(Invoker<,,,,,>).MakeGenericType(parameters);
-                    else return typeof(InvokerWithReturn<,,,,,,>).MakeGenericType(parameters);
+                    if (isNullReturn) return typeof(Invoker<,,,,,>).MakeGenericType(param);
+                    else return typeof(InvokerWithReturn<,,,,,,>).MakeGenericType(paramWithReturn);
                 case 7:
-                    if (isNullReturn) return typeof(Invoker<,,,,,,>).MakeGenericType(parameters);
-                    else return typeof(InvokerWithReturn<,,,,,,,>).MakeGenericType(parameters);
+                    if (isNullReturn) return typeof(Invoker<,,,,,,>).MakeGenericType(param);
+                    else return typeof(InvokerWithReturn<,,,,,,,>).MakeGenericType(paramWithReturn);
 #endif
                 default:
                     throw new ArgumentOutOfRangeException("Parameter length is incompatible");
