@@ -20,21 +20,37 @@ public class GreeterService : IGreeterService
 
     }
 
+    public async Task<HelloReply> ClientStreamCall(IAsyncEnumerable<HelloRequest> request, CallContext context = default)
+    {
+        return await Task.Run(async () => 
+        {
+            string txt = "";
+            var ch = request.GetAsyncEnumerator();
+            while (await ch.MoveNextAsync())
+            {
+                var item = ch.Current;
+                txt += item.Name + ";";
+            }
+            return new HelloReply() { Message = txt };
+        });
+        
+    }
+
     public async Task<HelloReply> SayHelloAsync(HelloRequest request, CallContext context)
     {
 
         return await Task.Run(async () =>
         {
             var a = _provider.GetModule("Dev1");
-             var cmd = CommandConverter.Convert(request);
+            var cmd = CommandConverter.Convert(request);
             var reply = new HelloReply() { Message = await a.ExecuteAsync(cmd) };
             return reply;
         });
     }
 
-    public async IAsyncEnumerable<HelloReply> StreamCall(HelloRequest request, CallContext context = default)
+    public async IAsyncEnumerable<HelloReply> ServerStreamCall(HelloRequest request, CallContext context = default)
     {
-        for (var i = 0;i<int.Parse(request.Name);i++)
+        for (var i = 0; i < int.Parse(request.Name); i++)
         {
             yield return new HelloReply() { Message = i.ToString() };
         }
@@ -66,9 +82,12 @@ public partial interface IGreeterService
         CallContext context = default);
 
     [OperationContract]
-    IAsyncEnumerable<HelloReply> StreamCall(HelloRequest request,
+    IAsyncEnumerable<HelloReply> ServerStreamCall(HelloRequest request,
         CallContext context = default);
 
+    [OperationContract]
+    Task<HelloReply> ClientStreamCall(IAsyncEnumerable<HelloRequest> request,
+    CallContext context = default);
 
 
 
