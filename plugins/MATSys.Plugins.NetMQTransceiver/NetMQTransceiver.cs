@@ -115,6 +115,7 @@ namespace MATSys.Plugins
 
         public void Configure(object? config)
         {
+            if (config == null) return;
             if (typeof(IConfigurationSection).IsAssignableFrom(config.GetType()))
                 Load((IConfigurationSection)config);
             else Load(config);

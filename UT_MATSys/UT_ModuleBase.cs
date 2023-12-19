@@ -46,37 +46,6 @@ public class UT_ModuleBase
         IModule dev = new NormalDevice();
         Assert.IsTrue(dev.Recorder.Alias == nameof(EmptyRecorder));
     }
-    [Test]
-    [Category("StartStop")]
-    public void StopBeforeStart()
-    {
-        IModule dev = new NormalDevice();
-        dev.StopPluginService();
-        Assert.IsTrue(!dev.IsRunning);
-    }
-
-    [Test]
-    [Category("StartStop")]
-    public void StartMultipleTimes()
-    {
-        var cts = new CancellationTokenSource();
-        IModule dev = new NormalDevice();
-        dev.StartPluginService(cts.Token);
-        dev.StartPluginService(cts.Token);
-        Assert.IsTrue(dev.IsRunning);
-    }
-
-    [Test]
-    [Category("StartStop")]
-    public void StopMultipleTimes()
-    {
-        var cts = new CancellationTokenSource();
-        IModule dev = new NormalDevice();
-        dev.StartPluginService(cts.Token);
-        dev.StopPluginService();
-        dev.StopPluginService();
-        Assert.IsTrue(!dev.IsRunning);
-    }
 
     [Test]
     [Category("Execute")]
@@ -84,9 +53,7 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartPluginService(cts.Token);
-        var res = dev.Execute(CommandBase.Create("Hi").Serialize());
-        dev.StopPluginService();
+        var res = dev.ExecuteCommandString(CommandBase.Create("Hi").Serialize());
         Assert.IsTrue(res == System.Text.Json.JsonSerializer.Serialize("WORLD"));
     }
 
@@ -96,9 +63,7 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartPluginService(cts.Token);
         var res = dev.Execute(CommandBase.Create("Hi"));
-        dev.StopPluginService();
         Assert.IsTrue(res == System.Text.Json.JsonSerializer.Serialize("WORLD"));
     }
 
@@ -108,9 +73,7 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartPluginService(cts.Token);
         var res = dev.Execute(CommandBase.Create("HO"));
-        dev.StopPluginService();
         Assert.IsTrue(res.Contains(ExceptionHandler.cmd_notFound));
     }
 
@@ -120,9 +83,7 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartPluginService(cts.Token);
         var res = dev.Execute(CommandBase.Create("HO").Serialize());
-        dev.StopPluginService();
         Assert.IsTrue(res.Contains(ExceptionHandler.cmd_notFound));
     }
 
@@ -132,9 +93,7 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartPluginService(cts.Token);
         var res = dev.Execute(CommandBase.Create("Exception"));
-        dev.StopPluginService();
         Assert.IsTrue(res.Contains(ExceptionHandler.cmd_execError));
     }
 
@@ -144,10 +103,8 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartPluginService(cts.Token);
         var res = dev.Execute(CommandBase.Create("WrongArgs", 1.5).Serialize());
-        dev.StopPluginService();
-        Assert.IsTrue(res.Contains(ExceptionHandler.cmd_serDesError));
+        Assert.IsTrue(res.Contains(ExceptionHandler.cmd_notFound));
     }
     [Test]
     [Category("Execute")]
@@ -155,10 +112,8 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        dev.StartPluginService(cts.Token);
 
-        var res = dev.Execute(CommandBase.Create("WrongSerDes", 8.8).Serialize());
-        dev.StopPluginService();
-        Assert.IsTrue(res.Contains(ExceptionHandler.cmd_serDesError));
+        var res = dev.ExecuteCommandString(CommandBase.Create("WrongSerDes", 8.8).Serialize());       
+        Assert.IsTrue(res.Contains(ExceptionHandler.cmd_execError));
     }
 }

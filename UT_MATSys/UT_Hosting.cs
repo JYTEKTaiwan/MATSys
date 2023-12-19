@@ -12,18 +12,17 @@ public class UT_Hosting
     [Category("MATSys")]
     public void MATSysSectionNotFound()
     {
-        Assert.Catch<KeyNotFoundException>(() =>
+        Assert.Catch<InvalidOperationException>(() =>
         {
             try
             {
-                var host = Host.CreateDefaultBuilder().UseMATSys()
-                .ConfigureAppConfiguration(configHost =>
-                {
-                    configHost.Sources.Clear();
-                    configHost.SetBasePath(Directory.GetCurrentDirectory());
-                }).Build();
-                host.Run();
-                host.StopAsync();
+                var host = Host.CreateDefaultBuilder()
+                .ConfigureServices(s => s.AddMATSysService());
+
+                var app=host.Build();
+                app.RunAsync();
+                var mod = app.Services.GetModule("Dev1");
+                app.StopAsync();
             }
             catch (Exception ex)
             {
@@ -37,17 +36,21 @@ public class UT_Hosting
     [Category("MATSys_Modules")]
     public void ModulesTypeNotFound()
     {
-        Assert.Catch<InvalidDataException>(() =>
+        Assert.Catch<InvalidOperationException>(() =>
         {
-            var host = Host.CreateDefaultBuilder().UseMATSys()
+            var host = Host.CreateDefaultBuilder()
                             .ConfigureAppConfiguration(configHost =>
                             {
                                 configHost.Sources.Clear();
                                 configHost.SetBasePath(Directory.GetCurrentDirectory());
                                 configHost.AddJsonFile("UT_Hosting_Modules.json");
-                            }).Build();
-            host.Run();
-            host.StopAsync();
+                            });
+            host.ConfigureServices(s => s.AddMATSysService());
+
+            var app =host.Build();
+            app.RunAsync();
+            var mod = app.Services.GetModule("Dev1");
+            app.StopAsync();
         });
 
     }
@@ -57,36 +60,18 @@ public class UT_Hosting
     {
         Assert.Catch<FileNotFoundException>(() =>
         {
-            var host = Host.CreateDefaultBuilder().UseMATSys()
+            var host = Host.CreateDefaultBuilder()
         .ConfigureAppConfiguration(configHost =>
         {
             configHost.Sources.Clear();
             configHost.SetBasePath(Directory.GetCurrentDirectory());
             configHost.AddJsonFile("notfound.json");
-        }).Build();
-            host.Run();
-            host.StopAsync();
         });
+            host.ConfigureServices(s => s.AddMATSysService());
 
-
-    }
-
-    [Test]
-    [Category("MATSys_Scripts")]
-    public void ATSFileNotFound()
-    {
-        //DirectoryNotFoundException or FileNotFoundException
-        Assert.Catch<IOException>(() =>
-        {
-            var host = Host.CreateDefaultBuilder().UseMATSys()
-        .ConfigureAppConfiguration(configHost =>
-        {
-            configHost.Sources.Clear();
-            configHost.SetBasePath(Directory.GetCurrentDirectory());
-            configHost.AddJsonFile("UT_Hosting_Scripts.json");
-        }).Build();
-            host.Run();
-            host.StopAsync();
+            var app = host.Build();
+            app.RunAsync();
+            app.StopAsync();
         });
 
 

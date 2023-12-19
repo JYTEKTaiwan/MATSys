@@ -431,7 +431,7 @@ namespace MATSys
             {
                 _logger?.Warn(ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, commandObjectInJson);
-            }
+            }            
             catch (Exception ex)
             {
                 _logger?.Error(ex);

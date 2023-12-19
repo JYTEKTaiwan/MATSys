@@ -8,10 +8,6 @@ namespace UT_MATSys;
 public class NormalDevice : ModuleBase
 {
 
-    public override void Load(IConfigurationSection section)
-    {
-    }
-
     [MATSysCommand("Hi")]
     public string Hello()
     {
@@ -35,8 +31,5 @@ public class NormalDevice : ModuleBase
     {
     }
 
-    public override void Load(object configuration)
-    {
-    }
 }
 
