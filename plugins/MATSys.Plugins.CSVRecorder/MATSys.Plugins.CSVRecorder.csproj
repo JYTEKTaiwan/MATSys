@@ -10,17 +10,13 @@
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<Authors>Way Lin</Authors>
 		<Company>JYTEK TAIWAN CORP.</Company>
-		<PackageIcon>JYTek.png</PackageIcon>
+		<PackageIcon></PackageIcon>
 		<Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
 		<VersionPrefix>1.0.2</VersionPrefix>
 		<EnableDynamicLoading>true</EnableDynamicLoading>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Include="..\..\icon\JYTek.png" Link="JYTek.png">
-			<PackagePath>\</PackagePath>
-			<Pack>True</Pack>
-		</None>
 		<ProjectReference Include="..\..\MATSys.Hosting\MATSys.Hosting.csproj" />
 		<ProjectReference Include="..\..\MATSys\MATSys.csproj">
 		<Private>false</Private>

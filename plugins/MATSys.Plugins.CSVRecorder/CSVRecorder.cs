@@ -35,7 +35,7 @@ namespace MATSys.Plugins
             _logger.Info("CSVRecorder initiated");
         }
 
-        public void Load(object configuration)
+        private void Load(object configuration)
         {
             _config = (configuration as CSVRecorderConfiguration) ?? CSVRecorderConfiguration.Default;
             _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
@@ -119,11 +119,18 @@ namespace MATSys.Plugins
         {
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
+        public void Configure(object? config)
+        {
+            if (typeof(IConfigurationSection).IsAssignableFrom(config.GetType()))
+                Load((IConfigurationSection)config);
+            else Load(config);
+        }
 
         public void Dispose()
         {
             StopBackgroundRecording();
         }
+
     }
     /// <summary>
     /// Configuration definition for CSVRecorder

@@ -10,18 +10,11 @@
 	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	  <Authors>Way Lin</Authors>
 	  <Company>JYTEK TAIWAN CORP.</Company>
-	  <PackageIcon>JYTek.png</PackageIcon>
+	  <PackageIcon></PackageIcon>
 	  <Copyright>Copyright © 2019-2022 JYTEK TAIWAN CORP.</Copyright>
 		<EnableDynamicLoading>true</EnableDynamicLoading>
 	  <VersionPrefix>1.0.2</VersionPrefix>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\..\icon\JYTek.png" Link="JYTek.png">
-      <PackagePath>\</PackagePath>
-      <Pack>True</Pack>
-    </None>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="NetMQ" Version="4.0.1.10" />

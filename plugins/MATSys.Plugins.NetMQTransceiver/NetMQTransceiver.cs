@@ -75,7 +75,7 @@ namespace MATSys.Plugins
             _isRunning = false;
         }
 
-        public void Load(IConfigurationSection section)
+        private void Load(IConfigurationSection section)
         {
             _config = section.Get<NetMQTransceiverConfiguration>();
             if (!_isRunning)
@@ -87,7 +87,7 @@ namespace MATSys.Plugins
             _logger.Info("NetMQTransceiver is initiated");
         }
 
-        public void Load(object configuration)
+        private void Load(object configuration)
         {
             _config = (NetMQTransceiverConfiguration)configuration;
             if (!_isRunning)
@@ -111,6 +111,13 @@ namespace MATSys.Plugins
         public void Dispose()
         {
             StopListening();
+        }
+
+        public void Configure(object? config)
+        {
+            if (typeof(IConfigurationSection).IsAssignableFrom(config.GetType()))
+                Load((IConfigurationSection)config);
+            else Load(config);
         }
     }
 

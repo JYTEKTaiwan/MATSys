@@ -67,7 +67,7 @@ namespace MATSys.Plugins
             }
         }
 
-        public void Load(IConfigurationSection section)
+        private void Load(IConfigurationSection section)
         {
             _config = section.Get<NetMQNotifierConfiguration>();
             _logger = _config!.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger(); ;
@@ -75,11 +75,17 @@ namespace MATSys.Plugins
             _logger.Info("NetMQNotifier is initiated");
         }
 
-        public void Load(object configuration)
+        private void Load(object configuration)
         {
             _config = (NetMQNotifierConfiguration)configuration;
             _logger = _config.EnableLogging ? NLog.LogManager.GetCurrentClassLogger() : NLog.LogManager.CreateNullLogger();
             _logger.Info("NetMQNotifier is initiated");
+        }
+        public void Configure(object? config)
+        {
+            if (typeof(IConfigurationSection).IsAssignableFrom(config.GetType()))
+                Load((IConfigurationSection)config);
+            else Load(config);
         }
 
         public object GetData(int timeoutInMilliseconds)

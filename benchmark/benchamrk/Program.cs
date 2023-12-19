@@ -3,6 +3,7 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using MATSys;
 using MATSys.Commands;
+using MATSys.Factories;
 using MATSys.Utilities;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -48,7 +49,7 @@ public class InvokerBenchmark
     public void UnsafeAccessor()
     {
 #if NET8_0_OR_GREATER
-        SayHello(name);
+        SayHello(data,name);
 #endif
     }
 

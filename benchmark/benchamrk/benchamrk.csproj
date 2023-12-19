@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\MATSys.Hosting\MATSys.Hosting.csproj" />
     <ProjectReference Include="..\..\MATSys.Utilities\MATSys.Utilities.csproj" />
     <ProjectReference Include="..\..\MATSys\MATSys.csproj" />
   </ItemGroup>
