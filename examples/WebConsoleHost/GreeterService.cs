@@ -6,6 +6,8 @@ using ProtoBuf;
 using ProtoBuf.Grpc;
 using System.Collections.Generic;
 using System.ServiceModel;
+using MATSys.Commands;
+
 
 namespace WebConsoleHost;
 
