@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
+using System;
 using System.Data;
 
 namespace MATSys.Factories
@@ -19,13 +20,14 @@ namespace MATSys.Factories
         private readonly INotifierFactory _notifierFactory;
         private readonly IRecorderFactory _recorderFactory;
         private readonly static NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
-
+        private readonly IServiceProvider _serviceprovider;
         /// <summary>
         /// Ctor
         /// </summary>
         /// <param name="provider">service provide from host</param>
         public ModuleFactory(IServiceProvider provider)
         {
+            _serviceprovider = provider;
             _transceiverFactory = provider.GetRequiredService<ITransceiverFactory>();
             _notifierFactory = provider.GetRequiredService<INotifierFactory>();
             _recorderFactory = provider.GetRequiredService<IRecorderFactory>();
@@ -69,6 +71,7 @@ namespace MATSys.Factories
                 {
                     var obj = (IModule)instance;
                     obj.Alias = alias;
+                    obj.SetProvider(_serviceprovider);
                     obj.Configure(section);
                     obj.InjectPlugin(rec);
                     obj.InjectPlugin(noti);

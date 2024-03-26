@@ -19,7 +19,7 @@ namespace MATSys
         private IRecorder _recorder = new EmptyRecorder();
         private INotifier _notifier = new EmptyNotifier();
         private volatile bool _isRunning = false;
-
+        private IServiceProvider _provider;
 #if NET8_0_OR_GREATER
         private FrozenDictionary<string, MATSysContext> cmds = null!;
 #elif NET6_0_OR_GREATER || NETSTANDARD2_0
@@ -44,7 +44,7 @@ namespace MATSys
         /// Instance of current ModuleBase instance
         /// </summary>
         public IModule Base => this;
-
+        public IServiceProvider Provider => _provider;
         /// <summary>
         /// ILogger instance
         /// </summary>
@@ -321,6 +321,10 @@ namespace MATSys
         /// <param name="notifier">INotifier instance </param>
         public void InjectPlugin(INotifier? notifier) => _notifier = notifier == null ? _notifier : notifier;
 
+        public void SetProvider(IServiceProvider provider)
+        {
+            _provider = provider;
+        }
         #endregion
 
         #region Private methods

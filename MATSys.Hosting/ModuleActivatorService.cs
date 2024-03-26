@@ -3,11 +3,12 @@ using MATSys.Factories;
 using MATSys.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 /// <summary>
 /// Handler for the modules in the host
 /// </summary>
-public class ModuleActivatorService
+public class ModuleActivatorService:IHostedService
 {
     private readonly Dictionary<string, IConfigurationSection> _modConfigurations;
     private readonly IModuleFactory _moduleFactory;
@@ -54,5 +55,22 @@ public class ModuleActivatorService
         if (sender != null) _modules.Remove(((IModule)sender).Alias);
     }
 
+
+    public Task StartAsync(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
+
+    public Task StopAsync(CancellationToken cancellationToken)
+    {
+        return Task.Run(() => 
+        {
+            foreach (var item in _modules)
+            {
+                item.Value.Dispose();
+            }
+            _modules.Clear();
+        });
+    }
 }
 

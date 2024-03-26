@@ -43,6 +43,7 @@
         /// </summary>
         IModule Base { get; }
 
+        IServiceProvider Provider { get; }
         /// <summary>
         /// Execute the assigned command
         /// </summary>
@@ -88,6 +89,9 @@
         /// </summary>
         /// <param name="notifier">INotifier instance </param>
         void InjectPlugin(INotifier notifier);
+
+        void SetProvider(IServiceProvider provider);
+
         /// <summary>
         /// Print all commands that is marked with MATSysCommandAttribute
         /// </summary>

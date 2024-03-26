@@ -1,6 +1,7 @@
 ﻿using MATSys.Factories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 
@@ -23,7 +24,7 @@ namespace MATSys.Hosting
                    .AddSingleton<INotifierFactory, NotifierFactory>()
                    .AddSingleton<ITransceiverFactory, TransceiverFactory>()
                    .AddSingleton<IModuleFactory, ModuleFactory>()
-                   .AddSingleton<ModuleActivatorService>();
+                   .AddHostedService<ModuleActivatorService>();
 
         /// <summary>
         /// Inject NLog service into logger builder in host
@@ -79,13 +80,13 @@ namespace MATSys.Hosting
         /// <param name="provider">service provider</param>
         /// <param name="alias">alias name</param>        
         /// <returns>IModule implementation</returns>
-        public static IModule GetModule(this IServiceProvider provider, string alias) => provider.GetRequiredService<ModuleActivatorService>().GetModule(alias);
+        public static IModule GetModule(this IServiceProvider provider, string alias) => provider.GetServices<IHostedService>().OfType<ModuleActivatorService>().Single().GetModule(alias);
 
         /// <summary>
         /// List all the active modules in the memory
         /// </summary>                
         /// <returns>Collection of <see cref="IModule"/> </returns>
-        public static IModule[] GetModules(this IServiceProvider provider) => provider.GetRequiredService<ModuleActivatorService>().ActiveModules;
+        public static IModule[] GetModules(this IServiceProvider provider) => provider.GetServices<IHostedService>().OfType<ModuleActivatorService>().Single().ActiveModules;
 
 
 
