@@ -446,7 +446,7 @@ namespace MATSys
         /// <summary>
         /// Dispose the instance and call GC
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             _notifier.Dispose();
             _transceiver.Dispose();
