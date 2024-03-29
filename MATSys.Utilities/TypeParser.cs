@@ -21,6 +21,10 @@ public static class TypeParser
             // 1.y if existed, get the type directly and overrider the variable t
             // 1.n if not, dynamically load the assembly from the section "AssemblyPath" and search for the type
             var typeName = Assembly.CreateQualifiedName(type, type).Split(',')[0];
+            var t=AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).FirstOrDefault(x => x.FullName == typeName);
+            if (t != null) return t;
+
+            /*
             //search entry assembly
             var t = Assembly.GetEntryAssembly()!.GetTypes().FirstOrDefault(x => x.FullName == typeName);
             if (t != null) return t;
@@ -30,7 +34,10 @@ public static class TypeParser
             //search calling assembly
             t = Assembly.GetCallingAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
             if (t != null) return t;
+            */
+
             //search external assembly (from file)
+
             t = DynamicLibraryLoader.LoadPluginAssemblies(extAssemPath).First().GetType(type);
             return t;
 
