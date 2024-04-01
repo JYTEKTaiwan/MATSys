@@ -2,7 +2,7 @@
 
 namespace MockModulesLibrary
 {
-    public class MockModule1:ModuleBase
+    public class MockModule1 : ModuleBase
     {
 
     }

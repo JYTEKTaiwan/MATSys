@@ -1,13 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using MATSys.Hosting.Grpc;
-using System.Diagnostics;
-using System.Reflection;
 using MATSys.Commands;
 
 Console.WriteLine("Hello, World!");
 
-var obj = new B(2.4,1 );
-var obj2 = new C(5,9.6);
+var obj = new B(2.4, 1);
+var obj2 = new C(5, 9.6);
 var b = CommandConverter.Convert(new A());
 Console.WriteLine(b.Serialize());
 b = CommandConverter.Convert(obj);
@@ -30,7 +27,7 @@ Console.WriteLine("!");
 Console.WriteLine();
 
 [MATSysCommandContract("AC")]
-public record C(int v3,double v1);
+public record C(int v3, double v1);
 
 [MATSysCommandContract("A")]
 public record B

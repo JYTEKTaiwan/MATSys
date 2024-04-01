@@ -3,7 +3,6 @@ using MATSys.Utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
-using System;
 using System.Data;
 
 namespace MATSys.Factories

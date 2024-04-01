@@ -39,7 +39,7 @@ namespace MATSys.Hosting
         /// <param name="configBuilder">configuration builder </param>
         /// <returns>IConfigurationBuilder</returns>
         public static IConfigurationBuilder AddConfigurationInMATSys(this IConfigurationBuilder configBuilder)
-        {            
+        {
             var config = new ConfigurationBuilder()
             //.AddEnvironmentVariables()
             .AddJsonFile("appsettings.json", optional: true)
@@ -55,7 +55,7 @@ namespace MATSys.Hosting
         /// <returns></returns>
         public static IConfiguration GetConfigurationRoot(this IServiceProvider provider)
         => provider.GetRequiredService<IConfiguration>();
-        
+
         /// <summary>
         /// Get the specified section of the configuration in the host
         /// </summary>
@@ -64,9 +64,9 @@ namespace MATSys.Hosting
         /// <returns></returns>
         public static IConfigurationSection GetConfigurationSection(this IServiceProvider provider, string sectionKey)
         => provider.GetRequiredService<IConfiguration>().GetSection(sectionKey);
-        
 
-       
+
+
 
         /// <summary>
         /// Get the module from the host using alias name 

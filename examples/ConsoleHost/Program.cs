@@ -25,7 +25,7 @@ namespace ConsoleHost
             a.ExecuteAsync("Delay", 3000);
             a.ExecuteAsync("Delay", 1000);
             Console.WriteLine(a.Alias);
-            
+
             Thread.Sleep(5000);
             host.StopAsync();
 

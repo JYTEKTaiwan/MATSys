@@ -1,7 +1,6 @@
 global using NUnit.Framework;
 using MATSys;
 using MATSys.Commands;
-using Microsoft.Extensions.Configuration;
 
 namespace UT_MATSys;
 

@@ -49,7 +49,7 @@ public class InvokerBenchmark
     public void UnsafeAccessor()
     {
 #if NET8_0_OR_GREATER
-        SayHello(data,name);
+        SayHello(data, name);
 #endif
     }
 

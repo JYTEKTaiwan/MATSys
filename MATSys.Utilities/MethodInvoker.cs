@@ -98,8 +98,8 @@ namespace MATSys.Utilities
             var param = mi.GetParameters().Select(x => x.ParameterType).ToArray();
             var paramWithReturn = isNullReturn ? param : param.Concat(new Type[] { mi.ReturnType }).ToArray();
             switch (param.Length)
-            {                
-                case 0:                    
+            {
+                case 0:
                     if (isNullReturn) return typeof(Invoker);
                     else return typeof(InvokerWithReturn<>).MakeGenericType(paramWithReturn);
                 case 1:

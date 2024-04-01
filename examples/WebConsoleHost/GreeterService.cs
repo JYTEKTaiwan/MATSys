@@ -1,12 +1,8 @@
-using Grpc.Core;
+using MATSys.Commands;
 using MATSys.Hosting;
-using MATSys.Hosting.Grpc;
-using Microsoft.AspNetCore.Mvc;
 using ProtoBuf;
 using ProtoBuf.Grpc;
-using System.Collections.Generic;
 using System.ServiceModel;
-using MATSys.Commands;
 
 
 namespace WebConsoleHost;
@@ -24,7 +20,7 @@ public class GreeterService : IGreeterService
 
     public async Task<HelloReply> ClientStreamCall(IAsyncEnumerable<HelloRequest> request, CallContext context = default)
     {
-        return await Task.Run(async () => 
+        return await Task.Run(async () =>
         {
             string txt = "";
             var ch = request.GetAsyncEnumerator();
@@ -35,7 +31,7 @@ public class GreeterService : IGreeterService
             }
             return new HelloReply() { Message = txt };
         });
-        
+
     }
 
     public async Task<HelloReply> SayHelloAsync(HelloRequest request, CallContext context)

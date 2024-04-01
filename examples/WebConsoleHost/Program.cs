@@ -1,7 +1,7 @@
 ﻿using MATSys;
 using MATSys.Commands;
-using MATSys.Hosting.Grpc;
 using MATSys.Hosting;
+using MATSys.Hosting.Grpc;
 
 namespace WebConsoleHost
 {

@@ -43,7 +43,7 @@ public sealed class CommandConverter
     pi =>
 {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
-        return pi.GetCustomAttributes<MATSysCommandOrderAttribute>().Any();
+    return pi.GetCustomAttributes<MATSysCommandOrderAttribute>().Any();
 #elif NET35
     return pi.GetCustomAttributes(typeof(MATSysCommandOrderAttribute), true).Any();
 #endif
@@ -52,7 +52,7 @@ public sealed class CommandConverter
         pi =>
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
-        return pi.GetCustomAttribute<MATSysCommandOrderAttribute>().Order;
+            return pi.GetCustomAttribute<MATSysCommandOrderAttribute>().Order;
 #elif NET35
             var attr = pi.GetCustomAttributes(typeof(MATSysCommandOrderAttribute), true).First();
             return (attr as MATSysCommandOrderAttribute).Order;

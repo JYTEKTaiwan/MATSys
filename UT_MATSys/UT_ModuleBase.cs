@@ -113,7 +113,7 @@ public class UT_ModuleBase
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
 
-        var res = dev.ExecuteCommandString(CommandBase.Create("WrongSerDes", 8.8).Serialize());       
+        var res = dev.ExecuteCommandString(CommandBase.Create("WrongSerDes", 8.8).Serialize());
         Assert.IsTrue(res.Contains(ExceptionHandler.cmd_execError));
     }
 }

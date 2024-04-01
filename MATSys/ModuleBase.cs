@@ -397,12 +397,12 @@ namespace MATSys
 
 #elif NET35
             return GetType().GetMethods()
-               .Where(x => x.GetCustomAttributes(typeof(MATSysCommandAttribute),true).Count() > 0)
+               .Where(x => x.GetCustomAttributes(typeof(MATSysCommandAttribute), true).Count() > 0)
                .Select(x =>
                {
                    return MATSysContext.Create(this, x);
                }).ToDictionary(x => x.MethodName);
-        
+
 #endif
         }
         /// <summary>
@@ -435,7 +435,7 @@ namespace MATSys
             {
                 _logger?.Warn(ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, commandObjectInJson);
-            }            
+            }
             catch (Exception ex)
             {
                 _logger?.Error(ex);

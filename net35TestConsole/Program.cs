@@ -9,16 +9,16 @@ namespace net35TestConsole
     {
         static void Main(string[] args)
         {
-            
+
             var mod = new TestDevice();
 
             //var aa = mod.ExecuteCommandString("{\"Delay\":[1000]}");
 
             var aa = mod.Execute(CommandConverter.Convert(new CMD() { delay = 3000 }));
-            
+
             Console.WriteLine(aa);
 
-            
+
             Console.ReadKey();
 
         }

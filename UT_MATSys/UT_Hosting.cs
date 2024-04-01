@@ -19,7 +19,7 @@ public class UT_Hosting
                 var host = Host.CreateDefaultBuilder()
                 .ConfigureServices(s => s.AddMATSysService());
 
-                var app=host.Build();
+                var app = host.Build();
                 app.RunAsync();
                 var mod = app.Services.GetModule("Dev1");
                 app.StopAsync();
@@ -47,7 +47,7 @@ public class UT_Hosting
                             });
             host.ConfigureServices(s => s.AddMATSysService());
 
-            var app =host.Build();
+            var app = host.Build();
             app.RunAsync();
             var mod = app.Services.GetModule("Dev1");
             app.StopAsync();

@@ -9,9 +9,9 @@ public class UT_Export
     public void ExportNetMQTransceiver()
     {
         NetMQTransceiverConfiguration config = new NetMQTransceiverConfiguration();
-        config.LocalIP="inproc://127.0.0.1";
+        config.LocalIP = "inproc://127.0.0.1";
         config.Port = 1224;
-        
+
         var tran = TransceiverFactory.CreateNew<NetMQTransceiver>(config);
         var a = tran.Export(true);
     }

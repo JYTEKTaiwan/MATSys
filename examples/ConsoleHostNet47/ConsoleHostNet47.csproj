@@ -210,6 +210,10 @@
       <Project>{0693e8a8-ac63-4e6e-9d2c-4f53fea64556}</Project>
       <Name>MATSys.Hosting</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MATSys.Utilities\MATSys.Utilities.csproj">
+      <Project>{4609bb0a-4724-467f-b88c-5b05d7a45f56}</Project>
+      <Name>MATSys.Utilities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MATSys\MATSys.csproj">
       <Project>{48e00b53-ecd5-457e-8f06-2d63d1350762}</Project>
       <Name>MATSys</Name>

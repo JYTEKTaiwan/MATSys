@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace MATSys.Commands
+﻿namespace MATSys.Commands
 {
     /// <summary>
     /// Attribute that represent the method information for MATSys to use
@@ -16,7 +14,7 @@ namespace MATSys.Commands
         /// <summary>
         /// Type of the ICommand instance
         /// </summary>
-        public Type? CommandType { get;  }
+        public Type? CommandType { get; }
 
 
         /// <summary>
