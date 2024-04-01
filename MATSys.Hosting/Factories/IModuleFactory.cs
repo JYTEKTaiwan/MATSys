@@ -14,5 +14,7 @@ namespace MATSys.Factories
         /// <returns>IModule instance</returns>
         IModule CreateModule(IConfigurationSection info);
 
+        IModule CreateModule(string alias);
+
     }
 }

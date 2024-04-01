@@ -1,4 +1,5 @@
-﻿using MATSys.Utilities;
+﻿using MATSys.Hosting;
+using MATSys.Utilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
@@ -21,6 +22,8 @@ namespace MATSys.Factories
         private readonly IRecorderFactory _recorderFactory;
         private readonly static NLog.ILogger _logger = LogManager.GetCurrentClassLogger();
         private readonly IServiceProvider _serviceprovider;
+        private readonly Dictionary<string, IConfigurationSection> _modConfigurations;
+
         /// <summary>
         /// Ctor
         /// </summary>
@@ -28,6 +31,7 @@ namespace MATSys.Factories
         public ModuleFactory(IServiceProvider provider)
         {
             _serviceprovider = provider;
+            _modConfigurations = provider.GetAllModuleInfos();
             _transceiverFactory = provider.GetRequiredService<ITransceiverFactory>();
             _notifierFactory = provider.GetRequiredService<INotifierFactory>();
             _recorderFactory = provider.GetRequiredService<IRecorderFactory>();
@@ -87,8 +91,21 @@ namespace MATSys.Factories
             {
                 throw;
             }
+        }
+        public IModule CreateModule(string alias)
+        {
+            try
+            {
+                var section = _modConfigurations[alias];
+                return CreateModule(section);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
         }
+
 
         /// <summary>
         /// Create new instance from external dll path

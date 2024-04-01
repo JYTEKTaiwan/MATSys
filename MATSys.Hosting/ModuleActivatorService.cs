@@ -11,7 +11,6 @@ using System.Reflection;
 /// </summary>
 public class ModuleActivatorService : IHostedService
 {
-    private readonly Dictionary<string, IConfigurationSection> _modConfigurations;
     private readonly IModuleFactory _moduleFactory;
     private Dictionary<string, IModule> _modules = new Dictionary<string, IModule>();
     /// <summary>
@@ -29,7 +28,6 @@ public class ModuleActivatorService : IHostedService
     /// <param name="provider">service provider from host</param>
     public ModuleActivatorService(IServiceProvider provider)
     {
-        _modConfigurations = provider.GetAllModuleInfos();
         //if plugin project is reference and never used in the app project, the assembly is not list in the appdomain. 
         //we should manually load the plugin assemblies        
         var paths = Directory.GetFiles(Environment.CurrentDirectory, "*.dll");
@@ -40,19 +38,19 @@ public class ModuleActivatorService : IHostedService
     /// <summary>
     /// Create new instance using key specified in the configuration file
     /// </summary>
-    /// <param name="key">Alias property in the configuration file</param>
+    /// <param name="alias">Alias property in the configuration file</param>
     /// <returns>IModule instance</returns>
-    public IModule GetModule(string key)
+    public IModule GetModule(string alias)
     {
-        if (_modules.ContainsKey(key))
+        if (_modules.ContainsKey(alias))
         {
-            return _modules[key];
+            return _modules[alias];
         }
         else
         {
-            var mod = _moduleFactory.CreateModule(_modConfigurations[key]);
+            var mod = _moduleFactory.CreateModule(alias);
             mod.IsDisposed += ModuleDisposed;
-            _modules.Add(key, mod);
+            _modules.Add(alias, mod);
             return mod;
         }
     }
