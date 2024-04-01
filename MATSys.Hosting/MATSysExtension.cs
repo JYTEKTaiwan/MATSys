@@ -65,14 +65,8 @@ namespace MATSys.Hosting
         public static IConfigurationSection GetConfigurationSection(this IServiceProvider provider, string sectionKey)
         => provider.GetRequiredService<IConfiguration>().GetSection(sectionKey);
         
-        /// <summary>
-        /// Get the collection of information for Module in the host
-        /// </summary>
-        /// <param name="provider"></param>
-        /// <returns></returns>
-        public static Dictionary<string, IConfigurationSection> GetAllModuleInfos(this IServiceProvider provider)
-        => provider.GetConfigurationSection("MATSys:Modules").GetChildren().ToDictionary(x => x["Alias"]!);
-        
+
+       
 
         /// <summary>
         /// Get the module from the host using alias name 

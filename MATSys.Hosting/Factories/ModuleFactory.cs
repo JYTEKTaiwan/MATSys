@@ -13,9 +13,13 @@ namespace MATSys.Factories
     /// </summary>
     public sealed class ModuleFactory : IModuleFactory
     {
-        private const string key_recorder = "Recorder";
-        private const string key_notifier = "Notifier";
-        private const string key_transceiver = "Transceiver";
+        private const string m_key_modConfigSection = "MATSys:Modules";
+        private const string m_key_modAlias = "Alias";
+        private const string m_key_modType = "Type";
+        private const string m_key_modextPath = "AssemblyPath";
+        private const string m_key_recorder = "Recorder";
+        private const string m_key_notifier = "Notifier";
+        private const string m_key_transceiver = "Transceiver";
 
         private readonly ITransceiverFactory _transceiverFactory;
         private readonly INotifierFactory _notifierFactory;
@@ -31,7 +35,7 @@ namespace MATSys.Factories
         public ModuleFactory(IServiceProvider provider)
         {
             _serviceprovider = provider;
-            _modConfigurations = provider.GetAllModuleInfos();
+            _modConfigurations = provider.GetConfigurationSection(m_key_modConfigSection).GetChildren().ToDictionary(x => x[m_key_modAlias]!);
             _transceiverFactory = provider.GetRequiredService<ITransceiverFactory>();
             _notifierFactory = provider.GetRequiredService<INotifierFactory>();
             _recorderFactory = provider.GetRequiredService<IRecorderFactory>();
@@ -47,13 +51,13 @@ namespace MATSys.Factories
             {
                 _logger.Trace($"Path: {section.Path}");
 
-                string alias = section.GetValue<string>("Alias")!; //Get the alias string in json section
+                string alias = section.GetValue<string>(m_key_modAlias)!; //Get the alias string in json section
                 if (alias == null) throw new NoNullAllowedException("Alias property cannot be null in configuration section");
 
-                string typeString = section.GetValue<string>("Type")!; //Get the type string of Type in json section
+                string typeString = section.GetValue<string>(m_key_modType)!; //Get the type string of Type in json section
                 if (typeString == null) throw new NoNullAllowedException("Type property cannot be null in configuration section");
 
-                string extAssemblyPath = section.GetValue<string>("AssemblyPath")!; //Get the assemblypath string of Type in json section
+                string extAssemblyPath = section.GetValue<string>(m_key_modextPath)!; //Get the assemblypath string of Type in json section
 
 
                 _logger.Trace($"Searching for the type named \"{typeString}\"");
@@ -64,9 +68,9 @@ namespace MATSys.Factories
                 _logger.Debug($"{t.FullName} is found");
 
                 //Create Transceiver, Notifier, and Recorder
-                var trans = _transceiverFactory.CreateTransceiver(section.GetSection(key_transceiver));
-                var noti = _notifierFactory.CreateNotifier(section.GetSection(key_notifier));
-                var rec = _recorderFactory.CreateRecorder(section.GetSection(key_recorder));
+                var trans = _transceiverFactory.CreateTransceiver(section.GetSection(m_key_transceiver));
+                var noti = _notifierFactory.CreateNotifier(section.GetSection(m_key_notifier));
+                var rec = _recorderFactory.CreateRecorder(section.GetSection(m_key_recorder));
                 _logger.Debug($"[{alias}]{typeString} is created with {trans.Alias},{noti.Alias},{rec.Alias}");
 
                 //Create instance and return
