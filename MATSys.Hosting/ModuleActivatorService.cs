@@ -4,11 +4,12 @@ using MATSys.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 /// <summary>
 /// Handler for the modules in the host
 /// </summary>
-public class ModuleActivatorService:IHostedService
+public class ModuleActivatorService : IHostedService
 {
     private readonly Dictionary<string, IConfigurationSection> _modConfigurations;
     private readonly IModuleFactory _moduleFactory;
@@ -29,6 +30,11 @@ public class ModuleActivatorService:IHostedService
     public ModuleActivatorService(IServiceProvider provider)
     {
         _modConfigurations = provider.GetAllModuleInfos();
+        //if plugin project is reference and never used in the app project, the assembly is not list in the appdomain. 
+        //we should manually load the plugin assemblies        
+        var paths = Directory.GetFiles(Environment.CurrentDirectory, "*.dll");
+        //use LoadFrom to ensure it will point to the same assembly if loaded twice.
+        foreach (var path in paths) Assembly.LoadFrom(path);
         _moduleFactory = provider.GetRequiredService<IModuleFactory>();
     }
     /// <summary>
@@ -63,7 +69,7 @@ public class ModuleActivatorService:IHostedService
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        return Task.Run(() => 
+        return Task.Run(() =>
         {
             foreach (var item in _modules)
             {
