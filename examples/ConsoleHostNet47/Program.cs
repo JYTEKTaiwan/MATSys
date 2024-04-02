@@ -47,5 +47,29 @@ namespace ConsoleHostNet47
         }
     }
 
+    internal class TestDevice : ModuleBase
+    {
+        [MATSysCommand]
+        public void Delay(int a)
+        {
+            Console.WriteLine($"[{DateTime.Now}]Start - {a}");
+            Thread.Sleep(a);
+            Console.WriteLine($"[{DateTime.Now}]Done - {a}");
+        }
+
+
+    }
+    internal class TestDevice2 : ModuleBase
+    {
+        [MATSysCommand]
+        public void Delay(int a)
+        {
+            Console.WriteLine($"[{DateTime.Now}]Start - {a}");
+            Thread.Sleep(a);
+            Console.WriteLine($"[{DateTime.Now}]Done - {a}");
+        }
+
+
+    }
 
 }
