@@ -51,7 +51,7 @@ public class ModuleActivatorService : IHostedService
         else
         {
             var mod = _moduleFactory.CreateModule(alias);
-            mod.IsDisposed += ModuleDisposed;
+            mod.Disposed += ModuleDisposed;
             _modules.Add(alias, mod);
             return mod;
         }

@@ -11,10 +11,11 @@
         /// <param name="jsonString"></param>
         delegate void NewDataReady(string jsonString);
 
+
         /// <summary>
         /// Event when object is disposed
         /// </summary>
-        event EventHandler? IsDisposed;
+        event EventHandler Disposed;
 
         /// <summary>
         /// Notifier instance

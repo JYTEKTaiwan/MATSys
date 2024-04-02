@@ -25,6 +25,7 @@ namespace MATSys
         private bool _disposedValue = false;
 #if NET8_0_OR_GREATER
         private FrozenDictionary<string, MATSysContext> cmds = null!;
+
 #elif NET6_0_OR_GREATER || NETSTANDARD2_0
         private ReadOnlyDictionary<string, MATSysContext> cmds = null!;
 #else
@@ -68,11 +69,7 @@ namespace MATSys
         /// </summary>
         INotifier IModule.Notifier => _notifier;
 
-
-        /// <summary>
-        /// Event when object is disposed
-        /// </summary>
-        public event EventHandler? IsDisposed;
+        public event EventHandler Disposed;
 
 
         /* Unmerged change from project 'MATSys (net35)'
@@ -465,7 +462,7 @@ namespace MATSys
                     _transceiver.Dispose();
                     _recorder.Dispose();
                     _isRunning = false;
-                    IsDisposed?.Invoke(this, null!);
+                    Disposed?.Invoke(this, null!);
                 }
                 _disposedValue = true;
             }

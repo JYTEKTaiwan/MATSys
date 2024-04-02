@@ -49,6 +49,16 @@ namespace ConsoleHostNet47
 
     internal class TestDevice : ModuleBase
     {
+        public TestDevice()
+        {
+            this.Disposed += TestDevice_Disposed;
+        }
+
+        private void TestDevice_Disposed(object sender, EventArgs e)
+        {
+            Console.WriteLine($"{Alias} is disposed");
+        }
+
         [MATSysCommand]
         public void Delay(int a)
         {
