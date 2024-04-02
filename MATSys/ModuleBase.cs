@@ -1,5 +1,7 @@
 ﻿#if NET8_0_OR_GREATER
 using System.Collections.Frozen;
+using System.Runtime.InteropServices;
+
 #else
 using System.Collections.ObjectModel;
 #endif
@@ -20,6 +22,7 @@ namespace MATSys
         private INotifier _notifier = new EmptyNotifier();
         private volatile bool _isRunning = false;
         private IServiceProvider _provider;
+        private bool _disposedValue = false;
 #if NET8_0_OR_GREATER
         private FrozenDictionary<string, MATSysContext> cmds = null!;
 #elif NET6_0_OR_GREATER || NETSTANDARD2_0
@@ -446,16 +449,27 @@ namespace MATSys
         /// <summary>
         /// Dispose the instance and call GC
         /// </summary>
-        public virtual void Dispose()
+        public void Dispose()
         {
-            _notifier.Dispose();
-            _transceiver.Dispose();
-            _recorder.Dispose();
-            _isRunning = false;
-            IsDisposed?.Invoke(this, null!);
+            Dispose(true);
             GC.Collect();
         }
-
+        // Protected implementation of Dispose pattern.
+        public virtual void Dispose(bool disposing)
+        {
+            if (!_disposedValue)
+            {
+                if (disposing)
+                {
+                    _notifier.Dispose();
+                    _transceiver.Dispose();
+                    _recorder.Dispose();
+                    _isRunning = false;
+                    IsDisposed?.Invoke(this, null!);
+                }
+                _disposedValue = true;
+            }
+        }
         #endregion
     }
 
