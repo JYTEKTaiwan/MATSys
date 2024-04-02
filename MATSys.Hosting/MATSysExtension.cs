@@ -23,8 +23,11 @@ namespace MATSys.Hosting
         => services.AddSingleton<IRecorderFactory, RecorderFactory>()
                    .AddSingleton<INotifierFactory, NotifierFactory>()
                    .AddSingleton<ITransceiverFactory, TransceiverFactory>()
-                   .AddSingleton<IModuleFactory, ModuleFactory>()
-                   .AddHostedService<ModuleActivatorService>();
+                   .AddSingleton<ModuleResolver>()
+                   .AddTransient<IModule>(provider =>
+                        provider.GetRequiredService<ModuleResolver>().GetSelectedModule()
+                   );
+
 
         /// <summary>
         /// Inject NLog service into logger builder in host
@@ -74,13 +77,17 @@ namespace MATSys.Hosting
         /// <param name="provider">service provider</param>
         /// <param name="alias">alias name</param>        
         /// <returns>IModule implementation</returns>
-        public static IModule GetModule(this IServiceProvider provider, string alias) => provider.GetServices<IHostedService>().OfType<ModuleActivatorService>().Single().GetModule(alias);
-
+        public static IModule GetModule(this IServiceProvider provider, string alias)
+        {
+            var resolver = provider.GetRequiredService<ModuleResolver>();
+            resolver.SelectedKey = alias;
+            return provider.GetRequiredService<IModule>();
+        }
         /// <summary>
         /// List all the active modules in the memory
         /// </summary>                
         /// <returns>Collection of <see cref="IModule"/> </returns>
-        public static IModule[] GetModules(this IServiceProvider provider) => provider.GetServices<IHostedService>().OfType<ModuleActivatorService>().Single().ActiveModules;
+        public static IModule[] GetModules(this IServiceProvider provider) => provider.GetRequiredService<ModuleResolver>().ExistingModules;
 
 
 
