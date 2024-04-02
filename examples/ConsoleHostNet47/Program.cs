@@ -19,9 +19,10 @@ namespace ConsoleHostNet47
 {
     internal class Program
     {
-        private delegate IModule ModuleInstanceMapper(string key);
+        
         static void Main(string[] args)
         {
+            
             Console.WriteLine("Hello, World!");
             var b = Host.CreateDefaultBuilder();
 
@@ -32,7 +33,7 @@ namespace ConsoleHostNet47
 
             var host = b.Build();
             host.StartAsync();
-
+            
             Thread.Sleep(1000);
             var dev = host.Services.GetModule("Dev1");
             var dev2 = host.Services.GetModule("Mod1");
