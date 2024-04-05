@@ -1,6 +1,7 @@
 using MATSys;
 using MATSys.Commands;
 using MATSys.Plugins;
+using System.Net.WebSockets;
 
 namespace UT_MATSys;
 
@@ -53,7 +54,7 @@ public class UT_ModuleBase
     {
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
-        var res = dev.ExecuteCommandString(CommandBase.Create("Hi").Serialize());
+        dev.Execute(CommandBase.Create("Hi").Serialize(), out var res);
         Assert.IsTrue(res == System.Text.Json.JsonSerializer.Serialize("WORLD"));
     }
 
@@ -113,7 +114,7 @@ public class UT_ModuleBase
         var cts = new CancellationTokenSource();
         IModule dev = new NormalDevice();
 
-        var res = dev.ExecuteCommandString(CommandBase.Create("WrongSerDes", 8.8).Serialize());
+        dev.Execute(CommandBase.Create("WrongSerDes", 8.8).Serialize(), out var res);
         Assert.IsTrue(res.Contains(ExceptionHandler.cmd_execError));
     }
 }

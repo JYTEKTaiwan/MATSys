@@ -19,10 +19,8 @@ namespace ConsoleHostNet47
 {
     internal class Program
     {
-        
         static void Main(string[] args)
         {
-            
             Console.WriteLine("Hello, World!");
             var b = Host.CreateDefaultBuilder();
 
@@ -39,7 +37,8 @@ namespace ConsoleHostNet47
             var dev2 = host.Services.GetModule("Mod1");
             Console.WriteLine($"{dev.Alias}_{dev.GetHashCode()}");
             Console.WriteLine($"{dev2.Alias}_{dev2.GetHashCode()}");
-            dev.Execute("Delay", 1000);
+            dev.ExecuteRaw("{\"Delay\":[1000]}", out var a);
+            Console.WriteLine(a);
             host.StopAsync();
             host.Dispose();
             Console.WriteLine("DONE");
@@ -66,7 +65,6 @@ namespace ConsoleHostNet47
             Thread.Sleep(a);
             Console.WriteLine($"[{DateTime.Now}]Done - {a}");
         }
-
 
     }
     internal class TestDevice2 : ModuleBase
