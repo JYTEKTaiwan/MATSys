@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 #endif
 using MATSys.Commands;
 using MATSys.Plugins;
+using MATSys.Utilities;
 
 namespace MATSys
 {
@@ -111,6 +112,14 @@ namespace MATSys
         {
             return await Task.Run(async () =>
             {
+                var response = await ExecuteRawAsync(cmd);
+                return cmd.ConvertResultToString(response)!;
+            });
+        }
+        public async Task<object> ExecuteRawAsync(ICommand cmd)
+        {
+            return await Task.Run(async () =>
+            {
                 try
                 {
                     _logger?.Trace($"Command is ready to executed {cmd.MethodName}");
@@ -120,20 +129,13 @@ namespace MATSys
                         throw new NullReferenceException("invoker is null");
                     }
                     var result = await invoker.InvokeAsync(cmd.GetParameters());
-                    var response = cmd.ConvertResultToString(result)!;
-                    _logger?.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
                     _logger?.Info($"Command [{cmd.MethodName}] is executed successfully");
-                    return response;
+                    return result!;
                 }
                 catch (KeyNotFoundException ex)
                 {
                     _logger?.Warn(ex);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, cmd);
-                }
-                catch (System.Text.Json.JsonException ex)
-                {
-                    _logger?.Warn(ex);
-                    return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_serDesError, ex, cmd);
                 }
                 catch (Exception ex)
                 {
@@ -142,7 +144,18 @@ namespace MATSys
                 }
             });
         }
+
         public async Task<string> ExecuteAsync(string methodName, params object[] parameters)
+        {
+            return await Task.Run(async () =>
+            {
+                var result = await ExecuteRawAsync(methodName, parameters)!;
+                var response = Utilities.Serializer.Serialize(result, false)!;
+                return response!;
+            });
+
+        }
+        public async Task<object> ExecuteRawAsync(string methodName, params object[] parameters)
         {
             return await Task.Run(async () =>
             {
@@ -154,11 +167,9 @@ namespace MATSys
                     {
                         throw new NullReferenceException("invoker is null");
                     }
-                    var result = await invoker.InvokeAsync(parameters);
-                    var response = Utilities.Serializer.Serialize(result, false)!;
-                    _logger?.Debug($"Command [{methodName}] is executed with return value: {response}");
+                    var result = await invoker.InvokeAsync(parameters);                    
                     _logger?.Info($"Command [{methodName}] is executed successfully");
-                    return response;
+                    return result!;
                 }
                 catch (KeyNotFoundException ex)
                 {
@@ -170,11 +181,6 @@ namespace MATSys
                     _logger?.Warn(ex.Message);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, methodName);
                 }
-                catch (System.Text.Json.JsonException ex)
-                {
-                    _logger?.Warn(ex);
-                    return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_serDesError, ex, methodName);
-                }
                 catch (Exception ex)
                 {
                     _logger?.Warn(ex);
@@ -183,6 +189,7 @@ namespace MATSys
             });
 
         }
+
 #endif
         /// <summary>
         /// Execute the incoming command object
@@ -205,7 +212,28 @@ namespace MATSys
             return Execute_Net35(methodName, parameters);
 #endif
         }
-        public string ExecuteCommandString(string cmdInJson) => OnRequestReceived(this, cmdInJson);
+        public void Execute(string cmdInJson, out string response) => response = OnRequestReceived(this, cmdInJson);
+
+        public object ExecuteRaw(ICommand cmd)
+        {
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
+            return ExecuteRawAsync(cmd).Result;
+#elif NET35
+            return ExecuteRaw_Net35(cmd);
+#endif
+        }
+
+        public object ExecuteRaw(string methodName, params object[] parameters)
+        {
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
+            return ExecuteRawAsync(methodName, parameters).Result;
+#elif NET35
+            return ExecuteRaw_Net35(methodName, parameters);
+#endif
+        }
+
+
+        public void ExecuteRaw(string cmdInJson,out object response) => response=OnRequestReceived(cmdInJson);
 
         /// <summary>
         /// List all methods in simplied string format 
@@ -313,7 +341,13 @@ namespace MATSys
         /// Inject the ITransceiver instance into IModule instance
         /// </summary>
         /// <param name="transceiver">ITransceiver instance</param>
-        public void InjectPlugin(ITransceiver? transceiver) => _transceiver = transceiver == null ? _transceiver : transceiver;
+        public void InjectPlugin(ITransceiver? transceiver)
+        {
+            _transceiver = transceiver == null ? _transceiver : transceiver;
+            _transceiver.OnNewRequest += OnRequestReceived;
+
+        }
+
 
         /// <summary>
         /// Inject the INotifier instance into IModule instance
@@ -329,7 +363,13 @@ namespace MATSys
 
         #region Private methods
 #if NET35
+        
         private string Execute_Net35(ICommand cmd)
+        {
+            return  cmd.ConvertResultToString(ExecuteRaw_Net35(cmd))!;
+
+        }
+        private object ExecuteRaw_Net35(ICommand cmd)
         {
             try
             {
@@ -340,10 +380,8 @@ namespace MATSys
                     throw new NullReferenceException("invoker is null");
                 }
                 var result = invoker.Invoke(cmd.GetParameters());
-                var response = cmd.ConvertResultToString(result)!;
-                _logger?.Debug($"Command [{cmd.MethodName}] is executed with return value: {response}");
                 _logger?.Info($"Command [{cmd.MethodName}] is executed successfully");
-                return response;
+                return result;
             }
             catch (KeyNotFoundException ex)
             {
@@ -357,7 +395,14 @@ namespace MATSys
             }
 
         }
+
         private string Execute_Net35(string methodName, params object[] parameters)
+        {
+            return Serializer.Serialize(ExecuteRaw_Net35(methodName,parameters),false)!;
+
+
+        }
+        private object ExecuteRaw_Net35(string methodName, params object[] parameters)
         {
             try
             {
@@ -367,8 +412,7 @@ namespace MATSys
                     throw new NullReferenceException("invoker is null");
                 }
                 var result = invoker.Invoke(parameters);
-                var response = Utilities.Serializer.Serialize(result, false)!;
-                return response!;
+                return result!;
             }
             catch (KeyNotFoundException ex)
             {
@@ -413,6 +457,11 @@ namespace MATSys
         /// <returns></returns>
         private string OnRequestReceived(object sender, string commandObjectInJson)
         {
+            return Serializer.Serialize(OnRequestReceived(commandObjectInJson),false);
+        }
+
+        private object OnRequestReceived(string commandObjectInJson)
+        {
             try
             {
                 _logger?.Trace($"Command received: {commandObjectInJson}");
@@ -429,7 +478,7 @@ namespace MATSys
 #endif
 
                 var cmd = CommandBase.Deserialize(commandObjectInJson, item.CommandType!);
-                return Execute(cmd);
+                return ExecuteRaw(cmd);
             }
             catch (KeyNotFoundException ex)
             {
@@ -441,6 +490,7 @@ namespace MATSys
                 _logger?.Error(ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, commandObjectInJson);
             }
+
         }
 
         /// <summary>

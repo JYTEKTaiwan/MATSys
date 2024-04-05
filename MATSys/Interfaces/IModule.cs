@@ -51,9 +51,13 @@
         /// <param name="cmd">ICommand instance</param>
         /// <returns>Serialized response</returns>
         string Execute(Commands.ICommand cmd);
+        string Execute(string methodName, params object[] parameters);
+        void Execute(string cmdInJson, out string response);
 
+        object ExecuteRaw(Commands.ICommand cmd);
+        object ExecuteRaw(string methodName, params object[] parameters);
+        void ExecuteRaw(string cmdInJson, out object response);
 
-        string ExecuteCommandString(string cmdInJson);
 
 #if NET6_0_OR_GREATER||NETSTANDARD2_0
         /// <summary>
@@ -62,12 +66,15 @@
         /// <param name="cmd">ICommand instance</param>
         /// <returns>Serialized response</returns>
         Task<string> ExecuteAsync(Commands.ICommand cmd);
+        Task<object> ExecuteRawAsync(Commands.ICommand cmd);
 
         Task<string> ExecuteAsync(string methodName, params object[] parameters);
+        Task<object> ExecuteRawAsync(string methodName, params object[] parameters);
+
 #endif
 
 
-        string Execute(string methodName, params object[] parameters);
+
 
         /// <summary>
         /// Configurae instance with object 
