@@ -4,13 +4,13 @@
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<BaseOutputPath>..\bin\</BaseOutputPath>
+		<BaseOutputPath>..\build\MATSys</BaseOutputPath>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<GenerateAssemblyInfo>True</GenerateAssemblyInfo>
 		<Authors>Way Lin</Authors>
 		<Company>JYTEK TAIWAN CORP.</Company>
-		<Copyright>Copyright © 2019-2023 JYTEK TAIWAN CORP.</Copyright>		
-		<VersionPrefix>2.0.18</VersionPrefix>
+		<Copyright>Copyright © 2019-2024 JYTEK TAIWAN CORP.</Copyright>		
+		<VersionPrefix>2.1.0</VersionPrefix>
 		<RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/</RepositoryUrl>
 
 		<PackageReadmeFile>README.md</PackageReadmeFile>
