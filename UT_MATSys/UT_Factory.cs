@@ -27,6 +27,6 @@ public class UT_DataReocrderFactory
         var a = RecorderFactory.CreateNew<CSVRecorder>(null);
         var b = RecorderFactory.CreateNew(typeof(CSVRecorder), null);
 
-        Assert.IsTrue(a != null && b != null);
+        Assert.That(a != null && b != null);
     }
 }

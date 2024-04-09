@@ -15,7 +15,7 @@ public class UT_Command
     {
         var cmd = CommandBase.Create("Test", 1, 2.0);
         var str = cmd.ConvertResultToString(null);
-        Assert.IsTrue(string.IsNullOrEmpty(str));
+        Assert.That(string.IsNullOrEmpty(str));
     }
 
     [Test]
@@ -25,7 +25,7 @@ public class UT_Command
         var str = cmd.Serialize();
         var att = new MATSysCommandAttribute("Test", typeof(Command<int, double>));
         var res = CommandBase.Deserialize(str, att.CommandType) as Command<int, double>;
-        Assert.IsTrue(res!.Item1 == 1 && res.Item2 == 2.0);
+        Assert.That(res!.Item1 == 1 && res.Item2 == 2.0);
     }
 
     [Test]
@@ -35,7 +35,7 @@ public class UT_Command
         var str = cmd.Serialize();
         var att = new MATSysCommandAttribute("Test", typeof(Command<Boolean>));
         var res = CommandBase.Deserialize(str, att.CommandType) as Command<Boolean>;
-        Assert.IsTrue(res!.Item1 == true);
+        Assert.That(res!.Item1 == true);
     }
     [Test]
     public void SerDesTestWithCustomObject()
@@ -44,7 +44,7 @@ public class UT_Command
         var str = cmd.Serialize();
         var att = new MATSysCommandAttribute("Test", typeof(Command<int, Test>));
         var res = CommandBase.Deserialize(str, att.CommandType) as Command<int, Test>;
-        Assert.IsTrue(res!.Item1 == 1 && res.Item2.A == 20);
+        Assert.That(res!.Item1 == 1 && res.Item2.A == 20);
     }
     [Test]
     public void SerDesTestWithWrongType()
@@ -108,7 +108,7 @@ public class UT_Command
                     CommandBase.Create("Test", i, i, i, i, i, i, i);
                     break;
             }
-            Assert.IsTrue(true);
+            Assert.That(true);
         }
         catch (Exception ex)
         {
