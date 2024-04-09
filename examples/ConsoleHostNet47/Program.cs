@@ -35,6 +35,7 @@ namespace ConsoleHostNet47
             Thread.Sleep(1000);
             var dev = host.Services.GetModule("Dev1");
             var dev2 = host.Services.GetModule("Mod1");
+            
             Console.WriteLine($"{dev.Alias}_{dev.GetHashCode()}");
             Console.WriteLine($"{dev2.Alias}_{dev2.GetHashCode()}");
             dev.ExecuteRaw("{\"Delay\":[1000]}", out var a);
