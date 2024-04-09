@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UT_MATSys", "UT_MATSys\UT_M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHostNet47", "examples\ConsoleHostNet47\ConsoleHostNet47.csproj", "{E9FC6760-068D-4DE4-8B18-E46223DC0A45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockModulesLibrary", "examples\MockModulesLibrary\MockModulesLibrary.csproj", "{F5981D13-999A-4BC7-8C08-A642F85D829F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockModulesLibrary", "examples\MockModulesLibrary\MockModulesLibrary.csproj", "{F5981D13-999A-4BC7-8C08-A642F85D829F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
