@@ -29,8 +29,10 @@ namespace MATSys
 
 #elif NET6_0_OR_GREATER || NETSTANDARD2_0
         private ReadOnlyDictionary<string, MATSysContext> cmds = null!;
+
 #else
         private Dictionary<string, MATSysContext> cmds = null;
+
 #endif
 
         #endregion
@@ -70,9 +72,8 @@ namespace MATSys
         /// </summary>
         INotifier IModule.Notifier => _notifier;
 
-        public event EventHandler Disposed;
-
-
+        public event ServiceDisposed Disposed;
+        public event ServiceExceptionFired ExceptionFired;
         /* Unmerged change from project 'MATSys (net35)'
         Before:
                 #endregion
@@ -98,6 +99,8 @@ namespace MATSys
             _logger = LogManager.GetCurrentClassLogger();
 
         }
+
+
         #endregion
 
         #region Public Methods
@@ -135,11 +138,13 @@ namespace MATSys
                 catch (KeyNotFoundException ex)
                 {
                     _logger?.Warn(ex);
+                    ExceptionFired.Invoke(this, ex);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, cmd);
                 }
                 catch (Exception ex)
                 {
                     _logger?.Warn(ex);
+                    ExceptionFired.Invoke(this, ex);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
                 }
             });
@@ -167,23 +172,26 @@ namespace MATSys
                     {
                         throw new NullReferenceException("invoker is null");
                     }
-                    var result = await invoker.InvokeAsync(parameters);                    
+                    var result = await invoker.InvokeAsync(parameters);
                     _logger?.Info($"Command [{methodName}] is executed successfully");
                     return result!;
                 }
                 catch (KeyNotFoundException ex)
                 {
                     _logger?.Warn(ex);
+                    ExceptionFired.Invoke(this, ex);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, methodName);
                 }
                 catch (AggregateException ex)
                 {
                     _logger?.Warn(ex.Message);
+                    ExceptionFired.Invoke(this, ex);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, methodName);
                 }
                 catch (Exception ex)
                 {
                     _logger?.Warn(ex);
+                    ExceptionFired.Invoke(this, ex);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, methodName);
                 }
             });
@@ -197,7 +205,7 @@ namespace MATSys
         /// <param name="cmd">ICommand instance</param>
         /// <returns>reponse after executing the commnad</returns>
         public string Execute(ICommand cmd)
-        {
+        {            
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteAsync(cmd).Result;
 #elif NET35
@@ -233,7 +241,7 @@ namespace MATSys
         }
 
 
-        public void ExecuteRaw(string cmdInJson,out object response) => response=OnRequestReceived(cmdInJson);
+        public void ExecuteRaw(string cmdInJson, out object response) => response = OnRequestReceived(cmdInJson);
 
         /// <summary>
         /// List all methods in simplied string format 
@@ -344,7 +352,7 @@ namespace MATSys
         public void InjectPlugin(ITransceiver? transceiver)
         {
             _transceiver = transceiver == null ? _transceiver : transceiver;
-            _transceiver.OnNewRequest += OnRequestReceived;
+            _transceiver.RequestReceived += OnRequestReceived;
 
         }
 
@@ -386,11 +394,13 @@ namespace MATSys
             catch (KeyNotFoundException ex)
             {
                 _logger?.Warn(ex);
+                ExceptionFired.Invoke(this, ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, cmd);
             }
             catch (Exception ex)
             {
                 _logger?.Warn(ex);
+                ExceptionFired.Invoke(this, ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
             }
 
@@ -457,7 +467,7 @@ namespace MATSys
         /// <returns></returns>
         private string OnRequestReceived(object sender, string commandObjectInJson)
         {
-            return Serializer.Serialize(OnRequestReceived(commandObjectInJson),false);
+            return Serializer.Serialize(OnRequestReceived(commandObjectInJson), false);
         }
 
         private object OnRequestReceived(string commandObjectInJson)
@@ -512,7 +522,7 @@ namespace MATSys
                     _transceiver.Dispose();
                     _recorder.Dispose();
                     _isRunning = false;
-                    Disposed?.Invoke(this, null!);
+                    Disposed?.Invoke(this, EventArgs.Empty);
                 }
                 _disposedValue = true;
             }

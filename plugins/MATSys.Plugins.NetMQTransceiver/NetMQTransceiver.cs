@@ -14,9 +14,12 @@ namespace MATSys.Plugins
         private NetMQTransceiverConfiguration? _config;
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
         private bool _isRunning = false;
-        public event ITransceiver.RequestFiredEvent? OnNewRequest;
+        public event ServiceExceptionFired ExceptionFired;
+        public event ServiceDisposed Disposed;
+        public event RequestFiredEvent? RequestReceived;
 
         private CancellationTokenSource _localCts = new CancellationTokenSource();
+        private bool disposedValue;
 
         public string Alias { get; set; } = nameof(NetMQTransceiver);
 
@@ -46,7 +49,7 @@ namespace MATSys.Plugins
                             var content = _routerSocket.ReceiveMultipartStrings();
                             _logger.Debug($"New message received {content[0]}");
 
-                            var response = OnNewRequest?.Invoke(this, content[0])!;
+                            var response = RequestReceived?.Invoke(this, content[0])!;
                             _logger.Trace("Message is executed");
 
                             _routerSocket.SendMoreFrame(key);
@@ -108,10 +111,6 @@ namespace MATSys.Plugins
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
 
-        public void Dispose()
-        {
-            StopListening();
-        }
 
         public void Configure(object? config)
         {
@@ -119,6 +118,38 @@ namespace MATSys.Plugins
             if (typeof(IConfigurationSection).IsAssignableFrom(config.GetType()))
                 Load((IConfigurationSection)config);
             else Load(config);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects)
+                    StopListening();
+                    Disposed?.Invoke(this, EventArgs.Empty);
+
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~NetMQTransceiver()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 

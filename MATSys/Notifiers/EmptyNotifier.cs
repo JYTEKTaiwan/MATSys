@@ -8,6 +8,7 @@ namespace MATSys.Plugins
     public sealed class EmptyNotifier : INotifier
     {
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
+        private bool disposedValue;
 
 
         /// <summary>
@@ -19,6 +20,8 @@ namespace MATSys.Plugins
         /// Event when new data is ready to notify
         /// </summary>
         public event INotifier.NotifyEvent? OnNotify;
+        public event ServiceExceptionFired ExceptionFired;
+        public event ServiceDisposed Disposed;
 
         /// <summary>
         /// Get the latest data stored in the buffer. Return null if timeout
@@ -91,12 +94,35 @@ namespace MATSys.Plugins
 #else
 #endif
         }
-        /// <summary>
-        /// Dispose the object
-        /// </summary>
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects)
+                    Disposed?.Invoke(this, EventArgs.Empty);
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~EmptyNotifier()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
         public void Dispose()
         {
-            GC.Collect();
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

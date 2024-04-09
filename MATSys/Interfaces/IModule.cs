@@ -5,17 +5,7 @@
     /// </summary>
     public interface IModule : IService
     {
-        /// <summary>
-        /// Indicate new data is generated from module
-        /// </summary>
-        /// <param name="jsonString"></param>
-        delegate void NewDataReady(string jsonString);
 
-
-        /// <summary>
-        /// Event when object is disposed
-        /// </summary>
-        event EventHandler Disposed;
 
         /// <summary>
         /// Notifier instance

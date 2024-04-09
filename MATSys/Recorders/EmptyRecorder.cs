@@ -7,6 +7,11 @@ namespace MATSys.Plugins
     public sealed class EmptyRecorder : IRecorder
     {
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
+        private bool disposedValue;
+
+        public event ServiceExceptionFired ExceptionFired;
+        public event ServiceDisposed Disposed;
+
         /// <summary>
         /// Name of the Service
         /// </summary>
@@ -81,12 +86,34 @@ namespace MATSys.Plugins
 #endif
         }
 
-        /// <summary>
-        /// Dispose the instance
-        /// </summary>
+        private void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects)
+                    Disposed?.Invoke(this, EventArgs.Empty);
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~EmptyRecorder()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
         public void Dispose()
         {
-            GC.Collect();
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

@@ -8,11 +8,12 @@ namespace MATSys.Plugins
     public sealed class EmptyTransceiver : ITransceiver
     {
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
+        private bool disposedValue;
 
-        /// <summary>
-        /// Event for the new coming request
-        /// </summary>
-        public event ITransceiver.RequestFiredEvent? OnNewRequest { add { } remove { } }
+        public event ServiceExceptionFired ExceptionFired;
+        public event ServiceDisposed Disposed;
+        public event RequestFiredEvent? RequestReceived;
+
 
         /// <summary>
         /// Name of the Service
@@ -66,12 +67,36 @@ namespace MATSys.Plugins
 #else
 #endif
         }
-        /// <summary>
-        /// Dispose the instance
-        /// </summary> 
+
+        private void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+
+                    // TODO: dispose managed state (managed objects)
+                    Disposed?.Invoke(this, EventArgs.Empty);
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~EmptyTransceiver()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
         public void Dispose()
         {
-            GC.Collect();
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

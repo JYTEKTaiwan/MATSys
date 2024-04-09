@@ -17,10 +17,13 @@ namespace MATSys.Plugins
 
         private NetMQNotifierConfiguration? _config;
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
+        private bool disposedValue;
 
         public string Alias { get; set; } = nameof(NetMQNotifier);
 
         public event INotifier.NotifyEvent? OnNotify;
+        public event ServiceExceptionFired ExceptionFired;
+        public event ServiceDisposed Disposed;
 
         public void Publish(object data)
         {
@@ -104,15 +107,41 @@ namespace MATSys.Plugins
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
 
-        public void Dispose()
-        {
-            Unbind();
-        }
 
         ~NetMQNotifier()
         {
         }
 
+        private void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // TODO: dispose managed state (managed objects)
+                    Unbind();
+                    Disposed?.Invoke(this, EventArgs.Empty);
+                }
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                disposedValue = true;
+            }
+        }
+
+        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
+        // ~NetMQNotifier()
+        // {
+        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        //     Dispose(disposing: false);
+        // }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
     }
 
     /// <summary>

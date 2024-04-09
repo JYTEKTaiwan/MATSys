@@ -1,5 +1,8 @@
 ﻿namespace MATSys
 {
+    public delegate void ServiceExceptionFired(object? sender, Exception ex);
+    public delegate void ServiceDisposed(object? sender, EventArgs ex);
+
     /// <summary>
     /// Interface of Service
     /// </summary>
@@ -10,7 +13,8 @@
         /// </summary>
         string Alias { get; set; }
         void Configure(object? config);
-
+        event ServiceExceptionFired ExceptionFired;
+        event ServiceDisposed Disposed;
 
 #if NET6_0_OR_GREATER||NETSTANDARD2_0
         /// <summary>
@@ -31,6 +35,11 @@
         /// <param name="indented">In indented format</param>
         /// <returns>string</returns>
         string Export(bool indented = true);
+
+    }
+
+    public class Delegation
+    {
 
     }
 }
