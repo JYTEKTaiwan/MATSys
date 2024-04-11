@@ -28,16 +28,16 @@ internal class DynamicLibraryLoader
         }
 
 #if NET6_0_OR_GREATER
-        var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic).ToDictionary(x => x.Location);
+        var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(p => !p.IsDynamic).ToList();
         foreach (var item in plugins)
         {
             var p = Path.GetFullPath(item);
             if (File.Exists(p))
             {
-                if (assemblies.Keys.Any(x => x == p))
+                if (assemblies.Any(x => x.Location == p))
                 {
                     //if assemblies already existed, return it
-                    yield return assemblies[item];
+                    yield return assemblies.First(x => x.Location == p);
                 }
                 else
                 {

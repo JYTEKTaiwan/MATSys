@@ -17,9 +17,14 @@ public static class TypeParser
 
         try
         {
-            // 1.  Look up the existed assemlies in GAC
+            // 1.  Look up in the loaded assemblies
             // 1.y if existed, get the type directly and overrider the variable t
-            // 1.n if not, dynamically load the assembly from the section "AssemblyPath" and search for the type
+            // 1.n if not, move to next step
+            // 2.  check if extAssemPath is null of empty
+            // 2.y this type should be reference in the project but not loaded yet
+            // 2.n this type might be located in the external file path, also need to check if extAssemPath is already existed
+            
+
             var typeName = Assembly.CreateQualifiedName(type, type).Split(',')[0];
             var t = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).FirstOrDefault(x => x.FullName == typeName);
             if (t != null) return t;
