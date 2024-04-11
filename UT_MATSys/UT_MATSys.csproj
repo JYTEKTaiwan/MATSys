@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MATSys.Hosting\MATSys.Hosting.csproj" />
+    <ProjectReference Include="..\MATSys.Utilities\MATSys.Utilities.csproj" />
     <ProjectReference Include="..\MATSys\MATSys.csproj" />
     <ProjectReference Include="..\plugins\MATSys.Plugins.CSVRecorder\MATSys.Plugins.CSVRecorder.csproj" />
     <ProjectReference Include="..\plugins\MATSys.Plugins.NetMQNotifier\MATSys.Plugins.NetMQNotifier.csproj" />
