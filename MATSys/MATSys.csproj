@@ -39,21 +39,4 @@
 			<PackageReference Include="NLog" Version="5.2.5" />
 	  <ProjectReference Include="..\MATSys.Utilities\MATSys.Utilities.csproj" />
 	</ItemGroup>
-<ItemGroup Condition="'$(TargetFramework)' == 'net35'">
-  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-</ItemGroup>
-
-<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
-  <PackageReference Include="System.Text.Json" Version="8.0.0" />  
-</ItemGroup>
-<ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
-  <PackageReference Include="System.Text.Json" Version="8.0.0" />  
-</ItemGroup>
-<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-  <PackageReference Include="System.Text.Json" Version="8.0.0" />  
-</ItemGroup>
-<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-  <PackageReference Include="System.Text.Json" Version="8.0.0" />  
-</ItemGroup>
-
 </Project>
