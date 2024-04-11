@@ -2,42 +2,64 @@
 using MATSys.Commands;
 using MATSys.Hosting;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.Threading;
 
 namespace ConsoleHost
 {
-    internal class ConsoleHost
+    internal class Program
     {
-        internal static void Main()
+        static void Main(string[] args)
         {
-
             Console.WriteLine("Hello, World!");
             var b = Host.CreateDefaultBuilder();
-            b.ConfigureAppConfiguration(app => app.AddConfigurationInMATSys());
-            b.ConfigureLogging(log => log.AddNlogInMATSys());
-            b.ConfigureServices(s => s.AddMATSysService());
+
+            b.ConfigureHostConfiguration(h => h.AddConfigurationInMATSys());
+            b.ConfigureServices(s =>
+            s.AddMATSysService()
+            );
 
             var host = b.Build();
             host.StartAsync();
 
             Thread.Sleep(1000);
+            var dev = host.Services.GetModule("Dev1");
+            var dev2 = host.Services.GetModule("Mod1");
+            var dev3 = host.Services.GetModule("Mod2");
 
-            var a = host.Services.GetModule("Dev1");
-            a.ExecuteAsync("Delay", 3000);
-            a.ExecuteAsync("Delay", 1000);
-            Console.WriteLine(a.Alias);
-
-            Thread.Sleep(5000);
+            Console.WriteLine($"{dev.Alias}_{dev.GetHashCode()}");
+            Console.WriteLine($"{dev2.Alias}_{dev2.GetHashCode()}");
+            dev.ExecuteRaw("{\"Delay\":[1000]}", out var a);
+            Console.WriteLine(a);
             host.StopAsync();
-
+            host.Dispose();
             Console.WriteLine("DONE");
-
-
-
-
-
+            Console.ReadKey();
         }
     }
+
     internal class TestDevice : ModuleBase
+    {
+        public TestDevice()
+        {
+            this.Disposed += TestDevice_Disposed;
+        }
+
+        private void TestDevice_Disposed(object sender, EventArgs e)
+        {
+            Console.WriteLine($"{Alias} is disposed");
+        }
+
+        [MATSysCommand]
+        public void Delay(int a)
+        {
+            Console.WriteLine($"[{DateTime.Now}]Start - {a}");
+            Thread.Sleep(a);
+            Console.WriteLine($"[{DateTime.Now}]Done - {a}");
+        }
+
+    }
+    internal class TestDevice2 : ModuleBase
     {
         [MATSysCommand]
         public void Delay(int a)
@@ -51,7 +73,3 @@ namespace ConsoleHost
     }
 
 }
-
-
-
-

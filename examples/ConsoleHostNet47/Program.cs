@@ -1,19 +1,9 @@
 ﻿using MATSys;
 using MATSys.Commands;
 using MATSys.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading;
-using MATSys.Utilities;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Reflection;
-using MATSys.Factories;
 
 namespace ConsoleHostNet47
 {
@@ -35,7 +25,8 @@ namespace ConsoleHostNet47
             Thread.Sleep(1000);
             var dev = host.Services.GetModule("Dev1");
             var dev2 = host.Services.GetModule("Mod1");
-            
+            var dev3 = host.Services.GetModule("Mod2");
+
             Console.WriteLine($"{dev.Alias}_{dev.GetHashCode()}");
             Console.WriteLine($"{dev2.Alias}_{dev2.GetHashCode()}");
             dev.ExecuteRaw("{\"Delay\":[1000]}", out var a);
