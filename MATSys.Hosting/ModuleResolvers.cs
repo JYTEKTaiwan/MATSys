@@ -53,12 +53,6 @@ namespace MATSys.Hosting
         public ModuleResolver(IServiceProvider provider, ITransceiverFactory tran, INotifierFactory noti, IRecorderFactory rec)
         {
             _provider = provider;
-            //if plugin project is reference and never used in the app project, the assembly is not list in the appdomain. 
-            //we should manually load the plugin assemblies        
-            var paths = Directory.GetFiles(Environment.CurrentDirectory, "*.dll");
-            //use LoadFrom to ensure it will point to the same assembly if loaded twice.
-            foreach (var path in paths) Assembly.LoadFrom(path);
-
             _modConfigurations = provider.GetConfigurationSection(m_key_modConfigSection).GetChildren().ToDictionary(x => x[m_key_modAlias]!);
             _transceiverFactory = tran;
             _notifierFactory = noti;
