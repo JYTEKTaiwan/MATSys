@@ -38,7 +38,9 @@ namespace MATSys.Utilities
         {
             try
             {
+                if (mi.GetParameters().Any(x => x.ParameterType.IsByRef)) throw new InvalidOperationException("ByRef type is not supported yet");
                 var t = GetInvokerType(mi);
+                
                 object? obj = Activator.CreateInstance(t, target, mi.Name);
                 if (obj == null)
                 {
