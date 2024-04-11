@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MATSys.Hosting
 {
-    public class ModuleResolver
+    public sealed class ModuleResolver
     {
 
         private const string m_key_modConfigSection = "MATSys:Modules";
