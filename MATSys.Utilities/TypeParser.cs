@@ -17,31 +17,11 @@ public static class TypeParser
 
         try
         {
-            // 1.  Look up in the loaded assemblies
-            // 1.y if existed, get the type directly and overrider the variable t
-            // 1.n if not, move to next step
-            // 2.  check if extAssemPath is null of empty
-            // 2.y this type should be reference in the project but not loaded yet
-            // 2.n this type might be located in the external file path, also need to check if extAssemPath is already existed
             
 
             var typeName = Assembly.CreateQualifiedName(type, type).Split(',')[0];
             var t = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).FirstOrDefault(x => x.FullName == typeName);
             if (t != null) return t;
-
-            /*
-            //search entry assembly
-            var t = Assembly.GetEntryAssembly()!.GetTypes().FirstOrDefault(x => x.FullName == typeName);
-            if (t != null) return t;
-            //search executing assembly
-            t = Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
-            if (t != null) return t;
-            //search calling assembly
-            t = Assembly.GetCallingAssembly().GetTypes().FirstOrDefault(x => x.FullName == typeName);
-            if (t != null) return t;
-            */
-
-            //search external assembly (from file)
 
             t = DynamicLibraryLoader.LoadPluginAssemblies(extAssemPath).First().GetType(type);
             return t;
