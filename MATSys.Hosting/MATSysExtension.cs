@@ -23,7 +23,7 @@ namespace MATSys.Hosting
         {
             var modsInfo = context.Configuration.GetSection("MATSys:Modules")
                 .GetChildren();
-
+            
             services.AddSingleton<IRecorderFactory, RecorderFactory>()
                               .AddSingleton<INotifierFactory, NotifierFactory>()
                               .AddSingleton<ITransceiverFactory, TransceiverFactory>()
@@ -32,7 +32,7 @@ namespace MATSys.Hosting
             {
                 services.AddKeyedScoped(
                     item["Alias"], 
-                    (sp, key) => sp.GetRequiredService<ModuleResolver>().CreateModule(item));
+                    (sp, key) => sp.GetRequiredService<ModuleResolver>().CreateModule(key.ToString()));
             };
             return services;
 

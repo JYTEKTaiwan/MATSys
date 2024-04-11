@@ -79,7 +79,8 @@ namespace MATSys.Factories
                     var obj = (IModule)instance;
                     obj.Alias = alias;
                     obj.SetProvider(_serviceprovider);
-                    obj.Configure(section);
+                    section.Bind(obj.Configuration);
+                    obj.Configure();
                     obj.InjectPlugin(rec);
                     obj.InjectPlugin(noti);
                     obj.InjectPlugin(trans);
@@ -127,7 +128,8 @@ namespace MATSys.Factories
                 if (instance != null)
                 {
                     var obj = (IModule)instance;
-                    obj.Configure(args);
+                    obj.Configuration = args;
+                    obj.Configure();
                     return obj;
                 }
                 else
@@ -156,7 +158,8 @@ namespace MATSys.Factories
             if (instance != null)
             {
                 var obj = (IModule)instance;
-                obj.Configure(args);
+                obj.Configuration = args;
+                obj.Configure();
                 return obj;
             }
             else

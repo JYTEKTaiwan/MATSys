@@ -17,7 +17,7 @@ public class UT_Hosting
             try
             {
                 var host = Host.CreateDefaultBuilder()
-                .ConfigureServices(s => s.AddMATSysService());
+                .ConfigureServices((c,s) => s.AddMATSysService(c));
 
                 var app = host.Build();
                 app.RunAsync();
@@ -45,7 +45,7 @@ public class UT_Hosting
                                 configHost.SetBasePath(Directory.GetCurrentDirectory());
                                 configHost.AddJsonFile("UT_Hosting_Modules.json");
                             });
-            host.ConfigureServices(s => s.AddMATSysService());
+            host.ConfigureServices((c,s) => s.AddMATSysService(c));
 
             var app = host.Build();
             app.RunAsync();
@@ -67,7 +67,7 @@ public class UT_Hosting
             configHost.SetBasePath(Directory.GetCurrentDirectory());
             configHost.AddJsonFile("notfound.json");
         });
-            host.ConfigureServices(s => s.AddMATSysService());
+            host.ConfigureServices((c,s) => s.AddMATSysService(c));
 
             var app = host.Build();
             app.RunAsync();

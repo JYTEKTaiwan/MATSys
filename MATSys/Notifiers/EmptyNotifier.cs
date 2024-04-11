@@ -10,7 +10,7 @@ namespace MATSys.Plugins
         private NLog.ILogger _logger = NLog.LogManager.CreateNullLogger();
         private bool disposedValue;
 
-
+        public object Configuration { get; set; } = new object();
         /// <summary>
         /// Name of the Service
         /// </summary>
@@ -38,7 +38,7 @@ namespace MATSys.Plugins
         /// </summary>
         /// <param name="configuration">configuration object</param>
 
-        public void Configure(object configuration)
+        public void Configure()
         {
             _logger.Info($"{nameof(EmptyNotifier)} is initiated");
         }
@@ -67,7 +67,7 @@ namespace MATSys.Plugins
         {
             return new System.Text.Json.Nodes.JsonObject();
         }
-#elif NET35
+#elif NET35||NET462
         /// <summary>
         /// Export the service insatnce into JObject format
         /// </summary>
@@ -87,7 +87,7 @@ namespace MATSys.Plugins
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return Export().ToJsonString(new System.Text.Json.JsonSerializerOptions() { WriteIndented = indented });
-#elif NET35            
+#elif NET35 ||NET462        
             if (indented) return Export().ToString(Newtonsoft.Json.Formatting.Indented);
             else return Export().ToString(Newtonsoft.Json.Formatting.None);
 

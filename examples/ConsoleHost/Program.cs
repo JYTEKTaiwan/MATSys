@@ -15,8 +15,8 @@ namespace ConsoleHost
             var b = Host.CreateDefaultBuilder();
 
             b.ConfigureHostConfiguration(h => h.UseConfigurationInMATSys());
-            b.ConfigureServices(s =>
-            s.AddMATSysService()
+            b.ConfigureServices((c,s) =>
+            s.AddMATSysService(c)
             );
 
             var host = b.Build();

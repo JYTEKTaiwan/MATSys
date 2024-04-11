@@ -5,8 +5,6 @@
     /// </summary>
     public interface IModule : IService
     {
-
-
         /// <summary>
         /// Notifier instance
         /// </summary>
@@ -70,7 +68,7 @@
         /// Configurae instance with object 
         /// </summary>
         /// <param name="config">configuration object</param>
-        void Configure(object? config);
+        void Configure();
 
         /// <summary>
         /// Inject the IRecorder instance into IModule instance

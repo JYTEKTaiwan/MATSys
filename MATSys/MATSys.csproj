@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net8.0;net6.0;net7.0;netstandard2.0;net35</TargetFrameworks>
+		<TargetFrameworks>net8.0;net6.0;net7.0;netstandard2.0;net462;net35</TargetFrameworks>
 		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
@@ -10,7 +10,7 @@
 		<Authors>Way Lin</Authors>
 		<Company>JYTEK TAIWAN CORP.</Company>
 		<Copyright>Copyright © 2019-2024 JYTEK TAIWAN CORP.</Copyright>		
-		<VersionPrefix>2.1.0</VersionPrefix>
+		<VersionPrefix>2.1.1</VersionPrefix>
 		<RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/</RepositoryUrl>
 
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -37,6 +37,9 @@
 	</ItemGroup>
 	<ItemGroup>
 			<PackageReference Include="NLog" Version="5.2.5" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\MATSys.Utilities\MATSys.Utilities.csproj" />
 	</ItemGroup>
 </Project>

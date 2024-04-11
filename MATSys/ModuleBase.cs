@@ -38,6 +38,9 @@ namespace MATSys
         #endregion
 
         #region Public Properties
+
+        public object Configuration { get;  set; }
+
         /// <summary>
         /// Running status of ModuleBase instance
         /// </summary>
@@ -73,7 +76,7 @@ namespace MATSys
         INotifier IModule.Notifier => _notifier;
 
         public event ServiceDisposed Disposed;
-        public event ServiceExceptionFired ExceptionFired;
+        public event ServiceExceptionFired? ExceptionFired;
         /* Unmerged change from project 'MATSys (net35)'
         Before:
                 #endregion
@@ -138,13 +141,13 @@ namespace MATSys
                 catch (KeyNotFoundException ex)
                 {
                     _logger?.Warn(ex);
-                    ExceptionFired.Invoke(this, ex);
+                    ExceptionFired?.Invoke(this, ex);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, cmd);
                 }
                 catch (Exception ex)
                 {
                     _logger?.Warn(ex);
-                    ExceptionFired.Invoke(this, ex);
+                    ExceptionFired?.Invoke(this, ex);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
                 }
             });
@@ -179,19 +182,19 @@ namespace MATSys
                 catch (KeyNotFoundException ex)
                 {
                     _logger?.Warn(ex);
-                    ExceptionFired.Invoke(this, ex);
+                    ExceptionFired?.Invoke(this, ex);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, methodName);
                 }
                 catch (AggregateException ex)
                 {
                     _logger?.Warn(ex.Message);
-                    ExceptionFired.Invoke(this, ex);
+                    ExceptionFired?.Invoke(this, ex);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, methodName);
                 }
                 catch (Exception ex)
                 {
                     _logger?.Warn(ex);
-                    ExceptionFired.Invoke(this, ex);
+                    ExceptionFired?.Invoke(this, ex);
                     return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, methodName);
                 }
             });
@@ -208,7 +211,7 @@ namespace MATSys
         {            
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteAsync(cmd).Result;
-#elif NET35
+#elif NET35||NET462
             return Execute_Net35(cmd);
 #endif
         }
@@ -216,7 +219,7 @@ namespace MATSys
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteAsync(methodName, parameters).Result;
-#elif NET35
+#elif NET35||NET462
             return Execute_Net35(methodName, parameters);
 #endif
         }
@@ -226,7 +229,7 @@ namespace MATSys
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteRawAsync(cmd).Result;
-#elif NET35
+#elif NET35||NET462
             return ExecuteRaw_Net35(cmd);
 #endif
         }
@@ -235,7 +238,7 @@ namespace MATSys
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteRawAsync(methodName, parameters).Result;
-#elif NET35
+#elif NET35||NET462
             return ExecuteRaw_Net35(methodName, parameters);
 #endif
         }
@@ -262,7 +265,7 @@ namespace MATSys
                 System.Text.Json.Nodes.JsonObject jobj = new System.Text.Json.Nodes.JsonObject();
                 jobj.Add(item.MethodName, arr);
                 yield return jobj.ToJsonString();
-#elif NET35
+#elif NET35||NET462
                 var args = item.CommandType!.GetGenericArguments();
                 Newtonsoft.Json.Linq.JArray arr = new Newtonsoft.Json.Linq.JArray();
                 for (int i = 0; i < args.Length; i++)
@@ -296,7 +299,7 @@ namespace MATSys
             return jObj;
         }
 
-#elif NET35
+#elif NET35||NET462
         /// <summary>
         /// Export the ModuleBase instance to json context
         /// </summary>
@@ -327,7 +330,7 @@ namespace MATSys
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return Export().ToJsonString(new System.Text.Json.JsonSerializerOptions() { WriteIndented = indented });
-#elif NET35
+#elif NET35||NET462
             if (indented) return Export().ToString(Newtonsoft.Json.Formatting.Indented);
             else return Export().ToString(Newtonsoft.Json.Formatting.None);
 
@@ -338,7 +341,7 @@ namespace MATSys
         /// Configurae IModule instance with object 
         /// </summary>
         /// <param name="option">configuration object</param>
-        public virtual void Configure(object? option) { }
+        public virtual void Configure() { }
         /// <summary>
         /// Inject the IRecorder instance into IModule instance
         /// </summary>
@@ -370,8 +373,8 @@ namespace MATSys
         #endregion
 
         #region Private methods
-#if NET35
-        
+#if NET35 || NET462
+
         private string Execute_Net35(ICommand cmd)
         {
             return  cmd.ConvertResultToString(ExecuteRaw_Net35(cmd))!;
@@ -394,13 +397,13 @@ namespace MATSys
             catch (KeyNotFoundException ex)
             {
                 _logger?.Warn(ex);
-                ExceptionFired.Invoke(this, ex);
+                ExceptionFired?.Invoke(this, ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_notFound, ex, cmd);
             }
             catch (Exception ex)
             {
                 _logger?.Warn(ex);
-                ExceptionFired.Invoke(this, ex);
+                ExceptionFired?.Invoke(this, ex);
                 return ExceptionHandler.PrintMessage(ExceptionHandler.cmd_execError, ex, cmd);
             }
 
@@ -441,7 +444,7 @@ namespace MATSys
 #endif
         private Dictionary<string, MATSysContext> ListMATSysCommands()
         {
-#if NET6_0_OR_GREATER || NETSTANDARD2_0
+#if NET6_0_OR_GREATER || NETSTANDARD2_0||NET462
             return GetType().GetMethods()
                            .Where(x => x.GetCustomAttributes<MATSysCommandAttribute>().Count() > 0)
                            .Select(x =>
@@ -480,7 +483,7 @@ namespace MATSys
                 var end = sp.IndexOf(':');
                 var start = sp.IndexOf('\"');
                 var item = cmds[sp.Slice(start + 1, end - start - 2).ToString()];
-#elif NET35
+#elif NET35||NET462
                 var sp = commandObjectInJson;
                 var end = sp.IndexOf(':');
                 var start = sp.IndexOf('\"');

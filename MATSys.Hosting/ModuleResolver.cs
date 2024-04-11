@@ -29,7 +29,7 @@ namespace MATSys.Hosting
         private readonly ITransceiverFactory _transceiverFactory;
         private readonly INotifierFactory _notifierFactory;
         private readonly IRecorderFactory _recorderFactory;
-
+        
         private object _sync = new object();
         private string _key;
         public string SelectedKey
@@ -92,6 +92,53 @@ namespace MATSys.Hosting
 
                 string extAssemblyPath = section.GetValue<string>(m_key_modextPath)!; //Get the assemblypath string of Type in json section
 
+                var t = TypeParser.SearchType(typeString, extAssemblyPath);
+                if (t == null) throw new InvalidDataException($"Cannot find type {typeString}");
+
+                //Create Transceiver, Notifier, and Recorder
+                var trans = _transceiverFactory.CreateTransceiver(section.GetSection(m_key_transceiver));
+                var noti = _notifierFactory.CreateNotifier(section.GetSection(m_key_notifier));
+                var rec = _recorderFactory.CreateRecorder(section.GetSection(m_key_recorder));
+
+                
+                //Create instance and return
+                var instance = Activator.CreateInstance(t);
+                
+                if (instance != null)
+                {
+                    var obj = (IModule)instance;
+                    obj.Alias = alias;
+                    obj.SetProvider(_provider);
+                    section.Bind(obj.Configuration);
+                    obj.Configure();
+                    obj.InjectPlugin(rec);
+                    obj.InjectPlugin(noti);
+                    obj.InjectPlugin(trans);
+                    return obj;
+                }
+                else
+                {
+                    throw new NullReferenceException($"Cannot create instance from type '{t.Name}'");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public IModule CreateModule(string key)
+        {
+            try
+            {
+                var section = _modConfigurations[key];
+
+                string alias = section.GetValue<string>(m_key_modAlias)!; //Get the alias string in json section
+                if (alias == null) throw new NoNullAllowedException("Alias property cannot be null in configuration section");
+
+                string typeString = section.GetValue<string>(m_key_modType)!; //Get the type string of Type in json section
+                if (typeString == null) throw new NoNullAllowedException("Type property cannot be null in configuration section");
+
+                string extAssemblyPath = section.GetValue<string>(m_key_modextPath)!; //Get the assemblypath string of Type in json section
 
 
                 var t = TypeParser.SearchType(typeString, extAssemblyPath);
@@ -110,7 +157,8 @@ namespace MATSys.Hosting
                     var obj = (IModule)instance;
                     obj.Alias = alias;
                     obj.SetProvider(_provider);
-                    obj.Configure(section);
+                    section.Bind(obj.Configuration);
+                    obj.Configure();
                     obj.InjectPlugin(rec);
                     obj.InjectPlugin(noti);
                     obj.InjectPlugin(trans);
@@ -126,6 +174,7 @@ namespace MATSys.Hosting
                 throw;
             }
         }
+
     }
 
 }

@@ -558,7 +558,7 @@ namespace MATSys.Commands
 
     }
 
-#elif NET35
+#elif NET35||NET462
     internal sealed class CommandBaseJsonConverter : Newtonsoft.Json.Converters.CustomCreationConverter<CommandBase>
     {
         public override bool CanConvert(Type typeToConvert)

@@ -8,11 +8,12 @@
     /// </summary>
     public interface IService : IDisposable
     {
+        object Configuration { get; set; }
         /// <summary>
         /// Name of the Service
         /// </summary>
         string Alias { get; set; }
-        void Configure(object? config);
+        void Configure();
         event ServiceExceptionFired ExceptionFired;
         event ServiceDisposed Disposed;
 
@@ -22,7 +23,7 @@
         /// </summary>
         /// <returns>JObject instance</returns>
         System.Text.Json.Nodes.JsonObject Export();
-#elif NET35
+#elif NET35||NET462
         /// <summary>
         /// Export the service insatnce into JObject format
         /// </summary>
@@ -38,8 +39,4 @@
 
     }
 
-    public class Delegation
-    {
-
-    }
 }

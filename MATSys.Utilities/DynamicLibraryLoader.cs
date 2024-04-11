@@ -51,7 +51,7 @@ internal class DynamicLibraryLoader
 
 #endif
 
-#if NETSTANDARD2_0 || NET35
+#if NETSTANDARD2_0 || NET35||NET462
 
         foreach (var item in plugins)
         {

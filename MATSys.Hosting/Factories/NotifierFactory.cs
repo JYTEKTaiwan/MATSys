@@ -53,7 +53,8 @@ namespace MATSys.Factories
                 if (instance != null)
                 {
                     var obj = (INotifier)instance;
-                    obj.Configure(section);
+                    section.Bind(obj.Configuration);
+                    obj.Configure();
                     return obj;
                 }
                 else
@@ -77,7 +78,8 @@ namespace MATSys.Factories
                 if (instance != null)
                 {
                     var obj = (INotifier)instance;
-                    obj.Configure(args);
+                    obj.Configuration = args;
+                    obj.Configure();
                     return obj;
                 }
                 else

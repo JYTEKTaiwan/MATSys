@@ -22,6 +22,7 @@ namespace MATSys.Plugins
 
         public event ServiceExceptionFired ExceptionFired;
         public event ServiceDisposed Disposed;
+        public object Configuration { get; set; } = new CSVRecorderConfiguration();
 
         public string Alias { get; set; } = nameof(CSVRecorder);
 
@@ -124,13 +125,9 @@ namespace MATSys.Plugins
         {
             return Export().ToJsonString(new JsonSerializerOptions() { WriteIndented = indented });
         }
-        public void Configure(object? config)
+        public void Configure()
         {
-            if (config == null) return;
-
-            if (typeof(IConfigurationSection).IsAssignableFrom(config.GetType()))
-                Load((IConfigurationSection)config);
-            else Load(config);
+            Load(Configuration);
         }
 
         protected virtual void Dispose(bool disposing)

@@ -20,6 +20,7 @@ namespace MATSys.Plugins
 
         private CancellationTokenSource _localCts = new CancellationTokenSource();
         private bool disposedValue;
+        public object Configuration { get; set; } = new NetMQTransceiverConfiguration();
 
         public string Alias { get; set; } = nameof(NetMQTransceiver);
 
@@ -112,12 +113,9 @@ namespace MATSys.Plugins
         }
 
 
-        public void Configure(object? config)
+        public void Configure()
         {
-            if (config == null) return;
-            if (typeof(IConfigurationSection).IsAssignableFrom(config.GetType()))
-                Load((IConfigurationSection)config);
-            else Load(config);
+             Load(Configuration);
         }
 
         private void Dispose(bool disposing)

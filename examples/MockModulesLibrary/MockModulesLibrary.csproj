@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0;net472;net462</TargetFrameworks>
+		<TargetFrameworks>net8.0;net462</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<EnableDynamicLoading>true</EnableDynamicLoading>
@@ -12,9 +12,10 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\MATSys\MATSys.csproj">
 			<Private>false</Private>
-			<ExcludeAssets>runtime</ExcludeAssets>
-
-		</ProjectReference>
+			<ExcludeAssets>runtime</ExcludeAssets>	
+			
+		</ProjectReference> 
+		
 	</ItemGroup>
 
 </Project>

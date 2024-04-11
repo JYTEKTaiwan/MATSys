@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net7.0;net6.0;netstandard2.0;net35</TargetFrameworks>
+    <TargetFrameworks>net8.0;net7.0;net6.0;netstandard2.0;net35;net462</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 	  <LangVersion>latest</LangVersion>
@@ -11,7 +11,7 @@
 	  <Authors>Way Lin</Authors>
 	  <Company>JYTEK TAIWAN CORP.</Company>
 	  <Copyright>Copyright © 2019-2024 JYTEK TAIWAN CORP.</Copyright>
-	  <VersionPrefix>2.1.0</VersionPrefix>
+	  <VersionPrefix>2.1.1</VersionPrefix>
 	  <RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/</RepositoryUrl>
 
   </PropertyGroup>
@@ -19,8 +19,12 @@
   <PackageReference Include="System.Threading.Tasks" Version="3.0.0"/>
   <PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
 </ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net462'" >
+		<PackageReference Include="System.Threading.Tasks" Version="3.0.0"/>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3"/>
+	</ItemGroup>
 
-<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
   <PackageReference Include="System.Text.Json" Version="7.0.0"/>  
 </ItemGroup>
 <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
