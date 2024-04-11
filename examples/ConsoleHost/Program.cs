@@ -14,7 +14,7 @@ namespace ConsoleHost
             Console.WriteLine("Hello, World!");
             var b = Host.CreateDefaultBuilder();
 
-            b.ConfigureHostConfiguration(h => h.AddConfigurationInMATSys());
+            b.ConfigureHostConfiguration(h => h.UseConfigurationInMATSys());
             b.ConfigureServices(s =>
             s.AddMATSysService()
             );

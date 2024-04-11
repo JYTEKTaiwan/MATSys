@@ -21,13 +21,8 @@
 	  <PackageReference Include="grpc.aspnetcore" Version="2.58.0" />
 	  <PackageReference Include="protobuf-net.grpc.aspnetcore" Version="1.1.1" />
   </ItemGroup>
-  <ItemGroup Condition="
-			   '$(TargetFramework)' == 'net6.0' Or 
-			   '$(TargetFramework)' == 'net7.0' ">
-	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
-  </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+  <ItemGroup>
 	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
 
   </ItemGroup>

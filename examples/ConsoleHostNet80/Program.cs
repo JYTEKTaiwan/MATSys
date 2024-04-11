@@ -14,7 +14,7 @@ namespace ConsoleHostNet80
             Console.WriteLine("Hello, World!");
             var b = Host.CreateDefaultBuilder();
 
-            b.ConfigureHostConfiguration(h => h.AddConfigurationInMATSys());
+            b.ConfigureHostConfiguration(h => h.UseConfigurationInMATSys());
             b.ConfigureServices((c,s) =>
             s.AddMATSysService(c)
             );

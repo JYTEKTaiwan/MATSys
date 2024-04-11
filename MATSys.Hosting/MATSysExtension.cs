@@ -21,27 +21,21 @@ namespace MATSys.Hosting
         /// <returns>IServiceCollection</returns>
         public static IServiceCollection AddMATSysService(this IServiceCollection services, HostBuilderContext context)
         {
-#if NET8_0_OR_GREATER
+            var modsInfo = context.Configuration.GetSection("MATSys:Modules")
+                .GetChildren();
+
             services.AddSingleton<IRecorderFactory, RecorderFactory>()
                               .AddSingleton<INotifierFactory, NotifierFactory>()
                               .AddSingleton<ITransceiverFactory, TransceiverFactory>()
-                              .AddSingleton<ModuleResolver>();
-            var mods = context.Configuration.GetSection("MATSys:Modules").GetChildren().ToDictionary(x => x["Alias"]);
-            foreach (var item in mods)
+                              .AddSingleton<ModuleResolver>();            
+            foreach (var item in modsInfo)
             {
-                services.AddKeyedScoped<IModule>(item.Key, (sp, key) => sp.GetRequiredService<ModuleResolver>().CreateModule(item.Value));
+                services.AddKeyedScoped(
+                    item["Alias"], 
+                    (sp, key) => sp.GetRequiredService<ModuleResolver>().CreateModule(item));
             };
             return services;
-#else
-            return services.AddSingleton<IRecorderFactory, RecorderFactory>()
-                              .AddSingleton<INotifierFactory, NotifierFactory>()
-                              .AddSingleton<ITransceiverFactory, TransceiverFactory>()
-                              .AddSingleton<ModuleResolver>()
-                              .AddTransient<IModule>(provider =>
-                                   provider.GetRequiredService<ModuleResolver>().GetSelectedModule()
-                              );
 
-#endif
         }
 
         /// <summary>
@@ -56,7 +50,7 @@ namespace MATSys.Hosting
         /// </summary>
         /// <param name="configBuilder">configuration builder </param>
         /// <returns>IConfigurationBuilder</returns>
-        public static IConfigurationBuilder AddConfigurationInMATSys(this IConfigurationBuilder configBuilder)
+        public static IConfigurationBuilder UseConfigurationInMATSys(this IConfigurationBuilder configBuilder)
         {
             var config = new ConfigurationBuilder()
             //.AddEnvironmentVariables()
@@ -94,13 +88,7 @@ namespace MATSys.Hosting
         /// <returns>IModule implementation</returns>
         public static IModule GetModule(this IServiceProvider provider, string alias)
         {
-#if NET8_0_OR_GREATER
             return provider.GetKeyedService<IModule>(alias);
-#else
-            var resolver = provider.GetRequiredService<ModuleResolver>();
-            resolver.SelectedKey = alias;
-            return provider.GetRequiredService<IModule>();
-#endif
 
         }
         /// <summary>

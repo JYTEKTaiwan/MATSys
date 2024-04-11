@@ -14,14 +14,12 @@ namespace ConsoleHostNet47
             Console.WriteLine("Hello, World!");
             var b = Host.CreateDefaultBuilder();
 
-            b.ConfigureHostConfiguration(h => h.AddConfigurationInMATSys());
-            b.ConfigureServices((c,s) =>
-            s.AddMATSysService(c)
-            );
+            b.ConfigureHostConfiguration(h => h.UseConfigurationInMATSys());
+            b.ConfigureServices((c, s) => s.AddMATSysService(c));
 
             var host = b.Build();
             host.StartAsync();
-            
+
             Thread.Sleep(1000);
             var dev = host.Services.GetModule("Dev1");
             var dev2 = host.Services.GetModule("Mod1");
