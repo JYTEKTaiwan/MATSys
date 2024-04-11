@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading;
 
-namespace ConsoleHostNet47
+namespace ConsoleHostNet80
 {
     internal class Program
     {
@@ -21,10 +21,10 @@ namespace ConsoleHostNet47
 
             var host = b.Build();
             host.StartAsync();
-            
+
             Thread.Sleep(1000);
             var dev = host.Services.GetModule("Dev1");
-            var dev2 = host.Services.GetModule("Mod1");
+            var dev2 = host.Services.GetModule("Dev1");
             var dev3 = host.Services.GetModule("Mod2");
 
             Console.WriteLine($"{dev.Alias}_{dev.GetHashCode()}");

@@ -19,15 +19,30 @@ namespace MATSys.Hosting
         /// </summary>
         /// <param name="services">service collection from host builder</param>
         /// <returns>IServiceCollection</returns>
-        public static IServiceCollection AddMATSysService(this IServiceCollection services)
-        => services.AddSingleton<IRecorderFactory, RecorderFactory>()
-                   .AddSingleton<INotifierFactory, NotifierFactory>()
-                   .AddSingleton<ITransceiverFactory, TransceiverFactory>()
-                   .AddSingleton<ModuleResolver>()
-                   .AddTransient<IModule>(provider =>
-                        provider.GetRequiredService<ModuleResolver>().GetSelectedModule()
-                   );
+        public static IServiceCollection AddMATSysService(this IServiceCollection services, HostBuilderContext context)
+        {
+#if NET8_0_OR_GREATER
+            services.AddSingleton<IRecorderFactory, RecorderFactory>()
+                              .AddSingleton<INotifierFactory, NotifierFactory>()
+                              .AddSingleton<ITransceiverFactory, TransceiverFactory>()
+                              .AddSingleton<ModuleResolver>();
+            var mods = context.Configuration.GetSection("MATSys:Modules").GetChildren().ToDictionary(x => x["Alias"]);
+            foreach (var item in mods)
+            {
+                services.AddKeyedScoped<IModule>(item.Key, (sp, key) => sp.GetRequiredService<ModuleResolver>().CreateModule(item.Value));
+            };
+            return services;
+#else
+            return services.AddSingleton<IRecorderFactory, RecorderFactory>()
+                              .AddSingleton<INotifierFactory, NotifierFactory>()
+                              .AddSingleton<ITransceiverFactory, TransceiverFactory>()
+                              .AddSingleton<ModuleResolver>()
+                              .AddTransient<IModule>(provider =>
+                                   provider.GetRequiredService<ModuleResolver>().GetSelectedModule()
+                              );
 
+#endif
+        }
 
         /// <summary>
         /// Inject NLog service into logger builder in host
@@ -79,9 +94,14 @@ namespace MATSys.Hosting
         /// <returns>IModule implementation</returns>
         public static IModule GetModule(this IServiceProvider provider, string alias)
         {
+#if NET8_0_OR_GREATER
+            return provider.GetKeyedService<IModule>(alias);
+#else
             var resolver = provider.GetRequiredService<ModuleResolver>();
             resolver.SelectedKey = alias;
             return provider.GetRequiredService<IModule>();
+#endif
+
         }
         /// <summary>
         /// List all the active modules in the memory

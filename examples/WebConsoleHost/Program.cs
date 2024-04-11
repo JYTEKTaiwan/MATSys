@@ -16,7 +16,7 @@ namespace WebConsoleHost
 
             builder.Configuration.AddConfigurationInMATSys();
             builder.Logging.AddNlogInMATSys();
-            builder.Services.AddMATSysService();
+            builder.Host.ConfigureServices((c,s)=>s.AddMATSysService(c));
             builder.AddGrpcService();
 
             //build
