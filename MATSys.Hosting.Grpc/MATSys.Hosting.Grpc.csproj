@@ -12,7 +12,7 @@
 	  <Authors>Way Lin</Authors>
 	  <Company>JYTEK TAIWAN CORP.</Company>
 	  <Copyright>Copyright © 2019-2024 JYTEK TAIWAN CORP.</Copyright>
-	  <VersionPrefix>2.1.0</VersionPrefix>
+	  <VersionPrefix>2.1.1</VersionPrefix>
 	  <RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/</RepositoryUrl>
 
   </PropertyGroup>
