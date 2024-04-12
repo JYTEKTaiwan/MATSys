@@ -12,7 +12,10 @@ namespace MATSys.Utilities.Tests
     [TestFixture()]
     public class TypeParserTests
     {
-        public class Test : ModuleBase { }
+        public class Test : ModuleBase
+        {
+            public override object Configuration { get; set; }
+        }
         [Test()]
         public void SearchLoadedTypeTest()
         {

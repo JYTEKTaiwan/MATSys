@@ -175,6 +175,7 @@ public class ModuleAccessBenchmark
 
     internal class Module : ModuleBase
     {
+        public override object Configuration { get; set; }
         [MATSysCommand]
         public string Hello0()
         {

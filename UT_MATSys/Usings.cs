@@ -6,7 +6,7 @@ namespace UT_MATSys;
 
 public class NormalDevice : ModuleBase
 {
-
+    public override object Configuration { get; set; }
     [MATSysCommand("Hi")]
     public string Hello()
     {

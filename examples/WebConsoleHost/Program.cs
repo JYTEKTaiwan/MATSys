@@ -34,7 +34,7 @@ namespace WebConsoleHost
 
     internal class TestDevice : ModuleBase
     {
-
+        public override object Configuration { get; set; }
         [MATSysCommand]
         public string Hello(string input)
         {

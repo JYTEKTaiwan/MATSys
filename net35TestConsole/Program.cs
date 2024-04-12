@@ -32,7 +32,7 @@ namespace net35TestConsole
     }
     internal class TestDevice : ModuleBase
     {
-
+        public override object Configuration { get; set; }
         [MATSysCommand("Delay")]
         public void Delay(int a)
         {

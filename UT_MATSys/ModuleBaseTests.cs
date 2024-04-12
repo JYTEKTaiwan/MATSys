@@ -18,6 +18,7 @@ namespace MATSys.Tests
     {
         internal class TestModule : ModuleBase
         {
+            public override object Configuration { get; set; }
             [MATSysCommand]
             public bool ReturnFalse() => false;
 

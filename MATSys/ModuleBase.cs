@@ -39,7 +39,7 @@ namespace MATSys
 
         #region Public Properties
 
-        public object Configuration { get;  set; }
+        public abstract object Configuration { get;  set; }
 
         /// <summary>
         /// Running status of ModuleBase instance

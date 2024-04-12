@@ -41,6 +41,7 @@ namespace ConsoleHostNet80
 
     internal class TestDevice : ModuleBase
     {
+        public override object Configuration { get; set; }
         public TestDevice()
         {
             this.Disposed += TestDevice_Disposed;
@@ -62,6 +63,7 @@ namespace ConsoleHostNet80
     }
     internal class TestDevice2 : ModuleBase
     {
+        public override object Configuration { get; set; }
         [MATSysCommand]
         public void Delay(int a)
         {
