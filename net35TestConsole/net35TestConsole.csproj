@@ -47,17 +47,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MATSys.Utilities\MATSys.Utilities.csproj">
-      <Project>{4609bb0a-4724-467f-b88c-5b05d7a45f56}</Project>
-      <Name>MATSys.Utilities</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\MATSys\MATSys.csproj">
       <Project>{48e00b53-ecd5-457e-8f06-2d63d1350762}</Project>
       <Name>MATSys</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
