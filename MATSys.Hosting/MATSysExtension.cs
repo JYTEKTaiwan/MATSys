@@ -23,11 +23,11 @@ namespace MATSys.Hosting
         {
             var modsInfo = context.Configuration.GetSection("MATSys:Modules")
                 .GetChildren();
-            
+
             services.AddSingleton<IRecorderFactory, RecorderFactory>()
                               .AddSingleton<INotifierFactory, NotifierFactory>()
                               .AddSingleton<ITransceiverFactory, TransceiverFactory>()
-                              .AddSingleton<ModuleResolver>();            
+                              ;
             foreach (var item in modsInfo)
             {
                 services.AddKeyedScoped(
