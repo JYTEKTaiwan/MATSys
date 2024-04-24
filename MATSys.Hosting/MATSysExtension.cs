@@ -32,7 +32,7 @@ namespace MATSys.Hosting
             {
                 services.AddKeyedScoped(
                     item["Alias"], 
-                    (sp, key) => sp.GetRequiredService<ModuleResolver>().CreateModule(key.ToString()));
+                    (sp, key) => ModuleResolver.Create(sp, item));
             };
             return services;
 
@@ -86,18 +86,11 @@ namespace MATSys.Hosting
         /// <param name="provider">service provider</param>
         /// <param name="alias">alias name</param>        
         /// <returns>IModule implementation</returns>
-        public static IModule GetModule(this IServiceProvider provider, string alias)
+        public static IModule? GetModule(this IServiceProvider provider, string alias)
         {
             return provider.GetKeyedService<IModule>(alias);
 
         }
-        /// <summary>
-        /// List all the active modules in the memory
-        /// </summary>                
-        /// <returns>Collection of <see cref="IModule"/> </returns>
-        public static IModule[] GetModules(this IServiceProvider provider) => provider.GetRequiredService<ModuleResolver>().ExistingModules;
-
-
 
     }
 }

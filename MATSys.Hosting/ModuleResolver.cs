@@ -14,7 +14,6 @@ namespace MATSys.Hosting
 {
     public sealed class ModuleResolver
     {
-
         private const string m_key_modConfigSection = "MATSys:Modules";
         private const string m_key_modAlias = "Alias";
         private const string m_key_modType = "Type";
@@ -23,120 +22,120 @@ namespace MATSys.Hosting
         private const string m_key_notifier = "Notifier";
         private const string m_key_transceiver = "Transceiver";
 
-        private readonly Dictionary<string, IConfigurationSection> _modConfigurations;
-        private Dictionary<string, IModule> _livingModules = new Dictionary<string, IModule>();
-        private readonly IServiceProvider _provider;
-        private readonly ITransceiverFactory _transceiverFactory;
-        private readonly INotifierFactory _notifierFactory;
-        private readonly IRecorderFactory _recorderFactory;
-        
-        private object _sync = new object();
-        private string _key;
-        public string SelectedKey
+        /// <summary>
+        /// Create module without transceiver, recorder and notifier
+        /// </summary>
+        /// <param name="provider">Service provider</param>
+        /// <param name="sectionKey">Key of the section</param>
+        /// <returns>IModule</returns>
+        /// <exception cref="KeyNotFoundException">sectino is not found</exception>
+        /// <exception cref="NoNullAllowedException">"Alias" or "Type" property is null</exception>
+        /// <exception cref="InvalidDataException">Cannot property parse the type info</exception>
+        /// <exception cref="NullReferenceException">Error when activating the instance</exception>
+        public static IModule Create(IServiceProvider provider, string sectionKey)
         {
-            get
+            var _transceiverFactory = (ITransceiverFactory)provider.GetService(typeof(ITransceiverFactory));
+            var _notifierFactory = (INotifierFactory)provider.GetService(typeof(INotifierFactory));
+            var _recorderFactory = (IRecorderFactory)provider.GetService(typeof(IRecorderFactory));
+
+            var section = provider.GetConfigurationSection(sectionKey);
+            if (!section.Exists()) throw new KeyNotFoundException($"Cannot find section key named \"{sectionKey}\"");
+
+            string alias = section.GetValue<string>(m_key_modAlias)!; //Get the alias string in json section
+            if (alias == null) throw new NoNullAllowedException("Alias property cannot be null in configuration section");
+
+            string typeString = section.GetValue<string>(m_key_modType)!; //Get the type string of Type in json section
+            if (typeString == null) throw new NoNullAllowedException("Type property cannot be null in configuration section");
+
+            string extAssemblyPath = section.GetValue<string>(m_key_modextPath)!; //Get the assemblypath string of Type in json section
+
+            var t = TypeParser.SearchType(typeString, extAssemblyPath);
+            if (t == null) throw new InvalidDataException($"Cannot find type {typeString}");
+
+            //Create instance and return
+            var instance = Activator.CreateInstance(t);
+
+            //Create Transceiver, Notifier, and Recorder
+            var trans = _transceiverFactory == null ? new EmptyTransceiver() :
+                _transceiverFactory.CreateTransceiver(section.GetSection(m_key_transceiver));
+            var noti = _notifierFactory == null ? new EmptyNotifier() :
+                _notifierFactory.CreateNotifier(section.GetSection(m_key_notifier));
+            var rec = _recorderFactory == null ? new EmptyRecorder() :
+                _recorderFactory.CreateRecorder(section.GetSection(m_key_recorder));
+
+            if (instance != null)
             {
-                lock (_sync)
-                {
-                    return _key;
-                }
+                var obj = (IModule)instance;
+                obj.Alias = alias;
+                obj.SetProvider(provider);
+                section.Bind(obj.Configuration);
+                obj.Configure();
+                obj.InjectPlugin(trans);
+                obj.InjectPlugin(noti);
+                obj.InjectPlugin(rec);
+                return obj;
             }
-            set
+            else
             {
-                lock (_sync)
-                {
-                    _key = value;
-                }
+                throw new NullReferenceException($"Cannot create instance from type '{t.Name}'");
             }
+
         }
-        public IModule[] ExistingModules => _livingModules.Values.ToArray();
-        public ModuleResolver(IServiceProvider provider, ITransceiverFactory tran, INotifierFactory noti, IRecorderFactory rec)
+        /// <summary>
+        /// Create module without transceiver, recorder and notifier
+        /// </summary>
+        /// <param name="provider">Service provider</param>
+        /// <param name="section">section data</param>
+        /// <returns>IModule</returns>
+        /// <exception cref="KeyNotFoundException">sectino is not found</exception>
+        /// <exception cref="NoNullAllowedException">"Alias" or "Type" property is null</exception>
+        /// <exception cref="InvalidDataException">Cannot property parse the type info</exception>
+        /// <exception cref="NullReferenceException">Error when activating the instance</exception>
+        public static IModule Create(IServiceProvider provider, IConfigurationSection section)
         {
-            _provider = provider;
-            _modConfigurations = provider.GetConfigurationSection(m_key_modConfigSection).GetChildren().ToDictionary(x => x[m_key_modAlias]!);
-            _transceiverFactory = tran;
-            _notifierFactory = noti;
-            _recorderFactory = rec;
+            var _transceiverFactory = (ITransceiverFactory)provider.GetService(typeof(ITransceiverFactory));
+            var _notifierFactory = (INotifierFactory)provider.GetService(typeof(INotifierFactory));
+            var _recorderFactory = (IRecorderFactory)provider.GetService(typeof(IRecorderFactory));
 
-        }
-        public IModule GetSelectedModule()
-        {
-            lock (_sync)
+            string alias = section.GetValue<string>(m_key_modAlias)!; //Get the alias string in json section
+            if (alias == null) throw new NoNullAllowedException("Alias property cannot be null in configuration section");
+
+            string typeString = section.GetValue<string>(m_key_modType)!; //Get the type string of Type in json section
+            if (typeString == null) throw new NoNullAllowedException("Type property cannot be null in configuration section");
+
+            string extAssemblyPath = section.GetValue<string>(m_key_modextPath)!; //Get the assemblypath string of Type in json section
+
+            var t = TypeParser.SearchType(typeString, extAssemblyPath);
+            if (t == null) throw new InvalidDataException($"Cannot find type {typeString}");
+
+            //Create instance and return
+            var instance = Activator.CreateInstance(t);
+
+            //Create Transceiver, Notifier, and Recorder
+            var trans = _transceiverFactory == null ? new EmptyTransceiver() :
+                _transceiverFactory.CreateTransceiver(section.GetSection(m_key_transceiver));
+            var noti = _notifierFactory == null ? new EmptyNotifier() :
+                _notifierFactory.CreateNotifier(section.GetSection(m_key_notifier));
+            var rec = _recorderFactory == null ? new EmptyRecorder() :
+                _recorderFactory.CreateRecorder(section.GetSection(m_key_recorder));
+
+            if (instance != null)
             {
-                if (_livingModules.ContainsKey(_key))
-                {
-                    return _livingModules[SelectedKey];
-                }
-                else
-                {
-                    var section = _modConfigurations[_key];
-                    var mod = CreateModule(section);
-                    _livingModules.Add(_key, mod);
-                    return mod;
-                }
-
-
+                var obj = (IModule)instance;
+                obj.Alias = alias;
+                obj.SetProvider(provider);
+                section.Bind(obj.Configuration);
+                obj.Configure();
+                obj.InjectPlugin(trans);
+                obj.InjectPlugin(noti);
+                obj.InjectPlugin(rec);
+                return obj;
+            }
+            else
+            {
+                throw new NullReferenceException($"Cannot create instance from type '{t.Name}'");
             }
 
-        }
-
-        public IModule CreateModule(IConfigurationSection section)
-        {
-            try
-            {
-                string alias = section.GetValue<string>(m_key_modAlias)!; //Get the alias string in json section
-                if (alias == null) throw new NoNullAllowedException("Alias property cannot be null in configuration section");
-
-                string typeString = section.GetValue<string>(m_key_modType)!; //Get the type string of Type in json section
-                if (typeString == null) throw new NoNullAllowedException("Type property cannot be null in configuration section");
-
-                string extAssemblyPath = section.GetValue<string>(m_key_modextPath)!; //Get the assemblypath string of Type in json section
-
-                var t = TypeParser.SearchType(typeString, extAssemblyPath);
-                if (t == null) throw new InvalidDataException($"Cannot find type {typeString}");
-
-                //Create Transceiver, Notifier, and Recorder
-                var trans = _transceiverFactory.CreateTransceiver(section.GetSection(m_key_transceiver));
-                var noti = _notifierFactory.CreateNotifier(section.GetSection(m_key_notifier));
-                var rec = _recorderFactory.CreateRecorder(section.GetSection(m_key_recorder));
-
-                
-                //Create instance and return
-                var instance = Activator.CreateInstance(t);
-                
-                if (instance != null)
-                {
-                    var obj = (IModule)instance;
-                    obj.Alias = alias;
-                    obj.SetProvider(_provider);
-                    section.Bind(obj.Configuration);
-                    obj.Configure();
-                    obj.InjectPlugin(rec);
-                    obj.InjectPlugin(noti);
-                    obj.InjectPlugin(trans);
-                    return obj;
-                }
-                else
-                {
-                    throw new NullReferenceException($"Cannot create instance from type '{t.Name}'");
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        public IModule CreateModule(string key)
-        {
-            try
-            {
-                var section = _modConfigurations[key];
-                return CreateModule(section);
-            }
-            catch (Exception)
-            {
-                throw;
-            }
         }
 
     }
