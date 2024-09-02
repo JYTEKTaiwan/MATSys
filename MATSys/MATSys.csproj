@@ -10,7 +10,7 @@
 		<Authors>Way Lin</Authors>
 		<Company>JYTEK TAIWAN CORP.</Company>
 		<Copyright>Copyright © 2019-2024 JYTEK TAIWAN CORP.</Copyright>		
-		<VersionPrefix>2.1.1</VersionPrefix>
+		<VersionPrefix>2.1.2</VersionPrefix>
 		<RepositoryUrl>https://github.com/JYTEKTaiwan/MATSys/</RepositoryUrl>
 
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -36,7 +36,7 @@
 	  <Folder Include="Interfaces\" />
 	</ItemGroup>
 	<ItemGroup>
-			<PackageReference Include="NLog" Version="5.2.5" />
+			<PackageReference Include="NLog" Version="5.3.3" />
 	</ItemGroup>
 
 	<ItemGroup>

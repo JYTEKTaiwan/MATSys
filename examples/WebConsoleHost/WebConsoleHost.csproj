@@ -16,7 +16,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="grpc.aspnetcore" Version="2.58.0" />
+    <PackageReference Include="grpc.aspnetcore" Version="2.65.0" />
     <PackageReference Include="grpc.core" Version="2.46.6" />
     <PackageReference Include="protobuf-net.grpc" Version="1.1.1" />
     <PackageReference Include="protobuf-net.grpc.aspnetcore" Version="1.1.1" />

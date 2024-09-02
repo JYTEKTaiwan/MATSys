@@ -24,6 +24,7 @@ namespace ConsoleHostNet80
             host.StartAsync();
 
             Thread.Sleep(1000);
+
             var dev = host.Services.GetModule("Dev1");
             var dev2 = host.Services.GetModule("Dev1");
             var dev3 = host.Services.GetModule("Mod2");

@@ -25,7 +25,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Csvhelper" Version="30.0.1" />
+	  <PackageReference Include="Csvhelper" Version="33.0.1" />
 	</ItemGroup>
 
 

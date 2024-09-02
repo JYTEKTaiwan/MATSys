@@ -12,17 +12,6 @@ Console.WriteLine(b.Serialize());
 b = CommandConverter.Convert(obj2);
 Console.WriteLine(b.Serialize());
 
-//var sw = new Stopwatch();
-//sw.Restart();
-//for (int i = 0; i < 1000; i++)
-//{
-//    var a = CommandConverter.Convert(obj);
-
-//}
-//sw.Stop();
-
-//Console.WriteLine(sw.Elapsed);
-
 Console.WriteLine("!");
 Console.WriteLine();
 
