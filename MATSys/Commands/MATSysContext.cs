@@ -12,7 +12,7 @@ internal class MATSysContext
     {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
         var attr = mi.GetCustomAttribute<MATSysCommandAttribute>();
-#elif NET35||NET462
+#else
         var attr = mi.GetCustomAttributes(typeof(MATSysCommandAttribute), true).First() as MATSysCommandAttribute;
 #endif
         MethodName = attr.Alias;
