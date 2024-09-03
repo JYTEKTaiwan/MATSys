@@ -109,20 +109,8 @@ namespace MATSys
         #region Public Methods
 
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
-        /// <summary>
-        /// Asynchronously execute the assigned command
-        /// </summary>
-        /// <param name="cmd">ICommand instance</param>
-        /// <returns>Serialized response</returns>
-        public async Task<string> ExecuteAsync(ICommand cmd)
-        {
-            return await Task.Run(async () =>
-            {
-                var response = await ExecuteRawAsync(cmd);
-                return cmd.ConvertResultToString(response)!;
-            });
-        }
-        public async Task<object> ExecuteRawAsync(ICommand cmd)
+
+        public async Task<object> ExecuteAsync(ICommand cmd)
         {
             return await Task.Run(async () =>
             {
@@ -153,17 +141,7 @@ namespace MATSys
             });
         }
 
-        public async Task<string> ExecuteAsync(string methodName, params object[] parameters)
-        {
-            return await Task.Run(async () =>
-            {
-                var result = await ExecuteRawAsync(methodName, parameters)!;
-                var response = Utilities.Serializer.Serialize(result, false)!;
-                return response!;
-            });
-
-        }
-        public async Task<object> ExecuteRawAsync(string methodName, params object[] parameters)
+        public async Task<object> ExecuteAsync(string methodName, params object[] parameters)
         {
             return await Task.Run(async () =>
             {
@@ -207,15 +185,17 @@ namespace MATSys
         /// </summary>
         /// <param name="cmd">ICommand instance</param>
         /// <returns>reponse after executing the commnad</returns>
-        public string Execute(ICommand cmd)
-        {            
+
+        public object Execute(ICommand cmd)
+        {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteAsync(cmd).Result;
 #else
             return Execute_Net462(cmd);
 #endif
         }
-        public string Execute(string methodName, params object[] parameters)
+
+        public object Execute(string methodName, params object[] parameters)
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteAsync(methodName, parameters).Result;
@@ -223,28 +203,9 @@ namespace MATSys
             return Execute_Net462(methodName, parameters);
 #endif
         }
-        public void Execute(string cmdInJson, out string response) => response = OnRequestReceived(this, cmdInJson);
-
-        public object ExecuteRaw(ICommand cmd)
-        {
-#if NET6_0_OR_GREATER || NETSTANDARD2_0
-            return ExecuteRawAsync(cmd).Result;
-#else
-            return ExecuteRaw_Net462(cmd);
-#endif
-        }
-
-        public object ExecuteRaw(string methodName, params object[] parameters)
-        {
-#if NET6_0_OR_GREATER || NETSTANDARD2_0
-            return ExecuteRawAsync(methodName, parameters).Result;
-#else
-            return ExecuteRaw_Net462(methodName, parameters);
-#endif
-        }
 
 
-        public void ExecuteRaw(string cmdInJson, out object response) => response = OnRequestReceived(cmdInJson);
+        public void Execute(string cmdInJson, out object response) => response = OnRequestReceived(cmdInJson);
 
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
         /// <summary>
@@ -381,12 +342,7 @@ namespace MATSys
         #region Private methods
 #if NET462
 
-        private string Execute_Net462(ICommand cmd)
-        {
-            return  cmd.ConvertResultToString(ExecuteRaw_Net462(cmd))!;
-
-        }
-        private object ExecuteRaw_Net462(ICommand cmd)
+        private object Execute_Net462(ICommand cmd)
         {
             try
             {
@@ -415,13 +371,7 @@ namespace MATSys
 
         }
 
-        private string Execute_Net462(string methodName, params object[] parameters)
-        {
-            return Serializer.Serialize(ExecuteRaw_Net462(methodName,parameters),false)!;
-
-
-        }
-        private object ExecuteRaw_Net462(string methodName, params object[] parameters)
+        private object Execute_Net462(string methodName, params object[] parameters)
         {
             try
             {
@@ -526,7 +476,7 @@ namespace MATSys
 #endif
 
                 var cmd = CommandBase.Deserialize(commandObjectInJson, item.CommandType!);
-                return ExecuteRaw(cmd);
+                return Execute(cmd);
             }
             catch (KeyNotFoundException ex)
             {
