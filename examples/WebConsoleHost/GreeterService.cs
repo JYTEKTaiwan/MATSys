@@ -41,7 +41,7 @@ public class GreeterService : IGreeterService
         {
             var a = _provider.GetModule("Dev1");
             var cmd = CommandConverter.Convert(request);
-            var reply = new HelloReply() { Message = await a.ExecuteAsync(cmd) };
+            var reply = new HelloReply() { Message =( await a.ExecuteAsync(cmd)).ToString() };
             return reply;
         });
     }

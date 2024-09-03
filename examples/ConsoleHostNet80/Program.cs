@@ -31,7 +31,7 @@ namespace ConsoleHostNet80
 
             Console.WriteLine($"{dev.Alias}_{dev.GetHashCode()}");
             Console.WriteLine($"{dev2.Alias}_{dev2.GetHashCode()}");
-            dev.ExecuteRaw("{\"Delay\":[1000]}", out var a);
+            dev.Execute("{\"Delay\":[1000]}", out var a);
             Console.WriteLine(a);
             host.StopAsync();
             host.Dispose();

@@ -11,12 +11,6 @@
         /// <value></value>
         string MethodName { get; set; }
 
-        /// <summary>
-        /// Convert the object returned from the execution into string
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        string? ConvertResultToString(object? obj);
 
         /// <summary>
         /// Get the list of the parameter objects in command

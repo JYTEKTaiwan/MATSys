@@ -11,13 +11,6 @@ namespace MATSys.Commands.Tests
     [TestFixture()]
     public class CommandBaseTests
     {
-        [Test]
-        public void ResultIsNullOrEmpty()
-        {
-            var cmd = CommandBase.Create("Test", 1, 2.0);
-            var str = cmd.ConvertResultToString(null);
-            Assert.That(string.IsNullOrEmpty(str));
-        }
 
         [Test]
         public void SerDesTest()
