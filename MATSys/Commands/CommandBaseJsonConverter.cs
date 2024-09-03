@@ -1,8 +1,6 @@
 ﻿#if NET6_0_OR_GREATER||NETSTANDARD2_0
 using System.Text.Json;
 using System.Text.Json.Serialization;
-#elif NET35
-using Newtonsoft.Json.Converters;
 #endif
 namespace MATSys.Commands
 {
@@ -558,7 +556,7 @@ namespace MATSys.Commands
 
     }
 
-#elif NET35||NET462
+#else
     internal sealed class CommandBaseJsonConverter : Newtonsoft.Json.Converters.CustomCreationConverter<CommandBase>
     {
         public override bool CanConvert(Type typeToConvert)

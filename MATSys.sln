@@ -33,15 +33,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InvokerBenchmark", "benchma
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Hosting", "MATSys.Hosting\MATSys.Hosting.csproj", "{0693E8A8-AC63-4E6E-9D2C-4F53FEA64556}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "net35TestConsole", "net35TestConsole\net35TestConsole.csproj", "{C3DC78D3-7D02-40C6-916D-29CDE731864F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UT_MATSys", "UT_MATSys\UT_MATSys.csproj", "{869103FE-1091-4C27-B73F-7EA5E98621DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHostNet47", "examples\ConsoleHostNet47\ConsoleHostNet47.csproj", "{E9FC6760-068D-4DE4-8B18-E46223DC0A45}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MockModulesLibrary", "examples\MockModulesLibrary\MockModulesLibrary.csproj", "{F5981D13-999A-4BC7-8C08-A642F85D829F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleHostNet80", "examples\ConsoleHostNet80\ConsoleHostNet80.csproj", "{D40B3C06-987E-45E8-B59A-52C8ABDBEE89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleHostNet80", "examples\ConsoleHostNet80\ConsoleHostNet80.csproj", "{D40B3C06-987E-45E8-B59A-52C8ABDBEE89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,10 +95,6 @@ Global
 		{0693E8A8-AC63-4E6E-9D2C-4F53FEA64556}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0693E8A8-AC63-4E6E-9D2C-4F53FEA64556}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0693E8A8-AC63-4E6E-9D2C-4F53FEA64556}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C3DC78D3-7D02-40C6-916D-29CDE731864F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C3DC78D3-7D02-40C6-916D-29CDE731864F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C3DC78D3-7D02-40C6-916D-29CDE731864F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C3DC78D3-7D02-40C6-916D-29CDE731864F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{869103FE-1091-4C27-B73F-7EA5E98621DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{869103FE-1091-4C27-B73F-7EA5E98621DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{869103FE-1091-4C27-B73F-7EA5E98621DB}.Release|Any CPU.ActiveCfg = Release|Any CPU

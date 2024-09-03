@@ -13,7 +13,7 @@ public class Serializer
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
         };
         return System.Text.Json.JsonSerializer.Serialize(input, opt);
-#elif NET35||NET462
+#else
         var setting = new Newtonsoft.Json.JsonSerializerSettings();
         if (indented)
         {
@@ -36,7 +36,7 @@ public class Serializer
             Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
         };
         return System.Text.Json.JsonSerializer.Serialize(input, t, opt);
-#elif NET35||NET462
+#else
         var setting = new Newtonsoft.Json.JsonSerializerSettings();
         if (indented)
         {
@@ -54,7 +54,7 @@ public class Serializer
     {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
         return System.Text.Json.JsonSerializer.Deserialize(rawString, t)!;
-#elif NET35||NET462
+#else
         return Newtonsoft.Json.JsonConvert.DeserializeObject(rawString, t)!;
 #endif
     }

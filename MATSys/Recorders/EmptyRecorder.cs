@@ -60,7 +60,7 @@ namespace MATSys.Plugins
         {
             return new System.Text.Json.Nodes.JsonObject();
         }
-#elif NET35||NET462
+#else
         /// <summary>
         /// Export the service insatnce into JObject format
         /// </summary>
@@ -80,12 +80,10 @@ namespace MATSys.Plugins
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return Export().ToJsonString(new System.Text.Json.JsonSerializerOptions() { WriteIndented = indented });
-#elif NET35||NET462            
+#else            
             if (indented) return Export().ToString(Newtonsoft.Json.Formatting.Indented);
             else return Export().ToString(Newtonsoft.Json.Formatting.None);
 
-
-#else
 #endif
         }
 

@@ -67,7 +67,7 @@ namespace MATSys.Plugins
         {
             return new System.Text.Json.Nodes.JsonObject();
         }
-#elif NET35||NET462
+#else
         /// <summary>
         /// Export the service insatnce into JObject format
         /// </summary>

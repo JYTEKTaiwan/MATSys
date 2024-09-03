@@ -211,7 +211,7 @@ namespace MATSys
         {            
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteAsync(cmd).Result;
-#elif NET35||NET462
+#else
             return Execute_Net35(cmd);
 #endif
         }
@@ -219,7 +219,7 @@ namespace MATSys
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteAsync(methodName, parameters).Result;
-#elif NET35||NET462
+#else
             return Execute_Net35(methodName, parameters);
 #endif
         }
@@ -229,7 +229,7 @@ namespace MATSys
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteRawAsync(cmd).Result;
-#elif NET35||NET462
+#else
             return ExecuteRaw_Net35(cmd);
 #endif
         }
@@ -238,7 +238,7 @@ namespace MATSys
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteRawAsync(methodName, parameters).Result;
-#elif NET35||NET462
+#else
             return ExecuteRaw_Net35(methodName, parameters);
 #endif
         }
@@ -265,7 +265,7 @@ namespace MATSys
                 System.Text.Json.Nodes.JsonObject jobj = new System.Text.Json.Nodes.JsonObject();
                 jobj.Add(item.MethodName, arr);
                 yield return jobj.ToJsonString();
-#elif NET35||NET462
+#else
                 var args = item.CommandType!.GetGenericArguments();
                 Newtonsoft.Json.Linq.JArray arr = new Newtonsoft.Json.Linq.JArray();
                 for (int i = 0; i < args.Length; i++)
@@ -299,7 +299,7 @@ namespace MATSys
             return jObj;
         }
 
-#elif NET35||NET462
+#else
         /// <summary>
         /// Export the ModuleBase instance to json context
         /// </summary>
@@ -330,11 +330,10 @@ namespace MATSys
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return Export().ToJsonString(new System.Text.Json.JsonSerializerOptions() { WriteIndented = indented });
-#elif NET35||NET462
+#else
             if (indented) return Export().ToString(Newtonsoft.Json.Formatting.Indented);
             else return Export().ToString(Newtonsoft.Json.Formatting.None);
 
-#else
 #endif
         }
         /// <summary>
@@ -483,7 +482,7 @@ namespace MATSys
                 var end = sp.IndexOf(':');
                 var start = sp.IndexOf('\"');
                 var item = cmds[sp.Slice(start + 1, end - start - 2).ToString()];
-#elif NET35||NET462
+#else
                 var sp = commandObjectInJson;
                 var end = sp.IndexOf(':');
                 var start = sp.IndexOf('\"');

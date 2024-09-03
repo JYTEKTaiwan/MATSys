@@ -3,24 +3,13 @@ namespace MATSys.Commands;
 /// Tool used to convert any instance marked with <see cref="MATSysCommandContractAttribute"/> and <see cref="MATSysCommandOrderAttribute"/> into ICommand instance
 /// </summary>
 public sealed class CommandConverter
-
 {
-#if NET6_0_OR_GREATER || NETSTANDARD2_0||NET462
     private static Lazy<IEnumerable<MethodInfo>> m_infos => new Lazy<IEnumerable<MethodInfo>>(() => typeof(CommandBase).GetMethods().Where(x => x.Name == "Create"));
-
-#elif NET35
-    private static IEnumerable<MethodInfo> m_infos = typeof(CommandBase).GetMethods().Where(x => x.Name == "Create");
-
-#endif
     //All generic method from CommandBase.Create
 
     private static MATSysCommandContractAttribute GetContractAttribute(Type t)
     {
-#if NET6_0_OR_GREATER || NETSTANDARD2_0||NET462
         var attr = t.GetCustomAttribute<MATSysCommandContractAttribute>();
-#elif NET35
-        var attr = t.GetCustomAttributes(typeof(MATSysCommandContractAttribute), true).First() as MATSysCommandContractAttribute;
-#endif
         if (attr == null)
         {
             throw new InvalidOperationException("MATSysCommandContract attribute is not presented");
@@ -32,32 +21,13 @@ public sealed class CommandConverter
     }
     private static bool CheckIfRecordType(Type t)
     {
-#if NET6_0_OR_GREATER || NETSTANDARD2_0||NET462
         return ((TypeInfo)t).DeclaredProperties.Any(x => x.Name == "EqualityContract");
-#elif NET35
-        //TypeInfo is not supported for net35, return alse directly 
-        return false;
-#endif
     }
     private static Func<PropertyInfo, bool> ContainMATSysCommandOrderAttribute =>
-    pi =>
-{
-#if NET6_0_OR_GREATER || NETSTANDARD2_0||NET462
-    return pi.GetCustomAttributes<MATSysCommandOrderAttribute>().Any();
-#elif NET35
-    return pi.GetCustomAttributes(typeof(MATSysCommandOrderAttribute), true).Any();
-#endif
-};
+    pi => pi.GetCustomAttributes<MATSysCommandOrderAttribute>().Any();
+
     private static Func<PropertyInfo, int> GetMATSysCommandOrderAttributeOrder =>
-        pi =>
-        {
-#if NET6_0_OR_GREATER || NETSTANDARD2_0||NET462
-            return pi.GetCustomAttribute<MATSysCommandOrderAttribute>().Order;
-#elif NET35
-            var attr = pi.GetCustomAttributes(typeof(MATSysCommandOrderAttribute), true).First();
-            return (attr as MATSysCommandOrderAttribute).Order;
-#endif
-        };
+        pi =>pi.GetCustomAttribute<MATSysCommandOrderAttribute>().Order;
 
     /// <summary>
     /// Convert the object into ICommand instance
@@ -81,12 +51,7 @@ public sealed class CommandConverter
                     .OrderBy(GetMATSysCommandOrderAttributeOrder).ToArray();
             }
 
-#if NET6_0_OR_GREATER || NETSTANDARD2_0||NET462
             var mi = m_infos.Value.First(x => x.GetGenericArguments().Count() == props.Count());
-
-#elif NET35
-            var mi = m_infos.First(x => x.GetGenericArguments().Count() == props.Count());
-#endif
             //Get the method that matches the count of properties
 
             //first argument will be the name of method
