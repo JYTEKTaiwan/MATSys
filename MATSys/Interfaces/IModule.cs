@@ -88,11 +88,6 @@
 
         void SetProvider(IServiceProvider provider);
 
-        /// <summary>
-        /// Print all commands that is marked with MATSysCommandAttribute
-        /// </summary>
-        /// <returns>Collection of string</returns>
-        IEnumerable<string> PrintCommands();
     }
 
 

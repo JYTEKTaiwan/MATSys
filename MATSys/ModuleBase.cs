@@ -212,7 +212,7 @@ namespace MATSys
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteAsync(cmd).Result;
 #else
-            return Execute_Net35(cmd);
+            return Execute_Net462(cmd);
 #endif
         }
         public string Execute(string methodName, params object[] parameters)
@@ -220,7 +220,7 @@ namespace MATSys
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteAsync(methodName, parameters).Result;
 #else
-            return Execute_Net35(methodName, parameters);
+            return Execute_Net462(methodName, parameters);
 #endif
         }
         public void Execute(string cmdInJson, out string response) => response = OnRequestReceived(this, cmdInJson);
@@ -230,7 +230,7 @@ namespace MATSys
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteRawAsync(cmd).Result;
 #else
-            return ExecuteRaw_Net35(cmd);
+            return ExecuteRaw_Net462(cmd);
 #endif
         }
 
@@ -239,46 +239,13 @@ namespace MATSys
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
             return ExecuteRawAsync(methodName, parameters).Result;
 #else
-            return ExecuteRaw_Net35(methodName, parameters);
+            return ExecuteRaw_Net462(methodName, parameters);
 #endif
         }
 
 
         public void ExecuteRaw(string cmdInJson, out object response) => response = OnRequestReceived(cmdInJson);
 
-        /// <summary>
-        /// List all methods in simplied string format 
-        /// </summary>
-        /// <returns>collection of string</returns>
-        public virtual IEnumerable<string> PrintCommands()
-        {
-            foreach (var item in cmds.Values)
-            {
-
-#if NET6_0_OR_GREATER || NETSTANDARD2_0
-                var args = item.CommandType!.GenericTypeArguments;
-                System.Text.Json.Nodes.JsonArray arr = new System.Text.Json.Nodes.JsonArray();
-                for (int i = 0; i < args.Length; i++)
-                {
-                    arr.Add(args[i].Name);
-                }
-                System.Text.Json.Nodes.JsonObject jobj = new System.Text.Json.Nodes.JsonObject();
-                jobj.Add(item.MethodName, arr);
-                yield return jobj.ToJsonString();
-#else
-                var args = item.CommandType!.GetGenericArguments();
-                Newtonsoft.Json.Linq.JArray arr = new Newtonsoft.Json.Linq.JArray();
-                for (int i = 0; i < args.Length; i++)
-                {
-                    arr.Add(args[i].Name);
-                }
-                Newtonsoft.Json.Linq.JObject jobj = new Newtonsoft.Json.Linq.JObject();
-                jobj.Add(item.MethodName, arr);
-                yield return jobj.ToString();
-#endif
-            }
-
-        }
 #if NET6_0_OR_GREATER || NETSTANDARD2_0
         /// <summary>
         /// Export the ModuleBase instance to json context
@@ -369,17 +336,57 @@ namespace MATSys
         {
             _provider = provider;
         }
+        public static IEnumerable<string> ListIModuleCommand<T>() where T : IModule
+        {
+            var supportedMethod = typeof(T).GetMethods()
+                           .Where(x => x.GetCustomAttributes<MATSysCommandAttribute>().Count() > 0);
+
+            foreach (var item in supportedMethod)
+            {
+                var t = GetCommandTypeFromMethodInfo(item);
+
+#if NET6_0_OR_GREATER || NETSTANDARD2_0
+                var name = item.GetCustomAttribute<MATSysCommandAttribute>().Alias;
+
+                var args = t.GenericTypeArguments;
+                System.Text.Json.Nodes.JsonArray arr = new System.Text.Json.Nodes.JsonArray();
+                for (int i = 0; i < args.Length; i++)
+                {
+                    arr.Add(args[i].Name);
+                }
+                System.Text.Json.Nodes.JsonObject jobj = new System.Text.Json.Nodes.JsonObject();
+                jobj.Add(name, arr);
+                yield return jobj.ToJsonString();
+#else
+                var name =( item.GetCustomAttributes(typeof(MATSysCommandAttribute), true).First() as MATSysCommandAttribute).Alias;
+
+                var args = t.GetGenericArguments();
+                Newtonsoft.Json.Linq.JArray arr = new Newtonsoft.Json.Linq.JArray();
+                for (int i = 0; i < args.Length; i++)
+                {
+                    arr.Add(args[i].Name);
+                }
+                Newtonsoft.Json.Linq.JObject jobj = new Newtonsoft.Json.Linq.JObject();
+                jobj.Add(name, arr);
+                yield return jobj.ToString();
+#endif
+
+            }
+
+
+        }
+
         #endregion
 
         #region Private methods
-#if NET35 || NET462
+#if NET462
 
-        private string Execute_Net35(ICommand cmd)
+        private string Execute_Net462(ICommand cmd)
         {
-            return  cmd.ConvertResultToString(ExecuteRaw_Net35(cmd))!;
+            return  cmd.ConvertResultToString(ExecuteRaw_Net462(cmd))!;
 
         }
-        private object ExecuteRaw_Net35(ICommand cmd)
+        private object ExecuteRaw_Net462(ICommand cmd)
         {
             try
             {
@@ -408,13 +415,13 @@ namespace MATSys
 
         }
 
-        private string Execute_Net35(string methodName, params object[] parameters)
+        private string Execute_Net462(string methodName, params object[] parameters)
         {
-            return Serializer.Serialize(ExecuteRaw_Net35(methodName,parameters),false)!;
+            return Serializer.Serialize(ExecuteRaw_Net462(methodName,parameters),false)!;
 
 
         }
-        private object ExecuteRaw_Net35(string methodName, params object[] parameters)
+        private object ExecuteRaw_Net462(string methodName, params object[] parameters)
         {
             try
             {
@@ -441,6 +448,35 @@ namespace MATSys
         }
 
 #endif
+
+
+        private static Type GetCommandTypeFromMethodInfo(MethodInfo mi)
+        {
+            var types = mi.GetParameters().Select(x => x.ParameterType).ToArray();
+            switch (types.Length)
+            {
+                case 0:
+                    return typeof(Command);
+                case 1:
+                    return typeof(Command<>).MakeGenericType(types);
+                case 2:
+                    return typeof(Command<,>).MakeGenericType(types);
+                case 3:
+                    return typeof(Command<,,>).MakeGenericType(types);
+                case 4:
+                    return typeof(Command<,,,>).MakeGenericType(types);
+                case 5:
+                    return typeof(Command<,,,,>).MakeGenericType(types);
+                case 6:
+                    return typeof(Command<,,,,,>).MakeGenericType(types);
+                case 7:
+                    return typeof(Command<,,,,,,>).MakeGenericType(types);
+                default:
+                    return typeof(Command);
+            }
+
+        }
+
         private Dictionary<string, MATSysContext> ListMATSysCommands()
         {
 #if NET6_0_OR_GREATER || NETSTANDARD2_0||NET462
