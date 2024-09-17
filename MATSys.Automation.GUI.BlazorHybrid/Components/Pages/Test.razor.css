@@ -1,0 +1,17 @@
+﻿html, body, .container-fluid {
+    height:100%;
+}
+
+.table-hover {
+    overflow-y: auto;
+    display: list-item;
+    height: 720px;
+}
+
+.row-first {
+    height: 50%;
+}
+
+.row-second {
+    height: 50%;
+}
