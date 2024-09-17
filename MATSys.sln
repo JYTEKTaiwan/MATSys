@@ -43,6 +43,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleHostNet80", "example
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Automation", "MATSys.Automation\MATSys.Automation.csproj", "{D87EB110-0953-43D7-AFAD-E6D4B5B0AAF1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Automation.GUI.WindowsForm", "MATSys.Automation.GUI.WindowsForm\MATSys.Automation.GUI.WindowsForm.csproj", "{A21073A3-3C44-42EA-908A-CF9828A0697C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Automation.GUI.BlazorHybrid", "MATSys.Automation.GUI.BlazorHybrid\MATSys.Automation.GUI.BlazorHybrid.csproj", "{5C1BB435-131B-4356-BF15-7398CE95CC63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +121,14 @@ Global
 		{D87EB110-0953-43D7-AFAD-E6D4B5B0AAF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D87EB110-0953-43D7-AFAD-E6D4B5B0AAF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D87EB110-0953-43D7-AFAD-E6D4B5B0AAF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A21073A3-3C44-42EA-908A-CF9828A0697C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A21073A3-3C44-42EA-908A-CF9828A0697C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A21073A3-3C44-42EA-908A-CF9828A0697C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A21073A3-3C44-42EA-908A-CF9828A0697C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C1BB435-131B-4356-BF15-7398CE95CC63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C1BB435-131B-4356-BF15-7398CE95CC63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C1BB435-131B-4356-BF15-7398CE95CC63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C1BB435-131B-4356-BF15-7398CE95CC63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
