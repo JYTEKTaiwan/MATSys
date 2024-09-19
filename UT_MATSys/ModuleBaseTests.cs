@@ -106,7 +106,7 @@ namespace MATSys.Tests
         public void ExecuteInICommandRAWTest()
         {
             var cmd = CommandBase.Create("ReturnFalse");
-            var result = (bool)_module.ExecuteRaw(cmd);
+            var result = (bool)_module.Execute(cmd);
             Assert.That(result, Is.False);
         }
         [Test]
