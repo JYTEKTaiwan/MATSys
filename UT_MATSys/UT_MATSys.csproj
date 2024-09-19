@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
@@ -25,6 +25,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+    <ProjectReference Include="..\MATSys.Automation\MATSys.Automation.csproj" />
     <ProjectReference Include="..\MATSys.Hosting\MATSys.Hosting.csproj" />
     <ProjectReference Include="..\MATSys.Utilities\MATSys.Utilities.csproj" />
     <ProjectReference Include="..\MATSys\MATSys.csproj" />

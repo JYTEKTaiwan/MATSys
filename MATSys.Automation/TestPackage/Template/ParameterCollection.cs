@@ -1,6 +1,7 @@
 ﻿using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.Xml;
+using System.Text.Json;
 
 public class ParameterCollection : Dictionary<string, object>, IXmlSerializable
 {
@@ -14,6 +15,11 @@ public class ParameterCollection : Dictionary<string, object>, IXmlSerializable
             param.Add(item.name, item.value);
         }
         return param;
+    }
+
+    public override string ToString()
+    {
+        return JsonSerializer.Serialize(this);
     }
     public void ReadXml(XmlReader reader)
     {
