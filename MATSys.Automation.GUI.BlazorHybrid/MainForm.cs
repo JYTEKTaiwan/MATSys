@@ -15,7 +15,7 @@ namespace MATSys.Automation.GUI.BlazorHybrid
             services.AddWindowsFormsBlazorWebView();
             blazorWebView1.HostPage = "wwwroot\\index.html";
             blazorWebView1.Services = services.BuildServiceProvider();
-            blazorWebView1.RootComponents.Add<TestItemListView>("#app");            
+            blazorWebView1.RootComponents.Add<Routes>("#app");            
         }
     }
 }
