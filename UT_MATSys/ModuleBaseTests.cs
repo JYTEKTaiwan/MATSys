@@ -75,22 +75,22 @@ namespace MATSys.Tests
         {
             var cmd = CommandBase.Create("Null");
             var response=_module.Execute(cmd);
-            Assert.That(response.Contains("ERR_NOTFOUND"));
+            Assert.That(response.ToString().Contains("ERR_NOTFOUND"));
         }
         [Test]
         [Category("Execution")]
         public void CommandNotFound2Test()
         {            
             var response = _module.Execute("Null");
-            Assert.That(response.Contains("ERR_NOTFOUND"));
+            Assert.That(response.ToString().Contains("ERR_NOTFOUND"));
         }
         [Test]
         [Category("Execution")]
         public void CommandNotFound3Test()
         {
             var cmd = CommandBase.Create("Null");
-            _module.Execute(cmd.Serialize(), out string response);
-            Assert.That(response.Contains("ERR_NOTFOUND"));
+            _module.Execute(cmd.Serialize(), out object response);
+            Assert.That(response.ToString().Contains("ERR_NOTFOUND"));
         }
 
         [Test]
@@ -98,31 +98,17 @@ namespace MATSys.Tests
         public void ExecuteInICommandTest()
         {
             var cmd = CommandBase.Create("ReturnFalse");
-            var result = JsonSerializer.Deserialize<bool>(_module.Execute(cmd));
+            var result = ((bool)_module.Execute(cmd));
             Assert.That(result, Is.False);
         }
-        [Test]
-        [Category("Execution")]
-        public void ExecuteInICommandRAWTest()
-        {
-            var cmd = CommandBase.Create("ReturnFalse");
-            var result = (bool)_module.Execute(cmd);
-            Assert.That(result, Is.False);
-        }
+        
         [Test]
         [Category("Execution")]
         public void ExecuteInMethodAndParametersTest()
         {
-            var result = JsonSerializer.Deserialize<bool>(_module.Execute("ReturnFalse"));
+            var result = JsonSerializer.Deserialize<bool>((bool)_module.Execute("ReturnFalse"));
             Assert.That(result, Is.False);
-        }
-        [Test]
-        [Category("Execution")]
-        public void ExecuteInMethodAndParametersRAWTest()
-        {
-            var result = (bool)_module.ExecuteRaw("ReturnFalse");
-            Assert.That(result, Is.False);
-        }
+        }        
         [Test]
         [Category("Execution")]
         public void ExecuteInCommandStringTest()
@@ -130,18 +116,10 @@ namespace MATSys.Tests
             var cmd = CommandBase.Create("ReturnFalse");
             var cmdStr = cmd.Serialize();
             _module.Execute(cmdStr, out var response);
-            var result = JsonSerializer.Deserialize<bool>(response);
+            var result = (bool)(response);
             Assert.That(result, Is.False);
         }
-        [Test]
-        [Category("Execution")]
-        public void ExecuteInCommandStringRAWTest()
-        {
-            var cmd = CommandBase.Create("ReturnFalse");
-            var cmdStr = cmd.Serialize();
-            _module.ExecuteRaw(cmdStr, out var result);
-            Assert.That(result, Is.False);
-        }
+        
         [Test]
         [Category("Execution")]
         public void ExecuteInICommandAsyncTest()
@@ -153,25 +131,9 @@ namespace MATSys.Tests
         }
         [Test]
         [Category("Execution")]
-        public void ExecuteInICommandRAWAsyncTest()
-        {
-            var cmd = CommandBase.Create("AsyncTestMethod", 100);
-            var cmd2 = CommandBase.Create("AsyncTestMethod", 50);
-            var index = Task.WaitAny(_module.ExecuteRawAsync(cmd), _module.ExecuteRawAsync(cmd2));
-            Assert.That(index == 1);
-        }
-        [Test]
-        [Category("Execution")]
         public void ExecuteInMethodAndParametersAsyncTest()
         {
             var index = Task.WaitAny(_module.ExecuteAsync("AsyncTestMethod", 100), _module.ExecuteAsync("AsyncTestMethod", 50));
-            Assert.That(index == 1);
-        }
-        [Test]
-        [Category("Execution")]
-        public void ExecuteInMethodAndParametersRAWAsyncTest()
-        {
-            var index = Task.WaitAny(_module.ExecuteRawAsync("AsyncTestMethod", 100), _module.ExecuteRawAsync("AsyncTestMethod", 50));
             Assert.That(index == 1);
         }
 
