@@ -43,6 +43,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleHostNet80", "example
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MATSys.Automation", "MATSys.Automation\MATSys.Automation.csproj", "{D87EB110-0953-43D7-AFAD-E6D4B5B0AAF1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomationTestUI", "AutomationTestUI\AutomationTestUI.csproj", "{4C9F6248-0FFF-4B89-8371-22A0840CECE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,10 @@ Global
 		{D87EB110-0953-43D7-AFAD-E6D4B5B0AAF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D87EB110-0953-43D7-AFAD-E6D4B5B0AAF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D87EB110-0953-43D7-AFAD-E6D4B5B0AAF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C9F6248-0FFF-4B89-8371-22A0840CECE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C9F6248-0FFF-4B89-8371-22A0840CECE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C9F6248-0FFF-4B89-8371-22A0840CECE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C9F6248-0FFF-4B89-8371-22A0840CECE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

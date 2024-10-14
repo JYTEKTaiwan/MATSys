@@ -7,11 +7,11 @@ public class TestResult
 {
     [XmlAttribute]public DateTime TimeStamp { get; set; }
     [XmlAttribute] public TestResultType Result { get; set; }
-    [XmlAttribute] public uint IterationCount { get; set; }
+    [XmlAttribute] public int IterationCount { get; set; }
     [XmlAttribute] public string Value { get; set; }
 
     public string Message { get; set; }
-    public static TestResult Create(TestResultType result, string value, uint Iteration = 0)
+    public static TestResult Create(TestResultType result, string value, int Iteration = 0)
     {
         return new TestResult()
         {

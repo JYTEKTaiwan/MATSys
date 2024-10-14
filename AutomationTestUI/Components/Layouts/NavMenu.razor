@@ -1,0 +1,31 @@
+﻿<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">BlazorHybrid</a>
+    </div>
+</div>
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">                
+                <span class="bi bi-house-door-fill-nav-menu"title="Home"/>                
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="counter">
+                <span class="bi bi-plus-square-fill-nav-menu" title="Counter" />
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="weather">
+                <span class="bi bi-list-nested-nav-menu" title="Weather" />
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="test">
+                <span class="bi bi-airplane-engines" title="Test" />
+            </NavLink>
+        </div>
+
+    </nav>
+</div>

@@ -52,4 +52,6 @@ public class ParameterCollection : Dictionary<string, object>, IXmlSerializable
             writer.WriteEndElement();
         }
     }
+
+   
 }

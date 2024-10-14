@@ -7,8 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
+namespace MATSys.Automation;
 public class TestSummary
 {
+    public int Ignore { get;private set; }
     public int Total { get; private set; }
     public int Pass { get; private set; }
     public int Fail { get; private set; }
@@ -17,13 +19,17 @@ public class TestSummary
 
     public void Init()
     {
-        Total = Pass = Fail = Skip = Error = 0;
+        Total = Pass = Fail = Skip = Error = Ignore=0;
     }
 
     public void Update(TestItem item)
     {
         switch (item.Result.Result)
         {
+            case TestResultType.Ignore:
+                Ignore++;
+                Total++;
+                break;
             case TestResultType.Skip:
                 Skip++;
                 Total++;

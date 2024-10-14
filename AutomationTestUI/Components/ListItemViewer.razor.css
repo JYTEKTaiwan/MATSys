@@ -1,0 +1,30 @@
+﻿body {
+}
+
+.table-responsive {
+    height: 100%;
+    overflow: auto
+}
+
+.table {
+    table-layout: fixed
+}
+
+    .table thead {
+        background: white;
+        font-size: medium;
+        height: min-content
+    }
+
+    .table th {
+        word-wrap: break-word;
+        font-style: oblique;
+        width: fit-content;
+    }
+
+    .table td {
+        word-wrap: break-word;
+        font-size: small;        
+    }
+
+    

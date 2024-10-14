@@ -1,0 +1,51 @@
+﻿<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="sticky-top">
+            <tr>
+                <th style="width:3rem">#</th>
+                <th style="width:auto">Item</th>
+                <th style ="width:4rem">Skip</th>
+                <th>Parameters</th>
+                <th>Conditions</th>
+                <th style="width:5rem">Retry</th>
+                <th>Arguments</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Items)
+            {
+                var style = item == CurrentItem ? "background:highlight" : "";
+                <tr style=@style ondblclick="" @onclick="()=>{ItemSelected(item);}" title="@item.Description">
+                    <td>@item.Order</td>
+                    <td>@item.Name</td>
+                    <td>
+                        <input type="checkbox" value="@item.Skip"/>
+                    </td>
+                    <td>@item.Parameters</td>
+                    <td>@item.Conditions</td>
+                    <td>@item.Retry</td>
+                    <td>@item.Arguments</td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+@code {
+    [Parameter]
+    public IReadOnlyList<TestItem> Items { get; set; }
+    [Parameter]
+    public EventCallback<TestItem> OnItemSelected { get; set; }
+
+    private TestItem CurrentItem = default;
+
+    private void ItemSelected(TestItem item)
+    {
+        if (CurrentItem != item)
+        {
+            CurrentItem = item;
+            OnItemSelected.InvokeAsync(item).Wait();
+        }
+    }
+}

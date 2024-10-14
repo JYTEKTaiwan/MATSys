@@ -1,0 +1,68 @@
+﻿@if (Item != null)
+{
+
+    <div class=" container-fluid">
+        <div class="input-group mb-3" style="margin-top:1rem;align-items:center">
+            <label for="inputName" class="input-group-text" style="width:100px;text-align: right">Item Name</label>
+            <input type="text" class="form-control" id="inputName" value="@Item.Name" style="margin-left:1rem">
+            <button class="btn btn-outline-secondary">Check</button>
+        </div>
+        <div class="input-group mb-3" style="margin-top:1rem;align-items:center">
+            <label for="inputOrder" class="input-group-text" style="width:100px;text-align-last:right"># Order</label>
+            <input type="text" class="form-control" id="inputOrder" value="@Item.Order" readonly="readonly" style="margin-left:1rem">
+            <button class="btn btn-outline-secondary" style="width:auto">a</button>
+        </div>
+        <div class="input-group mb-3" style="margin-top:1rem;align-items:center">
+            <label for="inputSkip" class="input-group-text" style="width:100px;text-align:right">Skip?</label>
+            <input type="checkbox" class="form-check-input" id="inputSkip" value="@Item.Skip" style="margin-left:1rem">
+        </div>
+
+        <div class="row g-3" style="margin-block:1rem;align-items:center">
+            <div class="col-4" style="text-align:right">
+                <label for="inputName" class="form-label">Test Item Name</label>
+            </div>
+            <div class=" col-8" style="vertical-align:central">
+                <input type="text" class="form-control" placeholder="Test item name" id="inputName" value="@Item.Name">
+            </div>
+        </div>
+        <div class="row g-3" style="margin-block:1rem;align-items:center">
+            <div class="col-4" style="text-align:right;">
+                <label for="inputOrder" class="form-label"># Order</label>
+            </div>
+            <div class=" col-8">
+                <input type="number" id="inputOrder" value="@Item.Order" readonly="readonly">
+            </div>
+
+        </div>
+        <div class="row g-3" style="margin-block:1rem">
+            <div class="col-4" style="text-align:right;">
+                <label for="inputSkip" class="form-label">Skip</label>
+            </div>
+            <div class=" col-8">
+                <input type="checkbox" class="form-check-input" id="inputSkip" value="@Item.Skip">
+            </div>
+
+        </div>
+        <div class="row g-3" style="margin-block:1rem;align-items:center">
+            <div class="col-4" style="text-align:right;">
+                <label for="inputRetry" class="form-label">Retry</label>
+            </div>
+            <div class=" col-8">
+                <input type="number" id="inputRetry" value="@Item.Retry" readonly="readonly">
+            </div>
+
+        </div>
+        <div class="row g-3" style="margin-block:1rem;align-items:center">
+        </div>
+
+    </div>
+}
+
+
+
+@code {
+    [Parameter]
+    public TestItem Item { get; set; } = null;
+
+
+}
