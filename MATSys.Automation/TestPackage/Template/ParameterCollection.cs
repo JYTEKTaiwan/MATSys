@@ -16,6 +16,15 @@ public class ParameterCollection : Dictionary<string, object>, IXmlSerializable
         }
         return param;
     }
+    public static ParameterCollection Create(IEnumerable< (string name, object value)> items)
+    {
+        var param = new ParameterCollection();
+        foreach (var item in items)
+        {
+            param.Add(item.name, item.value);
+        }
+        return param;
+    }
 
     public override string ToString()
     {

@@ -24,7 +24,7 @@ public class TestSummary
 
     public void Update(TestItem item)
     {
-        switch (item.Result.Result)
+        switch (item.Result.Value.Result)
         {
             case TestResultType.Ignore:
                 Ignore++;

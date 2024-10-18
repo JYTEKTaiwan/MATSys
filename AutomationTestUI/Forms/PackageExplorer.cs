@@ -82,7 +82,7 @@ namespace AutomationTestUI.Forms
                 var f = PluginEditor.Form as PluginEditor;
                 f.ServiceProvider = this.ServiceProvider;
                 f.Load(pi);
-                f.Open(this.Pane, DockAlignment.Bottom, 0.45);
+                f.Open(this.DockPanel, DockState.Document);
                 return;
             }
             if (e.Node.Level == 2 && e.Node.Parent.Text.Contains("TestScripts"))

@@ -5,7 +5,6 @@ using System.Text.Json.Nodes;
 using System.Text.Json;
 using System.Linq;
 using System.Xml.Serialization;
-using CsvHelper;
 using CsvHelper.Configuration.Attributes;
 
 
@@ -18,21 +17,21 @@ public class TestRunner
     private TestSummary summary = new TestSummary();
     private CancellationTokenSource cts;
 
-    private IReportWriter<ReportContext> writer=new ReportWriter<ReportContext>();
+    private IReportWriter<ReportContext> writer = new ReportWriter<ReportContext>();
     public TestPackage TestPackage { get; private set; }
     public UUT UUT { get; set; }
     public Operator Operator { get; set; }
 
-    public event EventHandler PackageLoading;
-    public event EventHandler<Exception> PackageLoadedException;
-    public event EventHandler PackageLoaded;
+    public event EventHandler? PackageLoading;
+    public event EventHandler<Exception>? PackageLoadedException;
+    public event EventHandler? PackageLoaded;
 
-    public event EventHandler RunnerExecutionOnstart;
-    public event EventHandler<TestItem> TestItemExecutionOnstart;
-    public event EventHandler<int> TestItemRetryOnstart;
-    public event EventHandler<TestResult> AfterTestItemCompleted;
-    public event EventHandler<TestPackage> AfterRunnerExecutionCompleted;
-    public event EventHandler<TestSummary> TestSummaryGenerated;
+    public event EventHandler? RunnerExecutionOnstart;
+    public event EventHandler<TestItem>? TestItemExecutionOnstart;
+    public event EventHandler<int>? TestItemRetryOnstart;
+    public event EventHandler<TestResult>? AfterTestItemCompleted;
+    public event EventHandler<TestPackage>? AfterRunnerExecutionCompleted;
+    public event EventHandler<TestSummary>? TestSummaryGenerated;
     public void Load(TestPackage package)
     {
         PackageLoading?.Invoke(this, EventArgs.Empty);
@@ -69,29 +68,36 @@ public class TestRunner
     {
         return await Task.Run(async () =>
         {
+            // create the linked cancelation token 
             cts = CancellationTokenSource.CreateLinkedTokenSource(token);
+            // initialize the IReportWriter by using UUT's name as prefix
             writer.Initialize(UUT.Name);
+            // fire the event 
             RunnerExecutionOnstart?.Invoke(this, null);
+            // cleanup the summary 
             summary.Init();
+            // duplicate the test package for output usage
             output = TestPackage;
+            // iterate the test items
             foreach (var item in output.Items)
             {
+                // if the token is cancelled, exit the execution process
                 if (cts.IsCancellationRequested) break;
+                // fire the event
                 TestItemExecutionOnstart?.Invoke(this, item);
-                if (!item.Skip)
-                {
-                    await ExecuteAsync(item, cts.Token);
-                }
-                else
-                {
-                    item.Result = TestResult.Create(TestResultType.Skip, null);
-                }
-                writer.WriteReport(new ReportContext(UUT,Operator,item,output));
+                // execute the test item
+                await ExecuteAsync(item, cts.Token);
+                // update the result to IReportWriter
+                writer.WriteReport(new ReportContext(UUT, Operator, item, output));
+                // update the summary counting
                 summary.Update(item);
-                AfterTestItemCompleted?.Invoke(this, item.Result);
+                // fire the event
+                AfterTestItemCompleted?.Invoke(this, item.Result.Value);
             }
+            // flush and clean up the IReportWriter
             writer.Flush();
             writer.Close();
+            // fire the event
             AfterRunnerExecutionCompleted?.Invoke(this, output);
             TestSummaryGenerated?.Invoke(this, summary);
             return output;
@@ -102,35 +108,50 @@ public class TestRunner
     {
         await Task.Run(async () =>
         {
-            var key = item.PluginID;
-            var testObject = scopedServices.ServiceProvider.GetRequiredKeyedService<IModule>(key);
-            var cmd = string.IsNullOrEmpty(item.Method) ?
-            $"{{\"{item.Name}\":[{item.Parameters.ToString()},{item.Conditions.ToString()}]}}"
-            : $"{{\"{item.Method}\":[{item.Parameters.ToString()},{item.Conditions.ToString()}]}}";
-            int cnt = 0;
-            for (int i = 0; i < item.Retry; i++)
+            if (item.Skip)
             {
-                if (token.IsCancellationRequested) break;
-                cnt++;
-                TestItemRetryOnstart?.Invoke(this, cnt);
-                testObject.Execute(cmd, out var result);
-                item.Result = (TestResult)result;
-                item.Result.IterationCount = cnt;
-                if (((TestResult)result).Result == TestResultType.Pass) { break; }
+                // if the test item marked as skip, return the test result as Skip
+                item.Result = TestResult.Create(TestResultType.Skip, null);
+            }
+            else
+            {
+                var testObject = GetModule(item.PluginID);
+                var cmd = ParseCommand(item);
+                int iteration = item.Retry < 1 ? 0 : item.Retry;
+                for (int i = 0; i <= iteration; i++)
+                {
+                    if (token.IsCancellationRequested) { item.Result = TestResult.Create(TestResultType.Ignore, null); break; }
+                    TestItemRetryOnstart?.Invoke(this, i);
+                    testObject.Execute(cmd, out var result);
+                    TestResult res = (TestResult)result;
+                    res.IterationCount = i;
+                    item.Result = res;
+                    if (((TestResult)result).Result == TestResultType.Pass) { break; }
+                }
+
             }
         });
 
     }
+    private IModule GetModule(string key)
+    {
+        return scopedServices.ServiceProvider.GetRequiredKeyedService<IModule>(key);
+    }
+
+    private string ParseCommand(TestItem item)
+    => string.IsNullOrEmpty(item.Method) ?
+                $"{{\"{item.Name}\":[{item.Parameters.ToString()},{item.Conditions.ToString()}]}}"
+                : $"{{\"{item.Method}\":[{item.Parameters.ToString()},{item.Conditions.ToString()}]}}";
 
     private void ValidateTestPackageInfo(TestPackage package)
     {
-        if (package.Plugins.Select(x => x.Alias).Distinct().Count()!=package.Plugins.Count())
+        if (package.Plugins.Select(x => x.Alias).Distinct().Count() != package.Plugins.Count())
             throw new PackageLoadingException("Duplicated plugin IDs");
 
 
         foreach (var plugin in package.Plugins)
         {
-            if(string.IsNullOrEmpty(plugin.Alias)) throw new PackageLoadingException("Plugin ID cannot be empty");
+            if (string.IsNullOrEmpty(plugin.Alias)) throw new PackageLoadingException("Plugin ID cannot be empty");
 
             //check if dll path in the plugins information exists
             if (!File.Exists(plugin.Path)) throw new PackageLoadingException("Invalid plugin path");
@@ -140,7 +161,7 @@ public class TestRunner
             var t = TypeParser.SearchType(typeName, plugin.Path);
             if (t == null) throw new PackageLoadingException("Invalid plugin type");
         }
-        
+
     }
     private void ValidateTestItems(TestPackage package)
     {
@@ -150,8 +171,8 @@ public class TestRunner
             //check if id of testitem is not existed
             var id = item.PluginID;
             if (string.IsNullOrEmpty(id)) throw new PackageLoadingException($"Id of test item #{item.Order}:{item.Name} cannot be null");
-            if (!ids.Any(x=>x==id)) throw new PackageLoadingException($"Wrong id for test item #{item.Order}:{item.Name}");
-                        
+            if (!ids.Any(x => x == id)) throw new PackageLoadingException($"Wrong id for test item #{item.Order}:{item.Name}");
+
         }
     }
 
@@ -277,19 +298,19 @@ public struct ReportContext
         Method = item.Method;
         Parameters = item.Parameters.ToString();
         Conditions = item.Conditions.ToString();
-        var plugin=package.Plugins[item.PluginID];
+        var plugin = package.Plugins[item.PluginID];
         AssemblyPath = plugin.Path;
         TypeInfo = plugin.QualifiedName;
-        TestResult = item.Result;
+        TestResult = item.Result.Value;
     }
     public UUT UUT { get; set; }
 
-    
+
     public Operator Operator { get; set; }
     public string TestItem { get; set; } = "";
     public int Order { get; set; }
     public bool Skip { get; set; }
-    public int Retry { get; set; }      
+    public int Retry { get; set; }
     public string Method { get; set; } = "";
     public string Parameters { get; set; } = "";
     public string Conditions { get; set; } = "";

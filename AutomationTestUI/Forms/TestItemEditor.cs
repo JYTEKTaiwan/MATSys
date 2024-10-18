@@ -189,17 +189,46 @@ namespace AutomationTestUI.Forms
             Item.Description = textBox_dscp.Text;
             Item.Method = comboBox_method.Text;
             Item.PluginID = comboBox_plugID.Text;
-            
-            Item.Parameters = string.IsNullOrEmpty(textBox_param.Text) ? new ParameterCollection() : JsonSerializer.Deserialize<ParameterCollection>(textBox_param.Text); 
-            
-            Item.Conditions = string.IsNullOrEmpty(textBox_cond.Text) ? new ParameterCollection() : JsonSerializer.Deserialize<ParameterCollection>(textBox_cond.Text);
+            if (string.IsNullOrEmpty(textBox_param.Text))
+            {
+                Item.Parameters = new ParameterCollection();
+            }
+            else
+            {              
+                Item.Parameters = ParameterCollection.Create(GetParametersFromUI());
+            }
+
+
+            if (string.IsNullOrEmpty(textBox_cond.Text))
+            {
+                Item.Conditions = new ParameterCollection();
+            }
+            else
+            {
+                Item.Conditions = ParameterCollection.Create(GetConditionsFromUI());
+            }
 
             TestItemChanged?.Invoke(this, EventArgs.Empty);
         }
+        private IEnumerable<(string,object)> GetParametersFromUI()
+        {
+            foreach (DataGridViewRow row in dgv_param.Rows)
+            {
+                yield return (row.Cells[0].Value.ToString(), row.Cells[1].Value);
+            }
+        }
+        private IEnumerable<(string, object)> GetConditionsFromUI()
+        {
+            foreach (DataGridViewRow row in dgv_cond.Rows)
+            {
+                yield return (row.Cells[0].Value.ToString(), row.Cells[1].Value);
+            }
+        }
+
 
         private void button_restore_Click(object sender, EventArgs e)
         {
-            BindToUI();
+            Load(Item);
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
